@@ -1,1 +1,89 @@
 @import 'variables';
+.hauteur{
+  height: auto;
+  width: 100%;
+}
+
+.carousel-caption {
+  top: 50%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.bg-image{
+  background-image: url("/assets/image/slider-etudiant.png");
+}
+
+.background-image-container {
+  background-image: url("/assets/image/slider-etudiant.png");
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+
+}
+
+.ml{
+  margin-top: auto;
+
+
+}
+
+.masthead {
+  background-size: cover;
+  min-height: 80vh;
+  position: relative;
+  color: white;
+  text-shadow: 2px 2px 2px rgba(0,0,0,.5);
+}
+
+.cButton{
+
+
+  background: linear-gradient(to right, #C36636, #E25F1D);
+
+  border: #fff, solid, 3px !important;
+  border: 2px solid #fdfdfd;
+
+  font-size: 17px;
+
+  border-radius: 20px;
+
+
+  max-width: 300px;
+  height: 45px;
+
+
+}
+
+
+
+
+// custom caption indicator
+
+.carousel-indicators{
+
+
+  right: initial !important;
+  margin-left: 4% !important;
+}
+
+.carousel-indicators .active{
+
+  background-color: #F1B33C;
+
+
+
+}
+
+.carousel-indicators [data-bs-target]{
+
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  opacity: 1 !important;
+}
+
+
