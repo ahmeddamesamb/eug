@@ -1,6 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 
 
+@font-face {
+	font-family: 'Montserrat';
+	src: url('./styles/font/Montserrat-Regular.otf');
+}
+
+@font-face {
+	font-family: 'Montserrat Medium';
+	src: url('./styles/font/Montserrat-Medium.otf');
+}
+
+@font-face {
+	font-family: 'Montserrat SemiBold';
+	src: url('./styles/font/Montserrat-SemiBold.otf');
+}
+
+@font-face {
+	font-family: 'Montserrat ExtraBold';
+	src: url('./styles/font/Montserrat-ExtraBold.otf');
+}
+
+
+*{
+	font-family: 'Montserrat';
+}
+
 
 
 
