@@ -1,0 +1,71 @@
+@import 'variables';
+
+
+.navbar-brand img{
+    width: 80px !important;
+    height: auto;
+}
+
+.navbar{
+    background: white;
+    box-shadow: 0px 3px 6px #00000023;
+}
+
+
+.texte-nav {
+    font-size: 2rem;
+    font-weight: 900;
+    text-align: center;
+    background: linear-gradient(270deg, $bleu, $orange, $marron-clair, $marron-fonce);
+    background-size: 600% 600%;
+    animation: animationColor 8s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.texte-nav.phone {
+    font-size: 1.2rem;
+}
+
+@keyframes animationColor {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+.dropdown{
+    .btn {
+        background-color: white;
+        border: 1px solid $bleu;
+        color: $bleu;
+        font-weight: 500;
+    }
+    a {
+        margin-right: 10px;
+        font-weight: 500;
+        
+    }
+
+    .etudiant{
+        color: $bleu;
+    }
+    .enseignant{
+        color: $marron-clair;
+    }
+    .personnel{
+        color: $marron-fonce;
+    }
+    i {
+        margin-right: 10px;
+    }
+    
+}
+
