@@ -4,13 +4,13 @@ export const navItems: INavData[] = [
   {
     name: 'Accueil',
     url: '/dashboard',
-    iconComponent: { name: 'cil-speedometer' },
+    iconComponent: { name: '' },
 
   },
   {
     name: 'Scolarité',
     url: '/base',
-    iconComponent: { name: 'cil-puzzle' },
+    iconComponent: { name: '' },
     children: [
       {
         name: 'Inscription',
@@ -20,17 +20,17 @@ export const navItems: INavData[] = [
           {
             name: 'Etudiant',
             url: '/base/accordion',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilFolderOpen' }
           },
           {
             name: 'Campagnes',
             url: '/base/breadcrumbs',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilCalendar' }
           },
           {
             name: 'Déliberations',
             url: '/base/cards',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilNotes' }
           },
         ]
       },
@@ -42,29 +42,29 @@ export const navItems: INavData[] = [
           {
             name: 'Utilisateurs',
             url: '/base/accordion',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilUser' },
           },
           {
             name: 'Etudiants',
             url: '/base/breadcrumbs',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilFolderOpen' }
           },
           {
             name: 'Formation',
             url: '/base/cards',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilClone' }
           },
         ]
       },
       {
         name: 'Impression',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilPrint' }
       },
       {
         name: 'Statistique',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilChart' }
       },
       
     ]
@@ -73,49 +73,27 @@ export const navItems: INavData[] = [
   {
     name: 'ACP',
     url: '/base',
-    iconComponent: { name: 'cil-puzzle' },
+    iconComponent: { name: '' },
     children: [
       {
         name: 'Paiements',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilMoney' },
       },
       {
         name: 'Paramétrage',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilCog' },
         children: [
           {
             name: 'Opérateurs',
             url: '/base/accordion',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilTransfer' },
           },
           {
             name: 'Utilisateurs',
             url: '/base/breadcrumbs',
-            icon: 'nav-icon-bullet'
-          },
-        ]
-      },
-      {
-        name: 'Paramétrage',
-        url: '/base/accordion',
-        icon: 'nav-icon-bullet',
-        children: [
-          {
-            name: 'Utilisateurs',
-            url: '/base/accordion',
-            icon: 'nav-icon-bullet'
-          },
-          {
-            name: 'Etudiants',
-            url: '/base/breadcrumbs',
-            icon: 'nav-icon-bullet'
-          },
-          {
-            name: 'Formation',
-            url: '/base/cards',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilUser' },
           },
         ]
       },
@@ -123,12 +101,12 @@ export const navItems: INavData[] = [
       {
         name: 'Répartitions',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilGrain' },
       },
       {
         name: 'Statistiques',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilChart' }
       },
       
     ]
@@ -137,27 +115,27 @@ export const navItems: INavData[] = [
   {
     name: 'CROUS',
     url: '/base',
-    iconComponent: { name: 'cil-puzzle' },
+    iconComponent: { name: '' },
     children: [
       {
         name: 'Visite médicale',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilMedicalCross' },
       },
       {
         name: 'Paramétrage',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilCog' },
         children: [
           {
             name: 'Utilisateurs',
             url: '/base/breadcrumbs',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilUser' },
           },
           {
             name: 'A. Structure',
             url: '/base/accordion',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilHouse' },
           },
           
         ]
@@ -165,7 +143,7 @@ export const navItems: INavData[] = [
       {
         name: 'Liste inscrits',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilPlaylistAdd' },
       },
       
       
@@ -176,22 +154,22 @@ export const navItems: INavData[] = [
   {
     name: 'BU',
     url: '/base',
-    iconComponent: { name: 'cil-puzzle' },
+    iconComponent: { name: '' },
     children: [
       {
         name: 'Quitus Etudiant',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilSpreadsheet' },
       },
       {
         name: 'Paramétrage',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilCog' },
         children: [
           {
             name: 'Utilisateurs',
             url: '/base/breadcrumbs',
-            icon: 'nav-icon-bullet'
+            iconComponent: { name: 'cilUser' },
           },
           
         ]
@@ -199,7 +177,7 @@ export const navItems: INavData[] = [
       {
         name: 'Statistique',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilChart' }
       },
       
       
