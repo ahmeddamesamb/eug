@@ -42,6 +42,7 @@
     "@fullcalendar/interaction": "^6.1.11",
     "@fullcalendar/list": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.11",
+    "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.4.2",
     "date-fns": "^3.6.0",
     "lodash-es": "^4.17.21",

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import {
   ChartData,
   ChartOptions,
@@ -16,6 +16,7 @@ export interface IChartProps {
 
   [propName: string]: any;
 }
+
 
 @Injectable({
   providedIn: 'any'

@@ -38,6 +38,8 @@
             ],
             "styles": [
               "src/scss/styles.scss"
+              
+
             ],
             "scripts": [],
             "allowedCommonJsDependencies": []

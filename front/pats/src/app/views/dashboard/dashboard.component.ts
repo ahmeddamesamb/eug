@@ -1,6 +1,7 @@
 import { DOCUMENT, NgStyle } from '@angular/common';
 import { Component, DestroyRef, effect, inject, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
 
+
 import {
   AvatarComponent,
   ButtonDirective,
@@ -22,6 +23,7 @@ import {
   WidgetsDropdownVerticalComponent
 } from '../widgets/widgets-dropdown-vertical/widgets-dropdown-vertical.component';
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
+import { CardsComponent } from "../base/cards/cards.component";
 
 const avatar2 = './assets/images/avatars/2.jpg';
 const avatar3 = './assets/images/avatars/3.jpg';
@@ -31,29 +33,31 @@ const avatar5 = './assets/images/avatars/5.jpg';
 const avatar6 = './assets/images/avatars/6.jpg';
 
 @Component({
-  templateUrl: 'dashboard.component.html',
-  styleUrls: ['dashboard.component.scss'],
-  standalone: true,
-  imports: [
-    NgStyle,
-    AvatarComponent,
-    ButtonDirective,
-    CardComponent,
-    CardBodyComponent,
-    CardFooterComponent,
-    CardHeaderComponent,
-    CardSubtitleDirective,
-    CardTitleDirective,
-    ChartjsComponent,
-    ColComponent,
-    IconDirective,
-    ProgressComponent,
-    RowComponent,
-    TableDirective,
-    WidgetsDropdownVerticalComponent
-  ]
+    templateUrl: 'dashboard.component.html',
+    styleUrls: ['dashboard.component.scss'],
+    standalone: true,
+    imports: [
+        NgStyle,
+        AvatarComponent,
+        ButtonDirective,
+        CardComponent,
+        CardBodyComponent,
+        CardFooterComponent,
+        CardHeaderComponent,
+        CardSubtitleDirective,
+        CardTitleDirective,
+        ChartjsComponent,
+        ColComponent,
+        IconDirective,
+        ProgressComponent,
+        RowComponent,
+        TableDirective,
+        WidgetsDropdownVerticalComponent,
+        CardsComponent
+    ]
 })
 export class DashboardComponent implements OnInit {
+
 
   readonly #destroyRef: DestroyRef = inject(DestroyRef);
   readonly #document: Document = inject(DOCUMENT);
