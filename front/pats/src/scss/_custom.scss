@@ -15,3 +15,76 @@
 .select-week .calendar-row.current {
   cursor: pointer;
 }
+
+//Personalisation du navbar
+.bg-dark-gradient {
+  background-color: white;
+  background-image: none !important; 
+}
+
+
+.sidebar-nav {
+  .nav-link {
+    color: rgb(27, 27, 27);
+    .nav-icon {
+      color: rgb(27, 27, 27) ;
+    }
+  }
+  .nav-link:hover {
+    color: rgb(80, 80, 80);
+    background-color: #b25f3528 ;
+
+    .nav-icon {
+      color: rgb(80, 80, 80) ;
+    }
+  }
+  .nav-link.active {
+    color: white;
+    font-weight: 500;
+    background-color: $marron-fonce;
+
+    .nav-icon {
+      color: white;
+    }
+  }
+  
+  .nav-group-toggle::after {
+
+    background-color: rgb(0, 0, 0) !important;
+  }
+
+  .nav-group.show .nav-group-toggle {
+    color: rgb(27, 27, 27);
+  }
+}
+
+.sidebar-toggler {
+  --cui-sidebar-toggler-color: rgb(46, 46, 46);
+}
+
+.header {
+  min-height: calc(4rem + 1px);
+  
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-top: 10px !important;
+}
+
+.breadcrumb span{
+  color: rgb(255, 255, 255);
+}
+
+.breadcrumb a{
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  color: rgba(255, 255, 255);
+}
+
+
+
+

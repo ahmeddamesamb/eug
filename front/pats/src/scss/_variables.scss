@@ -4,11 +4,23 @@
 
 $enable-deprecation-messages: false !default;
 
-$primary: #39f !default;
+$primary: #3588B2 !default;
 $success: #51cc8a !default;
 $danger: #ef376e !default;
 $warning: #fc0 !default;
 $info: #747af2 !default;
+
+// mes couleurs
+
+$bleu: #3588B2;
+$marron-fonce: #B25F35;
+$marron-clair: #D8843B;
+$orange: #F1B33C;
+
+$background: #F3F6F7;
+$success: #198754;
+$warning: #FFC107;
+
 
 $primary-text-emphasis: shade-color($primary, 60%) !default;
 $success-text-emphasis: shade-color($success, 60%) !default;

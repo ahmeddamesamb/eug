@@ -12,6 +12,7 @@ body {
 
 .header {
   min-height: calc(4rem + 1px); // stylelint-disable-line function-disallowed-list
+  
 }
 
 .sidebar-brand-full {
@@ -53,9 +54,12 @@ body {
   --cui-sidebar-nav-link-hover-bg: rgba(255, 255, 255, .0375);
 }
 
+
 .sidebar-nav .nav-link.active {
   --cui-sidebar-nav-link-active-bg: rgba(255, 255, 255, .0375);
 }
+
+
 
 @if $enable-dark-mode {
   @include color-mode(dark) {
@@ -73,3 +77,4 @@ body {
     }
   }
 }
+

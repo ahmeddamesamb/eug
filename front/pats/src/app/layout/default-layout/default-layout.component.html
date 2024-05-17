@@ -1,15 +1,15 @@
 <!--sidebar-->
 <c-sidebar
   #sidebar1="cSidebar"
-  class="d-print-none sidebar sidebar-fixed bg-dark-gradient border-end"
+  class="d-print-none sidebar sidebar-fixed bg-dark-gradient "
   colorScheme="dark"
   id="sidebar1"
   visible
 >
-  <c-sidebar-header class="border-bottom">
-    <c-sidebar-brand cSidebarToggle="sidebar1" toggle="unfoldable" style="cursor: pointer;">
-      <svg [class]="{icon: false}" cIcon class="sidebar-brand-full" height="32" name="logo" title="CoreUI Logo"></svg>
-      <svg cIcon class="sidebar-brand-narrow" height="32" name="signet" title="CoreUI Logo"></svg>
+  <c-sidebar-header class="">
+    <c-sidebar-brand class="w-100 d-flex justify-content-center" cSidebarToggle="sidebar1" toggle="unfoldable" style="cursor: pointer;">
+      
+      <img [class]="{icon: false}" cIcon class="sidebar-brand-full" height="100" name="logo" title="CoreUI Logo"  src="assets/images/logo.png" alt="" srcset="">
     </c-sidebar-brand>
     <button cSidebarToggle="sidebar1"
             cButtonClose
@@ -31,7 +31,8 @@
   <app-default-header [cShadowOnScroll]="'sm'"
                       class="mb-4 d-print-none header header-sticky p-0 shadow-sm"
                       position="sticky"
-                      sidebarId="sidebar1" />
+                      sidebarId="sidebar1"
+                      style="background-image: url('assets/images/bag-nav.png');" />
   <!--app-body-->
   <div class="body flex-grow-1">
     <c-container breakpoint="lg" class="h-auto px-4">
