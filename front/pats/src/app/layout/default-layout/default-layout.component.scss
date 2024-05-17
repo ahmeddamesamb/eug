@@ -22,3 +22,14 @@
 //  --scrollbar-thumb-transition: height ease-out 150ms, width ease-out 150ms;
 //  --scrollbar-track-transition: height ease-out 150ms, width ease-out 150ms;
 //}
+
+
+.content-page{
+
+  z-index: 10000 !important;
+  margin-top: -130px;
+  position: relative !important;
+  overflow-y: scroll;
+  height: 80vh;
+
+}

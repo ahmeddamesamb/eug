@@ -15,7 +15,7 @@ export const navItems: INavData[] = [
       {
         name: 'Inscription',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilEducation' },
         children: [
           {
             name: 'Etudiant',
@@ -37,7 +37,7 @@ export const navItems: INavData[] = [
       {
         name: 'Paramétrage',
         url: '/base/accordion',
-        icon: 'nav-icon-bullet',
+        iconComponent: { name: 'cilCog' },
         children: [
           {
             name: 'Utilisateurs',
