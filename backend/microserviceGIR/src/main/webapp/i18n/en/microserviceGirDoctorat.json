@@ -1,0 +1,27 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirDoctorat": {
+      "home": {
+        "title": "Doctorats",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Doctorat",
+        "createOrEditLabel": "Create or edit a Doctorat",
+        "notFound": "No Doctorats found"
+      },
+      "created": "A new Doctorat is created with identifier {{ param }}",
+      "updated": "A Doctorat is updated with identifier {{ param }}",
+      "deleted": "A Doctorat is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Doctorat {{ id }}?"
+      },
+      "detail": {
+        "title": "Doctorat"
+      },
+      "id": "ID",
+      "sujet": "Sujet",
+      "anneeInscriptionDoctorat": "Annee Inscription Doctorat",
+      "encadreurId": "Encadreur Id",
+      "laboratoirId": "Laboratoir Id"
+    }
+  }
+}

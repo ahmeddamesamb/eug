@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "changelogDate": "20240518160359"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "annee_academique",
+  "fields": [
+    {
+      "fieldName": "libelleAnneeAcademique",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "anneeCourante",
+      "fieldType": "Integer"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "AnneeAcademique",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

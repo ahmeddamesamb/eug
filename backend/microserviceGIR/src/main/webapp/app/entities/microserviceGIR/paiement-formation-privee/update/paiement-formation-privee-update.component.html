@@ -1,0 +1,159 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-paiement-formation-privee-heading"
+        data-cy="PaiementFormationPriveeCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirPaiementFormationPrivee.home.createOrEditLabel"
+      >
+        Create or edit a Paiement Formation Privee
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirPaiementFormationPrivee.datePaiement"
+            for="field_datePaiement"
+            >Date Paiement</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_datePaiement"
+              data-cy="datePaiement"
+              type="datetime-local"
+              class="form-control"
+              name="datePaiement"
+              formControlName="datePaiement"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirPaiementFormationPrivee.moisPaiement"
+            for="field_moisPaiement"
+            >Mois Paiement</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="moisPaiement"
+            id="field_moisPaiement"
+            data-cy="moisPaiement"
+            formControlName="moisPaiement"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirPaiementFormationPrivee.anneePaiement"
+            for="field_anneePaiement"
+            >Annee Paiement</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="anneePaiement"
+            id="field_anneePaiement"
+            data-cy="anneePaiement"
+            formControlName="anneePaiement"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirPaiementFormationPrivee.payerMensualiteYN"
+            for="field_payerMensualiteYN"
+            >Payer Mensualite YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="payerMensualiteYN"
+            id="field_payerMensualiteYN"
+            data-cy="payerMensualiteYN"
+            formControlName="payerMensualiteYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPaiementFormationPrivee.emailUser" for="field_emailUser"
+            >Email User</label
+          >
+          <input type="text" class="form-control" name="emailUser" id="field_emailUser" data-cy="emailUser" formControlName="emailUser" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirPaiementFormationPrivee.inscriptionAdministrativeFormation"
+            for="field_inscriptionAdministrativeFormation"
+            >Inscription Administrative Formation</label
+          >
+          <select
+            class="form-control"
+            id="field_inscriptionAdministrativeFormation"
+            data-cy="inscriptionAdministrativeFormation"
+            name="inscriptionAdministrativeFormation"
+            formControlName="inscriptionAdministrativeFormation"
+            [compareWith]="compareInscriptionAdministrativeFormation"
+          >
+            <option [ngValue]="null"></option>
+            @for (inscriptionAdministrativeFormationOption of inscriptionAdministrativeFormationsSharedCollection; track $index) {
+              <option [ngValue]="inscriptionAdministrativeFormationOption">{{ inscriptionAdministrativeFormationOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPaiementFormationPrivee.operateur" for="field_operateur"
+            >Operateur</label
+          >
+          <select
+            class="form-control"
+            id="field_operateur"
+            data-cy="operateur"
+            name="operateur"
+            formControlName="operateur"
+            [compareWith]="compareOperateur"
+          >
+            <option [ngValue]="null"></option>
+            @for (operateurOption of operateursSharedCollection; track $index) {
+              <option [ngValue]="operateurOption">{{ operateurOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-ufr-heading" data-cy="UFRCreateUpdateHeading" jhiTranslate="microserviceGirApp.microserviceGirUFr.home.createOrEditLabel">
+        Create or edit a UFR
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirUFr.libeleUFR" for="field_libeleUFR">Libele UFR</label>
+          <input type="text" class="form-control" name="libeleUFR" id="field_libeleUFR" data-cy="libeleUFR" formControlName="libeleUFR" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirUFr.sigleUFR" for="field_sigleUFR">Sigle UFR</label>
+          <input type="text" class="form-control" name="sigleUFR" id="field_sigleUFR" data-cy="sigleUFR" formControlName="sigleUFR" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirUFr.systemeLMDYN" for="field_systemeLMDYN"
+            >Systeme LMDYN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="systemeLMDYN"
+            id="field_systemeLMDYN"
+            data-cy="systemeLMDYN"
+            formControlName="systemeLMDYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirUFr.ordreStat" for="field_ordreStat">Ordre Stat</label>
+          <input type="number" class="form-control" name="ordreStat" id="field_ordreStat" data-cy="ordreStat" formControlName="ordreStat" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirUFr.universite" for="field_universite"
+            >Universite</label
+          >
+          <select
+            class="form-control"
+            id="field_universite"
+            data-cy="universite"
+            name="universite"
+            formControlName="universite"
+            [compareWith]="compareUniversite"
+          >
+            <option [ngValue]="null"></option>
+            @for (universiteOption of universitesSharedCollection; track $index) {
+              <option [ngValue]="universiteOption">{{ universiteOption.nomUniversite }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

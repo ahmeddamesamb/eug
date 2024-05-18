@@ -1,0 +1,195 @@
+<div>
+  <h2 id="page-heading" data-cy="FormationHeading">
+    <span jhiTranslate="microserviceGirApp.microserviceGirFormation.home.title">Formations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirFormation.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-formation"
+        [routerLink]="['/microservicegir/formation/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirFormation.home.createLabel">Create a new Formation</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (formations?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="microserviceGirApp.microserviceGirFormation.home.notFound">No Formations found</span>
+    </div>
+  }
+
+  @if (formations && formations.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nombreMensualites">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFormation.nombreMensualites">Nombre Mensualites</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="fraisDossierYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFormation.fraisDossierYN">Frais Dossier YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="classeDiplomanteYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFormation.classeDiplomanteYN">Classe Diplomante YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="libelleDiplome">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFormation.libelleDiplome">Libelle Diplome</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="codeFormation">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFormation.codeFormation">Code Formation</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nbreCreditsMin">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFormation.nbreCreditsMin">Nbre Credits Min</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="estParcoursYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFormation.estParcoursYN">Est Parcours YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="lmdYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFormation.lmdYN">Lmd YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="specialite.id">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFormation.specialite">Specialite</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="niveau.id">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFormation.niveau">Niveau</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (formation of formations; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/formation', formation.id, 'view']">{{ formation.id }}</a>
+              </td>
+              <td>{{ formation.nombreMensualites }}</td>
+              <td>{{ formation.fraisDossierYN }}</td>
+              <td>{{ formation.classeDiplomanteYN }}</td>
+              <td>{{ formation.libelleDiplome }}</td>
+              <td>{{ formation.codeFormation }}</td>
+              <td>{{ formation.nbreCreditsMin }}</td>
+              <td>{{ formation.estParcoursYN }}</td>
+              <td>{{ formation.lmdYN }}</td>
+              <td>
+                @if (formation.specialite) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/specialite', formation.specialite.id, 'view']">{{ formation.specialite.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (formation.niveau) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/niveau', formation.niveau.id, 'view']">{{ formation.niveau.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/formation', formation.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/formation', formation.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(formation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (formations && formations.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

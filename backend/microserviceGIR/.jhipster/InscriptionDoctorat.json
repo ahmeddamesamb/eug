@@ -1,0 +1,44 @@
+{
+  "annotations": {
+    "changelogDate": "20240518162359"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "inscription_doctorat",
+  "fields": [
+    {
+      "fieldName": "sourceFinancement",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "coEncadreurId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nombreInscription",
+      "fieldType": "Integer"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "InscriptionDoctorat",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "doctorat",
+      "relationshipName": "doctorat",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "inscriptionAdministrativeFormation",
+      "relationshipName": "inscriptionAdministrativeFormation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

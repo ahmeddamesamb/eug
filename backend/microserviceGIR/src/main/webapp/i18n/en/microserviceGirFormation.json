@@ -1,0 +1,34 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirFormation": {
+      "home": {
+        "title": "Formations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Formation",
+        "createOrEditLabel": "Create or edit a Formation",
+        "notFound": "No Formations found"
+      },
+      "created": "A new Formation is created with identifier {{ param }}",
+      "updated": "A Formation is updated with identifier {{ param }}",
+      "deleted": "A Formation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Formation {{ id }}?"
+      },
+      "detail": {
+        "title": "Formation"
+      },
+      "id": "ID",
+      "nombreMensualites": "Nombre Mensualites",
+      "fraisDossierYN": "Frais Dossier YN",
+      "classeDiplomanteYN": "Classe Diplomante YN",
+      "libelleDiplome": "Libelle Diplome",
+      "codeFormation": "Code Formation",
+      "nbreCreditsMin": "Nbre Credits Min",
+      "estParcoursYN": "Est Parcours YN",
+      "lmdYN": "Lmd YN",
+      "specialite": "Specialite",
+      "niveau": "Niveau",
+      "formationAutorisee": "Formation Autorisee"
+    }
+  }
+}

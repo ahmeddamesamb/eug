@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="floatType" value="float4" dbms="postgresql"/>
+    <property name="clobType" value="clob" dbms="postgresql"/>
+    <property name="blobType" value="blob" dbms="postgresql"/>
+    <property name="uuidType" value="uuid" dbms="postgresql"/>
+    <property name="datetimeType" value="datetime" dbms="postgresql"/>
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518154859_added_entity_Etudiant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518154959_added_entity_PaiementFormationPrivee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155059_added_entity_InformationPersonnelle.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155159_added_entity_TypeHandicap.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155259_added_entity_TypeBourse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155359_added_entity_Region.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155459_added_entity_Pays.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155559_added_entity_Zone.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155659_added_entity_Lycee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155759_added_entity_Baccalaureat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155859_added_entity_Serie.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155959_added_entity_TypeSelection.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160059_added_entity_TypeAdmission.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160159_added_entity_DisciplineSportiveEtudiant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160259_added_entity_DisciplineSportive.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160359_added_entity_AnneeAcademique.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160459_added_entity_ProgrammationInscription.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160559_added_entity_InscriptionAdministrative.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160659_added_entity_InscriptionAdministrativeFormation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160759_added_entity_ProcessusDinscriptionAdministrative.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160859_added_entity_Operation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160959_added_entity_TypeOperation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161059_added_entity_Specialite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161159_added_entity_Niveau.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161259_added_entity_Formation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161359_added_entity_FormationAutorisee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161459_added_entity_FormationValide.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161559_added_entity_Mention.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161659_added_entity_Domaine.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161759_added_entity_UFR.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161859_added_entity_Frais.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161959_added_entity_TypeFrais.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518162059_added_entity_PaiementFrais.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518162159_added_entity_Operateur.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518162259_added_entity_Campagne.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518162359_added_entity_InscriptionDoctorat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518162459_added_entity_Doctorat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518162559_added_entity_Universite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518162659_added_entity_Ministere.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20240518154859_added_entity_constraints_Etudiant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518154959_added_entity_constraints_PaiementFormationPrivee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155059_added_entity_constraints_InformationPersonnelle.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155359_added_entity_constraints_Region.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155459_added_entity_constraints_Pays.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155659_added_entity_constraints_Lycee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518155759_added_entity_constraints_Baccalaureat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160159_added_entity_constraints_DisciplineSportiveEtudiant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160459_added_entity_constraints_ProgrammationInscription.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160559_added_entity_constraints_InscriptionAdministrative.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160659_added_entity_constraints_InscriptionAdministrativeFormation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160759_added_entity_constraints_ProcessusDinscriptionAdministrative.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518160859_added_entity_constraints_Operation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161059_added_entity_constraints_Specialite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161259_added_entity_constraints_Formation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161359_added_entity_constraints_FormationAutorisee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161459_added_entity_constraints_FormationValide.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161559_added_entity_constraints_Mention.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161759_added_entity_constraints_UFR.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518161859_added_entity_constraints_Frais.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518162059_added_entity_constraints_PaiementFrais.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518162359_added_entity_constraints_InscriptionDoctorat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240518162559_added_entity_constraints_Universite.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+</databaseChangeLog>

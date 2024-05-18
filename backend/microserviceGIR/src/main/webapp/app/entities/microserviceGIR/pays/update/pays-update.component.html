@@ -1,0 +1,138 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-pays-heading"
+        data-cy="PaysCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirPays.home.createOrEditLabel"
+      >
+        Create or edit a Pays
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPays.libellePays" for="field_libellePays"
+            >Libelle Pays</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libellePays"
+            id="field_libellePays"
+            data-cy="libellePays"
+            formControlName="libellePays"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPays.paysEnAnglais" for="field_paysEnAnglais"
+            >Pays En Anglais</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="paysEnAnglais"
+            id="field_paysEnAnglais"
+            data-cy="paysEnAnglais"
+            formControlName="paysEnAnglais"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPays.nationalite" for="field_nationalite"
+            >Nationalite</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="nationalite"
+            id="field_nationalite"
+            data-cy="nationalite"
+            formControlName="nationalite"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPays.codePays" for="field_codePays">Code Pays</label>
+          <input type="text" class="form-control" name="codePays" id="field_codePays" data-cy="codePays" formControlName="codePays" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPays.uEMOAYN" for="field_uEMOAYN">U EMOAYN</label>
+          <input type="number" class="form-control" name="uEMOAYN" id="field_uEMOAYN" data-cy="uEMOAYN" formControlName="uEMOAYN" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPays.cEDEAOYN" for="field_cEDEAOYN">C EDEAOYN</label>
+          <input type="number" class="form-control" name="cEDEAOYN" id="field_cEDEAOYN" data-cy="cEDEAOYN" formControlName="cEDEAOYN" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPays.rIMYN" for="field_rIMYN">R IMYN</label>
+          <input type="number" class="form-control" name="rIMYN" id="field_rIMYN" data-cy="rIMYN" formControlName="rIMYN" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPays.autreYN" for="field_autreYN">Autre YN</label>
+          <input type="number" class="form-control" name="autreYN" id="field_autreYN" data-cy="autreYN" formControlName="autreYN" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirPays.estEtrangerYN" for="field_estEtrangerYN"
+            >Est Etranger YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="estEtrangerYN"
+            id="field_estEtrangerYN"
+            data-cy="estEtrangerYN"
+            formControlName="estEtrangerYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label jhiTranslate="microserviceGirApp.microserviceGirPays.zone" for="field_zones">Zone</label>
+          <select
+            class="form-control"
+            id="field_zones"
+            data-cy="zone"
+            multiple
+            name="zones"
+            formControlName="zones"
+            [compareWith]="compareZone"
+          >
+            @for (zoneOption of zonesSharedCollection; track $index) {
+              <option [ngValue]="zoneOption">{{ zoneOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+{
+  "annotations": {
+    "changelogDate": "20240518161459"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "formation_valide",
+  "fields": [
+    {
+      "fieldName": "valideYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "FormationValide",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "formation",
+      "relationshipName": "formation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

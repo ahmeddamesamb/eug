@@ -1,0 +1,102 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-formation-autorisee-heading"
+        data-cy="FormationAutoriseeCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirFormationAutorisee.home.createOrEditLabel"
+      >
+        Create or edit a Formation Autorisee
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormationAutorisee.dateDebuT" for="field_dateDebuT"
+            >Date Debu T</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateDebuT"
+              data-cy="dateDebuT"
+              type="text"
+              class="form-control"
+              name="dateDebuT"
+              ngbDatepicker
+              #dateDebuTDp="ngbDatepicker"
+              formControlName="dateDebuT"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDebuTDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormationAutorisee.dateFin" for="field_dateFin"
+            >Date Fin</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateFin"
+              data-cy="dateFin"
+              type="text"
+              class="form-control"
+              name="dateFin"
+              ngbDatepicker
+              #dateFinDp="ngbDatepicker"
+              formControlName="dateFin"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateFinDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormationAutorisee.enCours" for="field_enCours"
+            >En Cours</label
+          >
+          <input type="number" class="form-control" name="enCours" id="field_enCours" data-cy="enCours" formControlName="enCours" />
+        </div>
+
+        <div class="mb-3">
+          <label jhiTranslate="microserviceGirApp.microserviceGirFormationAutorisee.formation" for="field_formations">Formation</label>
+          <select
+            class="form-control"
+            id="field_formations"
+            data-cy="formation"
+            multiple
+            name="formations"
+            formControlName="formations"
+            [compareWith]="compareFormation"
+          >
+            @for (formationOption of formationsSharedCollection; track $index) {
+              <option [ngValue]="formationOption">{{ formationOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

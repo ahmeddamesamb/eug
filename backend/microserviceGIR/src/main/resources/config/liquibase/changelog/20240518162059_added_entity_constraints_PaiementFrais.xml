@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity PaiementFrais.
+    -->
+    <changeSet id="20240518162059-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="frais_id"
+                                 baseTableName="paiement_frais"
+                                 constraintName="fk_paiement_frais__frais_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="frais"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="operateur_id"
+                                 baseTableName="paiement_frais"
+                                 constraintName="fk_paiement_frais__operateur_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="operateur"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="inscription_administrative_formation_id"
+                                 baseTableName="paiement_frais"
+                                 constraintName="fk_paiement_frais__inscription_administrative_formation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="inscription_administrative_formation"
+                                 />
+    </changeSet>
+</databaseChangeLog>

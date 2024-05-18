@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (ministere) {
+      <div>
+        <h2 data-cy="ministereDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirMinistere.detail.title">Ministere</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ ministere.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirMinistere.nomMinistere">Nom Ministere</span></dt>
+          <dd>
+            <span>{{ ministere.nomMinistere }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirMinistere.sigleMinistere">Sigle Ministere</span></dt>
+          <dd>
+            <span>{{ ministere.sigleMinistere }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirMinistere.dateDebut">Date Debut</span></dt>
+          <dd>
+            <span>{{ ministere.dateDebut | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirMinistere.dateFin">Date Fin</span></dt>
+          <dd>
+            <span>{{ ministere.dateFin | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirMinistere.enCours">En Cours</span></dt>
+          <dd>
+            <span>{{ ministere.enCours }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/ministere', ministere.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

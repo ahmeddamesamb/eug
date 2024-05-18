@@ -1,0 +1,187 @@
+<div>
+  <h2 id="page-heading" data-cy="BaccalaureatHeading">
+    <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.home.title">Baccalaureats</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-baccalaureat"
+        [routerLink]="['/microservicegir/baccalaureat/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.home.createLabel">Create a new Baccalaureat</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (baccalaureats?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.home.notFound">No Baccalaureats found</span>
+    </div>
+  }
+
+  @if (baccalaureats && baccalaureats.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="origineScolaire">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.origineScolaire">Origine Scolaire</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="anneeBac">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.anneeBac">Annee Bac</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="numeroTable">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.numeroTable">Numero Table</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="natureBac">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.natureBac">Nature Bac</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="mentionBac">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.mentionBac">Mention Bac</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="moyenneSelectionBac">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.moyenneSelectionBac">Moyenne Selection Bac</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="moyenneBac">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.moyenneBac">Moyenne Bac</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="etudiant.id">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.etudiant">Etudiant</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="serie.id">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.serie">Serie</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (baccalaureat of baccalaureats; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/baccalaureat', baccalaureat.id, 'view']">{{ baccalaureat.id }}</a>
+              </td>
+              <td>{{ baccalaureat.origineScolaire }}</td>
+              <td>{{ baccalaureat.anneeBac | formatMediumDate }}</td>
+              <td>{{ baccalaureat.numeroTable }}</td>
+              <td>{{ baccalaureat.natureBac }}</td>
+              <td>{{ baccalaureat.mentionBac }}</td>
+              <td>{{ baccalaureat.moyenneSelectionBac }}</td>
+              <td>{{ baccalaureat.moyenneBac }}</td>
+              <td>
+                @if (baccalaureat.etudiant) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/etudiant', baccalaureat.etudiant.id, 'view']">{{ baccalaureat.etudiant.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (baccalaureat.serie) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/serie', baccalaureat.serie.id, 'view']">{{ baccalaureat.serie.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/baccalaureat', baccalaureat.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/baccalaureat', baccalaureat.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(baccalaureat)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (baccalaureats && baccalaureats.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

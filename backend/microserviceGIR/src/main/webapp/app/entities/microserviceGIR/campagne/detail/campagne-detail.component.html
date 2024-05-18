@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (campagne) {
+      <div>
+        <h2 data-cy="campagneDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirCampagne.detail.title">Campagne</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ campagne.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirCampagne.libelle">Libelle</span></dt>
+          <dd>
+            <span>{{ campagne.libelle }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirCampagne.dateDebut">Date Debut</span></dt>
+          <dd>
+            <span>{{ campagne.dateDebut | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirCampagne.dateFin">Date Fin</span></dt>
+          <dd>
+            <span>{{ campagne.dateFin | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirCampagne.libelleAbrege">Libelle Abrege</span></dt>
+          <dd>
+            <span>{{ campagne.libelleAbrege }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/campagne', campagne.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

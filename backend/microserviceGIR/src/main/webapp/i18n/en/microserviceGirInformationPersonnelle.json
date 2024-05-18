@@ -1,0 +1,44 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirInformationPersonnelle": {
+      "home": {
+        "title": "Information Personnelles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Information Personnelle",
+        "createOrEditLabel": "Create or edit a Information Personnelle",
+        "notFound": "No Information Personnelles found"
+      },
+      "created": "A new Information Personnelle is created with identifier {{ param }}",
+      "updated": "A Information Personnelle is updated with identifier {{ param }}",
+      "deleted": "A Information Personnelle is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Information Personnelle {{ id }}?"
+      },
+      "detail": {
+        "title": "Information Personnelle"
+      },
+      "id": "ID",
+      "nomEtu": "Nom Etu",
+      "nomJeuneFilleEtu": "Nom Jeune Fille Etu",
+      "prenomEtu": "Prenom Etu",
+      "statutMarital": "Statut Marital",
+      "regime": "Regime",
+      "profession": "Profession",
+      "adresseEtu": "Adresse Etu",
+      "telEtu": "Tel Etu",
+      "emailEtu": "Email Etu",
+      "adresseParent": "Adresse Parent",
+      "telParent": "Tel Parent",
+      "emailParent": "Email Parent",
+      "nomParent": "Nom Parent",
+      "prenomParent": "Prenom Parent",
+      "handicapYN": "Handicap YN",
+      "ordiPersoYN": "Ordi Perso YN",
+      "derniereModification": "Derniere Modification",
+      "emailUser": "Email User",
+      "etudiant": "Etudiant",
+      "typeHadique": "Type Hadique",
+      "typeBourse": "Type Bourse"
+    }
+  }
+}
