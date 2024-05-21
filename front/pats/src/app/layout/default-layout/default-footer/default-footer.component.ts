@@ -8,7 +8,12 @@ import { FooterComponent } from '@coreui/angular-pro';
     standalone: true,
 })
 export class DefaultFooterComponent extends FooterComponent {
+  annee: number | undefined;
+  
   constructor() {
     super();
+    const dateActuelle = new Date();
+    this.annee = dateActuelle.getFullYear();
   }
+
 }

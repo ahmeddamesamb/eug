@@ -1,6 +1,6 @@
 <!--<c-header class="mb-4 d-print-none" position="sticky">-->
-<ng-container>
-  <c-container [fluid]="true" class="px-4 herder-content">
+<ng-container class="px-4">
+  <c-container [fluid]="true" class="px-4 herder-content ">
     
     <div class="d-flex">
       <button
@@ -17,7 +17,7 @@
       </div>
     </div>
     
-    <form cForm class=" d-sm-flex etudiant">
+    <form cForm class=" etudiant d-none d-md-flex">
       <c-input-group class=" ">
         <span cInputGroupText id="search-addon" class="bg-body-primary border-0 px-1">
           <svg cIcon name="cilSearch" size="lg" class="my-1 mx-2 text-body-secondary"></svg>
@@ -41,22 +41,36 @@
     </c-header-nav>
 
   </c-container>
+  <form cForm class=" etudiant d-flex d-md-none w-50">
+    <c-input-group class="">
+      <span cInputGroupText id="search-addon" class="bg-body-primary border-0 px-1">
+        <svg cIcon name="cilSearch" size="lg" class="my-1 mx-2 text-body-secondary"></svg>
+      </span>
+      <input cFormControl
+             placeholder="Search..."
+             aria-label="Search"
+             aria-describedby="search-addon"
+             class="bg-body-secondary border-0"
+      />
+    </c-input-group>
+  </form>
 </ng-container>
 <!--</c-header>-->
 
 <ng-template #userDropdown>
-  <c-dropdown [popperOptions]="{ placement: 'bottom-start' }" variant="nav-item">
-    <button [caret]="false" cDropdownToggle class="py-0" class="user-content">
+  <c-dropdown [popperOptions]="{ placement: 'bottom-start' }" variant="nav-item" class="dropdown">
+    <button [caret]="false" cDropdownToggle class="py-0" class="user-content d-flex">
       <c-avatar
         size="md"
         src="./assets/images/avatars/8.jpg"
         status="success"
         textColor="primary"
       />
-      Lamine gueye
+      <span class="d-none d-md-flex">Lamine gueye</span>
+      
       <i class="bi bi-caret-down"></i>
     </button>
-    <ul cDropdownMenu class="pt-0 w-auto index">
+    <ul cDropdownMenu class="p-2 w-auto index">
       
       <li>
         <a cDropdownItem routerLink="">

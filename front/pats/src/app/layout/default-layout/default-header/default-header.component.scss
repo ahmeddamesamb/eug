@@ -8,10 +8,7 @@
     }
     input::placeholder{
         color: #ffffff;
-    }
-
-    
-    
+    } 
 }
 
 .index-user{
@@ -26,8 +23,23 @@
     font-family: 'Montserrat Medium';
     padding: 4px !important;
     padding-inline: 10px !important;
+    align-items: center;
+    span{
+        padding-inline: 5px;
+    }
 }
 
 .index{
-    z-index: 1040;
+    z-index: 1040 !important;
 }
+
+.dropdown {
+    position: relative !important;
+}
+
+@media (max-width: 768px) {
+    .herder-content > *{
+  
+      margin-top: 5px;
+    }
+  }

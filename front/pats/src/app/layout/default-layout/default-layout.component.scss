@@ -32,19 +32,22 @@
   overflow-y: scroll;
   height: 80vh;
   scrollbar-width: none;
-
-
 }
 
-*::-webkit-scrollbar {
-  width: 12px; /* width of the entire scrollbar */
-}
-*::-webkit-scrollbar-track {
-  background: orange; /* color of the tracking area */
+@media (max-width: 768px) {
+  .content-page{
+
+    margin-top: -60px;
+  }
 }
 
-*::-webkit-scrollbar-thumb {
-  background-color: blue; /* color of the scroll thumb */
-  border-radius: 20px; /* roundness of the scroll thumb */
-  border: 3px solid orange; /* creates padding around scroll thumb */
+
+.annee-connexion{
+  border: 1px solid #999;
+  border-radius: 10px;
+  color: #222222;
+  align-items: center;
+  font-size:medium;
+  font-family: 'Montserrat SemiBold';
 }
+

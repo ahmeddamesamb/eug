@@ -7,6 +7,8 @@
   visible
 >
   <c-sidebar-header class="">
+    
+    
     <c-sidebar-brand class="w-100 d-flex justify-content-center" cSidebarToggle="sidebar1" toggle="unfoldable" style="cursor: pointer;">
       
       <img [class]="{icon: false}" cIcon class="sidebar-brand-full" height="100" name="logo" title="CoreUI Logo"  src="assets/images/logo.png" alt="" srcset="">
@@ -23,6 +25,18 @@
   <ng-scrollbar #scrollbar="ngScrollbar" (updated)="onScrollbarUpdate(scrollbar.state)" class="overflow" pointerEventsMethod="scrollbar" visibility="hover">
     <c-sidebar-nav #overflow [navItems]="navItems" dropdownMode="close" compact />
   </ng-scrollbar>
+  <div class="p-2">
+    <div class="p-2 w-100 annee-connexion d-flex">
+      <i class="bi bi-calendar-minus"></i>
+      <select aria-label="Default select example" class="border-0 p-1 w-100 " cSelect>
+        <option>2025-2026</option>
+        <option value="1">2024-2025</option>
+        <option value="2">2023-2024</option>
+        <option value="3">2022-2023</option>
+      </select>
+    </div>
+  </div>
+  
 </c-sidebar>
 
 <!--main-->
