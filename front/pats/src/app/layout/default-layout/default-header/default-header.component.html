@@ -34,7 +34,7 @@
 
 
 
-    <c-header-nav class="ms-0">
+    <c-header-nav class="ms-0 index">
         <ng-container *ngTemplateOutlet="userDropdown" />
 
       
@@ -46,15 +46,17 @@
 
 <ng-template #userDropdown>
   <c-dropdown [popperOptions]="{ placement: 'bottom-start' }" variant="nav-item">
-    <button [caret]="false" cDropdownToggle class="py-0">
+    <button [caret]="false" cDropdownToggle class="py-0" class="user-content">
       <c-avatar
         size="md"
         src="./assets/images/avatars/8.jpg"
         status="success"
         textColor="primary"
       />
+      Lamine gueye
+      <i class="bi bi-caret-down"></i>
     </button>
-    <ul cDropdownMenu class="pt-0 w-auto">
+    <ul cDropdownMenu class="pt-0 w-auto index">
       
       <li>
         <a cDropdownItem routerLink="">

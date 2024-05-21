@@ -57,3 +57,25 @@
 *{
 	font-family: 'Montserrat light';
 }
+
+
+.sidebar-nav .nav-group .nav-group-items {
+	padding: var(--cui-sidebar-nav-group-items-padding-y) var(--cui-sidebar-nav-group-items-padding-x);
+	overflow: hidden;
+	transition: height 0.15s ease;
+	margin-left: 20px;
+	border-left: 1px solid #b25f3550;
+}
+  
+  
+.sidebar-nav > .nav-item > .nav-link > svg , .sidebar-nav > .nav-group > .nav-link > svg {
+	display: none;
+	width: 0px !important;
+	margin: 0px !important;
+}
+
+.sidebar-nav > .nav-item > .nav-link , .sidebar-nav > .nav-group > .nav-link {
+	font-family: 'Montserrat ExtraBold' !important;
+}
+  
+  

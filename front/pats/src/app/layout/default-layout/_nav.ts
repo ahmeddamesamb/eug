@@ -9,27 +9,27 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Scolarité',
-    url: '/base',
+    url: '/scolarite',
     iconComponent: { name: '' },
     children: [
       {
         name: 'Inscription',
-        url: '/base/accordion',
+        url: '/scolarite/inscription',
         iconComponent: { name: 'cilEducation' },
         children: [
           {
             name: 'Etudiant',
-            url: '/base/accordion',
+            url: '/etudiant',
             iconComponent: { name: 'cilFolderOpen' }
           },
           {
             name: 'Campagnes',
-            url: '/base/breadcrumbs',
+            url: '/scolarite/breadcrumbs',
             iconComponent: { name: 'cilCalendar' }
           },
           {
             name: 'Déliberations',
-            url: '/base/cards',
+            url: '/scolarite/cards',
             iconComponent: { name: 'cilNotes' }
           },
         ]
@@ -58,7 +58,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Impression',
-        url: '/base/accordion',
+        url: '/impression/accordion',
         iconComponent: { name: 'cilPrint' }
       },
       {
@@ -72,27 +72,27 @@ export const navItems: INavData[] = [
   },
   {
     name: 'ACP',
-    url: '/base',
+    url: '/acp',
     iconComponent: { name: '' },
     children: [
       {
         name: 'Paiements',
-        url: '/base/accordion',
+        url: '/paiements/accordion',
         iconComponent: { name: 'cilMoney' },
       },
       {
         name: 'Paramétrage',
-        url: '/base/accordion',
+        url: '/parametrage/accordion',
         iconComponent: { name: 'cilCog' },
         children: [
           {
             name: 'Opérateurs',
-            url: '/base/accordion',
+            url: '/parametrage/accordion',
             iconComponent: { name: 'cilTransfer' },
           },
           {
             name: 'Utilisateurs',
-            url: '/base/breadcrumbs',
+            url: '/parametrage/breadcrumbs',
             iconComponent: { name: 'cilUser' },
           },
         ]
@@ -100,12 +100,12 @@ export const navItems: INavData[] = [
       
       {
         name: 'Répartitions',
-        url: '/base/accordion',
+        url: '/repartitions/accordion',
         iconComponent: { name: 'cilGrain' },
       },
       {
         name: 'Statistiques',
-        url: '/base/accordion',
+        url: '/repartitions/accordion',
         iconComponent: { name: 'cilChart' }
       },
       
@@ -114,27 +114,27 @@ export const navItems: INavData[] = [
   },
   {
     name: 'CROUS',
-    url: '/base',
+    url: '/crous',
     iconComponent: { name: '' },
     children: [
       {
         name: 'Visite médicale',
-        url: '/base/accordion',
+        url: '/visite-medicale/accordion',
         iconComponent: { name: 'cilMedicalCross' },
       },
       {
         name: 'Paramétrage',
-        url: '/base/accordion',
+        url: '/parametrage/accordion',
         iconComponent: { name: 'cilCog' },
         children: [
           {
             name: 'Utilisateurs',
-            url: '/base/breadcrumbs',
+            url: '/parametrage/breadcrumbs',
             iconComponent: { name: 'cilUser' },
           },
           {
             name: 'A. Structure',
-            url: '/base/accordion',
+            url: '/parametrage/accordion',
             iconComponent: { name: 'cilHouse' },
           },
           
@@ -142,7 +142,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Liste inscrits',
-        url: '/base/accordion',
+        url: '/liste-inscrits/accordion',
         iconComponent: { name: 'cilPlaylistAdd' },
       },
       
@@ -153,22 +153,22 @@ export const navItems: INavData[] = [
 
   {
     name: 'BU',
-    url: '/base',
+    url: '/bu',
     iconComponent: { name: '' },
     children: [
       {
         name: 'Quitus Etudiant',
-        url: '/base/accordion',
+        url: '/quitus-etudiant/accordion',
         iconComponent: { name: 'cilSpreadsheet' },
       },
       {
         name: 'Paramétrage',
-        url: '/base/accordion',
+        url: '/parametrage/accordion',
         iconComponent: { name: 'cilCog' },
         children: [
           {
             name: 'Utilisateurs',
-            url: '/base/breadcrumbs',
+            url: '/utilisateurs/breadcrumbs',
             iconComponent: { name: 'cilUser' },
           },
           
@@ -176,7 +176,7 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Statistique',
-        url: '/base/accordion',
+        url: '/statistique/accordion',
         iconComponent: { name: 'cilChart' }
       },
       

@@ -18,3 +18,16 @@
     position: relative !important;
     z-index: 10000000 !important;
 }
+
+.user-content{
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    color: #ffffff !important;
+    font-family: 'Montserrat Medium';
+    padding: 4px !important;
+    padding-inline: 10px !important;
+}
+
+.index{
+    z-index: 1040;
+}

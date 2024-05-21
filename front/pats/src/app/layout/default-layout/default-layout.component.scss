@@ -26,10 +26,25 @@
 
 .content-page{
 
-  z-index: 10000 !important;
+  z-index: 1020 !important;
   margin-top: -130px;
   position: relative !important;
   overflow-y: scroll;
   height: 80vh;
+  scrollbar-width: none;
 
+
+}
+
+*::-webkit-scrollbar {
+  width: 12px; /* width of the entire scrollbar */
+}
+*::-webkit-scrollbar-track {
+  background: orange; /* color of the tracking area */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: blue; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 3px solid orange; /* creates padding around scroll thumb */
 }
