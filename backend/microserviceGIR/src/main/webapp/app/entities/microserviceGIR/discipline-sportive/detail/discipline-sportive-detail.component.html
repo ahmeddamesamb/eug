@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (disciplineSportive) {
+      <div>
+        <h2 data-cy="disciplineSportiveDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirDisciplineSportive.detail.title">Discipline Sportive</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ disciplineSportive.id }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirDisciplineSportive.libelleDisciplineSportive"
+              >Libelle Discipline Sportive</span
+            >
+          </dt>
+          <dd>
+            <span>{{ disciplineSportive.libelleDisciplineSportive }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/microservicegir/discipline-sportive', disciplineSportive.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

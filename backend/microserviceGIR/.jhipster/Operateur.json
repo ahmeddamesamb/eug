@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20240518162159"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "operateur",
+  "fields": [
+    {
+      "fieldName": "libelle",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "userLogin",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codeOperateur",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Operateur",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

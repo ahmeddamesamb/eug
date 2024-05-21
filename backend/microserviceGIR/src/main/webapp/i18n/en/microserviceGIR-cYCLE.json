@@ -1,0 +1,10 @@
+{
+  "microserviceGirApp": {
+    "CYCLE": {
+      "null": "",
+      "LICENCE": "Licence",
+      "MASTER": "Master",
+      "DOCTOTAT": "Doctorat"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "changelogDate": "20240518155259"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "type_bourse",
+  "fields": [
+    {
+      "fieldName": "libelle",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "TypeBourse",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

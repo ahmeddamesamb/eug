@@ -1,0 +1,178 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-programmation-inscription-heading"
+        data-cy="ProgrammationInscriptionCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirProgrammationInscription.home.createOrEditLabel"
+      >
+        Create or edit a Programmation Inscription
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirProgrammationInscription.libelleProgrammation"
+            for="field_libelleProgrammation"
+            >Libelle Programmation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libelleProgrammation"
+            id="field_libelleProgrammation"
+            data-cy="libelleProgrammation"
+            formControlName="libelleProgrammation"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateDebut"
+            for="field_dateDebut"
+            >Date Debut</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateDebut"
+              data-cy="dateDebut"
+              type="text"
+              class="form-control"
+              name="dateDebut"
+              ngbDatepicker
+              #dateDebutDp="ngbDatepicker"
+              formControlName="dateDebut"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDebutDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateFin" for="field_dateFin"
+            >Date Fin</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateFin"
+              data-cy="dateFin"
+              type="text"
+              class="form-control"
+              name="dateFin"
+              ngbDatepicker
+              #dateFinDp="ngbDatepicker"
+              formControlName="dateFin"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateFinDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirProgrammationInscription.ouvertYN" for="field_ouvertYN"
+            >Ouvert YN</label
+          >
+          <input type="number" class="form-control" name="ouvertYN" id="field_ouvertYN" data-cy="ouvertYN" formControlName="ouvertYN" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirProgrammationInscription.emailUser"
+            for="field_emailUser"
+            >Email User</label
+          >
+          <input type="text" class="form-control" name="emailUser" id="field_emailUser" data-cy="emailUser" formControlName="emailUser" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirProgrammationInscription.anneeAcademique"
+            for="field_anneeAcademique"
+            >Annee Academique</label
+          >
+          <select
+            class="form-control"
+            id="field_anneeAcademique"
+            data-cy="anneeAcademique"
+            name="anneeAcademique"
+            formControlName="anneeAcademique"
+            [compareWith]="compareAnneeAcademique"
+          >
+            <option [ngValue]="null"></option>
+            @for (anneeAcademiqueOption of anneeAcademiquesSharedCollection; track $index) {
+              <option [ngValue]="anneeAcademiqueOption">{{ anneeAcademiqueOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirProgrammationInscription.formation"
+            for="field_formation"
+            >Formation</label
+          >
+          <select
+            class="form-control"
+            id="field_formation"
+            data-cy="formation"
+            name="formation"
+            formControlName="formation"
+            [compareWith]="compareFormation"
+          >
+            <option [ngValue]="null"></option>
+            @for (formationOption of formationsSharedCollection; track $index) {
+              <option [ngValue]="formationOption">{{ formationOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirProgrammationInscription.campagne" for="field_campagne"
+            >Campagne</label
+          >
+          <select
+            class="form-control"
+            id="field_campagne"
+            data-cy="campagne"
+            name="campagne"
+            formControlName="campagne"
+            [compareWith]="compareCampagne"
+          >
+            <option [ngValue]="null"></option>
+            @for (campagneOption of campagnesSharedCollection; track $index) {
+              <option [ngValue]="campagneOption">{{ campagneOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

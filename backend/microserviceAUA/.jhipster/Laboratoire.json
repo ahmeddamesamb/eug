@@ -1,0 +1,28 @@
+{
+  "annotations": {
+    "changelogDate": "20240518154858"
+  },
+  "applications": ["microserviceAUA"],
+  "clientRootFolder": "microserviceAUA",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "laboratoire",
+  "fields": [
+    {
+      "fieldName": "nomLaboratoire",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "laboratoireCotutelleYN",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "microserviceName": "microserviceAUA",
+  "name": "Laboratoire",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

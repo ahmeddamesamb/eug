@@ -1,0 +1,721 @@
+
+application {
+  config {
+    baseName gateway
+    applicationType gateway
+    packageName sn.ugb.gateway
+    serviceDiscoveryType consul
+    testFrameworks [cypress]
+    authenticationType oauth2
+    cacheProvider hazelcast
+    buildTool maven
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+    clientTheme Flatly
+    clientFramework angular
+    jhiPrefix ugb
+    serverPort 8081
+    microfrontends [microserviceUser, microserviceGIR, microserviceEnseignement, microserviceEDT, microserviceGRH, microserviceAUA, microserviceDeliberation, microserviceGD, microserviceACLC, microserviceAide, microserviceGED]
+  }
+}
+
+application {
+  config {
+    baseName microserviceUser
+    applicationType microservice
+    packageName sn.ugb.user
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8082
+  }
+  entities Utilisateur
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+
+application {
+  config {
+    baseName microserviceGIR
+    applicationType microservice
+    packageName sn.ugb.gir
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8083
+  }
+  entities Etudiant, PaiementFormationPrivee ,InformationPersonnelle, TypeHandicap, TypeBourse, Region, Pays, Zone, Lycee, Baccalaureat, Serie, TypeSelection, TypeAdmission, DisciplineSportiveEtudiant, DisciplineSportive, AnneeAcademique, ProgrammationInscription, InscriptionAdministrative, InscriptionAdministrativeFormation, ProcessusDinscriptionAdministrative , Operation, TypeOperation, Specialite, Niveau, Formation, FormationAutorisee, FormationValide, Mention, Domaine, UFR, Frais, TypeFrais, PaiementFrais, Operateur, Campagne, InscriptionDoctorat, Doctorat, Universite, Ministere
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+
+
+application {
+  config {
+    baseName microserviceEnseignement
+    applicationType microservice
+    packageName sn.ugb.gp
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8084
+
+  }
+  entities  Enseignement
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+
+
+application {
+  config {
+    baseName microserviceEDT
+    applicationType microservice
+    packageName sn.ugb.edt
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8085
+
+  }
+  entities  Planning
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+
+
+application {
+  config {
+    baseName microserviceGRH
+    applicationType microservice
+    packageName sn.ugb.grh
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8086
+
+  }
+  entities  Enseignant
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+
+
+application {
+  config {
+    baseName microserviceAUA
+    applicationType microservice
+    packageName sn.ugb.aua
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8087
+
+  }
+  entities  Laboratoire
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+application {
+  config {
+    baseName microserviceDeliberation
+    applicationType microservice
+    packageName sn.ugb.deliberation
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8088
+
+  }
+  entities  Deliberation
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+
+application {
+  config {
+    baseName microserviceGD
+    applicationType microservice
+    packageName sn.ugb.gd
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8089
+
+  }
+  entities Rapport, TypeRapport
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+application {
+  config {
+    baseName microserviceACLC
+    applicationType microservice
+    packageName sn.ugb.aclc
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8090
+
+  }
+  entities  Candidat
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+application {
+  config {
+    baseName microserviceAide
+    applicationType microservice
+    packageName sn.ugb.aide
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8091
+
+  }
+  entities  Ressource
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+application {
+  config {
+    baseName microserviceGED
+    applicationType microservice
+    packageName sn.ugb.ged
+    serviceDiscoveryType consul
+    authenticationType oauth2
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+    clientTheme Flatly
+    clientFramework angular
+    cacheProvider hazelcast
+    buildTool maven
+    serverPort 8092
+
+  }
+  entities  TypeDocument, DocumentDelivre
+  dto * with mapstruct
+  service * with serviceClass
+  service * with serviceImpl
+  paginate * with pagination
+}
+
+// ---------------------------- Definition des enumeraion de GIR -------------------------
+enum CYCLE{
+  LICENCE(Licence),
+  MASTER(Master),
+  DOCTOTAT(Doctorat)
+}
+// ---------------------------- Definition des entites de GIR -------------------------
+entity InformationImage {
+  description String,
+  cheminPath String,
+  cheminFile String
+}
+entity InformationPersonnelle {
+  nomEtu String required,
+  nomJeuneFilleEtu String ,
+  prenomEtu String required,
+  statutMarital String required,
+  regime Integer ,
+  Profession String ,
+  adresseEtu String required,
+  telEtu String ,
+  emailEtu String ,
+  adresseParent String ,
+  telParent String ,
+  emailParent String ,
+  nomParent String ,
+  prenomParent String ,
+  handicapYN Integer ,
+  ordiPersoYN Integer ,
+  derniereModification LocalDate ,
+  emailUser String
+}
+entity TypeBourse {
+  libelle String
+}
+entity TypeHandicap {
+  libelleTypeHandicap String required
+}
+entity Etudiant {
+  codeEtu String required,
+  ine String required,
+  codeBU Integer required,
+  emailUGB String ,
+  dateNaissEtu LocalDate ,
+  lieuNaissEtu String required,
+  sexe String required,
+  numDocIdentite String ,
+  assimileYN Integer required,
+  exonereYN Integer required
+}
+entity TypeSelection {
+  libelle String
+}
+entity DisciplineSportive {
+  libelleDisciplineSportive String
+}
+entity DisciplineSportiveEtudiant {
+  licenceSportiveYN Integer,
+  competitionUGBYN Integer
+}
+entity Baccalaureat {
+  origineScolaire String ,
+  anneeBac LocalDate required,
+  numeroTable Integer required,
+  natureBac String ,
+  mentionBac String required,
+  moyenneSelectionBac Float ,
+  moyenneBac Float required
+}
+entity Serie {
+  codeSerie String,
+  libelleSerie String,
+  sigleSerie String
+}
+entity Lycee {
+  nomLycee String ,
+  codeLycee String ,
+  villeLycee String ,
+  academieLycee Integer ,
+  centreExamen String
+}
+entity Region {
+  libelleRegion String
+}
+entity Pays {
+  libellePays String ,
+  PaysEnAnglais String ,
+  nationalite String ,
+  codePays String ,
+  UEMOAYN Integer ,
+  CEDEAOYN Integer ,
+  RIMYN Integer ,
+  autreYN Integer ,
+  estEtrangerYN Integer
+}
+entity Zone {
+  libelleZone String
+}
+entity ProcessusDinscriptionAdministrative {
+  inscriptionDemarreeYN Integer,
+  dateDemarrageInscription Instant,
+  inscriptionAnnuleeYN Integer,
+  dateAnnulationInscription Instant,
+  apteYN Integer,
+  dateVisiteMedicale Instant,
+  beneficiaireCROUSYN Integer,
+  dateRemiseQuitusCROUS Instant,
+  nouveauCodeBUYN Integer,
+  quitusBUYN Integer,
+  dateRemiseQuitusBU Instant,
+  exporterBUYN Integer,
+  fraisObligatoiresPayesYN Integer,
+  datePaiementFraisObligatoires Instant,
+  numeroQuitusCROUS Integer,
+  carteEturemiseYN Integer,
+  carteDupremiseYN Integer,
+  dateRemiseCarteEtu Instant,
+  dateRemiseCarteDup Integer,
+  inscritAdministrativementYN Integer,
+  dateInscriptionAdministrative Instant,
+  derniereModification Instant,
+  inscritOnlineYN Integer
+  emailUser String
+}
+entity TypeAdmission {
+  libelle String
+}
+entity InscriptionAdministrative {
+  nouveauInscritYN Integer ,
+  repriseYN Integer ,
+  autoriseYN Integer ,
+  ordreInscription Integer
+}
+entity Operation {
+  dateExecution Instant ,
+  emailUser String,
+  detailOperation TextBlob,
+  infoSysteme String
+
+}
+entity TypeOperation {
+  libelleTypeOperation String
+}
+entity InscriptionAdministrativeFormation {
+  inscriptionPrincipaleYN Integer ,
+  inscriptionAnnuleeYN Integer ,
+  paiementFraisOblYN Integer ,
+  paiementFraisIntegergYN Integer ,
+  certificatDelivreYN Integer ,
+  dateChoixFormation Instant,
+  dateValidationInscription Instant
+}
+entity AnneeAcademique {
+  libelleAnneeAcademique String,
+  anneeCourante Integer
+
+}
+/*entity ModePaementEcheance {
+  paementIntegralYN Integer,
+  emailUser String
+}
+entity MethodePaiement {
+  libelle String,
+  description String
+}*/
+// ------------- Formation -----------------------------------------
+entity PaiementFormationPrivee{
+  datePaiement Instant,
+  moisPaiement String,
+  anneePaiement String,
+  payerMensualiteYN Integer,
+  emailUser String
+}
+entity InscriptionDoctorat{
+  sourceFinancement String,
+  coEncadreurId String,
+  nombreInscription Integer
+}
+entity Formation {
+  nombreMensualites Integer ,
+  fraisDossierYN Integer ,
+  classeDiplomanteYN Integer ,
+  libelleDiplome String ,
+  codeFormation String ,
+  nbreCreditsMin Integer ,
+  estParcoursYN Integer ,
+  lmdYN Integer
+}
+entity Specialite {
+  nomSpecialites String ,
+  sigleSpecialites String ,
+  specialiteParticulierYN Integer ,
+  specialitesPayanteYN Integer
+}
+entity Mention {
+  libelleMention String
+}
+entity Niveau {
+  libelleNiveau String ,
+  cycleNiveau String ,
+  codeNiveau String ,
+  anneeEtude String
+}
+entity Domaine {
+  libelleDomaine String
+}
+entity UFR {
+  libeleUFR String ,
+  SigleUFR String ,
+  SystemeLMDYN Integer ,
+  ordreStat Integer
+}
+entity FormationValide {
+  valideYN Integer,
+  dateDebut LocalDate,
+  dateFin LocalDate
+}
+entity  FormationAutorisee {
+  dateDebuT LocalDate,
+  dateFin LocalDate,
+  enCours Integer
+}
+entity FormationPrivee {
+  nombtreMois Integer,
+  paiementPremierMoisYN Integer ,
+  paiementDernierMoisYN Integer ,
+  fraisDossierYN Integer ,
+  couyTotal Float,
+  mensualite Float
+}
+entity TypeFrais {
+  libelle String
+}
+entity Frais {
+  valeurFrais Double ,
+  descriptionFrais String ,
+  fraispourAssimileYN Integer
+  cycle CYCLE,
+  dia Double,
+  dip Double,
+  dipPrivee Float,
+  dateApplication LocalDate,
+  dateFin LocalDate,
+  estEnApplicationYN Integer
+}
+entity PaiementFrais {
+  datePaiement LocalDate ,
+  obligatoireYN Integer ,
+  echeancePayeeYN Integer ,
+  emailUser String
+}
+entity Operateur {
+  libelle String ,
+  userLogin String ,
+  codeOperateur String
+}
+entity Campagne {
+  libelle String ,
+  dateDebut LocalDate,
+  dateFin LocalDate,
+  libelleAbrege String
+}
+entity Rapport {
+  libelleRapport String ,
+  descriptionRapport String ,
+  contenuRapport String ,
+  dateRedaction Instant
+}
+entity TypeRapport {
+  libelleTypeRapport String
+}
+entity DocumentDelivre {
+  libelleDoc String ,
+  anneeDoc Instant,
+  dateEnregistrement Instant
+}
+entity TypeDocument {
+  libelle String
+}
+
+entity ProgrammationInscription {
+  libelleProgrammation String,
+  dateDebut LocalDate,
+  dateFin LocalDate,
+  ouvertYN Integer,
+  emailUser String
+}
+
+
+entity Doctorat {
+  sujet String ,
+  anneeInscriptionDoctorat LocalDate ,
+  encadreurId Integer,
+  laboratoirId Integer
+}
+
+entity Universite {
+  nomUniversite String,
+  sigleUniversite String
+}
+entity Ministere {
+  nomMinistere String,
+  sigleMinistere String,
+  dateDebut LocalDate,
+  dateFin LocalDate,
+  enCours Integer
+}
+
+
+// ---------------------------- Definition des entites G-User  -------------------------
+entity Utilisateur {
+  nom String,
+  prenom String,
+  email String,
+  motDePasse String,
+  role String,
+  matricule String,
+  departement String,
+  statut String
+}
+// ---------------------------- Definition des entites Deliberation  -------------------------
+entity Deliberation {
+  estValidee Integer,
+  pvDeliberation Blob
+}
+// ---------------------------- Definition des entites Enseignement -------------------------
+entity Enseignement {
+  libelleEnseignements String,
+  volumeHoraire Float,
+  nombreInscrits Integer,
+  groupeYN Integer
+}
+// ---------------------------- Definition des entites EDT -------------------------
+entity Planning {
+  dateDebut Instant required,
+  dateFin Instant required
+}
+// ---------------------------- Definition des entites GRH -------------------------
+entity Enseignant {
+  titreCoEncadreur String,
+  nomEnseignant String required,
+  prenomEnseignant String required,
+  emailEnseignant String,
+  telephoneEnseignant String,
+  titresId Integer,
+  utilisateursId Integer,
+  adresse String,
+  numeroPoste Integer,
+  photoEnseignant Blob
+}
+// ---------------------------- Definition des entites AUA -------------------------
+entity Laboratoire {
+  nomLaboratoire String required,
+  laboratoireCotutelleYN Integer required
+}
+// ---------------------------- Definition des entites GED -------------------------
+/*entity DocumentDelivre {
+  numDocument String required,
+  dateDelivrance LocalDate required
+}
+
+entity TypeDocument {
+  libelleDocument String required
+}*/
+// ---------------------------- Definition des entites ACLC -------------------------
+entity Candidat {
+  nom String
+  prenom String
+  dateNaissance LocalDate
+  email String
+}
+
+// ---------------------------- Definition des entites Aide -------------------------
+entity Ressource {
+  nom String
+  description String
+}
+
+
+relationship OneToOne {
+  InformationPersonnelle {etudiant(id)} to Etudiant ,
+  Baccalaureat{etudiant(id)} to Etudiant ,
+  ProcessusDinscriptionAdministrative {inscriptionAdministrative(id)} to InscriptionAdministrative,
+}
+relationship ManyToOne {
+  Etudiant{region} to Region,
+  Region{pays} to Pays,
+  DisciplineSportiveEtudiant{disciplineSportive} to DisciplineSportive,
+  DisciplineSportiveEtudiant{etudiant} to Etudiant,
+  Etudiant{typeSelection} to TypeSelection,
+  InscriptionAdministrative{typeAdmission} to TypeAdmission,
+  UFR{universite(nomUniversite)} to Universite,
+  Universite{ministere(id)} to Ministere,
+  Lycee{region} to Region,
+  Etudiant{lycee(id)} to Lycee,
+  InformationPersonnelle{typeHadique(id)} to TypeHandicap ,
+  InformationPersonnelle{typeBourse} to TypeBourse ,
+  Formation{specialite(id)} to Specialite,
+  Formation {niveau(id)} to Niveau ,
+  Mention{domaine(id)} to Domaine,
+  Specialite{mention(id)} to Mention ,
+  InscriptionAdministrative{anneeAcademique} to AnneeAcademique,
+  InscriptionAdministrative{etudiant(id)} to Etudiant,
+  FormationValide{formation(id)} to Formation,
+  InscriptionAdministrativeFormation{inscriptionAdministrative(id)} to InscriptionAdministrative ,
+  InscriptionAdministrativeFormation{formation(id)} to Formation,
+  InscriptionDoctorat{doctorat} to  Doctorat,
+  InscriptionDoctorat{inscriptionAdministrativeFormation(id)} to InscriptionAdministrativeFormation ,
+  ProgrammationInscription{anneeAcademique(id)} to AnneeAcademique,
+  ProgrammationInscription{formation(id)} to Formation,
+  ProgrammationInscription{campagne(id)} to Campagne,
+  PaiementFrais{frais(id)} to Frais,
+  PaiementFrais{operateur} to Operateur,
+  PaiementFrais{inscriptionAdministrativeFormation(id)} to InscriptionAdministrativeFormation,
+  PaiementFormationPrivee{inscriptionAdministrativeFormation(id)}  to InscriptionAdministrativeFormation,
+  PaiementFormationPrivee{operateur(id)}  to Operateur,
+  Frais{typeFrais(id)} to TypeFrais,
+  DocumentDelivre {typeDocument} to TypeDocument ,
+  Operation{typeOperation } to TypeOperation ,
+  Baccalaureat{serie} to Serie,
+
+}
+
+relationship ManyToMany {
+  Pays{zone} to Zone{pays},
+  FormationAutorisee{formation} to Formation{formationAutorisee}
+}
+
+deployment {
+  deploymentType docker-compose
+  serviceDiscoveryType consul
+  appsFolders [gateway, microserviceUser, microserviceGIR, microserviceEnseignement, microserviceEDT, microserviceGRH, microserviceAUA, microserviceDeliberation, microserviceGD, microserviceACLC, microserviceAide, microserviceGED]
+  dockerRepositoryName  "diabrail"
+}
+
+deployment {
+  deploymentType kubernetes
+  appsFolders [gateway, microserviceUser, microserviceGIR, microserviceEnseignement, microserviceEDT, microserviceGRH, microserviceAUA, microserviceDeliberation, microserviceGD, microserviceACLC, microserviceAide, microserviceGED]
+  clusteredDbApps [store]
+  kubernetesNamespace sencookseur
+  kubernetesUseDynamicStorage true
+  kubernetesStorageClassName ""
+  serviceDiscoveryType consul
+  dockerRepositoryName  "diabrail"
+}

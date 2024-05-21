@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (typeRapport) {
+      <div>
+        <h2 data-cy="typeRapportDetailsHeading">
+          <span jhiTranslate="microserviceGdApp.microserviceGdTypeRapport.detail.title">Type Rapport</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ typeRapport.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGdApp.microserviceGdTypeRapport.libelleTypeRapport">Libelle Type Rapport</span></dt>
+          <dd>
+            <span>{{ typeRapport.libelleTypeRapport }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegd/type-rapport', typeRapport.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

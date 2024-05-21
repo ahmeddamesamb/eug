@@ -1,0 +1,29 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 10,
+    "applicationType": "microservice",
+    "authenticationType": "oauth2",
+    "baseName": "microserviceAide",
+    "buildTool": "maven",
+    "cacheProvider": "hazelcast",
+    "clientFramework": "angular",
+    "clientTheme": "Flatly",
+    "devDatabaseType": "postgresql",
+    "devServerPort": 4210,
+    "entities": ["Ressource"],
+    "gatewayServerPort": "8081",
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "NWYyOWM1MmFhOTQzMGFhNmYwOWM5MzI0MGM1MjAwZWYyNmNkOTRjYzZiNGRmYTE5ZTc1ZThlNjI4MDk0ZjIwYWQzZGI2MjdiNjY0N2Q4N2I1MmYwZWMxM2U0OGJlMDIyYmJmYTM5MjQ1NzM4NjNlNWY0MjUxNWRlMmZhMjMyMDU=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1716047338000,
+    "monorepository": true,
+    "nativeLanguage": "en",
+    "packageFolder": "sn/ugb/aide",
+    "packageName": "sn.ugb.aide",
+    "prodDatabaseType": "postgresql",
+    "serverPort": "8091",
+    "serviceDiscoveryType": "consul",
+    "skipCommitHook": true,
+    "skipUserManagement": true
+  }
+}

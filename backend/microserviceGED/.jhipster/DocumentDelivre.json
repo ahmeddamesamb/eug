@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "changelogDate": "20240518154958"
+  },
+  "applications": ["microserviceGED"],
+  "clientRootFolder": "microserviceGED",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "document_delivre",
+  "fields": [
+    {
+      "fieldName": "libelleDoc",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "anneeDoc",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dateEnregistrement",
+      "fieldType": "Instant"
+    }
+  ],
+  "microserviceName": "microserviceGED",
+  "name": "DocumentDelivre",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "typeDocument",
+      "relationshipName": "typeDocument",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -1,0 +1,72 @@
+{
+  "annotations": {
+    "changelogDate": "20240518161259"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "formation",
+  "fields": [
+    {
+      "fieldName": "nombreMensualites",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "fraisDossierYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "classeDiplomanteYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "libelleDiplome",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codeFormation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nbreCreditsMin",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "estParcoursYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "lmdYN",
+      "fieldType": "Integer"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Formation",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "specialite",
+      "relationshipName": "specialite",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "niveau",
+      "relationshipName": "niveau",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "formationAutorisee",
+      "otherEntityRelationshipName": "formation",
+      "relationshipName": "formationAutorisee",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

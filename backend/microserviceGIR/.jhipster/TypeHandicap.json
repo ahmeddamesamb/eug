@@ -1,0 +1,23 @@
+{
+  "annotations": {
+    "changelogDate": "20240518155159"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "type_handicap",
+  "fields": [
+    {
+      "fieldName": "libelleTypeHandicap",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "TypeHandicap",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

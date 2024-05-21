@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (operation) {
+      <div>
+        <h2 data-cy="operationDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirOperation.detail.title">Operation</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ operation.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirOperation.dateExecution">Date Execution</span></dt>
+          <dd>
+            <span>{{ operation.dateExecution | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirOperation.emailUser">Email User</span></dt>
+          <dd>
+            <span>{{ operation.emailUser }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirOperation.detailOperation">Detail Operation</span></dt>
+          <dd>
+            <span>{{ operation.detailOperation }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirOperation.infoSysteme">Info Systeme</span></dt>
+          <dd>
+            <span>{{ operation.infoSysteme }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirOperation.typeOperation">Type Operation</span></dt>
+          <dd>
+            @if (operation.typeOperation) {
+              <div>
+                <a [routerLink]="['/type-operation', operation.typeOperation.id, 'view']">{{ operation.typeOperation.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/operation', operation.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

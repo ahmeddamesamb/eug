@@ -1,0 +1,27 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirFormationValide": {
+      "home": {
+        "title": "Formation Valides",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Formation Valide",
+        "createOrEditLabel": "Create or edit a Formation Valide",
+        "notFound": "No Formation Valides found"
+      },
+      "created": "A new Formation Valide is created with identifier {{ param }}",
+      "updated": "A Formation Valide is updated with identifier {{ param }}",
+      "deleted": "A Formation Valide is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Formation Valide {{ id }}?"
+      },
+      "detail": {
+        "title": "Formation Valide"
+      },
+      "id": "ID",
+      "valideYN": "Valide YN",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "formation": "Formation"
+    }
+  }
+}

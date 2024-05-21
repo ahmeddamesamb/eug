@@ -1,0 +1,121 @@
+<div>
+  <h2 id="page-heading" data-cy="LaboratoireHeading">
+    <span jhiTranslate="microserviceAuaApp.microserviceAuaLaboratoire.home.title">Laboratoires</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="microserviceAuaApp.microserviceAuaLaboratoire.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-laboratoire"
+        [routerLink]="['/microserviceaua/laboratoire/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="microserviceAuaApp.microserviceAuaLaboratoire.home.createLabel">Create a new Laboratoire</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (laboratoires?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="microserviceAuaApp.microserviceAuaLaboratoire.home.notFound">No Laboratoires found</span>
+    </div>
+  }
+
+  @if (laboratoires && laboratoires.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nomLaboratoire">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceAuaApp.microserviceAuaLaboratoire.nomLaboratoire">Nom Laboratoire</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="laboratoireCotutelleYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceAuaApp.microserviceAuaLaboratoire.laboratoireCotutelleYN">Laboratoire Cotutelle YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (laboratoire of laboratoires; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microserviceaua/laboratoire', laboratoire.id, 'view']">{{ laboratoire.id }}</a>
+              </td>
+              <td>{{ laboratoire.nomLaboratoire }}</td>
+              <td>{{ laboratoire.laboratoireCotutelleYN }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microserviceaua/laboratoire', laboratoire.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microserviceaua/laboratoire', laboratoire.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(laboratoire)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (laboratoires && laboratoires.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

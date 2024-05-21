@@ -1,0 +1,138 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (informationPersonnelle) {
+      <div>
+        <h2 data-cy="informationPersonnelleDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.detail.title">Information Personnelle</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.nomEtu">Nom Etu</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.nomEtu }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.nomJeuneFilleEtu">Nom Jeune Fille Etu</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.nomJeuneFilleEtu }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.prenomEtu">Prenom Etu</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.prenomEtu }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.statutMarital">Statut Marital</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.statutMarital }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.regime">Regime</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.regime }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.profession">Profession</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.profession }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.adresseEtu">Adresse Etu</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.adresseEtu }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.telEtu">Tel Etu</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.telEtu }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.emailEtu">Email Etu</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.emailEtu }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.adresseParent">Adresse Parent</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.adresseParent }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.telParent">Tel Parent</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.telParent }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.emailParent">Email Parent</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.emailParent }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.nomParent">Nom Parent</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.nomParent }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.prenomParent">Prenom Parent</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.prenomParent }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.handicapYN">Handicap YN</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.handicapYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.ordiPersoYN">Ordi Perso YN</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.ordiPersoYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.derniereModification">Derniere Modification</span>
+          </dt>
+          <dd>
+            <span>{{ informationPersonnelle.derniereModification | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.emailUser">Email User</span></dt>
+          <dd>
+            <span>{{ informationPersonnelle.emailUser }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.etudiant">Etudiant</span></dt>
+          <dd>
+            @if (informationPersonnelle.etudiant) {
+              <div>
+                <a [routerLink]="['/etudiant', informationPersonnelle.etudiant.id, 'view']">{{ informationPersonnelle.etudiant.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.typeHadique">Type Hadique</span></dt>
+          <dd>
+            @if (informationPersonnelle.typeHadique) {
+              <div>
+                <a [routerLink]="['/type-handicap', informationPersonnelle.typeHadique.id, 'view']">{{
+                  informationPersonnelle.typeHadique.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.typeBourse">Type Bourse</span></dt>
+          <dd>
+            @if (informationPersonnelle.typeBourse) {
+              <div>
+                <a [routerLink]="['/type-bourse', informationPersonnelle.typeBourse.id, 'view']">{{
+                  informationPersonnelle.typeBourse.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/microservicegir/information-personnelle', informationPersonnelle.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

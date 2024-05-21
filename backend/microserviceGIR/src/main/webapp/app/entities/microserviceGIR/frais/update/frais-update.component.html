@@ -1,0 +1,183 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-frais-heading"
+        data-cy="FraisCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirFrais.home.createOrEditLabel"
+      >
+        Create or edit a Frais
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.valeurFrais" for="field_valeurFrais"
+            >Valeur Frais</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="valeurFrais"
+            id="field_valeurFrais"
+            data-cy="valeurFrais"
+            formControlName="valeurFrais"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.descriptionFrais" for="field_descriptionFrais"
+            >Description Frais</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="descriptionFrais"
+            id="field_descriptionFrais"
+            data-cy="descriptionFrais"
+            formControlName="descriptionFrais"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirFrais.fraispourAssimileYN"
+            for="field_fraispourAssimileYN"
+            >Fraispour Assimile YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="fraispourAssimileYN"
+            id="field_fraispourAssimileYN"
+            data-cy="fraispourAssimileYN"
+            formControlName="fraispourAssimileYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.cycle" for="field_cycle">Cycle</label>
+          <select class="form-control" name="cycle" formControlName="cycle" id="field_cycle" data-cy="cycle">
+            <option [ngValue]="null">{{ 'microserviceGirApp.CYCLE.null' | translate }}</option>
+            @for (cYCLE of cYCLEValues; track $index) {
+              <option [value]="cYCLE">{{ 'microserviceGirApp.CYCLE.' + cYCLE | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.dia" for="field_dia">Dia</label>
+          <input type="number" class="form-control" name="dia" id="field_dia" data-cy="dia" formControlName="dia" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.dip" for="field_dip">Dip</label>
+          <input type="number" class="form-control" name="dip" id="field_dip" data-cy="dip" formControlName="dip" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.dipPrivee" for="field_dipPrivee"
+            >Dip Privee</label
+          >
+          <input type="number" class="form-control" name="dipPrivee" id="field_dipPrivee" data-cy="dipPrivee" formControlName="dipPrivee" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.dateApplication" for="field_dateApplication"
+            >Date Application</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateApplication"
+              data-cy="dateApplication"
+              type="text"
+              class="form-control"
+              name="dateApplication"
+              ngbDatepicker
+              #dateApplicationDp="ngbDatepicker"
+              formControlName="dateApplication"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateApplicationDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.dateFin" for="field_dateFin">Date Fin</label>
+          <div class="input-group">
+            <input
+              id="field_dateFin"
+              data-cy="dateFin"
+              type="text"
+              class="form-control"
+              name="dateFin"
+              ngbDatepicker
+              #dateFinDp="ngbDatepicker"
+              formControlName="dateFin"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateFinDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.estEnApplicationYN" for="field_estEnApplicationYN"
+            >Est En Application YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="estEnApplicationYN"
+            id="field_estEnApplicationYN"
+            data-cy="estEnApplicationYN"
+            formControlName="estEnApplicationYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.typeFrais" for="field_typeFrais"
+            >Type Frais</label
+          >
+          <select
+            class="form-control"
+            id="field_typeFrais"
+            data-cy="typeFrais"
+            name="typeFrais"
+            formControlName="typeFrais"
+            [compareWith]="compareTypeFrais"
+          >
+            <option [ngValue]="null"></option>
+            @for (typeFraisOption of typeFraisSharedCollection; track $index) {
+              <option [ngValue]="typeFraisOption">{{ typeFraisOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

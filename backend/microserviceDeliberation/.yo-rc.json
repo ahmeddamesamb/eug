@@ -1,0 +1,29 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 7,
+    "applicationType": "microservice",
+    "authenticationType": "oauth2",
+    "baseName": "microserviceDeliberation",
+    "buildTool": "maven",
+    "cacheProvider": "hazelcast",
+    "clientFramework": "angular",
+    "clientTheme": "Flatly",
+    "devDatabaseType": "postgresql",
+    "devServerPort": 4207,
+    "entities": ["Deliberation"],
+    "gatewayServerPort": "8081",
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "NjViNmQzNzkwMzdmOTdmMjQxYTYwYzVhOTExZmU1NzI1ZGYzMDAyMmIyYWRlNjU0ZDhkZTk1MjczZDhkZWUyNWZiMDlkZTllZjNlN2VhYmJlYmFkYjdiMzQ4MWQ2YmJlZGYyMDgzNDlhN2RlOWM1YTFhY2ZjM2UzODc2ZjgzNzg=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1716047338000,
+    "monorepository": true,
+    "nativeLanguage": "en",
+    "packageFolder": "sn/ugb/deliberation",
+    "packageName": "sn.ugb.deliberation",
+    "prodDatabaseType": "postgresql",
+    "serverPort": "8088",
+    "serviceDiscoveryType": "consul",
+    "skipCommitHook": true,
+    "skipUserManagement": true
+  }
+}

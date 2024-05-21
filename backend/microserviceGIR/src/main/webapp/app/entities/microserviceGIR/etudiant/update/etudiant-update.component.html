@@ -1,0 +1,250 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-etudiant-heading"
+        data-cy="EtudiantCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirEtudiant.home.createOrEditLabel"
+      >
+        Create or edit a Etudiant
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.codeEtu" for="field_codeEtu">Code Etu</label>
+          <input type="text" class="form-control" name="codeEtu" id="field_codeEtu" data-cy="codeEtu" formControlName="codeEtu" />
+          @if (editForm.get('codeEtu')!.invalid && (editForm.get('codeEtu')!.dirty || editForm.get('codeEtu')!.touched)) {
+            <div>
+              @if (editForm.get('codeEtu')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.ine" for="field_ine">Ine</label>
+          <input type="text" class="form-control" name="ine" id="field_ine" data-cy="ine" formControlName="ine" />
+          @if (editForm.get('ine')!.invalid && (editForm.get('ine')!.dirty || editForm.get('ine')!.touched)) {
+            <div>
+              @if (editForm.get('ine')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.codeBU" for="field_codeBU">Code BU</label>
+          <input type="number" class="form-control" name="codeBU" id="field_codeBU" data-cy="codeBU" formControlName="codeBU" />
+          @if (editForm.get('codeBU')!.invalid && (editForm.get('codeBU')!.dirty || editForm.get('codeBU')!.touched)) {
+            <div>
+              @if (editForm.get('codeBU')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('codeBU')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.emailUGB" for="field_emailUGB"
+            >Email UGB</label
+          >
+          <input type="text" class="form-control" name="emailUGB" id="field_emailUGB" data-cy="emailUGB" formControlName="emailUGB" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.dateNaissEtu" for="field_dateNaissEtu"
+            >Date Naiss Etu</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateNaissEtu"
+              data-cy="dateNaissEtu"
+              type="text"
+              class="form-control"
+              name="dateNaissEtu"
+              ngbDatepicker
+              #dateNaissEtuDp="ngbDatepicker"
+              formControlName="dateNaissEtu"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateNaissEtuDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.lieuNaissEtu" for="field_lieuNaissEtu"
+            >Lieu Naiss Etu</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="lieuNaissEtu"
+            id="field_lieuNaissEtu"
+            data-cy="lieuNaissEtu"
+            formControlName="lieuNaissEtu"
+          />
+          @if (editForm.get('lieuNaissEtu')!.invalid && (editForm.get('lieuNaissEtu')!.dirty || editForm.get('lieuNaissEtu')!.touched)) {
+            <div>
+              @if (editForm.get('lieuNaissEtu')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.sexe" for="field_sexe">Sexe</label>
+          <input type="text" class="form-control" name="sexe" id="field_sexe" data-cy="sexe" formControlName="sexe" />
+          @if (editForm.get('sexe')!.invalid && (editForm.get('sexe')!.dirty || editForm.get('sexe')!.touched)) {
+            <div>
+              @if (editForm.get('sexe')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.numDocIdentite" for="field_numDocIdentite"
+            >Num Doc Identite</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="numDocIdentite"
+            id="field_numDocIdentite"
+            data-cy="numDocIdentite"
+            formControlName="numDocIdentite"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.assimileYN" for="field_assimileYN"
+            >Assimile YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="assimileYN"
+            id="field_assimileYN"
+            data-cy="assimileYN"
+            formControlName="assimileYN"
+          />
+          @if (editForm.get('assimileYN')!.invalid && (editForm.get('assimileYN')!.dirty || editForm.get('assimileYN')!.touched)) {
+            <div>
+              @if (editForm.get('assimileYN')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('assimileYN')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.exonereYN" for="field_exonereYN"
+            >Exonere YN</label
+          >
+          <input type="number" class="form-control" name="exonereYN" id="field_exonereYN" data-cy="exonereYN" formControlName="exonereYN" />
+          @if (editForm.get('exonereYN')!.invalid && (editForm.get('exonereYN')!.dirty || editForm.get('exonereYN')!.touched)) {
+            <div>
+              @if (editForm.get('exonereYN')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('exonereYN')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.region" for="field_region">Region</label>
+          <select
+            class="form-control"
+            id="field_region"
+            data-cy="region"
+            name="region"
+            formControlName="region"
+            [compareWith]="compareRegion"
+          >
+            <option [ngValue]="null"></option>
+            @for (regionOption of regionsSharedCollection; track $index) {
+              <option [ngValue]="regionOption">{{ regionOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.typeSelection" for="field_typeSelection"
+            >Type Selection</label
+          >
+          <select
+            class="form-control"
+            id="field_typeSelection"
+            data-cy="typeSelection"
+            name="typeSelection"
+            formControlName="typeSelection"
+            [compareWith]="compareTypeSelection"
+          >
+            <option [ngValue]="null"></option>
+            @for (typeSelectionOption of typeSelectionsSharedCollection; track $index) {
+              <option [ngValue]="typeSelectionOption">{{ typeSelectionOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirEtudiant.lycee" for="field_lycee">Lycee</label>
+          <select class="form-control" id="field_lycee" data-cy="lycee" name="lycee" formControlName="lycee" [compareWith]="compareLycee">
+            <option [ngValue]="null"></option>
+            @for (lyceeOption of lyceesSharedCollection; track $index) {
+              <option [ngValue]="lyceeOption">{{ lyceeOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

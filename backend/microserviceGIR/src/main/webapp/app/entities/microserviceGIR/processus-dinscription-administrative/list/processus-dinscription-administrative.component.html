@@ -1,0 +1,381 @@
+<div>
+  <h2 id="page-heading" data-cy="ProcessusDinscriptionAdministrativeHeading">
+    <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.home.title"
+      >Processus Dinscription Administratives</span
+    >
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-processus-dinscription-administrative"
+        [routerLink]="['/microservicegir/processus-dinscription-administrative/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.home.createLabel"
+          >Create a new Processus Dinscription Administrative</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (processusDinscriptionAdministratives?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.home.notFound"
+        >No Processus Dinscription Administratives found</span
+      >
+    </div>
+  }
+
+  @if (processusDinscriptionAdministratives && processusDinscriptionAdministratives.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="inscriptionDemarreeYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.inscriptionDemarreeYN"
+                  >Inscription Demarree YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateDemarrageInscription">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateDemarrageInscription"
+                  >Date Demarrage Inscription</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="inscriptionAnnuleeYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.inscriptionAnnuleeYN"
+                  >Inscription Annulee YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateAnnulationInscription">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateAnnulationInscription"
+                  >Date Annulation Inscription</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="apteYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.apteYN">Apte YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateVisiteMedicale">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateVisiteMedicale"
+                  >Date Visite Medicale</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="beneficiaireCROUSYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.beneficiaireCROUSYN"
+                  >Beneficiaire CROUSYN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateRemiseQuitusCROUS">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateRemiseQuitusCROUS"
+                  >Date Remise Quitus CROUS</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nouveauCodeBUYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.nouveauCodeBUYN"
+                  >Nouveau Code BUYN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="quitusBUYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.quitusBUYN">Quitus BUYN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateRemiseQuitusBU">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateRemiseQuitusBU"
+                  >Date Remise Quitus BU</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="exporterBUYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.exporterBUYN">Exporter BUYN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="fraisObligatoiresPayesYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.fraisObligatoiresPayesYN"
+                  >Frais Obligatoires Payes YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="datePaiementFraisObligatoires">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.datePaiementFraisObligatoires"
+                  >Date Paiement Frais Obligatoires</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="numeroQuitusCROUS">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.numeroQuitusCROUS"
+                  >Numero Quitus CROUS</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="carteEturemiseYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.carteEturemiseYN"
+                  >Carte Eturemise YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="carteDupremiseYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.carteDupremiseYN"
+                  >Carte Dupremise YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateRemiseCarteEtu">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateRemiseCarteEtu"
+                  >Date Remise Carte Etu</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateRemiseCarteDup">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateRemiseCarteDup"
+                  >Date Remise Carte Dup</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="inscritAdministrativementYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.inscritAdministrativementYN"
+                  >Inscrit Administrativement YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateInscriptionAdministrative">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateInscriptionAdministrative"
+                  >Date Inscription Administrative</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="derniereModification">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.derniereModification"
+                  >Derniere Modification</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="inscritOnlineYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.inscritOnlineYN"
+                  >Inscrit Online YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="emailUser">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.emailUser">Email User</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="inscriptionAdministrative.id">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.inscriptionAdministrative"
+                  >Inscription Administrative</span
+                >
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (processusDinscriptionAdministrative of processusDinscriptionAdministratives; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a
+                  [routerLink]="['/microservicegir/processus-dinscription-administrative', processusDinscriptionAdministrative.id, 'view']"
+                  >{{ processusDinscriptionAdministrative.id }}</a
+                >
+              </td>
+              <td>{{ processusDinscriptionAdministrative.inscriptionDemarreeYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.dateDemarrageInscription | formatMediumDatetime }}</td>
+              <td>{{ processusDinscriptionAdministrative.inscriptionAnnuleeYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.dateAnnulationInscription | formatMediumDatetime }}</td>
+              <td>{{ processusDinscriptionAdministrative.apteYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.dateVisiteMedicale | formatMediumDatetime }}</td>
+              <td>{{ processusDinscriptionAdministrative.beneficiaireCROUSYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.dateRemiseQuitusCROUS | formatMediumDatetime }}</td>
+              <td>{{ processusDinscriptionAdministrative.nouveauCodeBUYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.quitusBUYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.dateRemiseQuitusBU | formatMediumDatetime }}</td>
+              <td>{{ processusDinscriptionAdministrative.exporterBUYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.fraisObligatoiresPayesYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.datePaiementFraisObligatoires | formatMediumDatetime }}</td>
+              <td>{{ processusDinscriptionAdministrative.numeroQuitusCROUS }}</td>
+              <td>{{ processusDinscriptionAdministrative.carteEturemiseYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.carteDupremiseYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.dateRemiseCarteEtu | formatMediumDatetime }}</td>
+              <td>{{ processusDinscriptionAdministrative.dateRemiseCarteDup }}</td>
+              <td>{{ processusDinscriptionAdministrative.inscritAdministrativementYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.dateInscriptionAdministrative | formatMediumDatetime }}</td>
+              <td>{{ processusDinscriptionAdministrative.derniereModification | formatMediumDatetime }}</td>
+              <td>{{ processusDinscriptionAdministrative.inscritOnlineYN }}</td>
+              <td>{{ processusDinscriptionAdministrative.emailUser }}</td>
+              <td>
+                @if (processusDinscriptionAdministrative.inscriptionAdministrative) {
+                  <div>
+                    <a
+                      [routerLink]="[
+                        '/microservicegir/inscription-administrative',
+                        processusDinscriptionAdministrative.inscriptionAdministrative.id,
+                        'view'
+                      ]"
+                      >{{ processusDinscriptionAdministrative.inscriptionAdministrative.id }}</a
+                    >
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="[
+                      '/microservicegir/processus-dinscription-administrative',
+                      processusDinscriptionAdministrative.id,
+                      'view'
+                    ]"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="[
+                      '/microservicegir/processus-dinscription-administrative',
+                      processusDinscriptionAdministrative.id,
+                      'edit'
+                    ]"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button
+                    type="submit"
+                    (click)="delete(processusDinscriptionAdministrative)"
+                    class="btn btn-danger btn-sm"
+                    data-cy="entityDeleteButton"
+                  >
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (processusDinscriptionAdministratives && processusDinscriptionAdministratives.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

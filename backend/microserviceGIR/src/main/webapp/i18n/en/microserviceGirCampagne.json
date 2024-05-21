@@ -1,0 +1,27 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirCampagne": {
+      "home": {
+        "title": "Campagnes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Campagne",
+        "createOrEditLabel": "Create or edit a Campagne",
+        "notFound": "No Campagnes found"
+      },
+      "created": "A new Campagne is created with identifier {{ param }}",
+      "updated": "A Campagne is updated with identifier {{ param }}",
+      "deleted": "A Campagne is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Campagne {{ id }}?"
+      },
+      "detail": {
+        "title": "Campagne"
+      },
+      "id": "ID",
+      "libelle": "Libelle",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "libelleAbrege": "Libelle Abrege"
+    }
+  }
+}

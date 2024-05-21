@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (niveau) {
+      <div>
+        <h2 data-cy="niveauDetailsHeading"><span jhiTranslate="microserviceGirApp.microserviceGirNiveau.detail.title">Niveau</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ niveau.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirNiveau.libelleNiveau">Libelle Niveau</span></dt>
+          <dd>
+            <span>{{ niveau.libelleNiveau }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirNiveau.cycleNiveau">Cycle Niveau</span></dt>
+          <dd>
+            <span>{{ niveau.cycleNiveau }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirNiveau.codeNiveau">Code Niveau</span></dt>
+          <dd>
+            <span>{{ niveau.codeNiveau }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirNiveau.anneeEtude">Annee Etude</span></dt>
+          <dd>
+            <span>{{ niveau.anneeEtude }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/niveau', niveau.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

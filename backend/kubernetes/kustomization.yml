@@ -1,0 +1,50 @@
+commonLabels:
+  app.kubernetes.io/genereted-by: JHipster
+
+namespace: sencookseur
+
+resources:
+  - namespace.yml
+  # Individual apps
+  - gateway-k8s/gateway-deployment.yml
+  - gateway-k8s/gateway-service.yml
+  - gateway-k8s/gateway-postgresql.yml
+  - microserviceuser-k8s/microserviceuser-deployment.yml
+  - microserviceuser-k8s/microserviceuser-service.yml
+  - microserviceuser-k8s/microserviceuser-postgresql.yml
+  - microservicegir-k8s/microservicegir-deployment.yml
+  - microservicegir-k8s/microservicegir-service.yml
+  - microservicegir-k8s/microservicegir-postgresql.yml
+  - microserviceenseignement-k8s/microserviceenseignement-deployment.yml
+  - microserviceenseignement-k8s/microserviceenseignement-service.yml
+  - microserviceenseignement-k8s/microserviceenseignement-postgresql.yml
+  - microserviceedt-k8s/microserviceedt-deployment.yml
+  - microserviceedt-k8s/microserviceedt-service.yml
+  - microserviceedt-k8s/microserviceedt-postgresql.yml
+  - microservicegrh-k8s/microservicegrh-deployment.yml
+  - microservicegrh-k8s/microservicegrh-service.yml
+  - microservicegrh-k8s/microservicegrh-postgresql.yml
+  - microserviceaua-k8s/microserviceaua-deployment.yml
+  - microserviceaua-k8s/microserviceaua-service.yml
+  - microserviceaua-k8s/microserviceaua-postgresql.yml
+  - microservicedeliberation-k8s/microservicedeliberation-deployment.yml
+  - microservicedeliberation-k8s/microservicedeliberation-service.yml
+  - microservicedeliberation-k8s/microservicedeliberation-postgresql.yml
+  - microservicegd-k8s/microservicegd-deployment.yml
+  - microservicegd-k8s/microservicegd-service.yml
+  - microservicegd-k8s/microservicegd-postgresql.yml
+  - microserviceaclc-k8s/microserviceaclc-deployment.yml
+  - microserviceaclc-k8s/microserviceaclc-service.yml
+  - microserviceaclc-k8s/microserviceaclc-postgresql.yml
+  - microserviceaide-k8s/microserviceaide-deployment.yml
+  - microserviceaide-k8s/microserviceaide-service.yml
+  - microserviceaide-k8s/microserviceaide-postgresql.yml
+  - microserviceged-k8s/microserviceged-deployment.yml
+  - microserviceged-k8s/microserviceged-service.yml
+  - microserviceged-k8s/microserviceged-postgresql.yml
+  # service discovery eureka/consul
+  - registry-k8s/consul.yml
+  - registry-k8s/consul-config-loader.yml
+  - registry-k8s/application-configmap.yml
+
+patchesJson6902:
