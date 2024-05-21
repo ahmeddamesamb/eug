@@ -1,0 +1,122 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 0,
+    "applicationType": "gateway",
+    "applications": {
+      "microserviceACLC": {
+        "applicationIndex": 9,
+        "clientFramework": "angular",
+        "serverPort": "8090"
+      },
+      "microserviceAUA": {
+        "applicationIndex": 6,
+        "clientFramework": "angular",
+        "serverPort": "8087"
+      },
+      "microserviceAide": {
+        "applicationIndex": 10,
+        "clientFramework": "angular",
+        "serverPort": "8091"
+      },
+      "microserviceDeliberation": {
+        "applicationIndex": 7,
+        "clientFramework": "angular",
+        "serverPort": "8088"
+      },
+      "microserviceEDT": {
+        "applicationIndex": 4,
+        "clientFramework": "angular",
+        "serverPort": "8085"
+      },
+      "microserviceEnseignement": {
+        "applicationIndex": 3,
+        "clientFramework": "angular",
+        "serverPort": "8084"
+      },
+      "microserviceGD": {
+        "applicationIndex": 8,
+        "clientFramework": "angular",
+        "serverPort": "8089"
+      },
+      "microserviceGED": {
+        "applicationIndex": 11,
+        "clientFramework": "angular",
+        "serverPort": "8092"
+      },
+      "microserviceGIR": {
+        "applicationIndex": 2,
+        "clientFramework": "angular",
+        "serverPort": "8083"
+      },
+      "microserviceGRH": {
+        "applicationIndex": 5,
+        "clientFramework": "angular",
+        "serverPort": "8086"
+      },
+      "microserviceUser": {
+        "applicationIndex": 1,
+        "clientFramework": "angular",
+        "serverPort": "8082"
+      }
+    },
+    "authenticationType": "oauth2",
+    "baseName": "gateway",
+    "buildTool": "maven",
+    "cacheProvider": "hazelcast",
+    "clientFramework": "angular",
+    "clientTheme": "Flatly",
+    "devDatabaseType": "postgresql",
+    "devServerPort": 4200,
+    "entities": [],
+    "jhiPrefix": "ugb",
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "MWMxNWY5NzFkNDU3MDZjNDIwN2YwNmJjOWVhOWVhMmMxMTg4Zjc3NDc2ZWE1M2EzMDc5ZDk2ODRjNGJjYWE4MDY0NjczYjI3MWUzZjY3MjM4MmMyMjk2MzVjZTJmZTY0ZWE2NDg5Y2ZmNmQzMjZmOWUwZmJjOWU5YzFlYjE3MzU=",
+    "languages": ["en"],
+    "microfrontends": [
+      {
+        "baseName": "microserviceUser"
+      },
+      {
+        "baseName": "microserviceGIR"
+      },
+      {
+        "baseName": "microserviceEnseignement"
+      },
+      {
+        "baseName": "microserviceEDT"
+      },
+      {
+        "baseName": "microserviceGRH"
+      },
+      {
+        "baseName": "microserviceAUA"
+      },
+      {
+        "baseName": "microserviceDeliberation"
+      },
+      {
+        "baseName": "microserviceGD"
+      },
+      {
+        "baseName": "microserviceACLC"
+      },
+      {
+        "baseName": "microserviceAide"
+      },
+      {
+        "baseName": "microserviceGED"
+      }
+    ],
+    "monorepository": true,
+    "nativeLanguage": "en",
+    "packageFolder": "sn/ugb/gateway",
+    "packageName": "sn.ugb.gateway",
+    "prodDatabaseType": "postgresql",
+    "reactive": true,
+    "serverPort": "8081",
+    "serviceDiscoveryType": "consul",
+    "skipCommitHook": true,
+    "skipUserManagement": true,
+    "testFrameworks": ["cypress"]
+  }
+}

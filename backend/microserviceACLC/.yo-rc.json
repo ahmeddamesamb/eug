@@ -1,0 +1,29 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 9,
+    "applicationType": "microservice",
+    "authenticationType": "oauth2",
+    "baseName": "microserviceACLC",
+    "buildTool": "maven",
+    "cacheProvider": "hazelcast",
+    "clientFramework": "angular",
+    "clientTheme": "Flatly",
+    "devDatabaseType": "postgresql",
+    "devServerPort": 4209,
+    "entities": ["Candidat"],
+    "gatewayServerPort": "8081",
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "NjgxZWZjNTQ0NTA0MDc3ZWM4YjM0YTVjNzBkZTk5NzI3NDQwOWExZjJmNzFkZjZiNGE0NzEwYTRkOGUwNTc3NDEzMzdiZmVmNTE5N2UzNzZkZTZhYTUyM2M2ZjE1ZjZmZGQwNTZhNDc0ZTg3MWJjZDM5ODBmMjAyOTg4OTNhMDM=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1716047338000,
+    "monorepository": true,
+    "nativeLanguage": "en",
+    "packageFolder": "sn/ugb/aclc",
+    "packageName": "sn.ugb.aclc",
+    "prodDatabaseType": "postgresql",
+    "serverPort": "8090",
+    "serviceDiscoveryType": "consul",
+    "skipCommitHook": true,
+    "skipUserManagement": true
+  }
+}
