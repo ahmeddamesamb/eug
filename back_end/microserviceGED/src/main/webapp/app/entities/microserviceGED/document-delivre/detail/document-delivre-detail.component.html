@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (documentDelivre) {
+      <div>
+        <h2 data-cy="documentDelivreDetailsHeading">
+          <span jhiTranslate="microserviceGedApp.microserviceGedDocumentDelivre.detail.title">Document Delivre</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ documentDelivre.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGedApp.microserviceGedDocumentDelivre.libelleDoc">Libelle Doc</span></dt>
+          <dd>
+            <span>{{ documentDelivre.libelleDoc }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGedApp.microserviceGedDocumentDelivre.anneeDoc">Annee Doc</span></dt>
+          <dd>
+            <span>{{ documentDelivre.anneeDoc | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGedApp.microserviceGedDocumentDelivre.dateEnregistrement">Date Enregistrement</span></dt>
+          <dd>
+            <span>{{ documentDelivre.dateEnregistrement | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGedApp.microserviceGedDocumentDelivre.typeDocument">Type Document</span></dt>
+          <dd>
+            @if (documentDelivre.typeDocument) {
+              <div>
+                <a [routerLink]="['/type-document', documentDelivre.typeDocument.id, 'view']">{{ documentDelivre.typeDocument.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microserviceged/document-delivre', documentDelivre.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
