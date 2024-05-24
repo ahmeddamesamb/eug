@@ -1,0 +1,29 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 4,
+    "applicationType": "microservice",
+    "authenticationType": "oauth2",
+    "baseName": "microserviceEDT",
+    "buildTool": "maven",
+    "cacheProvider": "hazelcast",
+    "clientFramework": "angular",
+    "clientTheme": "Flatly",
+    "devDatabaseType": "postgresql",
+    "devServerPort": 4204,
+    "entities": ["Planning"],
+    "gatewayServerPort": "8081",
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "N2I3MjVlMjRlYTFhYzM1N2Q3YTBlNDg3NmRlYzdlMjIxNmIzYjNjODQwNjMwOWIwMDFiZDI5MmVjZDA3YWJlMDlkMDAwMTIyNGY3YWNkMmQ5YjQ3MmUwYzk1ZWJiMTc1YWNjY2RhNzE0N2YxZmE1ZTljYWRmODJmZWE4Yjg0YzM=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1716573829000,
+    "monorepository": true,
+    "nativeLanguage": "en",
+    "packageFolder": "sn/ugb/edt",
+    "packageName": "sn.ugb.edt",
+    "prodDatabaseType": "postgresql",
+    "serverPort": "8085",
+    "serviceDiscoveryType": "consul",
+    "skipCommitHook": true,
+    "skipUserManagement": true
+  }
+}
