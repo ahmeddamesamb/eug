@@ -1,0 +1,50 @@
+{
+  "annotations": {
+    "changelogDate": "20240524180349"
+  },
+  "applications": ["microserviceUser"],
+  "clientRootFolder": "microserviceUser",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "utilisateur",
+  "fields": [
+    {
+      "fieldName": "nomUser",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prenomUser",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "emailUser",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "motDePasse",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "role",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "matricule",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "departement",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statut",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceUser",
+  "name": "Utilisateur",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
