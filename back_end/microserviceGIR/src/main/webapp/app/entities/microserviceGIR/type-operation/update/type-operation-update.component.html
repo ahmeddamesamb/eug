@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-type-operation-heading"
+        data-cy="TypeOperationCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirTypeOperation.home.createOrEditLabel"
+      >
+        Create or edit a Type Operation
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirTypeOperation.libelleTypeOperation"
+            for="field_libelleTypeOperation"
+            >Libelle Type Operation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libelleTypeOperation"
+            id="field_libelleTypeOperation"
+            data-cy="libelleTypeOperation"
+            formControlName="libelleTypeOperation"
+          />
+          @if (
+            editForm.get('libelleTypeOperation')!.invalid &&
+            (editForm.get('libelleTypeOperation')!.dirty || editForm.get('libelleTypeOperation')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('libelleTypeOperation')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

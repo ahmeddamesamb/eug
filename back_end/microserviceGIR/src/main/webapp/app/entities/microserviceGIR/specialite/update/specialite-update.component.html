@@ -1,0 +1,157 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-specialite-heading"
+        data-cy="SpecialiteCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirSpecialite.home.createOrEditLabel"
+      >
+        Create or edit a Specialite
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirSpecialite.nomSpecialites" for="field_nomSpecialites"
+            >Nom Specialites</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="nomSpecialites"
+            id="field_nomSpecialites"
+            data-cy="nomSpecialites"
+            formControlName="nomSpecialites"
+          />
+          @if (
+            editForm.get('nomSpecialites')!.invalid && (editForm.get('nomSpecialites')!.dirty || editForm.get('nomSpecialites')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('nomSpecialites')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirSpecialite.sigleSpecialites"
+            for="field_sigleSpecialites"
+            >Sigle Specialites</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="sigleSpecialites"
+            id="field_sigleSpecialites"
+            data-cy="sigleSpecialites"
+            formControlName="sigleSpecialites"
+          />
+          @if (
+            editForm.get('sigleSpecialites')!.invalid &&
+            (editForm.get('sigleSpecialites')!.dirty || editForm.get('sigleSpecialites')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('sigleSpecialites')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirSpecialite.specialiteParticulierYN"
+            for="field_specialiteParticulierYN"
+            >Specialite Particulier YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="specialiteParticulierYN"
+            id="field_specialiteParticulierYN"
+            data-cy="specialiteParticulierYN"
+            formControlName="specialiteParticulierYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirSpecialite.specialitesPayanteYN"
+            for="field_specialitesPayanteYN"
+            >Specialites Payante YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="specialitesPayanteYN"
+            id="field_specialitesPayanteYN"
+            data-cy="specialitesPayanteYN"
+            formControlName="specialitesPayanteYN"
+          />
+          @if (
+            editForm.get('specialitesPayanteYN')!.invalid &&
+            (editForm.get('specialitesPayanteYN')!.dirty || editForm.get('specialitesPayanteYN')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('specialitesPayanteYN')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('specialitesPayanteYN')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirSpecialite.mention" for="field_mention">Mention</label>
+          <select
+            class="form-control"
+            id="field_mention"
+            data-cy="mention"
+            name="mention"
+            formControlName="mention"
+            [compareWith]="compareMention"
+          >
+            <option [ngValue]="null"></option>
+            @for (mentionOption of mentionsSharedCollection; track $index) {
+              <option [ngValue]="mentionOption">{{ mentionOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

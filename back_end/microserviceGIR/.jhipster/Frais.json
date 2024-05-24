@@ -1,0 +1,71 @@
+{
+  "annotations": {
+    "changelogDate": "20240524183449"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "frais",
+  "fields": [
+    {
+      "fieldName": "valeurFrais",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descriptionFrais",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fraisPourAssimileYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "cycle",
+      "fieldType": "Cycle",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "LICENCE (Licence),MASTER (Master),DOCTOTAT (Doctorat)"
+    },
+    {
+      "fieldName": "dia",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "dip",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "dipPrivee",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "dateApplication",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "estEnApplicationYN",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Frais",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "typeFrais",
+      "relationshipName": "typeFrais",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -1,0 +1,47 @@
+{
+  "annotations": {
+    "changelogDate": "20240524181249"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "lycee",
+  "fields": [
+    {
+      "fieldName": "nomLycee",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "codeLycee",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "villeLycee",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "academieLycee",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "centreExamen",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Lycee",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "region",
+      "relationshipName": "region",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

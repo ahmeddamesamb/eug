@@ -1,0 +1,26 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirFormationInvalide": {
+      "home": {
+        "title": "Formation Invalides",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Formation Invalide",
+        "createOrEditLabel": "Create or edit a Formation Invalide",
+        "notFound": "No Formation Invalides found"
+      },
+      "created": "A new Formation Invalide is created with identifier {{ param }}",
+      "updated": "A Formation Invalide is updated with identifier {{ param }}",
+      "deleted": "A Formation Invalide is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Formation Invalide {{ id }}?"
+      },
+      "detail": {
+        "title": "Formation Invalide"
+      },
+      "id": "ID",
+      "actifYN": "Actif YN",
+      "formation": "Formation",
+      "anneAcademique": "Anne Academique"
+    }
+  }
+}

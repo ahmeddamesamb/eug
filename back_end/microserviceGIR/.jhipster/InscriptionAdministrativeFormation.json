@@ -1,0 +1,61 @@
+{
+  "annotations": {
+    "changelogDate": "20240524182249"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "inscription_administrative_formation",
+  "fields": [
+    {
+      "fieldName": "inscriptionPrincipaleYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "inscriptionAnnuleeYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "paiementFraisOblYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "paiementFraisIntegergYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "certificatDelivreYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "dateChoixFormation",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dateValidationInscription",
+      "fieldType": "Instant"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "InscriptionAdministrativeFormation",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "inscriptionAdministrative",
+      "relationshipName": "inscriptionAdministrative",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "formation",
+      "relationshipName": "formation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

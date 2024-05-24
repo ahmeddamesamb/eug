@@ -1,0 +1,118 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-lycee-heading"
+        data-cy="LyceeCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirLycee.home.createOrEditLabel"
+      >
+        Create or edit a Lycee
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirLycee.nomLycee" for="field_nomLycee">Nom Lycee</label>
+          <input type="text" class="form-control" name="nomLycee" id="field_nomLycee" data-cy="nomLycee" formControlName="nomLycee" />
+          @if (editForm.get('nomLycee')!.invalid && (editForm.get('nomLycee')!.dirty || editForm.get('nomLycee')!.touched)) {
+            <div>
+              @if (editForm.get('nomLycee')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirLycee.codeLycee" for="field_codeLycee"
+            >Code Lycee</label
+          >
+          <input type="text" class="form-control" name="codeLycee" id="field_codeLycee" data-cy="codeLycee" formControlName="codeLycee" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirLycee.villeLycee" for="field_villeLycee"
+            >Ville Lycee</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="villeLycee"
+            id="field_villeLycee"
+            data-cy="villeLycee"
+            formControlName="villeLycee"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirLycee.academieLycee" for="field_academieLycee"
+            >Academie Lycee</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="academieLycee"
+            id="field_academieLycee"
+            data-cy="academieLycee"
+            formControlName="academieLycee"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirLycee.centreExamen" for="field_centreExamen"
+            >Centre Examen</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="centreExamen"
+            id="field_centreExamen"
+            data-cy="centreExamen"
+            formControlName="centreExamen"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirLycee.region" for="field_region">Region</label>
+          <select
+            class="form-control"
+            id="field_region"
+            data-cy="region"
+            name="region"
+            formControlName="region"
+            [compareWith]="compareRegion"
+          >
+            <option [ngValue]="null"></option>
+            @for (regionOption of regionsSharedCollection; track $index) {
+              <option [ngValue]="regionOption">{{ regionOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

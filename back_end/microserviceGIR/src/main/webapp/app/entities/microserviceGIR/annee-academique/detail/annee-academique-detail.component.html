@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (anneeAcademique) {
+      <div>
+        <h2 data-cy="anneeAcademiqueDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirAnneeAcademique.detail.title">Annee Academique</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ anneeAcademique.id }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirAnneeAcademique.libelleAnneeAcademique">Libelle Annee Academique</span>
+          </dt>
+          <dd>
+            <span>{{ anneeAcademique.libelleAnneeAcademique }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirAnneeAcademique.anneeAc">Annee Ac</span></dt>
+          <dd>
+            <span>{{ anneeAcademique.anneeAc }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirAnneeAcademique.anneeCouranteYN">Annee Courante YN</span></dt>
+          <dd>
+            <span>{{ anneeAcademique.anneeCouranteYN }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/annee-academique', anneeAcademique.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

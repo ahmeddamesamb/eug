@@ -1,0 +1,65 @@
+{
+  "annotations": {
+    "changelogDate": "20240524183649"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "paiement_frais",
+  "fields": [
+    {
+      "fieldName": "datePaiement",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "obligatoireYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "echeancePayeeYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "emailUser",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateForclos",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "forclosYN",
+      "fieldType": "Integer"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "PaiementFrais",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "frais",
+      "relationshipName": "frais",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "operateur",
+      "relationshipName": "operateur",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "inscriptionAdministrativeFormation",
+      "relationshipName": "inscriptionAdministrativeFormation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

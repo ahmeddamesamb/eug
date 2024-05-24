@@ -1,0 +1,150 @@
+<div>
+  <h2 id="page-heading" data-cy="LyceeHeading">
+    <span jhiTranslate="microserviceGirApp.microserviceGirLycee.home.title">Lycees</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirLycee.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-lycee"
+        [routerLink]="['/microservicegir/lycee/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirLycee.home.createLabel">Create a new Lycee</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (lycees?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="microserviceGirApp.microserviceGirLycee.home.notFound">No Lycees found</span>
+    </div>
+  }
+
+  @if (lycees && lycees.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nomLycee">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirLycee.nomLycee">Nom Lycee</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="codeLycee">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirLycee.codeLycee">Code Lycee</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="villeLycee">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirLycee.villeLycee">Ville Lycee</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="academieLycee">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirLycee.academieLycee">Academie Lycee</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="centreExamen">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirLycee.centreExamen">Centre Examen</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="region.id">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirLycee.region">Region</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (lycee of lycees; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/lycee', lycee.id, 'view']">{{ lycee.id }}</a>
+              </td>
+              <td>{{ lycee.nomLycee }}</td>
+              <td>{{ lycee.codeLycee }}</td>
+              <td>{{ lycee.villeLycee }}</td>
+              <td>{{ lycee.academieLycee }}</td>
+              <td>{{ lycee.centreExamen }}</td>
+              <td>
+                @if (lycee.region) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/region', lycee.region.id, 'view']">{{ lycee.region.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/microservicegir/lycee', lycee.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/microservicegir/lycee', lycee.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(lycee)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (lycees && lycees.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

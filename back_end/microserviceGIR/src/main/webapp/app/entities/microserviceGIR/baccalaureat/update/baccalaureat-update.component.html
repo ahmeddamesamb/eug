@@ -1,0 +1,171 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-baccalaureat-heading"
+        data-cy="BaccalaureatCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.home.createOrEditLabel"
+      >
+        Create or edit a Baccalaureat
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.origineScolaire"
+            for="field_origineScolaire"
+            >Origine Scolaire</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="origineScolaire"
+            id="field_origineScolaire"
+            data-cy="origineScolaire"
+            formControlName="origineScolaire"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.anneeBac" for="field_anneeBac"
+            >Annee Bac</label
+          >
+          <div class="input-group">
+            <input
+              id="field_anneeBac"
+              data-cy="anneeBac"
+              type="text"
+              class="form-control"
+              name="anneeBac"
+              ngbDatepicker
+              #anneeBacDp="ngbDatepicker"
+              formControlName="anneeBac"
+            />
+            <button type="button" class="btn btn-secondary" (click)="anneeBacDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.numeroTable" for="field_numeroTable"
+            >Numero Table</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="numeroTable"
+            id="field_numeroTable"
+            data-cy="numeroTable"
+            formControlName="numeroTable"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.natureBac" for="field_natureBac"
+            >Nature Bac</label
+          >
+          <input type="text" class="form-control" name="natureBac" id="field_natureBac" data-cy="natureBac" formControlName="natureBac" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.mentionBac" for="field_mentionBac"
+            >Mention Bac</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="mentionBac"
+            id="field_mentionBac"
+            data-cy="mentionBac"
+            formControlName="mentionBac"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.moyenneSelectionBac"
+            for="field_moyenneSelectionBac"
+            >Moyenne Selection Bac</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="moyenneSelectionBac"
+            id="field_moyenneSelectionBac"
+            data-cy="moyenneSelectionBac"
+            formControlName="moyenneSelectionBac"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.moyenneBac" for="field_moyenneBac"
+            >Moyenne Bac</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="moyenneBac"
+            id="field_moyenneBac"
+            data-cy="moyenneBac"
+            formControlName="moyenneBac"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.etudiant" for="field_etudiant"
+            >Etudiant</label
+          >
+          <select
+            class="form-control"
+            id="field_etudiant"
+            data-cy="etudiant"
+            name="etudiant"
+            formControlName="etudiant"
+            [compareWith]="compareEtudiant"
+          >
+            <option [ngValue]="null"></option>
+            @for (etudiantOption of etudiantsCollection; track $index) {
+              <option [ngValue]="etudiantOption">{{ etudiantOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirBaccalaureat.serie" for="field_serie">Serie</label>
+          <select class="form-control" id="field_serie" data-cy="serie" name="serie" formControlName="serie" [compareWith]="compareSerie">
+            <option [ngValue]="null"></option>
+            @for (serieOption of seriesSharedCollection; track $index) {
+              <option [ngValue]="serieOption">{{ serieOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+{
+  "annotations": {
+    "changelogDate": "20240524184049"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "doctorat",
+  "fields": [
+    {
+      "fieldName": "sujet",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "anneeInscriptionDoctorat",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "encadreurId",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "laboratoirId",
+      "fieldType": "Integer"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Doctorat",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

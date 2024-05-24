@@ -1,0 +1,26 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirUniversite": {
+      "home": {
+        "title": "Universites",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Universite",
+        "createOrEditLabel": "Create or edit a Universite",
+        "notFound": "No Universites found"
+      },
+      "created": "A new Universite is created with identifier {{ param }}",
+      "updated": "A Universite is updated with identifier {{ param }}",
+      "deleted": "A Universite is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Universite {{ id }}?"
+      },
+      "detail": {
+        "title": "Universite"
+      },
+      "id": "ID",
+      "nomUniversite": "Nom Universite",
+      "sigleUniversite": "Sigle Universite",
+      "ministere": "Ministere"
+    }
+  }
+}

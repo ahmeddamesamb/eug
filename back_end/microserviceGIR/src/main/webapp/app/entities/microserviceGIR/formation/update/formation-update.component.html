@@ -1,0 +1,193 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-formation-heading"
+        data-cy="FormationCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirFormation.home.createOrEditLabel"
+      >
+        Create or edit a Formation
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormation.fraisDossierYN" for="field_fraisDossierYN"
+            >Frais Dossier YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="fraisDossierYN"
+            id="field_fraisDossierYN"
+            data-cy="fraisDossierYN"
+            formControlName="fraisDossierYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirFormation.classeDiplomanteYN"
+            for="field_classeDiplomanteYN"
+            >Classe Diplomante YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="classeDiplomanteYN"
+            id="field_classeDiplomanteYN"
+            data-cy="classeDiplomanteYN"
+            formControlName="classeDiplomanteYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormation.libelleDiplome" for="field_libelleDiplome"
+            >Libelle Diplome</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libelleDiplome"
+            id="field_libelleDiplome"
+            data-cy="libelleDiplome"
+            formControlName="libelleDiplome"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormation.codeFormation" for="field_codeFormation"
+            >Code Formation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="codeFormation"
+            id="field_codeFormation"
+            data-cy="codeFormation"
+            formControlName="codeFormation"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormation.nbreCreditsMin" for="field_nbreCreditsMin"
+            >Nbre Credits Min</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="nbreCreditsMin"
+            id="field_nbreCreditsMin"
+            data-cy="nbreCreditsMin"
+            formControlName="nbreCreditsMin"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormation.estParcoursYN" for="field_estParcoursYN"
+            >Est Parcours YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="estParcoursYN"
+            id="field_estParcoursYN"
+            data-cy="estParcoursYN"
+            formControlName="estParcoursYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormation.lmdYN" for="field_lmdYN">Lmd YN</label>
+          <input type="number" class="form-control" name="lmdYN" id="field_lmdYN" data-cy="lmdYN" formControlName="lmdYN" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormation.typeFormation" for="field_typeFormation"
+            >Type Formation</label
+          >
+          <select
+            class="form-control"
+            name="typeFormation"
+            formControlName="typeFormation"
+            id="field_typeFormation"
+            data-cy="typeFormation"
+          >
+            <option [ngValue]="null">{{ 'microserviceGirApp.TypeFormation.null' | translate }}</option>
+            @for (typeFormation of typeFormationValues; track $index) {
+              <option [value]="typeFormation">{{ 'microserviceGirApp.TypeFormation.' + typeFormation | translate }}</option>
+            }
+          </select>
+          @if (editForm.get('typeFormation')!.invalid && (editForm.get('typeFormation')!.dirty || editForm.get('typeFormation')!.touched)) {
+            <div>
+              @if (editForm.get('typeFormation')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormation.niveau" for="field_niveau">Niveau</label>
+          <select
+            class="form-control"
+            id="field_niveau"
+            data-cy="niveau"
+            name="niveau"
+            formControlName="niveau"
+            [compareWith]="compareNiveau"
+          >
+            <option [ngValue]="null"></option>
+            @for (niveauOption of niveausSharedCollection; track $index) {
+              <option [ngValue]="niveauOption">{{ niveauOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormation.specialite" for="field_specialite"
+            >Specialite</label
+          >
+          <select
+            class="form-control"
+            id="field_specialite"
+            data-cy="specialite"
+            name="specialite"
+            formControlName="specialite"
+            [compareWith]="compareSpecialite"
+          >
+            <option [ngValue]="null"></option>
+            @for (specialiteOption of specialitesSharedCollection; track $index) {
+              <option [ngValue]="specialiteOption">{{ specialiteOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,209 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-inscription-administrative-formation-heading"
+        data-cy="InscriptionAdministrativeFormationCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.home.createOrEditLabel"
+      >
+        Create or edit a Inscription Administrative Formation
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.inscriptionPrincipaleYN"
+            for="field_inscriptionPrincipaleYN"
+            >Inscription Principale YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="inscriptionPrincipaleYN"
+            id="field_inscriptionPrincipaleYN"
+            data-cy="inscriptionPrincipaleYN"
+            formControlName="inscriptionPrincipaleYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.inscriptionAnnuleeYN"
+            for="field_inscriptionAnnuleeYN"
+            >Inscription Annulee YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="inscriptionAnnuleeYN"
+            id="field_inscriptionAnnuleeYN"
+            data-cy="inscriptionAnnuleeYN"
+            formControlName="inscriptionAnnuleeYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.paiementFraisOblYN"
+            for="field_paiementFraisOblYN"
+            >Paiement Frais Obl YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="paiementFraisOblYN"
+            id="field_paiementFraisOblYN"
+            data-cy="paiementFraisOblYN"
+            formControlName="paiementFraisOblYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.paiementFraisIntegergYN"
+            for="field_paiementFraisIntegergYN"
+            >Paiement Frais Integerg YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="paiementFraisIntegergYN"
+            id="field_paiementFraisIntegergYN"
+            data-cy="paiementFraisIntegergYN"
+            formControlName="paiementFraisIntegergYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.certificatDelivreYN"
+            for="field_certificatDelivreYN"
+            >Certificat Delivre YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="certificatDelivreYN"
+            id="field_certificatDelivreYN"
+            data-cy="certificatDelivreYN"
+            formControlName="certificatDelivreYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.dateChoixFormation"
+            for="field_dateChoixFormation"
+            >Date Choix Formation</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateChoixFormation"
+              data-cy="dateChoixFormation"
+              type="datetime-local"
+              class="form-control"
+              name="dateChoixFormation"
+              formControlName="dateChoixFormation"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.dateValidationInscription"
+            for="field_dateValidationInscription"
+            >Date Validation Inscription</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateValidationInscription"
+              data-cy="dateValidationInscription"
+              type="datetime-local"
+              class="form-control"
+              name="dateValidationInscription"
+              formControlName="dateValidationInscription"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.inscriptionAdministrative"
+            for="field_inscriptionAdministrative"
+            >Inscription Administrative</label
+          >
+          <select
+            class="form-control"
+            id="field_inscriptionAdministrative"
+            data-cy="inscriptionAdministrative"
+            name="inscriptionAdministrative"
+            formControlName="inscriptionAdministrative"
+            [compareWith]="compareInscriptionAdministrative"
+          >
+            <option [ngValue]="null"></option>
+            @for (inscriptionAdministrativeOption of inscriptionAdministrativesSharedCollection; track $index) {
+              <option [ngValue]="inscriptionAdministrativeOption">{{ inscriptionAdministrativeOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.formation"
+            for="field_formation"
+            >Formation</label
+          >
+          <select
+            class="form-control"
+            id="field_formation"
+            data-cy="formation"
+            name="formation"
+            formControlName="formation"
+            [compareWith]="compareFormation"
+          >
+            <option [ngValue]="null"></option>
+            @for (formationOption of formationsSharedCollection; track $index) {
+              <option [ngValue]="formationOption">{{ formationOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
