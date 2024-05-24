@@ -1,0 +1,56 @@
+{
+  "annotations": {
+    "changelogDate": "20240524182149"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "inscription_administrative",
+  "fields": [
+    {
+      "fieldName": "nouveauInscritYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "repriseYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "autoriseYN",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "ordreInscription",
+      "fieldType": "Integer"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "InscriptionAdministrative",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "typeAdmission",
+      "relationshipName": "typeAdmission",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "anneeAcademique",
+      "relationshipName": "anneeAcademique",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "etudiant",
+      "relationshipName": "etudiant",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

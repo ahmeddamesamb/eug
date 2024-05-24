@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (inscriptionAdministrative) {
+      <div>
+        <h2 data-cy="inscriptionAdministrativeDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.detail.title">Inscription Administrative</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ inscriptionAdministrative.id }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.nouveauInscritYN">Nouveau Inscrit YN</span>
+          </dt>
+          <dd>
+            <span>{{ inscriptionAdministrative.nouveauInscritYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.repriseYN">Reprise YN</span></dt>
+          <dd>
+            <span>{{ inscriptionAdministrative.repriseYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.autoriseYN">Autorise YN</span></dt>
+          <dd>
+            <span>{{ inscriptionAdministrative.autoriseYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.ordreInscription">Ordre Inscription</span>
+          </dt>
+          <dd>
+            <span>{{ inscriptionAdministrative.ordreInscription }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.typeAdmission">Type Admission</span></dt>
+          <dd>
+            @if (inscriptionAdministrative.typeAdmission) {
+              <div>
+                <a [routerLink]="['/type-admission', inscriptionAdministrative.typeAdmission.id, 'view']">{{
+                  inscriptionAdministrative.typeAdmission.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.anneeAcademique">Annee Academique</span></dt>
+          <dd>
+            @if (inscriptionAdministrative.anneeAcademique) {
+              <div>
+                <a [routerLink]="['/annee-academique', inscriptionAdministrative.anneeAcademique.id, 'view']">{{
+                  inscriptionAdministrative.anneeAcademique.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.etudiant">Etudiant</span></dt>
+          <dd>
+            @if (inscriptionAdministrative.etudiant) {
+              <div>
+                <a [routerLink]="['/etudiant', inscriptionAdministrative.etudiant.id, 'view']">{{
+                  inscriptionAdministrative.etudiant.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/microservicegir/inscription-administrative', inscriptionAdministrative.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

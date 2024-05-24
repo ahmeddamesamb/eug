@@ -1,0 +1,34 @@
+{
+  "generator-jhipster": {
+    "appsFolders": [
+      "gateway",
+      "microserviceUser",
+      "microserviceGIR",
+      "microserviceEnseignement",
+      "microserviceEDT",
+      "microserviceGRH",
+      "microserviceAUA",
+      "microserviceDeliberation",
+      "microserviceGD",
+      "microserviceACLC",
+      "microserviceAide",
+      "microserviceGED"
+    ],
+    "clusteredDbApps": ["store"],
+    "dbRandomPassword": "fdcd6614b5c24af44110e0e89323acbcf8f94849ef494a6bad0946233159",
+    "deploymentType": "kubernetes",
+    "directoryPath": "../",
+    "dockerPushCommand": "docker push",
+    "dockerRepositoryName": "diabrail",
+    "ingressDomain": "",
+    "istio": false,
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "YWFmN2YyZGY1OGE3Y2ZiODUzMTk0NWI1MGM3MjVlNTMxMDA3Y2M3ZTZmNWZjZTZkZmFkNzE4M2NjZDIwMDExNDNhMjVhNDJhZDg5ZjI1Njc3YzBhYjk1MGU4OWNlMTY3ZmExZA==",
+    "kubernetesNamespace": "sencookseur",
+    "kubernetesServiceType": "LoadBalancer",
+    "kubernetesStorageClassName": "",
+    "kubernetesUseDynamicStorage": true,
+    "monitoring": "no",
+    "serviceDiscoveryType": "consul"
+  }
+}

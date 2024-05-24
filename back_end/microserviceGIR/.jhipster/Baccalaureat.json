@@ -1,0 +1,61 @@
+{
+  "annotations": {
+    "changelogDate": "20240524181349"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "baccalaureat",
+  "fields": [
+    {
+      "fieldName": "origineScolaire",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "anneeBac",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "numeroTable",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "natureBac",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mentionBac",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "moyenneSelectionBac",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "moyenneBac",
+      "fieldType": "Float"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Baccalaureat",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "etudiant",
+      "relationshipName": "etudiant",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "serie",
+      "relationshipName": "serie",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

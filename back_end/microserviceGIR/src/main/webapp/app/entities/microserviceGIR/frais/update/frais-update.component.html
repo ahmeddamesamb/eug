@@ -1,0 +1,228 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-frais-heading"
+        data-cy="FraisCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirFrais.home.createOrEditLabel"
+      >
+        Create or edit a Frais
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.valeurFrais" for="field_valeurFrais"
+            >Valeur Frais</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="valeurFrais"
+            id="field_valeurFrais"
+            data-cy="valeurFrais"
+            formControlName="valeurFrais"
+          />
+          @if (editForm.get('valeurFrais')!.invalid && (editForm.get('valeurFrais')!.dirty || editForm.get('valeurFrais')!.touched)) {
+            <div>
+              @if (editForm.get('valeurFrais')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('valeurFrais')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.descriptionFrais" for="field_descriptionFrais"
+            >Description Frais</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="descriptionFrais"
+            id="field_descriptionFrais"
+            data-cy="descriptionFrais"
+            formControlName="descriptionFrais"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirFrais.fraisPourAssimileYN"
+            for="field_fraisPourAssimileYN"
+            >Frais Pour Assimile YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="fraisPourAssimileYN"
+            id="field_fraisPourAssimileYN"
+            data-cy="fraisPourAssimileYN"
+            formControlName="fraisPourAssimileYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.cycle" for="field_cycle">Cycle</label>
+          <select class="form-control" name="cycle" formControlName="cycle" id="field_cycle" data-cy="cycle">
+            <option [ngValue]="null">{{ 'microserviceGirApp.Cycle.null' | translate }}</option>
+            @for (cycle of cycleValues; track $index) {
+              <option [value]="cycle">{{ 'microserviceGirApp.Cycle.' + cycle | translate }}</option>
+            }
+          </select>
+          @if (editForm.get('cycle')!.invalid && (editForm.get('cycle')!.dirty || editForm.get('cycle')!.touched)) {
+            <div>
+              @if (editForm.get('cycle')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.dia" for="field_dia">Dia</label>
+          <input type="number" class="form-control" name="dia" id="field_dia" data-cy="dia" formControlName="dia" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.dip" for="field_dip">Dip</label>
+          <input type="number" class="form-control" name="dip" id="field_dip" data-cy="dip" formControlName="dip" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.dipPrivee" for="field_dipPrivee"
+            >Dip Privee</label
+          >
+          <input type="number" class="form-control" name="dipPrivee" id="field_dipPrivee" data-cy="dipPrivee" formControlName="dipPrivee" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.dateApplication" for="field_dateApplication"
+            >Date Application</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateApplication"
+              data-cy="dateApplication"
+              type="text"
+              class="form-control"
+              name="dateApplication"
+              ngbDatepicker
+              #dateApplicationDp="ngbDatepicker"
+              formControlName="dateApplication"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateApplicationDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          @if (
+            editForm.get('dateApplication')!.invalid && (editForm.get('dateApplication')!.dirty || editForm.get('dateApplication')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('dateApplication')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.dateFin" for="field_dateFin">Date Fin</label>
+          <div class="input-group">
+            <input
+              id="field_dateFin"
+              data-cy="dateFin"
+              type="text"
+              class="form-control"
+              name="dateFin"
+              ngbDatepicker
+              #dateFinDp="ngbDatepicker"
+              formControlName="dateFin"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateFinDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.estEnApplicationYN" for="field_estEnApplicationYN"
+            >Est En Application YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="estEnApplicationYN"
+            id="field_estEnApplicationYN"
+            data-cy="estEnApplicationYN"
+            formControlName="estEnApplicationYN"
+          />
+          @if (
+            editForm.get('estEnApplicationYN')!.invalid &&
+            (editForm.get('estEnApplicationYN')!.dirty || editForm.get('estEnApplicationYN')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('estEnApplicationYN')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('estEnApplicationYN')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFrais.typeFrais" for="field_typeFrais"
+            >Type Frais</label
+          >
+          <select
+            class="form-control"
+            id="field_typeFrais"
+            data-cy="typeFrais"
+            name="typeFrais"
+            formControlName="typeFrais"
+            [compareWith]="compareTypeFrais"
+          >
+            <option [ngValue]="null"></option>
+            @for (typeFraisOption of typeFraisSharedCollection; track $index) {
+              <option [ngValue]="typeFraisOption">{{ typeFraisOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

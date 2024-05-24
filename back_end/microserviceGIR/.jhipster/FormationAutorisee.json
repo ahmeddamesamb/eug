@@ -1,0 +1,38 @@
+{
+  "annotations": {
+    "changelogDate": "20240524182949"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "formation_autorisee",
+  "fields": [
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "enCoursYN",
+      "fieldType": "Integer"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "FormationAutorisee",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "formation",
+      "otherEntityRelationshipName": "formationAutorisee",
+      "relationshipName": "formation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

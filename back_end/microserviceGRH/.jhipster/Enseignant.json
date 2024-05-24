@@ -1,0 +1,57 @@
+{
+  "annotations": {
+    "changelogDate": "20240524180402"
+  },
+  "applications": ["microserviceGRH"],
+  "clientRootFolder": "microserviceGRH",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "enseignant",
+  "fields": [
+    {
+      "fieldName": "titreCoEncadreur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nomEnseignant",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "prenomEnseignant",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "emailEnseignant",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephoneEnseignant",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "titresId",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "adresse",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numeroPoste",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "photoEnseignant",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    }
+  ],
+  "microserviceName": "microserviceGRH",
+  "name": "Enseignant",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

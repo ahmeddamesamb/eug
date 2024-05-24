@@ -1,0 +1,9 @@
+{
+  "microserviceGirApp": {
+    "TypeFormation": {
+      "null": "",
+      "PUBLIC": "Public",
+      "PRIVEE": "Privee"
+    }
+  }
+}

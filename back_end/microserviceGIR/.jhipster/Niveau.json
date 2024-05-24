@@ -1,0 +1,38 @@
+{
+  "annotations": {
+    "changelogDate": "20240524182749"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "niveau",
+  "fields": [
+    {
+      "fieldName": "libelleNiveau",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "cycleNiveau",
+      "fieldType": "Cycle",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "LICENCE (Licence),MASTER (Master),DOCTOTAT (Doctorat)"
+    },
+    {
+      "fieldName": "codeNiveau",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "anneeEtude",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Niveau",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

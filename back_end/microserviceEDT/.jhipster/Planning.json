@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "changelogDate": "20240524180349"
+  },
+  "applications": ["microserviceEDT"],
+  "clientRootFolder": "microserviceEDT",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "planning",
+  "fields": [
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "Instant"
+    }
+  ],
+  "microserviceName": "microserviceEDT",
+  "name": "Planning",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

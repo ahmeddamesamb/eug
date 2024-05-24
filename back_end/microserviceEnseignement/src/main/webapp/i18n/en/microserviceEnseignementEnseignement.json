@@ -1,0 +1,27 @@
+{
+  "microserviceEnseignementApp": {
+    "microserviceEnseignementEnseignement": {
+      "home": {
+        "title": "Enseignements",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Enseignement",
+        "createOrEditLabel": "Create or edit a Enseignement",
+        "notFound": "No Enseignements found"
+      },
+      "created": "A new Enseignement is created with identifier {{ param }}",
+      "updated": "A Enseignement is updated with identifier {{ param }}",
+      "deleted": "A Enseignement is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Enseignement {{ id }}?"
+      },
+      "detail": {
+        "title": "Enseignement"
+      },
+      "id": "ID",
+      "libelleEnseignements": "Libelle Enseignements",
+      "volumeHoraire": "Volume Horaire",
+      "nombreInscrits": "Nombre Inscrits",
+      "groupeYN": "Groupe YN"
+    }
+  }
+}

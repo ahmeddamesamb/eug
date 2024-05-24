@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (paiementFrais) {
+      <div>
+        <h2 data-cy="paiementFraisDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.detail.title">Paiement Frais</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ paiementFrais.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.datePaiement">Date Paiement</span></dt>
+          <dd>
+            <span>{{ paiementFrais.datePaiement | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.obligatoireYN">Obligatoire YN</span></dt>
+          <dd>
+            <span>{{ paiementFrais.obligatoireYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.echeancePayeeYN">Echeance Payee YN</span></dt>
+          <dd>
+            <span>{{ paiementFrais.echeancePayeeYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.emailUser">Email User</span></dt>
+          <dd>
+            <span>{{ paiementFrais.emailUser }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.dateForclos">Date Forclos</span></dt>
+          <dd>
+            <span>{{ paiementFrais.dateForclos | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.forclosYN">Forclos YN</span></dt>
+          <dd>
+            <span>{{ paiementFrais.forclosYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.frais">Frais</span></dt>
+          <dd>
+            @if (paiementFrais.frais) {
+              <div>
+                <a [routerLink]="['/frais', paiementFrais.frais.id, 'view']">{{ paiementFrais.frais.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.operateur">Operateur</span></dt>
+          <dd>
+            @if (paiementFrais.operateur) {
+              <div>
+                <a [routerLink]="['/operateur', paiementFrais.operateur.id, 'view']">{{ paiementFrais.operateur.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.inscriptionAdministrativeFormation"
+              >Inscription Administrative Formation</span
+            >
+          </dt>
+          <dd>
+            @if (paiementFrais.inscriptionAdministrativeFormation) {
+              <div>
+                <a [routerLink]="['/inscription-administrative-formation', paiementFrais.inscriptionAdministrativeFormation.id, 'view']">{{
+                  paiementFrais.inscriptionAdministrativeFormation.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/paiement-frais', paiementFrais.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

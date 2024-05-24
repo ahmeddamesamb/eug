@@ -1,0 +1,27 @@
+{
+  "generator-jhipster": {
+    "appsFolders": [
+      "gateway",
+      "microserviceUser",
+      "microserviceGIR",
+      "microserviceEnseignement",
+      "microserviceEDT",
+      "microserviceGRH",
+      "microserviceAUA",
+      "microserviceDeliberation",
+      "microserviceGD",
+      "microserviceACLC",
+      "microserviceAide",
+      "microserviceGED"
+    ],
+    "clusteredDbApps": [],
+    "deploymentType": "docker-compose",
+    "directoryPath": "../",
+    "dockerRepositoryName": "diabrail",
+    "gatewayType": "SpringCloudGateway",
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "ZjllMTU1ZTFjZmRiNGRjOTU0YmE1Yjg5NTJiZmEyZGNmZDg4OTA4MzI1MmNhYzRiYzIzZjcyNTMxZDQyZDlkZmE5ODY1MDBhMjQ3MjdlNmIwYTQxZDhlZjM1NzA4NWYwMWUwZQ==",
+    "monitoring": "no",
+    "serviceDiscoveryType": "consul"
+  }
+}

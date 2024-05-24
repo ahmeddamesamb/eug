@@ -1,0 +1,30 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirFormationPrivee": {
+      "home": {
+        "title": "Formation Privees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Formation Privee",
+        "createOrEditLabel": "Create or edit a Formation Privee",
+        "notFound": "No Formation Privees found"
+      },
+      "created": "A new Formation Privee is created with identifier {{ param }}",
+      "updated": "A Formation Privee is updated with identifier {{ param }}",
+      "deleted": "A Formation Privee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Formation Privee {{ id }}?"
+      },
+      "detail": {
+        "title": "Formation Privee"
+      },
+      "id": "ID",
+      "nombreMensualites": "Nombre Mensualites",
+      "paiementPremierMoisYN": "Paiement Premier Mois YN",
+      "paiementDernierMoisYN": "Paiement Dernier Mois YN",
+      "fraisDossierYN": "Frais Dossier YN",
+      "coutTotal": "Cout Total",
+      "mensualite": "Mensualite",
+      "formation": "Formation"
+    }
+  }
+}
