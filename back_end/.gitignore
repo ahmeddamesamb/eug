@@ -1,15 +1,13 @@
 ######################
 # Node
 ######################
-
 /node/
 node_tmp/
 node_modules/
 npm-debug.log.*
 /.awcache/*
 /.cache-loader/*
-/microserviceGIR/src/main/resources/config/application-dev.yml
-/gateway/src/main/resources/config/application-dev.yml
+
 ######################
 # SASS
 ######################

@@ -128,7 +128,8 @@ Desktop.ini
 *.*~
 *~
 .merge_file*
-
+/microserviceGIR/src/main/resources/config/application-dev.yml
+/gateway/src/main/resources/config/application-dev.yml
 ######################
 # Gradle Wrapper
 ######################

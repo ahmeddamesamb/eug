@@ -27,4 +27,13 @@ public interface DomaineRepository extends DomaineRepositoryWithBagRelationships
     default Page<Domaine> findAllWithEagerRelationships(Pageable pageable) {
         return this.fetchBagRelationships(this.findAll(pageable));
     }
+
+//-------------------------------------------- FIND ALL DOMAINES BY UFR ------------------------------------------------
+Page<Domaine> findByUfrsId(Long ufrId, Pageable pageable);
+
+//-------------------------------------------- FIND ALL DOMAINES BY UNIVERSITE -----------------------------------------
+Page<Domaine> findByUfrsUniversiteId(Long universiteId, Pageable pageable);
+
+//-------------------------------------------- FIND ALL DOMAINES BY MINISTERE ------------------------------------------
+Page<Domaine> findByUfrsUniversiteMinistereId(Long ministereId, Pageable pageable);
 }

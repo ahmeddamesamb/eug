@@ -188,4 +188,31 @@ public class DomaineResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+//***************************************************************** GET ALL DOMAINES BY UFR ****************************************************
+
+@GetMapping("/ufrs/{ufrId}")
+public ResponseEntity<List<DomaineDTO>> getAllDomaineByUfr(@PathVariable Long ufrId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+    log.debug("REST request to get a page of UFRs by Domaine ID : {}", ufrId);
+    Page<DomaineDTO> page = domaineService.findAllDomaineByUfr(ufrId, pageable);
+    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+    return ResponseEntity.ok().headers(headers).body(page.getContent());
+}
+
+//***************************************************************** GET ALL DOMAINES BY UNIVERSITE *********************************************
+@GetMapping("/universites/{universiteId}")
+public ResponseEntity<List<DomaineDTO>> getAllDomaineByUniversite(@PathVariable Long universiteId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+    log.debug("REST request to get a page of UFRs by Domaine ID : {}", universiteId);
+    Page<DomaineDTO> page = domaineService.findAllDomaineByUniversite(universiteId, pageable);
+    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+    return ResponseEntity.ok().headers(headers).body(page.getContent());
+}
+
+//***************************************************************** GET ALL DOMAINES BY MINISTER ************************************************
+@GetMapping("/ministeres/{ministereId}")
+public ResponseEntity<List<DomaineDTO>> getAllDomaineByMinistere(@PathVariable Long ministereId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+    log.debug("REST request to get a page of UFRs by Domaine ID : {}", ministereId);
+    Page<DomaineDTO> page = domaineService.findAllDomaineByMinistere(ministereId, pageable);
+    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+    return ResponseEntity.ok().headers(headers).body(page.getContent());
+}
 }
