@@ -1,6 +1,9 @@
 package sn.ugb.gir.service.impl;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -81,4 +84,17 @@ public class NiveauServiceImpl implements NiveauService {
         log.debug("Request to delete Niveau : {}", id);
         niveauRepository.deleteById(id);
     }
+
+    @Override
+    public Page<NiveauDTO> getAllNiveauByUniversite(Long universiteId, Pageable pageable) {
+        return niveauRepository.getAllNiveauByUniversiteId(universiteId, pageable)
+            .map(niveauMapper::toDto);
+    }
+
+    @Override
+    public Page<NiveauDTO> getAllNiveauByMinistere(Long ministereId, Pageable pageable) {
+        return niveauRepository.getAllNiveauByMinistereId(ministereId, pageable)
+            .map(niveauMapper::toDto);
+    }
+
 }

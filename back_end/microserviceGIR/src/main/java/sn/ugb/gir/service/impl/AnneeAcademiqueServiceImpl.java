@@ -81,4 +81,11 @@ public class AnneeAcademiqueServiceImpl implements AnneeAcademiqueService {
         log.debug("Request to delete AnneeAcademique : {}", id);
         anneeAcademiqueRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<AnneeAcademiqueDTO> getInfosCurrentAnneeAcademique() {
+        log.debug("Request to find current AnneeAcademique");
+        return anneeAcademiqueRepository.findByAnneeCouranteYN(1).map(anneeAcademiqueMapper::toDto);
+    }
 }

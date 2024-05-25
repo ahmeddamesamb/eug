@@ -182,4 +182,11 @@ public class AnneeAcademiqueResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/current")
+    public ResponseEntity<AnneeAcademiqueDTO> getInfosCurrentAnneeAcademique() {
+        log.debug("REST request to get AnneeAcademique ");
+        Optional<AnneeAcademiqueDTO> anneeAcademiqueDTO = anneeAcademiqueService.getInfosCurrentAnneeAcademique();
+        return ResponseUtil.wrapOrNotFound(anneeAcademiqueDTO);
+    }
 }

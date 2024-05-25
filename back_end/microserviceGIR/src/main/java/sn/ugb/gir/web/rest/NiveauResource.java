@@ -179,4 +179,52 @@ public class NiveauResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+
+    @GetMapping("/universite/{universiteId}")
+    public ResponseEntity<Page<NiveauDTO>> getAllNiveauByUniversiteId(@PathVariable Long universiteId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        Page<NiveauDTO> page = niveauService.getAllNiveauByUniversite(universiteId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page);
+    }
+
+    @GetMapping("/ministere/{ministereId}")
+    public ResponseEntity<Page<NiveauDTO>> getAllNiveauByMinistereId(@PathVariable Long ministereId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        Page<NiveauDTO> page = niveauService.getAllNiveauByMinistere(ministereId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page);
+    }
+
+   /* // New method to get all niveaux by universite
+    @GetMapping("/universite/{universiteId}")
+    public ResponseEntity<List<NiveauDTO>> getAllNiveauByUniversite(@PathVariable Long universiteId) {
+        log.debug("REST request to get all Niveaus by Universite : {}", universiteId);
+        List<NiveauDTO> niveaus = niveauService.getAllNiveauByUniversite(universiteId);
+        return ResponseEntity.ok().body(niveaus);
+    }
+
+    // New method to get all niveaux by ministere
+    @GetMapping("/ministere/{ministereId}")
+    public ResponseEntity<List<NiveauDTO>> getAllNiveauByMinistere(@PathVariable Long ministereId) {
+        log.debug("REST request to get all Niveaus by Ministere : {}", ministereId);
+        List<NiveauDTO> niveaus = niveauService.getAllNiveauByMinistere(ministereId);
+        return ResponseEntity.ok().body(niveaus);
+    }*/
+/*
+    // New method to get all niveaux by universite
+    @GetMapping("/universites/{universiteId}")
+    public ResponseEntity<List<NiveauDTO>> findAllByNiveauFormationSpecialiteMentionDomaineUfrUniversiteId(@PathVariable Long universiteId) {
+        log.debug("REST request to get all Niveaus by Universite : {}", universiteId);
+        List<NiveauDTO> niveaus = niveauService.findAllByNiveauFormationSpecialiteMentionDomaineUfrUniversiteId(universiteId);
+        return ResponseEntity.ok().body(niveaus);
+    }
+
+    // New method to get all niveaux by ministere
+    @GetMapping("/ministeres/{ministereId}")
+    public ResponseEntity<List<NiveauDTO>> findAllByNiveauFormationSpecialiteMentionDomaineUfrUniversiteMinistereId(@PathVariable Long ministereId) {
+        log.debug("REST request to get all Niveaus by Ministere : {}", ministereId);
+        List<NiveauDTO> niveaus = niveauService.findAllByNiveauFormationSpecialiteMentionDomaineUfrUniversiteMinistereId(ministereId);
+        return ResponseEntity.ok().body(niveaus);
+    }*/
 }
+
