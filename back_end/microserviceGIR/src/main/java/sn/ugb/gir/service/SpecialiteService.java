@@ -55,4 +55,14 @@ public interface SpecialiteService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<SpecialiteDTO> getAllSpecialiteByMention(Long mentionId, Pageable pageable);
+
+    Page<SpecialiteDTO> getAllSpecialiteByDomaine(Long domaineId, Pageable pageable);
+
+    Page<SpecialiteDTO> getAllSpecialiteByUfr(Long ufrId, Pageable pageable);
+
+    Page<SpecialiteDTO> getAllSpecialiteByUniversite(Long universiteId, Pageable pageable);
+
+    Page<SpecialiteDTO> getAllSpecialiteByMinistere(Long ministereId, Pageable pageable);
 }

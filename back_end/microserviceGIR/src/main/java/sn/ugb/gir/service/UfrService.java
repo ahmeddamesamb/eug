@@ -55,4 +55,8 @@ public interface UfrService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<UfrDTO> getAllUfrByUniversite(Long universiteId, Pageable pageable);
+
+    Page<UfrDTO> getAllUfrByMinistere(Long ministereId, Pageable pageable);
 }

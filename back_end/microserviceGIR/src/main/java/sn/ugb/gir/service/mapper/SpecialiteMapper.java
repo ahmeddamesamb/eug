@@ -17,5 +17,6 @@ public interface SpecialiteMapper extends EntityMapper<SpecialiteDTO, Specialite
     @Named("mentionId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleMention", source = "libelleMention")
     MentionDTO toDtoMentionId(Mention mention);
 }

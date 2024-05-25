@@ -81,4 +81,20 @@ public class UfrServiceImpl implements UfrService {
         log.debug("Request to delete Ufr : {}", id);
         ufrRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<UfrDTO> getAllUfrByUniversite(Long universiteId, Pageable pageable) {
+        log.debug("Request to get all UFRs by Universite ID : {}", universiteId);
+        return ufrRepository.findByUniversiteId(universiteId, pageable)
+            .map(ufrMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<UfrDTO> getAllUfrByMinistere(Long ministereId, Pageable pageable) {
+        log.debug("Request to get all UFRs by Ministere ID : {}", ministereId);
+        return ufrRepository.findByUniversiteMinistereId(ministereId, pageable)
+            .map(ufrMapper::toDto);
+    }
 }

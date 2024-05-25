@@ -81,4 +81,39 @@ public class SpecialiteServiceImpl implements SpecialiteService {
         log.debug("Request to delete Specialite : {}", id);
         specialiteRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<SpecialiteDTO> getAllSpecialiteByMention(Long mentionId, Pageable pageable) {
+        log.debug("Request to get all Specialites by Mention ID : {}", mentionId);
+        return specialiteRepository.findByMentionId(mentionId, pageable).map(specialiteMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<SpecialiteDTO> getAllSpecialiteByDomaine(Long domaineId, Pageable pageable) {
+        log.debug("Request to get all Specialites by Domaine ID : {}", domaineId);
+        return specialiteRepository.findByMentionDomaineId(domaineId, pageable).map(specialiteMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<SpecialiteDTO> getAllSpecialiteByUfr(Long ufrId, Pageable pageable) {
+        log.debug("Request to get all Specialites by UFR ID : {}", ufrId);
+        return specialiteRepository.findByMentionDomaineUfrsId(ufrId, pageable).map(specialiteMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<SpecialiteDTO> getAllSpecialiteByUniversite(Long universiteId, Pageable pageable) {
+        log.debug("Request to get all Specialites by Universite ID : {}", universiteId);
+        return specialiteRepository.findByMentionDomaineUfrsUniversiteId(universiteId, pageable).map(specialiteMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<SpecialiteDTO> getAllSpecialiteByMinistere(Long ministereId, Pageable pageable) {
+        log.debug("Request to get all Specialites by Ministere ID : {}", ministereId);
+        return specialiteRepository.findByMentionDomaineUfrsUniversiteMinistereId(ministereId, pageable).map(specialiteMapper::toDto);
+    }
 }

@@ -56,7 +56,7 @@ spring:
       port: 8500
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/microserviceGIR
+    url: jdbc:postgresql://localhost:5432/microserviceGir
     username: postgres
     password: root
     hikari:
@@ -64,7 +64,7 @@ spring:
       auto-commit: false
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev, faker
+    contexts: dev
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:

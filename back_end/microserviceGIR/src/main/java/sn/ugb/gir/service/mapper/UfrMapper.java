@@ -17,5 +17,7 @@ public interface UfrMapper extends EntityMapper<UfrDTO, Ufr> {
     @Named("universiteId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nomUniversite", source = "nomUniversite")
+    @Mapping(target = "sigleUniversite", source = "sigleUniversite")
     UniversiteDTO toDtoUniversiteId(Universite universite);
 }

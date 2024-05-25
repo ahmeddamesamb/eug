@@ -8,6 +8,10 @@ npm-debug.log.*
 /.awcache/*
 /.cache-loader/*
 
+src/main/java/sn/ugb/gir/generator
+src/main/java/sn/ugb/gir/FakerDataGenerator.java
+src/main/java/sn/ugb/gir/InitData.java
+
 ######################
 # SASS
 ######################
