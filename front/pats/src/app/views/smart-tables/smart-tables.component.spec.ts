@@ -10,7 +10,7 @@ import {
   SmartTableModule
 } from '@coreui/angular-pro';
 import { IconSetService } from '@coreui/icons-angular';
-import { iconSubset } from '../../icons/icon-subset';
+import { iconSubset } from '../../shared/icons/icon-subset';
 import { SmartTablesComponent } from './smart-tables.component';
 import { SmartTablesBasicExampleComponent } from './smart-tables-basic-example/smart-tables-basic-example.component';
 import {
