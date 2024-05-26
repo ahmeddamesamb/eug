@@ -1,0 +1,106 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-candidat-heading"
+        data-cy="CandidatCreateUpdateHeading"
+        jhiTranslate="microserviceAclcApp.microserviceAclcCandidat.home.createOrEditLabel"
+      >
+        Create or edit a Candidat
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceAclcApp.microserviceAclcCandidat.nomCanditat" for="field_nomCanditat"
+            >Nom Canditat</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="nomCanditat"
+            id="field_nomCanditat"
+            data-cy="nomCanditat"
+            formControlName="nomCanditat"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceAclcApp.microserviceAclcCandidat.prenomCandidat" for="field_prenomCandidat"
+            >Prenom Candidat</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="prenomCandidat"
+            id="field_prenomCandidat"
+            data-cy="prenomCandidat"
+            formControlName="prenomCandidat"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceAclcApp.microserviceAclcCandidat.dateNaissanceCandidat"
+            for="field_dateNaissanceCandidat"
+            >Date Naissance Candidat</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateNaissanceCandidat"
+              data-cy="dateNaissanceCandidat"
+              type="text"
+              class="form-control"
+              name="dateNaissanceCandidat"
+              ngbDatepicker
+              #dateNaissanceCandidatDp="ngbDatepicker"
+              formControlName="dateNaissanceCandidat"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateNaissanceCandidatDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceAclcApp.microserviceAclcCandidat.emailCandidat" for="field_emailCandidat"
+            >Email Candidat</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="emailCandidat"
+            id="field_emailCandidat"
+            data-cy="emailCandidat"
+            formControlName="emailCandidat"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

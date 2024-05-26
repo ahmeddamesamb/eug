@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-formation-invalide-heading"
+        data-cy="FormationInvalideCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirFormationInvalide.home.createOrEditLabel"
+      >
+        Create or edit a Formation Invalide
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormationInvalide.actifYN" for="field_actifYN"
+            >Actif YN</label
+          >
+          <input type="number" class="form-control" name="actifYN" id="field_actifYN" data-cy="actifYN" formControlName="actifYN" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirFormationInvalide.formation" for="field_formation"
+            >Formation</label
+          >
+          <select
+            class="form-control"
+            id="field_formation"
+            data-cy="formation"
+            name="formation"
+            formControlName="formation"
+            [compareWith]="compareFormation"
+          >
+            <option [ngValue]="null"></option>
+            @for (formationOption of formationsSharedCollection; track $index) {
+              <option [ngValue]="formationOption">{{ formationOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirFormationInvalide.anneAcademique"
+            for="field_anneAcademique"
+            >Anne Academique</label
+          >
+          <select
+            class="form-control"
+            id="field_anneAcademique"
+            data-cy="anneAcademique"
+            name="anneAcademique"
+            formControlName="anneAcademique"
+            [compareWith]="compareAnneeAcademique"
+          >
+            <option [ngValue]="null"></option>
+            @for (anneeAcademiqueOption of anneeAcademiquesSharedCollection; track $index) {
+              <option [ngValue]="anneeAcademiqueOption">{{ anneeAcademiqueOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (frais) {
+      <div>
+        <h2 data-cy="fraisDetailsHeading"><span jhiTranslate="microserviceGirApp.microserviceGirFrais.detail.title">Frais</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ frais.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.valeurFrais">Valeur Frais</span></dt>
+          <dd>
+            <span>{{ frais.valeurFrais }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.descriptionFrais">Description Frais</span></dt>
+          <dd>
+            <span>{{ frais.descriptionFrais }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.fraisPourAssimileYN">Frais Pour Assimile YN</span></dt>
+          <dd>
+            <span>{{ frais.fraisPourAssimileYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.cycle">Cycle</span></dt>
+          <dd>
+            <span jhiTranslate="{{ 'microserviceGirApp.Cycle.' + frais.cycle }}">{{ frais.cycle }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.dia">Dia</span></dt>
+          <dd>
+            <span>{{ frais.dia }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.dip">Dip</span></dt>
+          <dd>
+            <span>{{ frais.dip }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.dipPrivee">Dip Privee</span></dt>
+          <dd>
+            <span>{{ frais.dipPrivee }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.dateApplication">Date Application</span></dt>
+          <dd>
+            <span>{{ frais.dateApplication | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.dateFin">Date Fin</span></dt>
+          <dd>
+            <span>{{ frais.dateFin | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.estEnApplicationYN">Est En Application YN</span></dt>
+          <dd>
+            <span>{{ frais.estEnApplicationYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFrais.typeFrais">Type Frais</span></dt>
+          <dd>
+            @if (frais.typeFrais) {
+              <div>
+                <a [routerLink]="['/type-frais', frais.typeFrais.id, 'view']">{{ frais.typeFrais.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/frais', frais.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

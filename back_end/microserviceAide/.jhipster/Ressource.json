@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "changelogDate": "20240524180349"
+  },
+  "applications": ["microserviceAide"],
+  "clientRootFolder": "microserviceAide",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "ressource",
+  "fields": [
+    {
+      "fieldName": "nomRessource",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descriptionRessource",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceAide",
+  "name": "Ressource",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

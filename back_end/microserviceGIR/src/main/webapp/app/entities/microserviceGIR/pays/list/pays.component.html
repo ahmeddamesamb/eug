@@ -1,0 +1,169 @@
+<div>
+  <h2 id="page-heading" data-cy="PaysHeading">
+    <span jhiTranslate="microserviceGirApp.microserviceGirPays.home.title">Pays</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirPays.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-pays"
+        [routerLink]="['/microservicegir/pays/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirPays.home.createLabel">Create a new Pays</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (pays?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="microserviceGirApp.microserviceGirPays.home.notFound">No Pays found</span>
+    </div>
+  }
+
+  @if (pays && pays.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="libellePays">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPays.libellePays">Libelle Pays</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="paysEnAnglais">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPays.paysEnAnglais">Pays En Anglais</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nationalite">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPays.nationalite">Nationalite</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="codePays">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPays.codePays">Code Pays</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="uEMOAYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPays.uEMOAYN">U EMOAYN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cEDEAOYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPays.cEDEAOYN">C EDEAOYN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="rIMYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPays.rIMYN">R IMYN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="autreYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPays.autreYN">Autre YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="estEtrangerYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPays.estEtrangerYN">Est Etranger YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (pays of pays; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/pays', pays.id, 'view']">{{ pays.id }}</a>
+              </td>
+              <td>{{ pays.libellePays }}</td>
+              <td>{{ pays.paysEnAnglais }}</td>
+              <td>{{ pays.nationalite }}</td>
+              <td>{{ pays.codePays }}</td>
+              <td>{{ pays.uEMOAYN }}</td>
+              <td>{{ pays.cEDEAOYN }}</td>
+              <td>{{ pays.rIMYN }}</td>
+              <td>{{ pays.autreYN }}</td>
+              <td>{{ pays.estEtrangerYN }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/microservicegir/pays', pays.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/microservicegir/pays', pays.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(pays)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (pays && pays.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

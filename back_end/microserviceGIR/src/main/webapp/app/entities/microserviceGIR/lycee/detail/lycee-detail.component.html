@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (lycee) {
+      <div>
+        <h2 data-cy="lyceeDetailsHeading"><span jhiTranslate="microserviceGirApp.microserviceGirLycee.detail.title">Lycee</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ lycee.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirLycee.nomLycee">Nom Lycee</span></dt>
+          <dd>
+            <span>{{ lycee.nomLycee }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirLycee.codeLycee">Code Lycee</span></dt>
+          <dd>
+            <span>{{ lycee.codeLycee }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirLycee.villeLycee">Ville Lycee</span></dt>
+          <dd>
+            <span>{{ lycee.villeLycee }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirLycee.academieLycee">Academie Lycee</span></dt>
+          <dd>
+            <span>{{ lycee.academieLycee }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirLycee.centreExamen">Centre Examen</span></dt>
+          <dd>
+            <span>{{ lycee.centreExamen }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirLycee.region">Region</span></dt>
+          <dd>
+            @if (lycee.region) {
+              <div>
+                <a [routerLink]="['/region', lycee.region.id, 'view']">{{ lycee.region.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/lycee', lycee.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

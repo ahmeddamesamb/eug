@@ -1,0 +1,29 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 3,
+    "applicationType": "microservice",
+    "authenticationType": "oauth2",
+    "baseName": "microserviceEnseignement",
+    "buildTool": "maven",
+    "cacheProvider": "hazelcast",
+    "clientFramework": "angular",
+    "clientTheme": "Flatly",
+    "devDatabaseType": "postgresql",
+    "devServerPort": 4203,
+    "entities": ["Enseignement"],
+    "gatewayServerPort": "8081",
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "NGE4OTI3OTQxODQ3NjIxNjhhMTczNmRjOGFiNDJhODJlMTAwMDgxOTQ2NTZkOWRhN2M5NmU3YTRhZDkwNTRlNjA2YWQxNzY1NDc1MzEyYjE5ZTNkNjhkMTYwMWI1ODllMWExMWVkNmJhNTQ4NDM5ZWI3MDYyYzI1NTZkODE0MTE=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1716573829000,
+    "monorepository": true,
+    "nativeLanguage": "en",
+    "packageFolder": "sn/ugb/gp",
+    "packageName": "sn.ugb.gp",
+    "prodDatabaseType": "postgresql",
+    "serverPort": "8084",
+    "serviceDiscoveryType": "consul",
+    "skipCommitHook": true,
+    "skipUserManagement": true
+  }
+}

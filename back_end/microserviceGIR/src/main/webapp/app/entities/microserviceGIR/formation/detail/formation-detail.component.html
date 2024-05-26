@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (formation) {
+      <div>
+        <h2 data-cy="formationDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirFormation.detail.title">Formation</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ formation.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormation.fraisDossierYN">Frais Dossier YN</span></dt>
+          <dd>
+            <span>{{ formation.fraisDossierYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormation.classeDiplomanteYN">Classe Diplomante YN</span></dt>
+          <dd>
+            <span>{{ formation.classeDiplomanteYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormation.libelleDiplome">Libelle Diplome</span></dt>
+          <dd>
+            <span>{{ formation.libelleDiplome }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormation.codeFormation">Code Formation</span></dt>
+          <dd>
+            <span>{{ formation.codeFormation }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormation.nbreCreditsMin">Nbre Credits Min</span></dt>
+          <dd>
+            <span>{{ formation.nbreCreditsMin }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormation.estParcoursYN">Est Parcours YN</span></dt>
+          <dd>
+            <span>{{ formation.estParcoursYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormation.lmdYN">Lmd YN</span></dt>
+          <dd>
+            <span>{{ formation.lmdYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormation.typeFormation">Type Formation</span></dt>
+          <dd>
+            <span jhiTranslate="{{ 'microserviceGirApp.TypeFormation.' + formation.typeFormation }}">{{ formation.typeFormation }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormation.niveau">Niveau</span></dt>
+          <dd>
+            @if (formation.niveau) {
+              <div>
+                <a [routerLink]="['/niveau', formation.niveau.id, 'view']">{{ formation.niveau.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormation.specialite">Specialite</span></dt>
+          <dd>
+            @if (formation.specialite) {
+              <div>
+                <a [routerLink]="['/specialite', formation.specialite.id, 'view']">{{ formation.specialite.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/formation', formation.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

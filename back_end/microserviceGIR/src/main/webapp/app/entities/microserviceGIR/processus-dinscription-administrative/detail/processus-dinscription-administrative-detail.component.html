@@ -1,0 +1,231 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (processusDinscriptionAdministrative) {
+      <div>
+        <h2 data-cy="processusDinscriptionAdministrativeDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.detail.title"
+            >Processus Dinscription Administrative</span
+          >
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.id }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.inscriptionDemarreeYN"
+              >Inscription Demarree YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.inscriptionDemarreeYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateDemarrageInscription"
+              >Date Demarrage Inscription</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.dateDemarrageInscription | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.inscriptionAnnuleeYN"
+              >Inscription Annulee YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.inscriptionAnnuleeYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateAnnulationInscription"
+              >Date Annulation Inscription</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.dateAnnulationInscription | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.apteYN">Apte YN</span></dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.apteYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateVisiteMedicale"
+              >Date Visite Medicale</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.dateVisiteMedicale | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.beneficiaireCROUSYN"
+              >Beneficiaire CROUSYN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.beneficiaireCROUSYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateRemiseQuitusCROUS"
+              >Date Remise Quitus CROUS</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.dateRemiseQuitusCROUS | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.nouveauCodeBUYN"
+              >Nouveau Code BUYN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.nouveauCodeBUYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.quitusBUYN">Quitus BUYN</span></dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.quitusBUYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateRemiseQuitusBU"
+              >Date Remise Quitus BU</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.dateRemiseQuitusBU | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.exporterBUYN">Exporter BUYN</span>
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.exporterBUYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.fraisObligatoiresPayesYN"
+              >Frais Obligatoires Payes YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.fraisObligatoiresPayesYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.datePaiementFraisObligatoires"
+              >Date Paiement Frais Obligatoires</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.datePaiementFraisObligatoires | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.numeroQuitusCROUS"
+              >Numero Quitus CROUS</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.numeroQuitusCROUS }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.carteEturemiseYN"
+              >Carte Eturemise YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.carteEturemiseYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.carteDupremiseYN"
+              >Carte Dupremise YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.carteDupremiseYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateRemiseCarteEtu"
+              >Date Remise Carte Etu</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.dateRemiseCarteEtu | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateRemiseCarteDup"
+              >Date Remise Carte Dup</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.dateRemiseCarteDup }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.inscritAdministrativementYN"
+              >Inscrit Administrativement YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.inscritAdministrativementYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.dateInscriptionAdministrative"
+              >Date Inscription Administrative</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.dateInscriptionAdministrative | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.derniereModification"
+              >Derniere Modification</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.derniereModification | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.inscritOnlineYN"
+              >Inscrit Online YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.inscritOnlineYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.emailUser">Email User</span></dt>
+          <dd>
+            <span>{{ processusDinscriptionAdministrative.emailUser }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirProcessusDinscriptionAdministrative.inscriptionAdministrative"
+              >Inscription Administrative</span
+            >
+          </dt>
+          <dd>
+            @if (processusDinscriptionAdministrative.inscriptionAdministrative) {
+              <div>
+                <a
+                  [routerLink]="['/inscription-administrative', processusDinscriptionAdministrative.inscriptionAdministrative.id, 'view']"
+                  >{{ processusDinscriptionAdministrative.inscriptionAdministrative.id }}</a
+                >
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/microservicegir/processus-dinscription-administrative', processusDinscriptionAdministrative.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

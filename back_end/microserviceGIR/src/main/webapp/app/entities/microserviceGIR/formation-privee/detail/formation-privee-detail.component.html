@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (formationPrivee) {
+      <div>
+        <h2 data-cy="formationPriveeDetailsHeading">
+          <span jhiTranslate="microserviceGirApp.microserviceGirFormationPrivee.detail.title">Formation Privee</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ formationPrivee.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormationPrivee.nombreMensualites">Nombre Mensualites</span></dt>
+          <dd>
+            <span>{{ formationPrivee.nombreMensualites }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirFormationPrivee.paiementPremierMoisYN">Paiement Premier Mois YN</span>
+          </dt>
+          <dd>
+            <span>{{ formationPrivee.paiementPremierMoisYN }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="microserviceGirApp.microserviceGirFormationPrivee.paiementDernierMoisYN">Paiement Dernier Mois YN</span>
+          </dt>
+          <dd>
+            <span>{{ formationPrivee.paiementDernierMoisYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormationPrivee.fraisDossierYN">Frais Dossier YN</span></dt>
+          <dd>
+            <span>{{ formationPrivee.fraisDossierYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormationPrivee.coutTotal">Cout Total</span></dt>
+          <dd>
+            <span>{{ formationPrivee.coutTotal }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormationPrivee.mensualite">Mensualite</span></dt>
+          <dd>
+            <span>{{ formationPrivee.mensualite }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirFormationPrivee.formation">Formation</span></dt>
+          <dd>
+            @if (formationPrivee.formation) {
+              <div>
+                <a [routerLink]="['/formation', formationPrivee.formation.id, 'view']">{{ formationPrivee.formation.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/formation-privee', formationPrivee.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

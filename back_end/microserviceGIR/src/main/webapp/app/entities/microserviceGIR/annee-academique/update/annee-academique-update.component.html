@@ -1,0 +1,103 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-annee-academique-heading"
+        data-cy="AnneeAcademiqueCreateUpdateHeading"
+        jhiTranslate="microserviceGirApp.microserviceGirAnneeAcademique.home.createOrEditLabel"
+      >
+        Create or edit a Annee Academique
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirAnneeAcademique.libelleAnneeAcademique"
+            for="field_libelleAnneeAcademique"
+            >Libelle Annee Academique</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libelleAnneeAcademique"
+            id="field_libelleAnneeAcademique"
+            data-cy="libelleAnneeAcademique"
+            formControlName="libelleAnneeAcademique"
+          />
+          @if (
+            editForm.get('libelleAnneeAcademique')!.invalid &&
+            (editForm.get('libelleAnneeAcademique')!.dirty || editForm.get('libelleAnneeAcademique')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('libelleAnneeAcademique')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="microserviceGirApp.microserviceGirAnneeAcademique.anneeAc" for="field_anneeAc"
+            >Annee Ac</label
+          >
+          <input type="text" class="form-control" name="anneeAc" id="field_anneeAc" data-cy="anneeAc" formControlName="anneeAc" />
+          @if (editForm.get('anneeAc')!.invalid && (editForm.get('anneeAc')!.dirty || editForm.get('anneeAc')!.touched)) {
+            <div>
+              @if (editForm.get('anneeAc')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('anneeAc')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 4 }"
+                  >This field cannot be longer than 4 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="microserviceGirApp.microserviceGirAnneeAcademique.anneeCouranteYN"
+            for="field_anneeCouranteYN"
+            >Annee Courante YN</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="anneeCouranteYN"
+            id="field_anneeCouranteYN"
+            data-cy="anneeCouranteYN"
+            formControlName="anneeCouranteYN"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

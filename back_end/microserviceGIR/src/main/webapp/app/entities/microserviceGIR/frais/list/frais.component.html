@@ -1,0 +1,190 @@
+<div>
+  <h2 id="page-heading" data-cy="FraisHeading">
+    <span jhiTranslate="microserviceGirApp.microserviceGirFrais.home.title">Frais</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirFrais.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-frais"
+        [routerLink]="['/microservicegir/frais/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirFrais.home.createLabel">Create a new Frais</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (frais?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="microserviceGirApp.microserviceGirFrais.home.notFound">No Frais found</span>
+    </div>
+  }
+
+  @if (frais && frais.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="valeurFrais">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.valeurFrais">Valeur Frais</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="descriptionFrais">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.descriptionFrais">Description Frais</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="fraisPourAssimileYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.fraisPourAssimileYN">Frais Pour Assimile YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cycle">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.cycle">Cycle</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dia">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.dia">Dia</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dip">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.dip">Dip</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dipPrivee">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.dipPrivee">Dip Privee</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateApplication">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.dateApplication">Date Application</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateFin">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.dateFin">Date Fin</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="estEnApplicationYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.estEnApplicationYN">Est En Application YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="typeFrais.id">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirFrais.typeFrais">Type Frais</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (frais of frais; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/frais', frais.id, 'view']">{{ frais.id }}</a>
+              </td>
+              <td>{{ frais.valeurFrais }}</td>
+              <td>{{ frais.descriptionFrais }}</td>
+              <td>{{ frais.fraisPourAssimileYN }}</td>
+              <td jhiTranslate="{{ 'microserviceGirApp.Cycle.' + frais.cycle }}">{{ frais.cycle }}</td>
+              <td>{{ frais.dia }}</td>
+              <td>{{ frais.dip }}</td>
+              <td>{{ frais.dipPrivee }}</td>
+              <td>{{ frais.dateApplication | formatMediumDate }}</td>
+              <td>{{ frais.dateFin | formatMediumDate }}</td>
+              <td>{{ frais.estEnApplicationYN }}</td>
+              <td>
+                @if (frais.typeFrais) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/type-frais', frais.typeFrais.id, 'view']">{{ frais.typeFrais.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/microservicegir/frais', frais.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/microservicegir/frais', frais.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(frais)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (frais && frais.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

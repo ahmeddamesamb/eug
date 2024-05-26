@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (ufr) {
+      <div>
+        <h2 data-cy="ufrDetailsHeading"><span jhiTranslate="microserviceGirApp.microserviceGirUfr.detail.title">Ufr</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ ufr.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirUfr.libeleUfr">Libele Ufr</span></dt>
+          <dd>
+            <span>{{ ufr.libeleUfr }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirUfr.sigleUfr">Sigle Ufr</span></dt>
+          <dd>
+            <span>{{ ufr.sigleUfr }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirUfr.systemeLMDYN">Systeme LMDYN</span></dt>
+          <dd>
+            <span>{{ ufr.systemeLMDYN }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirUfr.ordreStat">Ordre Stat</span></dt>
+          <dd>
+            <span>{{ ufr.ordreStat }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceGirApp.microserviceGirUfr.universite">Universite</span></dt>
+          <dd>
+            @if (ufr.universite) {
+              <div>
+                <a [routerLink]="['/universite', ufr.universite.id, 'view']">{{ ufr.universite.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/ufr', ufr.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

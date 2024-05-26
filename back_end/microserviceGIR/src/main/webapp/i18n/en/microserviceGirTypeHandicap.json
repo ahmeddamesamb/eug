@@ -1,0 +1,24 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirTypeHandicap": {
+      "home": {
+        "title": "Type Handicaps",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Type Handicap",
+        "createOrEditLabel": "Create or edit a Type Handicap",
+        "notFound": "No Type Handicaps found"
+      },
+      "created": "A new Type Handicap is created with identifier {{ param }}",
+      "updated": "A Type Handicap is updated with identifier {{ param }}",
+      "deleted": "A Type Handicap is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Type Handicap {{ id }}?"
+      },
+      "detail": {
+        "title": "Type Handicap"
+      },
+      "id": "ID",
+      "libelleTypeHandicap": "Libelle Type Handicap"
+    }
+  }
+}

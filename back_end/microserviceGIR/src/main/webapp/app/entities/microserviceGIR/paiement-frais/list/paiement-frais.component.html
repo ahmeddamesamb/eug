@@ -1,0 +1,203 @@
+<div>
+  <h2 id="page-heading" data-cy="PaiementFraisHeading">
+    <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.home.title">Paiement Frais</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-paiement-frais"
+        [routerLink]="['/microservicegir/paiement-frais/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.home.createLabel">Create a new Paiement Frais</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (paiementFrais?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.home.notFound">No Paiement Frais found</span>
+    </div>
+  }
+
+  @if (paiementFrais && paiementFrais.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="datePaiement">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.datePaiement">Date Paiement</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="obligatoireYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.obligatoireYN">Obligatoire YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="echeancePayeeYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.echeancePayeeYN">Echeance Payee YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="emailUser">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.emailUser">Email User</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dateForclos">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.dateForclos">Date Forclos</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="forclosYN">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.forclosYN">Forclos YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="frais.id">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.frais">Frais</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="operateur.id">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.operateur">Operateur</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="inscriptionAdministrativeFormation.id">
+              <div class="d-flex">
+                <span jhiTranslate="microserviceGirApp.microserviceGirPaiementFrais.inscriptionAdministrativeFormation"
+                  >Inscription Administrative Formation</span
+                >
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (paiementFrais of paiementFrais; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/paiement-frais', paiementFrais.id, 'view']">{{ paiementFrais.id }}</a>
+              </td>
+              <td>{{ paiementFrais.datePaiement | formatMediumDate }}</td>
+              <td>{{ paiementFrais.obligatoireYN }}</td>
+              <td>{{ paiementFrais.echeancePayeeYN }}</td>
+              <td>{{ paiementFrais.emailUser }}</td>
+              <td>{{ paiementFrais.dateForclos | formatMediumDate }}</td>
+              <td>{{ paiementFrais.forclosYN }}</td>
+              <td>
+                @if (paiementFrais.frais) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/frais', paiementFrais.frais.id, 'view']">{{ paiementFrais.frais.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (paiementFrais.operateur) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/operateur', paiementFrais.operateur.id, 'view']">{{
+                      paiementFrais.operateur.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (paiementFrais.inscriptionAdministrativeFormation) {
+                  <div>
+                    <a
+                      [routerLink]="[
+                        '/microservicegir/inscription-administrative-formation',
+                        paiementFrais.inscriptionAdministrativeFormation.id,
+                        'view'
+                      ]"
+                      >{{ paiementFrais.inscriptionAdministrativeFormation.id }}</a
+                    >
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/paiement-frais', paiementFrais.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/paiement-frais', paiementFrais.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(paiementFrais)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (paiementFrais && paiementFrais.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,32 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirInscriptionAdministrativeFormation": {
+      "home": {
+        "title": "Inscription Administrative Formations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Inscription Administrative Formation",
+        "createOrEditLabel": "Create or edit a Inscription Administrative Formation",
+        "notFound": "No Inscription Administrative Formations found"
+      },
+      "created": "A new Inscription Administrative Formation is created with identifier {{ param }}",
+      "updated": "A Inscription Administrative Formation is updated with identifier {{ param }}",
+      "deleted": "A Inscription Administrative Formation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Inscription Administrative Formation {{ id }}?"
+      },
+      "detail": {
+        "title": "Inscription Administrative Formation"
+      },
+      "id": "ID",
+      "inscriptionPrincipaleYN": "Inscription Principale YN",
+      "inscriptionAnnuleeYN": "Inscription Annulee YN",
+      "paiementFraisOblYN": "Paiement Frais Obl YN",
+      "paiementFraisIntegergYN": "Paiement Frais Integerg YN",
+      "certificatDelivreYN": "Certificat Delivre YN",
+      "dateChoixFormation": "Date Choix Formation",
+      "dateValidationInscription": "Date Validation Inscription",
+      "inscriptionAdministrative": "Inscription Administrative",
+      "formation": "Formation"
+    }
+  }
+}

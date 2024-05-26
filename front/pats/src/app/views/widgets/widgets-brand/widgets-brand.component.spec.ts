@@ -4,7 +4,7 @@ import { GridModule, WidgetModule } from '@coreui/angular-pro';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 import { IconModule } from '@coreui/icons-angular';
 import { IconSetService } from '@coreui/icons-angular';
-import { iconSubset } from '../../../icons/icon-subset';
+import { iconSubset } from '../../../shared/icons/icon-subset';
 import { WidgetsBrandComponent } from './widgets-brand.component';
 
 describe('WidgetsBrandComponent', () => {

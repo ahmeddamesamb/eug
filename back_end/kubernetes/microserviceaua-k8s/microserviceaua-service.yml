@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: microserviceaua
+  namespace: sencookseur
+  labels:
+    app: microserviceaua
+spec:
+  selector:
+    app: microserviceaua
+  ports:
+    - name: http
+      port: 8087

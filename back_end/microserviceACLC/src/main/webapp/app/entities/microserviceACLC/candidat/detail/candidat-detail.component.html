@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (candidat) {
+      <div>
+        <h2 data-cy="candidatDetailsHeading">
+          <span jhiTranslate="microserviceAclcApp.microserviceAclcCandidat.detail.title">Candidat</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ candidat.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceAclcApp.microserviceAclcCandidat.nomCanditat">Nom Canditat</span></dt>
+          <dd>
+            <span>{{ candidat.nomCanditat }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceAclcApp.microserviceAclcCandidat.prenomCandidat">Prenom Candidat</span></dt>
+          <dd>
+            <span>{{ candidat.prenomCandidat }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceAclcApp.microserviceAclcCandidat.dateNaissanceCandidat">Date Naissance Candidat</span></dt>
+          <dd>
+            <span>{{ candidat.dateNaissanceCandidat | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="microserviceAclcApp.microserviceAclcCandidat.emailCandidat">Email Candidat</span></dt>
+          <dd>
+            <span>{{ candidat.emailCandidat }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microserviceaclc/candidat', candidat.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
