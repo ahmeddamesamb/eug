@@ -1,5 +1,6 @@
 package sn.ugb.gir.service.impl;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,5 +81,28 @@ public class MinistereServiceImpl implements MinistereService {
     public void delete(Long id) {
         log.debug("Request to delete Ministere : {}", id);
         ministereRepository.deleteById(id);
+    }
+
+
+    /**
+     * @return
+     */
+    @Override
+    public Optional<MinistereDTO> findCurrent() {
+        Ministere ministereEnCours = ministereRepository.findByEnCoursYN(1)
+            .orElse(null);
+        return Optional.ofNullable(ministereMapper.toDto(ministereEnCours));
+    }
+
+    /**
+     * @param startDate
+     * @param endDate
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<MinistereDTO> findByPeriode(LocalDate startDate, LocalDate endDate, Pageable pageable) {
+        Page<Ministere> ministerePage = ministereRepository.findByPeriode(startDate, endDate, pageable);
+        return ministerePage.map(ministereMapper::toDto);
     }
 }

@@ -20,10 +20,18 @@ public interface FormationMapper extends EntityMapper<FormationDTO, Formation> {
     @Named("niveauId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleNiveau", source = "libelleNiveau")
+    @Mapping(target = "cycleNiveau", source = "cycleNiveau")
+    @Mapping(target = "codeNiveau", source = "codeNiveau")
+    @Mapping(target = "anneeEtude", source = "anneeEtude")
     NiveauDTO toDtoNiveauId(Niveau niveau);
 
     @Named("specialiteId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nomSpecialites", source = "nomSpecialites")
+    @Mapping(target = "sigleSpecialites", source = "sigleSpecialites")
+    @Mapping(target = "specialiteParticulierYN", source = "specialiteParticulierYN")
+    @Mapping(target = "specialitesPayanteYN", source = "specialitesPayanteYN")
     SpecialiteDTO toDtoSpecialiteId(Specialite specialite);
 }

@@ -3,9 +3,11 @@ package sn.ugb.gir.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import sn.ugb.gir.domain.enumeration.TypeFormation;
@@ -57,15 +59,15 @@ public class Formation implements Serializable {
     private Niveau niveau;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "mention" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"mention"}, allowSetters = true)
     private Specialite specialite;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "formations")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "formations" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"formations"}, allowSetters = true)
     private Set<FormationAutorisee> formationAutorisees = new HashSet<>();
 
-    @JsonIgnoreProperties(value = { "formation" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"formation"}, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "formation")
     private FormationPrivee formationPrivee;
 

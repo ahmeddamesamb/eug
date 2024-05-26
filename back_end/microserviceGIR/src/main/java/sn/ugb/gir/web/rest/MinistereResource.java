@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -178,5 +180,23 @@ public class MinistereResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/current")
+    public ResponseEntity<MinistereDTO> getInfosCurrentMinistere() {
+        log.debug("REST request to get current Ministere");
+        Optional<MinistereDTO> ministereDTO = ministereService.findCurrent();
+        return ResponseUtil.wrapOrNotFound(ministereDTO);
+    }
+
+    @GetMapping("/periode")
+    public ResponseEntity<List<MinistereDTO>> getInfosMinistreByPeriode(
+        @RequestParam(value = "startDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+        @RequestParam(value = "endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get Ministere by period: {} - {}", startDate, endDate);
+        Page<MinistereDTO> Page = ministereService.findByPeriode(startDate, endDate, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), Page);
+        return ResponseEntity.ok().headers(headers).body(Page.getContent());
     }
 }

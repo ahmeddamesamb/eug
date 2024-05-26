@@ -1,10 +1,6 @@
 package sn.ugb.gir.service.impl;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -12,10 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sn.ugb.gir.domain.Formation;
+import sn.ugb.gir.domain.enumeration.Cycle;
 import sn.ugb.gir.repository.FormationRepository;
 import sn.ugb.gir.service.FormationService;
 import sn.ugb.gir.service.dto.FormationDTO;
 import sn.ugb.gir.service.mapper.FormationMapper;
+import sn.ugb.gir.domain.enumeration.TypeFormation;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Formation}.
@@ -38,6 +36,16 @@ public class FormationServiceImpl implements FormationService {
     @Override
     public FormationDTO save(FormationDTO formationDTO) {
         log.debug("Request to save Formation : {}", formationDTO);
+
+        if (formationDTO.getNiveau() == null || formationDTO.getSpecialite() == null) {
+            throw new IllegalArgumentException("Le niveau et la specialité ne doivent pas etre null");
+        }
+
+        Optional<Formation> existingFormation = formationRepository.findByNiveauIdAndSpecialiteId(formationDTO.getNiveau().getId(), formationDTO.getSpecialite().getId());
+
+        if (existingFormation.isPresent()) {
+            throw new IllegalArgumentException("Cette Formation existe deja avec le meme Niveau et la meme Specialite");
+        }
         Formation formation = formationMapper.toEntity(formationDTO);
         formation = formationRepository.save(formation);
         return formationMapper.toDto(formation);
@@ -73,19 +81,6 @@ public class FormationServiceImpl implements FormationService {
         return formationRepository.findAll(pageable).map(formationMapper::toDto);
     }
 
-    /**
-     *  Get all the formations where FormationPrivee is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<FormationDTO> findAllWhereFormationPriveeIsNull() {
-        log.debug("Request to get all formations where FormationPrivee is null");
-        return StreamSupport
-            .stream(formationRepository.findAll().spliterator(), false)
-            .filter(formation -> formation.getFormationPrivee() == null)
-            .map(formationMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
 
     @Override
     @Transactional(readOnly = true)
@@ -99,4 +94,70 @@ public class FormationServiceImpl implements FormationService {
         log.debug("Request to delete Formation : {}", id);
         formationRepository.deleteById(id);
     }
+
+    @Override
+    public Page<FormationDTO> findAllFormationByMention(Long mentionId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionId(mentionId, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationByDomaine(Long domaineId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineId(domaineId, pageable)
+            .map(formationMapper::toDto);
+    }
+
+
+    @Override
+    public Page<FormationDTO> findAllFormationByUfr(Long ufrId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsId(ufrId, pageable)
+            .map(formationMapper::toDto);
+    }
+
+
+    @Override
+    public Page<FormationDTO> findAllFormationByCycle(Cycle cycle, Pageable pageable) {
+        return formationRepository.findByNiveauCycleNiveau(cycle, pageable)
+            .map(formationMapper::toDto);
+    }
+
+
+    @Override
+    public Page<FormationDTO> findAllFormationByUniversite(Long universiteId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteId(universiteId, pageable)
+            .map(formationMapper::toDto);
+    }
+
+
+    @Override
+    public Page<FormationDTO> findAllFormationByMinistere(Long ministereId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteMinistereId(ministereId, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationPubliqueByUniversite(Long universiteId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteIdAndTypeFormation(universiteId, TypeFormation.PUBLIC, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationPriveeByUniversite(Long universiteId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteIdAndTypeFormation(universiteId, TypeFormation.PRIVEE, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationPubliqueByMinistere(Long ministereId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteMinistereIdAndTypeFormation(ministereId, TypeFormation.PUBLIC, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationPriveeByMinistere(Long ministereId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteMinistereIdAndTypeFormation(ministereId, TypeFormation.PRIVEE, pageable)
+            .map(formationMapper::toDto);
+    }
+
+
 }

@@ -1,8 +1,10 @@
 package sn.ugb.gir.service.dto;
 
 import jakarta.validation.constraints.*;
+
 import java.io.Serializable;
 import java.util.Objects;
+
 import sn.ugb.gir.domain.enumeration.TypeFormation;
 
 /**
@@ -12,8 +14,6 @@ import sn.ugb.gir.domain.enumeration.TypeFormation;
 public class FormationDTO implements Serializable {
 
     private Long id;
-
-    private Integer fraisDossierYN;
 
     private Integer classeDiplomanteYN;
 
@@ -26,6 +26,9 @@ public class FormationDTO implements Serializable {
     private Integer estParcoursYN;
 
     private Integer lmdYN;
+
+    private Integer fraisDossierYN;
+
 
     @NotNull
     private TypeFormation typeFormation;
@@ -122,6 +125,7 @@ public class FormationDTO implements Serializable {
         this.specialite = specialite;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -146,18 +150,18 @@ public class FormationDTO implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "FormationDTO{" +
-            "id=" + getId() +
-            ", fraisDossierYN=" + getFraisDossierYN() +
-            ", classeDiplomanteYN=" + getClasseDiplomanteYN() +
+        return "FormationDTO{"
+            + "id=" + getId() + "," +
+            ", classeDiplomanteYN=" + getClasseDiplomanteYN() + ", " +
             ", libelleDiplome='" + getLibelleDiplome() + "'" +
             ", codeFormation='" + getCodeFormation() + "'" +
             ", nbreCreditsMin=" + getNbreCreditsMin() +
             ", estParcoursYN=" + getEstParcoursYN() +
             ", lmdYN=" + getLmdYN() +
-            ", typeFormation='" + getTypeFormation() + "'" +
+            ", typeFormation='" + getTypeFormation() +
             ", niveau=" + getNiveau() +
             ", specialite=" + getSpecialite() +
             "}";
+
     }
 }
