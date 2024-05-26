@@ -60,6 +60,9 @@ public class UniversiteResource {
         if (universiteDTO.getId() != null) {
             throw new BadRequestAlertException("A new universite cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        if ( universiteRepository.existsUniversiteByNomUniversite( universiteDTO.getNomUniversite() ) ) {
+            throw new BadRequestAlertException("Cet université exist deja !!!", ENTITY_NAME, "nomuniversiteexists");
+        }
         UniversiteDTO result = universiteService.save(universiteDTO);
         return ResponseEntity
             .created(new URI("/api/universites/" + result.getId()))
@@ -147,6 +150,20 @@ public class UniversiteResource {
     public ResponseEntity<List<UniversiteDTO>> getAllUniversites(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Universites");
         Page<UniversiteDTO> page = universiteService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /universites} : get all the universites having ministere id.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of universites in body.
+     */
+    @GetMapping("/ministeres/{id}")
+    public ResponseEntity<List<UniversiteDTO>> findByMinistereId(@org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("id") Long id) {
+        log.debug("REST request to get a page of Universites having an id of a ministere");
+        Page<UniversiteDTO> page = universiteService.findAllByMinistereId(pageable,id);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

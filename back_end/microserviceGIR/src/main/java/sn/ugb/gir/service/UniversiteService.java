@@ -55,4 +55,13 @@ public interface UniversiteService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get all the universites having ministere id .
+     *
+     * @param pageable the pagination information.
+     * @param id
+     * @return the list of entities.
+     */
+    Page<UniversiteDTO> findAllByMinistereId(Pageable pageable,Long id);
 }

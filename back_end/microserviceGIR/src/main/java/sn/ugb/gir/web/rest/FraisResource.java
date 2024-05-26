@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import sn.ugb.gir.domain.enumeration.Cycle;
 import sn.ugb.gir.repository.FraisRepository;
 import sn.ugb.gir.service.FraisService;
 import sn.ugb.gir.service.dto.FraisDTO;
@@ -59,6 +60,10 @@ public class FraisResource {
         log.debug("REST request to save Frais : {}", fraisDTO);
         if (fraisDTO.getId() != null) {
             throw new BadRequestAlertException("A new frais cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        if( fraisRepository.existsFraisByCycleAndTypeFraisLibelleTypeFrais(fraisDTO.getCycle(),fraisDTO.getTypeFrais().getLibelleTypeFrais()) )
+        {
+            throw new BadRequestAlertException("Ce frais existe deja pour ce cycle", ENTITY_NAME, "fraisexists");
         }
         FraisDTO result = fraisService.save(fraisDTO);
         return ResponseEntity
@@ -178,5 +183,19 @@ public class FraisResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    /**
+     * {@code GET  /frais} : get all the frais.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of frais in body.
+     */
+    @GetMapping("/cycle/{cycle}")
+    public ResponseEntity<List<FraisDTO>> getFraisByCycle(@org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("cycle") Cycle cycle) {
+        log.debug("REST request to get a page of Frais for a given cycle");
+        Page<FraisDTO> page = fraisService.findAllFraisByCycle(pageable,cycle);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

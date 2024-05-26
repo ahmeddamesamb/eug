@@ -71,6 +71,13 @@ public class UniversiteServiceImpl implements UniversiteService {
 
     @Override
     @Transactional(readOnly = true)
+    public Page<UniversiteDTO> findAllByMinistereId(Pageable pageable,Long id) {
+        log.debug("Request to get all Universites");
+        return universiteRepository.findByMinistereId(pageable,id).map(universiteMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<UniversiteDTO> findOne(Long id) {
         log.debug("Request to get Universite : {}", id);
         return universiteRepository.findById(id).map(universiteMapper::toDto);

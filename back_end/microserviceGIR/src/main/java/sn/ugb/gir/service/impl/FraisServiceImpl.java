@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sn.ugb.gir.domain.Frais;
+import sn.ugb.gir.domain.enumeration.Cycle;
 import sn.ugb.gir.repository.FraisRepository;
 import sn.ugb.gir.service.FraisService;
 import sn.ugb.gir.service.dto.FraisDTO;
@@ -81,4 +82,12 @@ public class FraisServiceImpl implements FraisService {
         log.debug("Request to delete Frais : {}", id);
         fraisRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<FraisDTO> findAllFraisByCycle(Pageable pageable, Cycle cycle) {
+        log.debug("Request to get all Frais for a cycle");
+        return fraisRepository.findFraisByCycle(pageable,cycle).map(fraisMapper::toDto);
+    }
+
 }

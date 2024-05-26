@@ -26,10 +26,12 @@ public class Frais implements Serializable {
     private Long id;
 
     @NotNull
+    @Min(5000) //Ajouter
     @Column(name = "valeur_frais", nullable = false)
     private Double valeurFrais;
 
-    @Column(name = "description_frais")
+    @NotNull //Ajouter
+    @Column(name = "description_frais", nullable = false)
     private String descriptionFrais;
 
     @Column(name = "frais_pour_assimile_yn")
@@ -60,6 +62,7 @@ public class Frais implements Serializable {
     @Column(name = "est_en_application_yn", nullable = false)
     private Integer estEnApplicationYN;
 
+    @NotNull //Ajouter
     @ManyToOne(fetch = FetchType.LAZY)
     private TypeFrais typeFrais;
 

@@ -3,6 +3,7 @@ package sn.ugb.gir.service;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import sn.ugb.gir.domain.enumeration.Cycle;
 import sn.ugb.gir.service.dto.FraisDTO;
 
 /**
@@ -55,4 +56,13 @@ public interface FraisService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get all the frais by cycle .
+     *
+     * @param pageable the pagination information.
+     * @param cycle
+     * @return the list of entities.
+     */
+    Page<FraisDTO> findAllFraisByCycle(Pageable pageable, Cycle cycle);
 }

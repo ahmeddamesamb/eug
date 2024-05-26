@@ -17,5 +17,8 @@ public interface FraisMapper extends EntityMapper<FraisDTO, Frais> {
     @Named("typeFraisId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleTypeFrais", source = "libelleTypeFrais")
+
+
     TypeFraisDTO toDtoTypeFraisId(TypeFrais typeFrais);
 }

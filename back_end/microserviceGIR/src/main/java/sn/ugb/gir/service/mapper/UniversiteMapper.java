@@ -17,5 +17,11 @@ public interface UniversiteMapper extends EntityMapper<UniversiteDTO, Universite
     @Named("ministereId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nomMinistere", source = "nomMinistere")
+    @Mapping(target = "sigleMinistere", source = "sigleMinistere")
+    @Mapping(target = "dateDebut", source = "dateDebut")
+    @Mapping(target = "dateFin", source = "dateFin")
+    @Mapping(target = "enCoursYN", source = "enCoursYN")
+
     MinistereDTO toDtoMinistereId(Ministere ministere);
 }
