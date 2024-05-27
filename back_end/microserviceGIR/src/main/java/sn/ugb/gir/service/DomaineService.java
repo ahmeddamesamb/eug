@@ -63,12 +63,12 @@ public interface DomaineService {
      * @param id the id of the entity.
      */
     void delete(Long id);
-//---------------------------------------- FIND ALL DOMAINES BY UFR ----------------------------------------------------
+//---------------------------------------- FIND ALL DOMAINES BY UFR ID----------------------------------------------------
 Page<DomaineDTO> findAllDomaineByUfr(Long ufrId, Pageable pageable);
-//---------------------------------------- FIND ALL DOMAINES BY UNIVERSITE ---------------------------------------------
+//---------------------------------------- FIND ALL DOMAINES BY UNIVERSITE ID---------------------------------------------
 
 Page<DomaineDTO> findAllDomaineByUniversite(Long universiteId, Pageable pageable);
 
-//---------------------------------------- FIND ALL DOMAINES BY MINISTERE ----------------------------------------------
+//---------------------------------------- FIND ALL DOMAINES BY MINISTERE ID----------------------------------------------
 Page<DomaineDTO> findAllDomaineByMinistere(Long ministereId, Pageable pageable);
 }
