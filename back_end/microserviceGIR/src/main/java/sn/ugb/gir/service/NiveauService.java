@@ -66,8 +66,14 @@ public interface NiveauService {
      * @param universiteId the id of the universite.
      * @return the list of entities.
      */
-
     Page<NiveauDTO> getAllNiveauByUniversite(Long universiteId, Pageable pageable);
+
+    /**
+     * Get all niveaux by universite.
+     *
+     * @param ministereId the id of the universite.
+     * @return the list of entities.
+     */
     Page<NiveauDTO> getAllNiveauByMinistere(Long ministereId, Pageable pageable);
 
 

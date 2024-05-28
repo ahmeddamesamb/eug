@@ -23,16 +23,21 @@ public class AnneeAcademique implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank
     @NotNull
-    @Column(name = "libelle_annee_academique", nullable = false)
+    @Size(max = 9, min = 9 )
+    @Column(name = "libelle_annee_academique" , length =9 , nullable = false)
     private String libelleAnneeAcademique;
 
     @NotNull
-    @Size(max = 4)
-    @Column(name = "annee_ac", length = 4, nullable = false, unique = true)
+    @Size(max = 4, min = 4 )
+    @Column(name = "annee_ac", length = 4, nullable = false, unique = true )
     private String anneeAc;
 
-    @Column(name = "annee_courante_yn")
+    @NotBlank
+    @NotNull
+    @Size(max = 1)
+    @Column(name = "annee_courante_yn", length = 1, nullable = false, unique = true)
     private Integer anneeCouranteYN;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

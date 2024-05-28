@@ -408,6 +408,7 @@ entity ProcessusDinscriptionAdministrative {
   inscritOnlineYN Integer,
   emailUser String
 }
+
 entity TypeAdmission {
   libelleTypeAdmission  String required unique
 }
