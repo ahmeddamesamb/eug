@@ -60,6 +60,9 @@ public class LyceeResource {
         if (lyceeDTO.getId() != null) {
             throw new BadRequestAlertException("A new lycee cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        if (lyceeRepository.existsLyceeByNomLycee(lyceeDTO.getNomLycee())) {
+            throw new BadRequestAlertException("Deux Lycees ne peuvent pas avoir le même nom", ENTITY_NAME, "nomlyceeexists");
+        }
         LyceeDTO result = lyceeService.save(lyceeDTO);
         return ResponseEntity
             .created(new URI("/api/lycees/" + result.getId()))
@@ -178,5 +181,21 @@ public class LyceeResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    /**
+     * {@code GET  /lycees} : get all the lycees.
+     *
+     * @param pageable the pagination information.
+     *
+     * @param id the id of region
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of lycees in body.
+     */
+    @GetMapping("/Regions/{id}")
+    public ResponseEntity<List<LyceeDTO>> getAllLyceesByRegion(@org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("id") Long id) {
+        log.debug("REST request to get a page of Lycees having an id of region");
+        Page<LyceeDTO> page = lyceeService.findAllByRegionId(pageable,id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }
