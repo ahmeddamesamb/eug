@@ -22,6 +22,7 @@ public interface PaysMapper extends EntityMapper<PaysDTO, Pays> {
     @Named("zoneId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleZone", source = "libelleZone")
     ZoneDTO toDtoZoneId(Zone zone);
 
     @Named("zoneIdSet")

@@ -55,4 +55,8 @@ public interface RegionService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+//---------------------------------------- FIND ALL REGIOND BY PAYS ID ----------------------------------------------------
+    Page<RegionDTO> findAllRegionByPays(Long paysId, Pageable pageable);
+
 }

@@ -11,8 +11,8 @@ npm-debug.log.*
 back_end/microserviceGIR/src/main/java/sn/ugb/gir/generator
 back_end/microserviceGIR/src/main/java/sn/ugb/gir/FakerDataGenerator.java
 back_end/microserviceGIR/src/main/java/sn/ugb/gir/InitData.java
-back_end/microserviceGIR/src/main/resources/config/application-dev.yml
-back_end/gateway/src/main/resources/config/application-dev.yml
+
+*application-dev.yml
 
 ######################
 # SASS

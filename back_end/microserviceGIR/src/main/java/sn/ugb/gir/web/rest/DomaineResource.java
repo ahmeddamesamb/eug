@@ -188,29 +188,29 @@ public class DomaineResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
-//***************************************************************** GET ALL DOMAINES BY UFR ****************************************************
+//***************************************************************** GET ALL DOMAINES BY UFR ID****************************************************
 
 @GetMapping("/ufrs/{ufrId}")
 public ResponseEntity<List<DomaineDTO>> getAllDomaineByUfr(@PathVariable Long ufrId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-    log.debug("REST request to get a page of UFRs by Domaine ID : {}", ufrId);
+    log.debug("REST request to get a page of Domaine by Ufr ID : {}", ufrId);
     Page<DomaineDTO> page = domaineService.findAllDomaineByUfr(ufrId, pageable);
     HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
     return ResponseEntity.ok().headers(headers).body(page.getContent());
 }
 
-//***************************************************************** GET ALL DOMAINES BY UNIVERSITE *********************************************
+//***************************************************************** GET ALL DOMAINES BY UNIVERSITE ID*********************************************
 @GetMapping("/universites/{universiteId}")
 public ResponseEntity<List<DomaineDTO>> getAllDomaineByUniversite(@PathVariable Long universiteId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-    log.debug("REST request to get a page of UFRs by Domaine ID : {}", universiteId);
+    log.debug("REST request to get a page of Domaine by Universite ID : {}", universiteId);
     Page<DomaineDTO> page = domaineService.findAllDomaineByUniversite(universiteId, pageable);
     HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
     return ResponseEntity.ok().headers(headers).body(page.getContent());
 }
 
-//***************************************************************** GET ALL DOMAINES BY MINISTER ************************************************
+//***************************************************************** GET ALL DOMAINES BY MINISTER ID************************************************
 @GetMapping("/ministeres/{ministereId}")
 public ResponseEntity<List<DomaineDTO>> getAllDomaineByMinistere(@PathVariable Long ministereId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-    log.debug("REST request to get a page of UFRs by Domaine ID : {}", ministereId);
+    log.debug("REST request to get a page of Domaine by Ministere ID : {}", ministereId);
     Page<DomaineDTO> page = domaineService.findAllDomaineByMinistere(ministereId, pageable);
     HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
     return ResponseEntity.ok().headers(headers).body(page.getContent());
