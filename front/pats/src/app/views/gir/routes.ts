@@ -52,14 +52,14 @@ export const routes: Routes = [
             loadComponent: () => import('./parametrage/parametrage.component').then(m => m.ParametrageComponent),
             data: {
                 title: 'Parametrage'
-            }
-        },
-        {
-            path: 'statistique',
-            loadComponent: () => import('./statistique/statistique.component').then(m => m.StatistiqueComponent),
-            data: {
-                title: 'Statistique'
-            }
+            },
+            children: [
+                {
+                  path: '',
+                  loadChildren: () => import('./parametrage/routes').then((m) => m.routes)
+                },
+                
+            ]
         },
       
     ]

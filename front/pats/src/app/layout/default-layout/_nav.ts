@@ -22,7 +22,7 @@ export const navItems: INavData[] = [
         url: '/gir/inscription-reinscription',
         iconComponent: { name: 'cilFolderOpen' }
       },
-      
+
       {
         name: 'Paiement en ligne ou présentiel',
         url: '/gir/paiement-en-ligne-ou-presentiel',
@@ -48,14 +48,9 @@ export const navItems: INavData[] = [
         url: '/gir/parametrage',
         iconComponent: { name: 'cilCog' },
       },
-      {
-        name: 'Statistique',
-        url: '/gir/statistique',
-        iconComponent: { name: 'cilChart' }
-      },
-      
+
     ]
-    
+
   },
 
 ];
