@@ -186,4 +186,39 @@ public class DisciplineSportiveEtudiantResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    /**
+     * {@code GET  /discipline-sportive-etudiants} : get all the disciplineSportiveEtudiants.
+     *
+     * @param pageable the pagination information.
+     * @param codeEtu the codeEtu of entity Etudiant
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of disciplineSportiveEtudiants in body.
+     */
+    @GetMapping("/etudiants/codeEtu/{codeEtu}")
+    public ResponseEntity<List<DisciplineSportiveEtudiantDTO>> getAllDisciplineSportiveEtudiantsByEtudiantcodeEtu(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("codeEtu") String codeEtu
+    ) {
+        log.debug("REST request to get a page of DisciplineSportiveEtudiants for etudiant : {}", codeEtu);
+        Page<DisciplineSportiveEtudiantDTO> page = disciplineSportiveEtudiantService.findAllByEtudiantCodeEtu(pageable,codeEtu);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /discipline-sportive-etudiants} : get all the disciplineSportiveEtudiants.
+     *
+     * @param pageable the pagination information.
+     * @param id the id of entity Etudiant
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of disciplineSportiveEtudiants in body.
+     */
+    @GetMapping("/etudiants/id/{id}")
+    public ResponseEntity<List<DisciplineSportiveEtudiantDTO>> getAllDisciplineSportiveEtudiantsByEtudiantId(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("id") Long id
+    ) {
+        log.debug("REST request to get a page of DisciplineSportiveEtudiants for etudiant : {}", id);
+        Page<DisciplineSportiveEtudiantDTO> page = disciplineSportiveEtudiantService.findAllByEtudiantId(pageable,id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }
