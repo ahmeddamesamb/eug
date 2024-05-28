@@ -12,4 +12,5 @@ import sn.ugb.gir.domain.Operateur;
 @SuppressWarnings("unused")
 @Repository
 public interface OperateurRepository extends JpaRepository<Operateur, Long> {
+    boolean existsOperateurByCodeOperateur(String codeOperateur);
 }
