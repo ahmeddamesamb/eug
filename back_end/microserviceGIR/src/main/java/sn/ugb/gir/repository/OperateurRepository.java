@@ -1,5 +1,7 @@
 package sn.ugb.gir.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import sn.ugb.gir.domain.Operateur;
@@ -9,4 +11,5 @@ import sn.ugb.gir.domain.Operateur;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface OperateurRepository extends JpaRepository<Operateur, Long> {}
+public interface OperateurRepository extends JpaRepository<Operateur, Long> {
+}

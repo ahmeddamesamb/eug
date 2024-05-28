@@ -3,6 +3,8 @@ package sn.ugb.gir.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
+
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,15 +25,19 @@ public class DisciplineSportiveEtudiant implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "licence_sportive_yn")
+    @NotNull //Ajoutee
+    @Column(name = "licence_sportive_yn", nullable = false)
     private Integer licenceSportiveYN;
 
-    @Column(name = "competition_ugbyn")
+    @NotNull //Ajoutee
+    @Column(name = "competition_ugbyn", nullable = false)
     private Integer competitionUGBYN;
 
+    @NotNull //Ajoutee
     @ManyToOne(fetch = FetchType.LAZY)
     private DisciplineSportive disciplineSportive;
 
+    @NotNull //Ajoutee
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "region", "typeSelection", "lycee", "informationPersonnelle", "baccalaureat" }, allowSetters = true)
     private Etudiant etudiant;
