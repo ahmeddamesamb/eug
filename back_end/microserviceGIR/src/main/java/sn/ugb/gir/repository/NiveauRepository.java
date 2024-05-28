@@ -17,7 +17,7 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface NiveauRepository extends JpaRepository<Niveau, Long> {
-
+    // Requête pour récupérer tous les niveaux par universite
     @Query("SELECT n FROM Niveau n " +
         "JOIN Formation f ON f.niveau.id = n.id " +
         "JOIN Specialite s ON f.specialite.id = s.id " +

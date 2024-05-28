@@ -100,4 +100,5 @@ public class Region implements Serializable {
             ", libelleRegion='" + getLibelleRegion() + "'" +
             "}";
     }
+
 }
