@@ -60,6 +60,9 @@ public class OperateurResource {
         if (operateurDTO.getId() != null) {
             throw new BadRequestAlertException("A new operateur cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        if (  operateurRepository.existsOperateurByCodeOperateur(operateurDTO.getCodeOperateur())) {
+            throw new BadRequestAlertException("Ce codeOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme code. ", ENTITY_NAME, "codeoperateurexists");
+        }
         OperateurDTO result = operateurService.save(operateurDTO);
         return ResponseEntity
             .created(new URI("/api/operateurs/" + result.getId()))
