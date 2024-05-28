@@ -12,7 +12,7 @@ public class FormationPriveeDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
+
     private Integer nombreMensualites;
 
     private Integer paiementPremierMoisYN;
@@ -21,12 +21,11 @@ public class FormationPriveeDTO implements Serializable {
 
     private Integer fraisDossierYN;
 
-    @NotNull
     private Float coutTotal;
 
-    @NotNull
     private Float mensualite;
 
+    @NotNull
     private FormationDTO formation;
 
     public Long getId() {
