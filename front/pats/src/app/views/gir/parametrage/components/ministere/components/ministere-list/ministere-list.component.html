@@ -1,5 +1,13 @@
+
+<div class="d-flex">
+    <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder fs-5">
+        Ajouter ministère
+    </button>
+</div>
+
+
 <c-smart-table
-  [activePage]="3"
+  [activePage]="1"
   [columnSorter]="true"
   [columns]="columns"
   [columnFilter]="true"
@@ -7,10 +15,9 @@
   [itemsPerPage]="5"
   [items]="usersData"
   [sorterValue]="{ column: 'name', state: 'asc' }"
-  [tableFilter]="true"
+  [tableFilter]="false"
   [tableProps]="{ hover: true, striped: true, responsive: true }"
   [tableBodyProps]="{ align: 'middle' }"
-  cleaner
   clickableRows
   footer
   header
@@ -20,8 +27,8 @@
     <div>
       <div [visible]="this.details_visible[item.id]===true" cCollapse>
         <div class="card-body">
-          <h5>{{ item['name'] }}</h5>
-          <p class="text-muted">User since: {{ item['registered'] }}</p>
+          <h5>{{ item['libelle'] }}</h5>
+          <p class="text-muted">Date debut: {{ item['dateDebut'] }}</p>
           <button cButton color="info" size="sm">
             User Settings
           </button>
@@ -32,7 +39,9 @@
       </div>
     </div>
   </ng-template>
+  
   <ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent">
+    
     <td>
       @switch (columnName) {
         @case ('status') {
@@ -41,10 +50,24 @@
           </c-badge>
         }
         @case ('show') {
-          <button (click)="toggleDetails(item.id)" cButton color="primary" size="sm" variant="outline">
-            Show
-          </button>
+            <div class="d-flex gap-2">
+                <button (click)="toggleDetails(item.id)"  cButton color="info" size="sm" variant="outline">
+                    <i class="bi bi-eye-fill"></i>
+                </button>
+                <button  cButton color="primary" size="sm" variant="outline">
+                    <i class="bi bi-pen-fill"></i>
+                </button>
+                <button  cButton color="danger" size="sm" variant="outline">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+            </div>
+          
         }
+        @case ('edit') {
+            
+        }
+        
         @default {
           {{ tdContent }}
         }

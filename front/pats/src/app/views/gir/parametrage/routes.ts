@@ -34,7 +34,21 @@ export const routes: Routes = [
     {
         path: 'ministere',
         loadComponent: () => import('./components/ministere/ministere.component').then(m => m.MinistereComponent),
+     
     },
+    // {
+    // path: 'action',
+    //     loadComponent: () => import('./components/action/action.component').then(m => m.ActionComponent),
+    //     children: [
+    //         {
+    //           path: '',
+    //           loadChildren: () => import('./components/action/routes').then((m) => m.routes)
+    //         },
+
+            
+            
+    //     ]
+    // }
   ];
 
 

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { IItem } from '@coreui/angular-pro';
+
 import {
   BadgeComponent,
   ButtonDirective,
@@ -8,32 +10,43 @@ import {
   TemplateIdDirective,
   TextColorDirective
 } from '@coreui/angular-pro';
-import usersData from './_data';
 
 @Component({
-  selector: 'app-formation-list',
+  selector: 'app-ministere-list',
   standalone: true,
-  templateUrl: './formation-list.component.html',
-  styleUrl: './formation-list.component.scss',
-  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective]
+  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective],
+  templateUrl: './ministere-list.component.html',
+  styleUrl: './ministere-list.component.scss'
 })
-export class FormationListComponent {
-  usersData = usersData;
+export class MinistereListComponent {
+
+  usersData: IItem[] = [
+   
+    {id: 0, libelle: "Ministére de la Santé et de l'Action Social", sigle: 'MSAS', dateDebut: '2018/01/01' , dateFin: '2019/01/01', status: 'Inactive' },
+    {id: 1, libelle: 'Ministere de Zoulaykha', sigle: 'MZ', dateDebut: '2018/01/01', dateFin: '2019/01/01', status: 'Active'},
+  ]
 
   columns: IColumn[] = [
     {
-      key: 'name'
+      key: 'libelle'
     },
     {
-      key: 'registered',
-      label: 'Date Registered',
+      key: 'sigle'
+    },
+    {
+      key: 'dateDebut',
+      label: 'Date debut',
       _props: { class: 'text-truncate' }
     },
-    { key: 'role', _style: { width: '20%' } },
+    {
+      key: 'dateFin',
+      label: 'Date Fin',
+      _props: { class: 'text-truncate' }
+    },
     { key: 'status', _style: { width: '15%' } },
     {
       key: 'show',
-      label: '',
+      label: 'Action',
       _style: { width: '5%' },
       filter: false,
       sorter: false
