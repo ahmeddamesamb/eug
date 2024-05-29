@@ -17,5 +17,13 @@ public interface FormationPriveeMapper extends EntityMapper<FormationPriveeDTO, 
     @Named("formationId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "fraisDossierYN", source = "fraisDossierYN")
+    @Mapping(target = "classeDiplomanteYN", source = "classeDiplomanteYN")
+    @Mapping(target = "libelleDiplome", source = "libelleDiplome")
+    @Mapping(target = "codeFormation", source = "codeFormation")
+    @Mapping(target = "nbreCreditsMin", source = "nbreCreditsMin")
+    @Mapping(target = "estParcoursYN", source = "estParcoursYN")
+    @Mapping(target = "lmdYN", source = "lmdYN")
+    @Mapping(target = "typeFormation", source = "typeFormation")
     FormationDTO toDtoFormationId(Formation formation);
 }

@@ -9,4 +9,5 @@ import sn.ugb.gir.domain.FormationPrivee;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface FormationPriveeRepository extends JpaRepository<FormationPrivee, Long> {}
+public interface FormationPriveeRepository extends JpaRepository<FormationPrivee, Long> {
+}

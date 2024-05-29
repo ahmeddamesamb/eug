@@ -35,13 +35,11 @@ public class MinistereServiceImpl implements MinistereService {
         this.ministereMapper = ministereMapper;
     }
 
+    @Transactional
     @Override
     public MinistereDTO save(MinistereDTO ministereDTO) {
         log.debug("Request to save Ministere : {}", ministereDTO);
 
-        if (ministereDTO.getEnCoursYN() != 1) {
-            throw new BadRequestAlertException("Statut 'enCours' doit être égal à 1", ENTITY_NAME, "enCoursRequiredand");
-        }
 
         if (ministereRepository.findByNomMinistereIgnoreCase(ministereDTO.getNomMinistere()).isPresent()) {
             throw new BadRequestAlertException("Un ministère avec ce nom existe déjà", ENTITY_NAME, "nomMinistereExists");
@@ -52,14 +50,17 @@ public class MinistereServiceImpl implements MinistereService {
         if (currentMinistere.isPresent()) {
             Ministere existingMinistere = currentMinistere.get();
             existingMinistere.setEnCoursYN(0);
+            existingMinistere.setDateFin(LocalDate.now());
             ministereRepository.save(existingMinistere);
         }
 
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
+        ministere.setEnCoursYN(1);
         ministere = ministereRepository.save(ministere);
         return ministereMapper.toDto(ministere);
     }
 
+    @Transactional
     @Override
     public MinistereDTO update(MinistereDTO ministereDTO) {
         log.debug("Request to update Ministere : {}", ministereDTO);
@@ -76,14 +77,22 @@ public class MinistereServiceImpl implements MinistereService {
             if (currentMinistere.isPresent() && !currentMinistere.get().getId().equals(ministereDTO.getId())) {
                 Ministere existingMinistere = currentMinistere.get();
                 existingMinistere.setEnCoursYN(0);
+                existingMinistere.setDateFin(LocalDate.now());
                 ministereRepository.save(existingMinistere);
             }
         }
 
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
+
+        if (ministereDTO.getEnCoursYN() == 0 && ministereRepository.findById(ministere.getId()).orElseThrow().getEnCoursYN() == 1) {
+            ministere.setDateFin(LocalDate.now());
+        }
+
         ministere = ministereRepository.save(ministere);
+
         return ministereMapper.toDto(ministere);
     }
+
 
 
     @Override
