@@ -57,6 +57,9 @@ public class MinistereServiceImpl implements MinistereService {
             ministereRepository.save(existingMinistere);
         }
 
+        ministereDTO.setEnCoursYN(1);
+        ministereDTO.setDateDebut(LocalDate.now());
+
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
         ministere = ministereRepository.save(ministere);
         return ministereMapper.toDto(ministere);
