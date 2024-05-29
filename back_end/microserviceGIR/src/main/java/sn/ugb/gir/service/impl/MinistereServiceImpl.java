@@ -40,9 +40,6 @@ public class MinistereServiceImpl implements MinistereService {
     public MinistereDTO save(MinistereDTO ministereDTO) {
         log.debug("Request to save Ministere : {}", ministereDTO);
 
-        if (ministereDTO.getEnCoursYN() != 1) {
-            throw new BadRequestAlertException("Statut 'enCours' doit être égal à 1", ENTITY_NAME, "enCoursRequiredand");
-        }
 
         if (ministereRepository.findByNomMinistereIgnoreCase(ministereDTO.getNomMinistere()).isPresent()) {
             throw new BadRequestAlertException("Un ministère avec ce nom existe déjà", ENTITY_NAME, "nomMinistereExists");
@@ -57,10 +54,8 @@ public class MinistereServiceImpl implements MinistereService {
             ministereRepository.save(existingMinistere);
         }
 
-        ministereDTO.setEnCoursYN(1);
-        ministereDTO.setDateDebut(LocalDate.now());
-
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
+        ministere.setEnCoursYN(1);
         ministere = ministereRepository.save(ministere);
         return ministereMapper.toDto(ministere);
     }
