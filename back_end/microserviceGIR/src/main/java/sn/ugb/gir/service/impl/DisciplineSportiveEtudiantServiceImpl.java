@@ -84,4 +84,17 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
         log.debug("Request to delete DisciplineSportiveEtudiant : {}", id);
         disciplineSportiveEtudiantRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantCodeEtu(Pageable pageable, String codeEtu){
+        log.debug("Request to get all DisciplineSportiveEtudiants for an et entity etudiant");
+        return disciplineSportiveEtudiantRepository.findAllByEtudiantCodeEtu(pageable,codeEtu).map(disciplineSportiveEtudiantMapper::toDto);
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantId(Pageable pageable, Long id){
+        log.debug("Request to get all DisciplineSportiveEtudiants");
+        return disciplineSportiveEtudiantRepository.findAllByEtudiantId(pageable,id).map(disciplineSportiveEtudiantMapper::toDto);
+    }
 }

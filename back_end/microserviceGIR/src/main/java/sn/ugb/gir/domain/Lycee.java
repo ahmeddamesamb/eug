@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+
+import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,9 +27,11 @@ public class Lycee implements Serializable {
     private Long id;
 
     @NotNull
+    @Unique //Ajoute
     @Column(name = "nom_lycee", nullable = false, unique = true)
     private String nomLycee;
 
+    @NotNull //Ajoute
     @Column(name = "code_lycee")
     private String codeLycee;
 

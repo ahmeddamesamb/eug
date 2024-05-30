@@ -18,9 +18,8 @@ public interface MinistereRepository extends JpaRepository<Ministere, Long> {
 
     Optional<Ministere> findByEnCoursYN(Integer enCours);
 
-    @Query("SELECT m FROM Ministere m WHERE (m.dateDebut >= :startDate AND m.dateDebut <= :endDate) AND (m.dateFin >= :startDate AND m.dateFin <= :endDate)")
-    Page<Ministere> findByPeriode(LocalDate startDate, LocalDate endDate, Pageable pageable);
+    Page<Ministere> findByDateDebutBetweenAndDateFinBetween(LocalDate startDate, LocalDate endDate, LocalDate startDate2, LocalDate endDate2, Pageable pageable);
 
-    Optional<Object> findByNomMinistereIgnoreCase(String nomMinistere);
+    Optional<Ministere> findByNomMinistereIgnoreCase(String nomMinistere);
 
 }

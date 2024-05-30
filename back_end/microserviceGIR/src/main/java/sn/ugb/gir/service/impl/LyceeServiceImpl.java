@@ -81,4 +81,11 @@ public class LyceeServiceImpl implements LyceeService {
         log.debug("Request to delete Lycee : {}", id);
         lyceeRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<LyceeDTO> findAllByRegionId(Pageable pageable, Long id) {
+        log.debug("Request to get all Lycees having an id region");
+        return lyceeRepository.findAllByRegionId(pageable,id).map(lyceeMapper::toDto);
+    }
 }

@@ -3,6 +3,7 @@ package sn.ugb.gir.service;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import sn.ugb.gir.domain.DisciplineSportiveEtudiant;
 import sn.ugb.gir.service.dto.DisciplineSportiveEtudiantDTO;
 
 /**
@@ -55,4 +56,14 @@ public interface DisciplineSportiveEtudiantService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get all the disciplineSportive for an Etudiants by codeEtu.
+     *
+     * @param pageable the pagination information.
+     * @param codeEtu the CodeEtu of entity etudiant
+     * @return the list of entities.
+     */
+    Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantCodeEtu(Pageable pageable, String codeEtu);
+    Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantId(Pageable pageable,Long id);
 }

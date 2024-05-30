@@ -78,6 +78,14 @@
 	font-family: 'Montserrat ExtraBold' !important;
 }
 
+.nav-underline-border .nav-link {
+    margin-left: 10px;
+}
+
+.nav-underline-border .nav-link.active, .nav-underline-border .show > .nav-link {
+    font-family: 'Montserrat SemiBold';
+}
+
 
   
   
