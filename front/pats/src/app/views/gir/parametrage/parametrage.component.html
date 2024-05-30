@@ -14,27 +14,27 @@
                 </c-nav>
                 <c-tab-content #tabContent1="cTabContent" [activeTabPaneIdx]="0" cRounded="bottom">
                     @for (pane of panes; track pane; let i = $index) {
-                      <c-tab-pane class="p-3 preview">                      
+                      <c-tab-pane class="p-3 preview">
                       </c-tab-pane>
                     }
                     <div class="list overflow-y-scroll overflow-x-hidden">
                       <router-outlet />
                     </div>
-                    
+
                 </c-tab-content>
-                
-                
+
+
             </c-col>
         </c-row>
     </div>
-      
+
     </div>
     <div class="col-12 col-lg-4 p-2">
       <div class="droite card">
-        
+        <router-outlet name='secondary'></router-outlet>
       </div>
 
     </div>
-    
-    
+
+
 </div>

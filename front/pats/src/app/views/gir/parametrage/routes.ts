@@ -9,33 +9,83 @@ export const routes: Routes = [
     },
     {
         path: 'formation',
-        loadComponent: () => import('./components/formation/formation.component').then(m => m.FormationComponent),
+        children: [
+          // Default component
+          {
+            path:"",
+            loadChildren: () => import('./components/formation/routes').then((m) => m.routes)
+          }
+        ]
+
     },
     {
         path: 'specialite',
-        loadComponent: () => import('./components/specialite/specialite.component').then(m => m.SpecialiteComponent),
+        children: [
+          // Default component
+          {
+            path:"",
+            loadChildren: () => import('./components/specialite/routes').then((m) => m.routes)
+          }
+        ]
+
     },
     {
         path: 'mention',
-        loadComponent: () => import('./components/mention/mention.component').then(m => m.MentionComponent),
+        children: [
+          // Default component
+          {
+            path:"",
+            loadChildren: () => import('./components/mention/routes').then((m) => m.routes)
+          }
+        ]
+
+
     },
     {
         path: 'domaine',
-        loadComponent: () => import('./components/domaine/domaine.component').then(m => m.DomaineComponent),
+        children: [
+          // Default component
+          {
+            path:"",
+            loadChildren: () => import('./components/domaine/routes').then((m) => m.routes)
+          }
+        ]
+
     },
     {
         path: 'ufr',
-        loadComponent: () => import('./components/ufr/ufr.component').then(m => m.UfrComponent),
+        children: [
+          // Default component
+          {
+            path:"",
+            loadChildren: () => import('./components/ufr/routes').then((m) => m.routes)
+          }
+        ]
+
+
     },
     {
         path: 'universite',
-        loadComponent: () => import('./components/universite/universite.component').then(m => m.UniversiteComponent),
+        children: [
+          // Default component
+          {
+            path:"",
+            loadChildren: () => import('./components/universite/routes').then((m) => m.routes)
+          }
+        ]
+
+
     },
     {
-        path: 'ministere',
-        loadComponent: () => import('./components/ministere/ministere.component').then(m => m.MinistereComponent),
-     
-    },
+      path: 'ministere',
+      children: [
+        // Default component
+        {
+          path:"",
+          loadChildren: () => import('./components/ministere/routes').then((m) => m.routes)
+        }
+      ]
+  },
     // {
     // path: 'action',
     //     loadComponent: () => import('./components/action/action.component').then(m => m.ActionComponent),
@@ -45,8 +95,8 @@ export const routes: Routes = [
     //           loadChildren: () => import('./components/action/routes').then((m) => m.routes)
     //         },
 
-            
-            
+
+
     //     ]
     // }
   ];

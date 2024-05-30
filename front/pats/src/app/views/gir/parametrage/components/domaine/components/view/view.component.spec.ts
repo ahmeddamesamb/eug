@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RetrieveComponent } from './retrieve.component';
+import { ViewComponent } from './view.component';
 
-describe('RetrieveComponent', () => {
-  let component: RetrieveComponent;
-  let fixture: ComponentFixture<RetrieveComponent>;
+describe('ViewComponent', () => {
+  let component: ViewComponent;
+  let fixture: ComponentFixture<ViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RetrieveComponent]
+      imports: [ViewComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(RetrieveComponent);
+    fixture = TestBed.createComponent(ViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
