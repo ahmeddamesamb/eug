@@ -23,6 +23,7 @@ public class TypeOperation implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank
     @NotNull
     @Column(name = "libelle_type_operation", nullable = false, unique = true)
     private String libelleTypeOperation;

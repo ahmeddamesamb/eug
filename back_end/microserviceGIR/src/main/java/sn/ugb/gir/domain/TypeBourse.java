@@ -24,6 +24,7 @@ public class TypeBourse implements Serializable {
     private Long id;
 
     @NotNull
+    @NotBlank
     @Column(name = "libelle_type_bourse", nullable = false, unique = true)
     private String libelleTypeBourse;
 

@@ -3,6 +3,7 @@ package sn.ugb.gir.service;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 import sn.ugb.gir.service.dto.AnneeAcademiqueDTO;
 
 /**
@@ -57,4 +58,6 @@ public interface AnneeAcademiqueService {
     void delete(Long id);
 
     Optional<AnneeAcademiqueDTO> getInfosCurrentAnneeAcademique();
+
+    String generateLibelleAnneeAcademique(String anneeAc);
 }

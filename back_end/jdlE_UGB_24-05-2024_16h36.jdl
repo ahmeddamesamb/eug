@@ -439,7 +439,7 @@ entity InscriptionAdministrativeFormation {
 }
 entity AnneeAcademique {
   libelleAnneeAcademique String required ,
-  anneeAc String required unique maxlength(4),
+  anneeAc String required unique maxlength(4) ,
   anneeCouranteYN Integer
 
 }
