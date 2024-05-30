@@ -24,6 +24,8 @@ public class TypeHandicap implements Serializable {
     private Long id;
 
     @NotNull
+    @NotBlank
+    @Pattern(regexp = "^[A-Z][a-z]*$", message = "Le libellé doit commencer par une majuscule et le reste doit être en minuscules.")
     @Column(name = "libelle_type_handicap", nullable = false, unique = true)
     private String libelleTypeHandicap;
 

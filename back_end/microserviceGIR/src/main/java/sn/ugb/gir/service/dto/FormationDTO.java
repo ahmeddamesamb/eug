@@ -33,8 +33,10 @@ public class FormationDTO implements Serializable {
     @NotNull
     private TypeFormation typeFormation;
 
+    @NotNull
     private NiveauDTO niveau;
 
+    @NotNull
     private SpecialiteDTO specialite;
 
     public Long getId() {

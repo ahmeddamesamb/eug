@@ -40,7 +40,6 @@ public class MinistereServiceImpl implements MinistereService {
     public MinistereDTO save(MinistereDTO ministereDTO) {
         log.debug("Request to save Ministere : {}", ministereDTO);
 
-
         if (ministereRepository.findByNomMinistereIgnoreCase(ministereDTO.getNomMinistere()).isPresent()) {
             throw new BadRequestAlertException("Un ministère avec ce nom existe déjà", ENTITY_NAME, "nomMinistereExists");
         }
@@ -54,8 +53,15 @@ public class MinistereServiceImpl implements MinistereService {
             ministereRepository.save(existingMinistere);
         }
 
+        if (ministereDTO.getDateDebut() == null) {
+            ministereDTO.setDateDebut(LocalDate.now());
+        }
+
+        if (ministereDTO.getEnCoursYN() == null) {
+            ministereDTO.setEnCoursYN(1);
+        }
+
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
-        ministere.setEnCoursYN(1);
         ministere = ministereRepository.save(ministere);
         return ministereMapper.toDto(ministere);
     }

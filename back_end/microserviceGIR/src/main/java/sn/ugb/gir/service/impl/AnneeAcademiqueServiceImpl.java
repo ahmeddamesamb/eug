@@ -13,6 +13,7 @@ import sn.ugb.gir.service.AnneeAcademiqueService;
 import sn.ugb.gir.service.dto.AnneeAcademiqueDTO;
 import sn.ugb.gir.service.mapper.AnneeAcademiqueMapper;
 
+
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.AnneeAcademique}.
  */
@@ -34,7 +35,17 @@ public class AnneeAcademiqueServiceImpl implements AnneeAcademiqueService {
     @Override
     public AnneeAcademiqueDTO save(AnneeAcademiqueDTO anneeAcademiqueDTO) {
         log.debug("Request to save AnneeAcademique : {}", anneeAcademiqueDTO);
+
+        // Vérifier s'il existe déjà une AnneeAcademique avec anneeCouranteYN = 1
+        if (anneeAcademiqueDTO.getAnneeCouranteYN() == 1) {
+            Optional<AnneeAcademique> existing = anneeAcademiqueRepository.findByAnneeCouranteYN(1);
+            if (existing.isPresent() && !existing.get().getId().equals(anneeAcademiqueDTO.getId())) {
+                throw new IllegalStateException("There can only be one current academic year.");
+            }
+        }
+
         AnneeAcademique anneeAcademique = anneeAcademiqueMapper.toEntity(anneeAcademiqueDTO);
+        anneeAcademique.setLibelleAnneeAcademique(generateLibelleAnneeAcademique(anneeAcademique.getAnneeAc()));
         anneeAcademique = anneeAcademiqueRepository.save(anneeAcademique);
         return anneeAcademiqueMapper.toDto(anneeAcademique);
     }
@@ -42,7 +53,17 @@ public class AnneeAcademiqueServiceImpl implements AnneeAcademiqueService {
     @Override
     public AnneeAcademiqueDTO update(AnneeAcademiqueDTO anneeAcademiqueDTO) {
         log.debug("Request to update AnneeAcademique : {}", anneeAcademiqueDTO);
+
+        // Vérifier s'il existe déjà une AnneeAcademique avec anneeCouranteYN = 1
+        if (anneeAcademiqueDTO.getAnneeCouranteYN() == 1) {
+            Optional<AnneeAcademique> existing = anneeAcademiqueRepository.findByAnneeCouranteYN(1);
+            if (existing.isPresent() && !existing.get().getId().equals(anneeAcademiqueDTO.getId())) {
+                throw new IllegalStateException("There can only be one current academic year.");
+            }
+        }
+
         AnneeAcademique anneeAcademique = anneeAcademiqueMapper.toEntity(anneeAcademiqueDTO);
+        //anneeAcademique.setLibelleAnneeAcademique(generateLibelleAnneeAcademique(anneeAcademique.getAnneeAc()));
         anneeAcademique = anneeAcademiqueRepository.save(anneeAcademique);
         return anneeAcademiqueMapper.toDto(anneeAcademique);
     }
@@ -88,4 +109,18 @@ public class AnneeAcademiqueServiceImpl implements AnneeAcademiqueService {
         log.debug("Request to find current AnneeAcademique");
         return anneeAcademiqueRepository.findByAnneeCouranteYN(1).map(anneeAcademiqueMapper::toDto);
     }
+    @Override
+    @Transactional(readOnly = true)
+    public String generateLibelleAnneeAcademique(String anneeAc) {
+        // Convert anneeAc to an integer to calculate the next year
+        int currentYear = Integer.parseInt(anneeAc);
+        int nextYear = currentYear + 1;
+
+        // Concatenate the current year and the next year with a dash in between
+        return currentYear + "-" + nextYear;
+    }
+
+
+
 }
+

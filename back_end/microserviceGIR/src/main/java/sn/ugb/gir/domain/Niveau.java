@@ -24,15 +24,18 @@ public class Niveau implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank
     @NotNull
     @Column(name = "libelle_niveau", nullable = false, unique = true)
     private String libelleNiveau;
+
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "cycle_niveau", nullable = false)
     private Cycle cycleNiveau;
 
+    @NotBlank
     @NotNull
     @Column(name = "code_niveau", nullable = false)
     private String codeNiveau;

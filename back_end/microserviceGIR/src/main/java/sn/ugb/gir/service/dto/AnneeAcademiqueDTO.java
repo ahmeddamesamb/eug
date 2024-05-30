@@ -34,6 +34,7 @@ public class AnneeAcademiqueDTO implements Serializable {
     }
 
     public void setLibelleAnneeAcademique(String libelleAnneeAcademique) {
+
         this.libelleAnneeAcademique = libelleAnneeAcademique;
     }
 

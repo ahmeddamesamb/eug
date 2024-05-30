@@ -10,8 +10,12 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A AnneeAcademique.
  */
 @Entity
-@Table(name = "annee_academique")
+@Table(name = "annee_academique", uniqueConstraints = {
+    @UniqueConstraint(columnNames = "annee_courante_yn")
+})
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
+
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class AnneeAcademique implements Serializable {
 
@@ -23,16 +27,20 @@ public class AnneeAcademique implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank
     @NotNull
-    @Column(name = "libelle_annee_academique", nullable = false)
+    @Pattern(regexp = "^\\d{4}[-/]\\d{4}$", message = "Le libellé de l'anneé academique doit être au format '2000-2001' ou '2000/2001'")
+    @Column(name = "libelle_annee_academique" , nullable = false)
     private String libelleAnneeAcademique;
 
     @NotNull
-    @Size(max = 4)
-    @Column(name = "annee_ac", length = 4, nullable = false, unique = true)
+    @Pattern(regexp = "^\\d{4}$", message = "L'anneé academique doit être au format 'aaaa' ")
+    @Column(name = "annee_ac",  nullable = false, unique = true )
     private String anneeAc;
 
-    @Column(name = "annee_courante_yn")
+
+    @NotNull
+    @Column(name = "annee_courante_yn", nullable = false)
     private Integer anneeCouranteYN;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
