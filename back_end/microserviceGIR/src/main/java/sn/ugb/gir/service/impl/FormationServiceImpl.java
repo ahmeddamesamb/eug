@@ -36,24 +36,23 @@ public class FormationServiceImpl implements FormationService {
     @Override
     public FormationDTO save(FormationDTO formationDTO) {
         log.debug("Request to save Formation : {}", formationDTO);
+        return storeFormation(formationDTO);
+    }
 
-        if (formationDTO.getNiveau() == null || formationDTO.getSpecialite() == null) {
-            throw new IllegalArgumentException("Le niveau et la specialité ne doivent pas etre null");
-        }
+    @Override
+    public FormationDTO update(FormationDTO formationDTO) {
+        log.debug("Request to update Formation : {}", formationDTO);
+        return storeFormation(formationDTO);
+    }
+
+
+    private FormationDTO storeFormation(FormationDTO formationDTO) {
 
         Optional<Formation> existingFormation = formationRepository.findByNiveauIdAndSpecialiteId(formationDTO.getNiveau().getId(), formationDTO.getSpecialite().getId());
 
         if (existingFormation.isPresent()) {
             throw new IllegalArgumentException("Cette Formation existe deja avec le meme Niveau et la meme Specialite");
         }
-        Formation formation = formationMapper.toEntity(formationDTO);
-        formation = formationRepository.save(formation);
-        return formationMapper.toDto(formation);
-    }
-
-    @Override
-    public FormationDTO update(FormationDTO formationDTO) {
-        log.debug("Request to update Formation : {}", formationDTO);
         Formation formation = formationMapper.toEntity(formationDTO);
         formation = formationRepository.save(formation);
         return formationMapper.toDto(formation);
