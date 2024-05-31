@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -58,13 +59,20 @@ public class FraisResource {
     @PostMapping("")
     public ResponseEntity<FraisDTO> createFrais(@Valid @RequestBody FraisDTO fraisDTO) throws URISyntaxException {
         log.debug("REST request to save Frais : {}", fraisDTO);
+        LocalDate currentDate = LocalDate.now();
+
         if (fraisDTO.getId() != null) {
             throw new BadRequestAlertException("A new frais cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if( fraisRepository.existsFraisByCycleAndTypeFraisLibelleTypeFrais(fraisDTO.getCycle(),fraisDTO.getTypeFrais().getLibelleTypeFrais()) )
+
+        if (fraisDTO.getDateApplication().isBefore(currentDate))
         {
-            throw new BadRequestAlertException("Ce frais existe deja pour ce cycle", ENTITY_NAME, "fraisexists");
+            throw new BadRequestAlertException("La date d_appliaction d_un nouveau frais ne peut pas etre dans le passe", ENTITY_NAME, "dateapplicationinvalide");
         }
+
+        fraisDTO.setDateFin(null);
+        fraisRepository.updateIfEstEnApplicationIsOneAndCycleLike(fraisDTO.getCycle());
+        fraisDTO.setEstEnApplicationYN(1);
         FraisDTO result = fraisService.save(fraisDTO);
         return ResponseEntity
             .created(new URI("/api/frais/" + result.getId()))
@@ -98,7 +106,9 @@ public class FraisResource {
         if (!fraisRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-
+        if (fraisDTO.getEstEnApplicationYN() == 1) {
+            fraisDTO.setDateFin(null);
+        }
         FraisDTO result = fraisService.update(fraisDTO);
         return ResponseEntity
             .ok()
@@ -133,7 +143,9 @@ public class FraisResource {
         if (!fraisRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-
+        if (fraisDTO.getEstEnApplicationYN() == 1) {
+            fraisDTO.setDateFin(null);
+        }
         Optional<FraisDTO> result = fraisService.partialUpdate(fraisDTO);
 
         return ResponseUtil.wrapOrNotFound(
