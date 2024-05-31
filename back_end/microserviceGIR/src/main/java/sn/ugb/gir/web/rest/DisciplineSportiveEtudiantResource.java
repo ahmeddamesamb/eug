@@ -221,4 +221,17 @@ public class DisciplineSportiveEtudiantResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
+    @GetMapping("/disciplineSportives/id/{id}")
+    public ResponseEntity<List<DisciplineSportiveEtudiantDTO>> getAllDisciplineSportiveEtudiantsByDisciplineSportiveId(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("id") Long id
+    ) {
+        log.debug("REST request to get a page of DisciplineSportiveEtudiants for an DisciplineSportive : {}", id);
+        Page<DisciplineSportiveEtudiantDTO> page = disciplineSportiveEtudiantService.findAllByDisciplineSportiveId(pageable,id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+
+
 }

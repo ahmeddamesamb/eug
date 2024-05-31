@@ -16,4 +16,5 @@ public interface DisciplineSportiveEtudiantRepository extends JpaRepository<Disc
 
     Page<DisciplineSportiveEtudiant> findAllByEtudiantCodeEtu(Pageable pageable, String codeEtu);
     Page<DisciplineSportiveEtudiant> findAllByEtudiantId(Pageable pageable,Long id);
+    Page<DisciplineSportiveEtudiant> findAllByDisciplineSportiveId(Pageable pageable,Long id);
 }

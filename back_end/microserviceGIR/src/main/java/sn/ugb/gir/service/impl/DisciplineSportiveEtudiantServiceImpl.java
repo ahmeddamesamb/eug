@@ -97,4 +97,11 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
         log.debug("Request to get all DisciplineSportiveEtudiants");
         return disciplineSportiveEtudiantRepository.findAllByEtudiantId(pageable,id).map(disciplineSportiveEtudiantMapper::toDto);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<DisciplineSportiveEtudiantDTO> findAllByDisciplineSportiveId(Pageable pageable, Long id) {
+        log.debug("Request to get all DisciplineSportiveEtudiants for an id of a DisciplineSportive");
+        return disciplineSportiveEtudiantRepository.findAllByDisciplineSportiveId(pageable,id).map(disciplineSportiveEtudiantMapper::toDto);
+    }
 }
