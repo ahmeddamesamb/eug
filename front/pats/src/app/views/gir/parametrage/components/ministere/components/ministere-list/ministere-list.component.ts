@@ -20,6 +20,7 @@ import {
 })
 export class MinistereListComponent {
 
+
   usersData: IItem[] = [
    
     {id: 0, libelle: "Ministére de la Santé et de l'Action Social", sigle: 'MSAS', dateDebut: '2018/01/01' , dateFin: '2019/01/01', status: 'Inactive' },
@@ -70,6 +71,6 @@ export class MinistereListComponent {
   }
 
   toggleDetails(item: any) {
-    this.details_visible[item] = !this.details_visible[item];
+    //this.details_visible[item] = !this.details_visible[item];
   }
 }

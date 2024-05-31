@@ -1,1 +1,53 @@
-<p>create works!</p>
+    
+<div class="">
+    <h3>Ajout Ministere</h3>
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+        [validated]="customStylesValidated"
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="ministereForm"
+        
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom01">Nom </label>
+            <input cFormControl id="validationCustom01" required type="text" value="" formControlName="nom"/>
+            <c-form-feedback [valid]="true">Bon!</c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom02">Sigle </label>
+            <input cFormControl id="validationCustom02" required type="text" value="" formControlName="sigle"/>
+            <c-form-feedback [valid]="true">Bon!</c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Date de création </label>
+            <c-date-picker cFormControl id="validationCustom03"  required  locale="fr-FR"   formControlName="dateCreation"/>
+            <c-form-feedback [valid]="true">Bon!</c-form-feedback>
+            
+        </c-col>
+
+        
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                <button cButton class=" w-100"  color="primary" type="submit">
+                    Submit form
+                </button>
+
+            </div>
+            <div class=" w-50 ps-1">
+                <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                    Reset
+                </button>
+            </div>
+            
+
+
+            
+
+            
+        </div>
+    </form>
+</div>
+    
+
