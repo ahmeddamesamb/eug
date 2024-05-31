@@ -161,12 +161,12 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
         if (optionalFormationPrivee.isPresent()) {
             FormationPrivee formationPrivee = optionalFormationPrivee.get();
 
+            formationPriveeRepository.deleteById(id);
+            log.debug("Formation privée avec ID {} supprimée avec succès.", id);
+
             Long formationId = formationPrivee.getFormation().getId();
             formationRepository.deleteById(formationId);
             log.debug("Formation avec ID {} supprimée avec succès.", formationId);
-
-            formationPriveeRepository.deleteById(id);
-            log.debug("Formation privée avec ID {} supprimée avec succès.", id);
 
         } else {
             log.debug("La formation privée avec ID {} n'existe pas.", id);
