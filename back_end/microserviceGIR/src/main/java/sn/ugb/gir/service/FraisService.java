@@ -1,5 +1,7 @@
 package sn.ugb.gir.service;
 
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -65,4 +67,5 @@ public interface FraisService {
      * @return the list of entities.
      */
     Page<FraisDTO> findAllFraisByCycle(Pageable pageable, Cycle cycle);
+
 }
