@@ -57,8 +57,8 @@ public class MinistereServiceImpl implements MinistereService {
             ministereDTO.setEnCoursYN(1);
         }
 
-        if (ministereDTO.getDateFin() != null && !ministereDTO.getDateFin().isAfter(ministereDTO.getDateDebut())) {
-            throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidDateRange");
+        if (ministereDTO.getDateFin()!=null) {
+            ministereDTO.setDateFin(null);
         }
 
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
@@ -77,7 +77,9 @@ public class MinistereServiceImpl implements MinistereService {
             throw new BadRequestAlertException("Un ministère avec ce nom existe déjà", ENTITY_NAME, "nomMinistereExists");
         }
 
+
         if (ministereDTO.getEnCoursYN() == 1) {
+
             Optional<Ministere> currentMinistere = ministereRepository.findByEnCoursYN(1);
 
             if (currentMinistere.isPresent() && !currentMinistere.get().getId().equals(ministereDTO.getId())) {
@@ -86,10 +88,13 @@ public class MinistereServiceImpl implements MinistereService {
                 existingMinistere.setDateFin(LocalDate.now());
                 ministereRepository.save(existingMinistere);
             }
+            if (ministereDTO.getDateFin()!=null) {
+                ministereDTO.setDateFin(null);
+            }
         }
 
         if (ministereDTO.getDateFin() != null && !ministereDTO.getDateFin().isAfter(ministereDTO.getDateDebut())) {
-            throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidDateRange");
+           throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidDateRange");
         }
 
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
