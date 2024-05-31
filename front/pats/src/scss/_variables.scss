@@ -2,16 +2,19 @@
 //
 // If you want to customize your project please add your variables below.
 
+@import "../../node_modules/@coreui/coreui/scss/variables";
+
 $enable-deprecation-messages: false !default;
 
 $primary: #3588B2 !default;
+$secondary:#B25F35;
+$tertiaire:#D8843B;
 $success: #51cc8a !default;
 $danger: #ef376e !default;
 $warning: #fc0 !default;
 $info: #747af2 !default;
 
 // mes couleurs
-
 $bleu: #3588B2;
 $marron-fonce: #B25F35;
 $marron-clair: #D8843B;
@@ -20,6 +23,24 @@ $orange: #F1B33C;
 $background: #F3F6F7;
 $success: #198754;
 $warning: #FFC107;
+
+$custom-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "tertiaire": $marron-clair,
+  "orange": $orange,
+  "success": $success,
+  "danger": $danger,
+  "warning": $warning,
+  "info": $info,
+  "dark":rgb(32, 32, 32),
+  "white": #fff,
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+
 
 
 $primary-text-emphasis: shade-color($primary, 60%) !default;

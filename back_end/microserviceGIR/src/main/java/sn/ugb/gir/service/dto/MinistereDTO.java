@@ -19,6 +19,7 @@ public class MinistereDTO implements Serializable {
     @NotNull
     private String sigleMinistere;
 
+    @NotNull
     private LocalDate dateDebut;
 
     private LocalDate dateFin;
