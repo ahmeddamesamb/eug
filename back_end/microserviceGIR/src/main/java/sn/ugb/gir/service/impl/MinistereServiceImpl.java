@@ -53,12 +53,12 @@ public class MinistereServiceImpl implements MinistereService {
             ministereRepository.save(existingMinistere);
         }
 
-        if (ministereDTO.getDateDebut() == null) {
-            ministereDTO.setDateDebut(LocalDate.now());
-        }
-
         if (ministereDTO.getEnCoursYN() == null) {
             ministereDTO.setEnCoursYN(1);
+        }
+
+        if (ministereDTO.getDateFin() != null && !ministereDTO.getDateFin().isAfter(ministereDTO.getDateDebut())) {
+            throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidDateRange");
         }
 
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
@@ -86,6 +86,10 @@ public class MinistereServiceImpl implements MinistereService {
                 existingMinistere.setDateFin(LocalDate.now());
                 ministereRepository.save(existingMinistere);
             }
+        }
+
+        if (ministereDTO.getDateFin() != null && !ministereDTO.getDateFin().isAfter(ministereDTO.getDateDebut())) {
+            throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidDateRange");
         }
 
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
