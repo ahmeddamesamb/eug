@@ -50,9 +50,6 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
         log.debug("Request to save FormationPrivee : {}", formationPriveeDTO);
 
         FormationDTO formationDTO = formationPriveeDTO.getFormation();
-        if (formationDTO == null) {
-            throw new IllegalArgumentException("La formation ne doit pas être nulle.");
-        }
 
         if (formationDTO.getNiveau() == null || formationDTO.getSpecialite() == null) {
             throw new IllegalArgumentException("Le niveau et la spécialité ne doivent pas être null.");
@@ -93,13 +90,36 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
     }
 
 
+    @Transactional
     @Override
     public FormationPriveeDTO update(FormationPriveeDTO formationPriveeDTO) {
         log.debug("Request to update FormationPrivee : {}", formationPriveeDTO);
+
+        FormationDTO formationDTO = formationPriveeDTO.getFormation();
+
+        if (formationDTO.getNiveau() == null || formationDTO.getSpecialite() == null) {
+            throw new IllegalArgumentException("Le niveau et la spécialité ne doivent pas être null.");
+        }
+
+        Optional<Formation> existingFormationOpt = formationRepository.findById(formationDTO.getId());
+
+        if (existingFormationOpt.isPresent()) {
+            Formation existingFormation = existingFormationOpt.get();
+            if (existingFormation.getTypeFormation() == TypeFormation.PRIVEE && formationDTO.getTypeFormation() == TypeFormation.PUBLIC) {
+                formationPriveeRepository.deleteById(formationPriveeDTO.getId());
+                existingFormation.setTypeFormation(TypeFormation.PUBLIC);
+                formationRepository.save(existingFormation);
+                FormationPriveeDTO emptyFormationPriveeDTO = new FormationPriveeDTO();
+                emptyFormationPriveeDTO.setId(0L);
+                return emptyFormationPriveeDTO;
+            }
+        }
+
         FormationPrivee formationPrivee = formationPriveeMapper.toEntity(formationPriveeDTO);
         formationPrivee = formationPriveeRepository.save(formationPrivee);
         return formationPriveeMapper.toDto(formationPrivee);
     }
+
 
     @Override
     public Optional<FormationPriveeDTO> partialUpdate(FormationPriveeDTO formationPriveeDTO) {
@@ -140,11 +160,14 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
 
         if (optionalFormationPrivee.isPresent()) {
             FormationPrivee formationPrivee = optionalFormationPrivee.get();
+
             formationPriveeRepository.deleteById(id);
             log.debug("Formation privée avec ID {} supprimée avec succès.", id);
+
             Long formationId = formationPrivee.getFormation().getId();
             formationRepository.deleteById(formationId);
             log.debug("Formation avec ID {} supprimée avec succès.", formationId);
+
         } else {
             log.debug("La formation privée avec ID {} n'existe pas.", id);
         }

@@ -195,8 +195,8 @@ public class MinistereResource {
         @RequestParam(value = "endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get Ministere by period: {} - {}", startDate, endDate);
-        Page<MinistereDTO> Page = ministereService.findByPeriode(startDate, endDate, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), Page);
-        return ResponseEntity.ok().headers(headers).body(Page.getContent());
+        Page<MinistereDTO> page = ministereService.findByPeriode(startDate, endDate, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

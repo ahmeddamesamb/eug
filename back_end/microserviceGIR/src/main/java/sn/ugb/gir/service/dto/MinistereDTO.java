@@ -16,6 +16,7 @@ public class MinistereDTO implements Serializable {
     @NotNull
     private String nomMinistere;
 
+    @NotNull
     private String sigleMinistere;
 
     @NotNull

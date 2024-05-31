@@ -6,6 +6,15 @@
 // custom tweaks for scrollbar styling (wip)
 @import "scrollbar";
 
+$bleu: #3588B2;
+$marron-fonce: #B25F35;
+$marron-clair: #D8843B;
+$orange: #F1B33C;
+
+$background: #F3F6F7;
+$success: #198754;
+$warning: #FFC107;
+
  // custom calendar today cell color
 .calendar-cell.today {
   --cui-calendar-cell-today-color: var(--cui-info) !important;
