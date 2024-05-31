@@ -69,6 +69,10 @@ public class FraisResource {
         {
             throw new BadRequestAlertException("La date d_appliaction d_un nouveau frais ne peut pas etre dans le passe", ENTITY_NAME, "dateapplicationinvalide");
         }
+        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription") && (fraisDTO.getDia() == null || fraisDTO.getDip() == null))
+        {
+            throw new BadRequestAlertException("les droits d'inscriptions requiert les repartitions en  dia et un dip", ENTITY_NAME, "dip_dipisnull");
+        }
 
         fraisDTO.setDateFin(null);
         fraisRepository.updateIfEstEnApplicationIsOneAndCycleLike(fraisDTO.getCycle());
