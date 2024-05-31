@@ -29,7 +29,7 @@ public class AnneeAcademique implements Serializable {
 
     @NotBlank
     @NotNull
-    @Pattern(regexp = "^\\d{4}[-/]\\d{4}$", message = "Le libellé de l'anneé   rttyyy  academique doit être au format '2000-2001' ou '2000/2001'")
+    @Pattern(regexp = "^\\d{4}[-/]\\d{4}$", message = "Le libellé de l'anneé academique doit être au format '2000-2001' ou '2000/2001'")
     @Column(name = "libelle_annee_academique" , nullable = false)
     private String libelleAnneeAcademique;
 

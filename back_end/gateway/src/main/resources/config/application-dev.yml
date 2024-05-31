@@ -41,7 +41,7 @@ spring:
   cloud:
     consul:
       config:
-        fail-fast: false # if not in "prod" profile, do not force to use Spring Cloud Config
+        fail-fast: false # if not in "prod" profile, do not force to use Spring Cloud Config dddd
         format: yaml
         profile-separator: '-'
       discovery:
@@ -57,11 +57,11 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-    url: jdbc:postgresql://localhost:5432/gatewayUGB
+    url: jdbc:postgresql://localhost:5432/gateway-eugb
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/gatewayUGB
+    url: r2dbc:postgresql://localhost:5432/gateway-eugb
     username: postgres
     password: root
   thymeleaf:
