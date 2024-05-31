@@ -159,7 +159,7 @@ public class MinistereServiceImpl implements MinistereService {
     @Override
     public Page<MinistereDTO> findByPeriode(LocalDate startDate, LocalDate endDate, Pageable pageable) {
         log.debug("Request to get Ministeres by period: {} to {}", startDate, endDate);
-        Page<Ministere> ministerePage = ministereRepository.findByDateDebutBetweenAndDateFinBetween(startDate, endDate, startDate, endDate, pageable);
+        Page<Ministere> ministerePage = ministereRepository.findByDateDebutBetweenAndDateFinBetweenOrDateDebutBetweenAndEnCoursYN(startDate, endDate, startDate, endDate, startDate, endDate, 1, pageable);
         return ministerePage.map(ministereMapper::toDto);
     }
 }

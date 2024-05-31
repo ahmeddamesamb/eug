@@ -20,6 +20,8 @@ public interface MinistereRepository extends JpaRepository<Ministere, Long> {
 
     Page<Ministere> findByDateDebutBetweenAndDateFinBetween(LocalDate startDate, LocalDate endDate, LocalDate startDate2, LocalDate endDate2, Pageable pageable);
 
+    Page<Ministere> findByDateDebutBetweenAndDateFinBetweenOrDateDebutBetweenAndEnCoursYN(LocalDate startDate, LocalDate endDate, LocalDate startDate2, LocalDate endDate2, LocalDate startDate3, LocalDate endDate3, Integer enCoursYN, Pageable pageable);
+
     Optional<Ministere> findByNomMinistereIgnoreCase(String nomMinistere);
 
 }
