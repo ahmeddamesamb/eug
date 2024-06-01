@@ -66,11 +66,15 @@
         status="success"
         textColor="primary"
       />
-      <span class="d-none d-md-flex">Lamine gueye</span>
+      <span class="d-none d-md-flex">{{ userFirstName }} {{ userLastName }}</span>
       
       <i class="bi bi-caret-down"></i>
     </button>
     <ul cDropdownMenu class="p-2 w-auto index">
+      <a cDropdownItem (click)="login()">
+        <svg cIcon class="me-1" name="cilAccountLogin"></svg>
+        Connecter
+      </a>
       
       <li>
         <a cDropdownItem routerLink="">
@@ -88,6 +92,8 @@
   </c-dropdown>
   
 </ng-template>
+
+
 
 
 
