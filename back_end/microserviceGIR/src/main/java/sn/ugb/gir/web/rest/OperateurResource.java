@@ -63,6 +63,12 @@ public class OperateurResource {
         if (  operateurRepository.existsOperateurByCodeOperateur(operateurDTO.getCodeOperateur())) {
             throw new BadRequestAlertException("Ce codeOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme code. ", ENTITY_NAME, "codeoperateurexists");
         }
+        if (  operateurRepository.existsOperateurByLibelleOperateur(operateurDTO.getLibelleOperateur())) {
+            throw new BadRequestAlertException("Ce libelleOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme libelle. ", ENTITY_NAME, "libelleoperateurexists");
+        }
+        if (operateurDTO.getCodeOperateur().isEmpty() || operateurDTO.getLibelleOperateur().isEmpty() || operateurDTO.getUserLogin().isEmpty()) {
+            throw new BadRequestAlertException("les champs code, libelle et userLogin doivent etre renseigne ", ENTITY_NAME, "champobligatoire");
+        }
         OperateurDTO result = operateurService.save(operateurDTO);
         return ResponseEntity
             .created(new URI("/api/operateurs/" + result.getId()))
