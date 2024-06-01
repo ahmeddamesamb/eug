@@ -61,7 +61,10 @@ public class LyceeResource {
             throw new BadRequestAlertException("A new lycee cannot already have an ID", ENTITY_NAME, "idexists");
         }
         if (lyceeRepository.existsLyceeByNomLycee(lyceeDTO.getNomLycee())) {
-            throw new BadRequestAlertException("Deux Lycees ne peuvent pas avoir le même nom", ENTITY_NAME, "nomlyceeexists");
+            throw new BadRequestAlertException("Ce Lycee existe. Deux Lycees ne peuvent pas avoir le même nom", ENTITY_NAME, "nomlyceeexists");
+        }
+        if (lyceeDTO.getCodeLycee().isEmpty() || lyceeDTO.getNomLycee().isEmpty()) {
+            throw new BadRequestAlertException("Le nom et le code du lycee sont obligatoires", ENTITY_NAME, "nom_ou_codelycee_vide");
         }
         LyceeDTO result = lyceeService.save(lyceeDTO);
         return ResponseEntity
