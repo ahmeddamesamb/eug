@@ -73,7 +73,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
   
 
   ngOnInit() {
-    this.userService.initialize();
+
+    const token = this.userService.getToken();
+    console.log("Token récupéré depuis le localStorage :", token);
+    this.userService.initializeWithToken(token ?? '');
     this.userService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
       if (isLoggedIn) {
@@ -82,6 +85,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
         this.userLastName = this.userService.userLastName;
       }
     });
+
+  
   }
 
 
