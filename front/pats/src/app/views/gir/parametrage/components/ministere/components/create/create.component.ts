@@ -20,7 +20,7 @@ export class CreateComponent {
     this.ministereForm = new FormGroup({
       nom: new FormControl('', Validators.required),
       sigle: new FormControl('', Validators.required),
-      dateCreation: new FormControl('', Validators.required)
+      dateCreation: new FormControl(null, Validators.required)
     });
   }
 
@@ -37,5 +37,5 @@ export class CreateComponent {
     this.ministereForm!.reset();
   }
 
-  
+
 }

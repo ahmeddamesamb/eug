@@ -1,4 +1,4 @@
-    
+
 <div class="">
     <h3>Ajout Ministere</h3>
     <form #customStylesForm="ngForm"
@@ -7,26 +7,26 @@
         cForm
         class="row g-3 needs-validation"
         [formGroup]="ministereForm"
-        
+
     >
         <c-col md="12">
             <label cLabel for="validationCustom01">Nom </label>
             <input cFormControl id="validationCustom01" required type="text" value="" formControlName="nom"/>
-            <c-form-feedback [valid]="true">Bon!</c-form-feedback>
+            <c-form-feedback [valid]="ministereForm?.get('nom')?.hasError('required')">Bon!</c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom02">Sigle </label>
             <input cFormControl id="validationCustom02" required type="text" value="" formControlName="sigle"/>
-            <c-form-feedback [valid]="true">Bon!</c-form-feedback>
+            <c-form-feedback [valid]="ministereForm?.get('sigle')?.hasError('required')">Bon!</c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom03">Date de création </label>
             <c-date-picker cFormControl id="validationCustom03"  required  locale="fr-FR"   formControlName="dateCreation"/>
-            <c-form-feedback [valid]="true">Bon!</c-form-feedback>
-            
+            <c-form-feedback [valid]="ministereForm?.get('dateCreation')?.hasError('required')">Bon!</c-form-feedback>
+
         </c-col>
 
-        
+
 
         <div class="col-12 d-flex justify-content-between ">
             <div class=" w-50 pe-1">
@@ -40,14 +40,14 @@
                     Reset
                 </button>
             </div>
-            
 
 
-            
 
-            
+
+
+
         </div>
     </form>
 </div>
-    
+
 
