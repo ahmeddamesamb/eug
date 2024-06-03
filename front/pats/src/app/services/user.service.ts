@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { KeycloakEventType, KeycloakService } from 'keycloak-angular';
 import { NavigationExtras, Router } from '@angular/router';
-
+import { environment} from '../config/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,11 +23,8 @@ export class UserService {
   async initialize() {
     try {
       const initSuccess = await this.keycloakService.init({
-        config: {
-          url: 'http://localhost:8080/',
-          realm: 'e-ugb',
-          clientId: 'pats-client'
-        },
+        config: environment.keycloak, 
+
         initOptions: {
           pkceMethod: 'S256',
           redirectUri: 'http://localhost:4200/',
@@ -73,7 +70,7 @@ export class UserService {
 
   async logout() {
     try {
-      await this.keycloakService.logout();
+      await this.keycloakService.logout('http://localhost:4201');
       this._isLoggedIn.next(false);
       this.accessToken = "";
       this.userFirstName = undefined;
@@ -87,41 +84,59 @@ export class UserService {
 
   public async updateLoginStatus() {
    
-      // Récupérer les rôles de l'utilisateur
-      const roles = await this.keycloakService.getUserRoles();
-      const hasPatRole = roles.includes('pats');
+    const userInfo = await this.keycloakService.loadUserProfile();
+    console.log("Informations de l'utilisateur :", userInfo);
 
-      if (hasPatRole) {
-        const userInfo = await this.keycloakService.loadUserProfile();
-        console.log("Informations de l'utilisateur :", userInfo);
+    this.accessToken = await this.keycloakService.getToken();
+    this.saveToken(this.accessToken);
 
-        this.accessToken = await this.keycloakService.getToken();
-        this.saveToken(this.accessToken);
+    // Stocker les informations de l'utilisateur dans les variables appropriées
+    this.userFirstName = userInfo.firstName;
+    this.userLastName = userInfo.lastName;
+    this.userEmail = userInfo.email;
+    this.username = userInfo.username;
+
+    this._isLoggedIn.next(true);
+   
+
+}
+  // public async updateLoginStatus() {
+   
+  //     // Récupérer les rôles de l'utilisateur
+  //     const roles = await this.keycloakService.getUserRoles();
+  //     const hasPatRole = roles.includes('pats');
+
+  //     if (hasPatRole) {
+  //       const userInfo = await this.keycloakService.loadUserProfile();
+  //       console.log("Informations de l'utilisateur :", userInfo);
+
+  //       this.accessToken = await this.keycloakService.getToken();
+  //       this.saveToken(this.accessToken);
 
 
-        // Stocker les informations de l'utilisateur dans les variables appropriées
-        this.userFirstName = userInfo.firstName;
-        this.userLastName = userInfo.lastName;
-        this.userEmail = userInfo.email;
-        this.username = userInfo.username;
+  //       // Stocker les informations de l'utilisateur dans les variables appropriées
+  //       this.userFirstName = userInfo.firstName;
+  //       this.userLastName = userInfo.lastName;
+  //       this.userEmail = userInfo.email;
+  //       this.username = userInfo.username;
 
-        this._isLoggedIn.next(true);
-      } 
-      else {
-        console.log("L'utilisateur n'a pas le rôle 'pats'");
-        this._isLoggedIn.next(false);
-        await this.logout();
+  //       this._isLoggedIn.next(true);
+  //     } 
+  //     else {
+  //       console.log("L'utilisateur n'a pas le rôle 'pats'");
+  //       this._isLoggedIn.next(false);
+  //       await this.logout();
 
-        // Rediriger l'utilisateur vers la page NotAuthorizedComponent
-        const navigationExtras: NavigationExtras = {
-          queryParamsHandling: 'preserve',
-          preserveFragment: true
-        };
-        this.router.navigate(['/404'], navigationExtras);
+  //       // Rediriger l'utilisateur vers la page NotAuthorizedComponent
+  //       const navigationExtras: NavigationExtras = {
+  //         queryParamsHandling: 'preserve',
+  //         preserveFragment: true
+  //       };
+  //       this.router.navigate(['/404'], navigationExtras);
       
-    } 
+  //   } 
   
-  }
+  // }
   public getUserFirstName(): string | undefined {
     return this.userFirstName;
   }
@@ -146,11 +161,7 @@ saveToken(token: string) {
     console.log("Token: ", token);
     try {
       const initSuccess = await this.keycloakService.init({
-        config: {
-          url: 'http://localhost:8080/', // Remplacez par l'URL de votre serveur Keycloak
-          realm: 'e-ugb', // Remplacez par le nom de votre realm Keycloak
-          clientId: 'pats-client' // Remplacez par l'ID client de votre application
-        },
+        config: environment.keycloak, 
         initOptions: {
           pkceMethod: 'S256',
           redirectUri: 'http://localhost:4200/', // Remplacez par l'URL de redirection de votre application
