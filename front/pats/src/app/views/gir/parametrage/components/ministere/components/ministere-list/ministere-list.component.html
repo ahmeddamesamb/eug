@@ -1,6 +1,6 @@
 
 <div class="d-flex">
-    <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder fs-5">
+    <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder " (click)="create()" >
         Ajouter ministère
     </button>
 </div>
@@ -51,7 +51,7 @@
         }
         @case ('show') {
             <div class="d-flex gap-2">
-                <button (click)="toggleDetails(item.id)"  cButton color="info" size="sm" variant="outline"  >
+                <button (click)="view(item.id)"  cButton color="info" size="sm" variant="outline"  >
                     <i class="bi bi-eye-fill"></i>
                 </button>
                 <button  cButton color="primary" size="sm" variant="outline">
