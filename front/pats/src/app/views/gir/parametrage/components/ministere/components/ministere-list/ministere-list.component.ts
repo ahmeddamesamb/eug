@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IItem } from '@coreui/angular-pro';
+import { Router } from '@angular/router';
 
 import {
   BadgeComponent,
@@ -19,7 +20,9 @@ import {
   styleUrl: './ministere-list.component.scss'
 })
 export class MinistereListComponent {
+  constructor (private route:Router){
 
+  }
 
   usersData: IItem[] = [
    
@@ -70,7 +73,12 @@ export class MinistereListComponent {
     }
   }
 
-  toggleDetails(item: any) {
-    //this.details_visible[item] = !this.details_visible[item];
+  view(item: number) {
+    this.route.navigate(['/gir/parametrage/ministere/view',item])
+
+  }
+  create() {
+    this.route.navigate(['/gir/parametrage/ministere/create'])
+
   }
 }
