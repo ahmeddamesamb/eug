@@ -1,5 +1,6 @@
 package sn.ugb.gir.service.impl;
 
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import sn.ugb.gir.service.FormationService;
 import sn.ugb.gir.service.dto.FormationDTO;
 import sn.ugb.gir.service.mapper.FormationMapper;
 import sn.ugb.gir.domain.enumeration.TypeFormation;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Formation}.
@@ -23,6 +26,8 @@ import sn.ugb.gir.domain.enumeration.TypeFormation;
 public class FormationServiceImpl implements FormationService {
 
     private final Logger log = LoggerFactory.getLogger(FormationServiceImpl.class);
+
+    private static final String ENTITY_NAME = "Formation";
 
     private final FormationRepository formationRepository;
 
@@ -40,38 +45,59 @@ public class FormationServiceImpl implements FormationService {
     }
 
     @Override
-    public FormationDTO update(FormationDTO formationDTO) {
+    public FormationDTO update(Long id, FormationDTO formationDTO) {
         log.debug("Request to update Formation : {}", formationDTO);
+        validateFormation(id, formationDTO);
         return storeFormation(formationDTO);
     }
 
-
-    private FormationDTO storeFormation(FormationDTO formationDTO) {
-
-        Optional<Formation> existingFormation = formationRepository.findByNiveauIdAndSpecialiteId(formationDTO.getNiveau().getId(), formationDTO.getSpecialite().getId());
-
-        if (existingFormation.isPresent()) {
-            throw new IllegalArgumentException("Cette Formation existe deja avec le meme Niveau et la meme Specialite");
-        }
-        Formation formation = formationMapper.toEntity(formationDTO);
-        formation = formationRepository.save(formation);
-        return formationMapper.toDto(formation);
-    }
-
     @Override
-    public Optional<FormationDTO> partialUpdate(FormationDTO formationDTO) {
+    public Optional<FormationDTO> partialUpdate(Long id, FormationDTO formationDTO) {
         log.debug("Request to partially update Formation : {}", formationDTO);
-
+        validateFormation(id, formationDTO);
         return formationRepository
             .findById(formationDTO.getId())
             .map(existingFormation -> {
                 formationMapper.partialUpdate(existingFormation, formationDTO);
-
                 return existingFormation;
             })
             .map(formationRepository::save)
             .map(formationMapper::toDto);
     }
+
+    private void validateFormation(Long id, FormationDTO formationDTO) {
+        if (formationDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, formationDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+        if (!formationRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+    }
+
+    private FormationDTO storeFormation(FormationDTO formationDTO) {
+
+        Optional<Formation> existingFormation = formationRepository.findByNiveauIdAndSpecialiteId(formationDTO.getNiveau().getId(), formationDTO.getSpecialite().getId());
+
+        if(formationDTO.getNiveau()==null) {
+            throw new BadRequestAlertException("Le niveau du ministere ne dois pas etre null", ENTITY_NAME, "idNiveauNotNull");
+        }
+
+        if(formationDTO.getSpecialite()==null) {
+            throw new BadRequestAlertException("La spécialité du ministere ne dois pas etre null", ENTITY_NAME, "idSpecialiteNotNull");
+        }
+
+        if (existingFormation.isPresent()) {
+            throw new BadRequestAlertException("Cette Formation existe deja avec le meme Niveau et la meme Specialite", ENTITY_NAME, "FormationDuplicate");
+        }
+
+        Formation formation = formationMapper.toEntity(formationDTO);
+        formation = formationRepository.save(formation);
+        return formationMapper.toDto(formation);
+    }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -79,7 +105,6 @@ public class FormationServiceImpl implements FormationService {
         log.debug("Request to get all Formations");
         return formationRepository.findAll(pageable).map(formationMapper::toDto);
     }
-
 
     @Override
     @Transactional(readOnly = true)
@@ -106,13 +131,11 @@ public class FormationServiceImpl implements FormationService {
             .map(formationMapper::toDto);
     }
 
-
     @Override
     public Page<FormationDTO> findAllFormationByUfr(Long ufrId, Pageable pageable) {
         return formationRepository.findBySpecialiteMentionDomaineUfrsId(ufrId, pageable)
             .map(formationMapper::toDto);
     }
-
 
     @Override
     public Page<FormationDTO> findAllFormationByCycle(Cycle cycle, Pageable pageable) {
@@ -120,13 +143,11 @@ public class FormationServiceImpl implements FormationService {
             .map(formationMapper::toDto);
     }
 
-
     @Override
     public Page<FormationDTO> findAllFormationByUniversite(Long universiteId, Pageable pageable) {
         return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteId(universiteId, pageable)
             .map(formationMapper::toDto);
     }
-
 
     @Override
     public Page<FormationDTO> findAllFormationByMinistere(Long ministereId, Pageable pageable) {
@@ -157,6 +178,5 @@ public class FormationServiceImpl implements FormationService {
         return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteMinistereIdAndTypeFormation(ministereId, TypeFormation.PRIVEE, pageable)
             .map(formationMapper::toDto);
     }
-
 
 }

@@ -1,6 +1,7 @@
 package sn.ugb.gir.service.impl;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,8 +41,16 @@ public class MinistereServiceImpl implements MinistereService {
     public MinistereDTO save(MinistereDTO ministereDTO) {
         log.debug("Request to save Ministere : {}", ministereDTO);
 
+        if (ministereDTO.getId() != null) {
+           throw new BadRequestAlertException("A new ministere cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+
         if (ministereRepository.findByNomMinistereIgnoreCase(ministereDTO.getNomMinistere()).isPresent()) {
             throw new BadRequestAlertException("Un ministère avec ce nom existe déjà", ENTITY_NAME, "nomMinistereExists");
+        }
+
+        if (ministereDTO.getNomMinistere().isEmpty() || ministereDTO.getNomMinistere().isBlank()){
+            throw new BadRequestAlertException("Le libellé du Ministere ne peut pas être vide.", ENTITY_NAME, "nomMinistereNotNull");
         }
 
         Optional<Ministere> currentMinistere = ministereRepository.findByEnCoursYN(1);
@@ -66,17 +75,36 @@ public class MinistereServiceImpl implements MinistereService {
         return ministereMapper.toDto(ministere);
     }
 
-    @Transactional
-    @Override
-    public MinistereDTO update(MinistereDTO ministereDTO) {
-        log.debug("Request to update Ministere : {}", ministereDTO);
+    private void validateMinistere(Long id, MinistereDTO ministereDTO) {
+        if (ministereDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, ministereDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+        if (!ministereRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+        if (ministereDTO.getNomMinistere().isEmpty() || ministereDTO.getNomMinistere().isBlank()){
+            throw new BadRequestAlertException("La nom du ministere ne peut pas être vide.", ENTITY_NAME, "sigleSpecialiteNotNull");
+        }
 
         Optional<Ministere> ministereWithName = ministereRepository.findByNomMinistereIgnoreCase(ministereDTO.getNomMinistere());
-
         if (ministereWithName.isPresent() && !ministereWithName.get().getId().equals(ministereDTO.getId())) {
             throw new BadRequestAlertException("Un ministère avec ce nom existe déjà", ENTITY_NAME, "nomMinistereExists");
         }
+        if (ministereDTO.getDateFin() != null && !ministereDTO.getDateFin().isAfter(ministereDTO.getDateDebut())) {
+            throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidDateRange");
+        }
+    }
 
+
+    @Transactional
+    @Override
+    public MinistereDTO update(Long id, MinistereDTO ministereDTO) {
+        log.debug("Request to update Ministere : {}", ministereDTO);
+
+        validateMinistere(id, ministereDTO);
 
         if (ministereDTO.getEnCoursYN() == 1) {
 
@@ -88,42 +116,37 @@ public class MinistereServiceImpl implements MinistereService {
                 existingMinistere.setDateFin(LocalDate.now());
                 ministereRepository.save(existingMinistere);
             }
-            if (ministereDTO.getDateFin()!=null) {
+            if (ministereDTO.getDateFin() != null) {
                 ministereDTO.setDateFin(null);
             }
         }
 
-        if (ministereDTO.getDateFin() != null && !ministereDTO.getDateFin().isAfter(ministereDTO.getDateDebut())) {
-           throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidDateRange");
-        }
-
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
-
         if (ministereDTO.getEnCoursYN() == 0 && ministereRepository.findById(ministere.getId()).orElseThrow().getEnCoursYN() == 1) {
             ministere.setDateFin(LocalDate.now());
         }
 
         ministere = ministereRepository.save(ministere);
-
         return ministereMapper.toDto(ministere);
     }
 
-
-
     @Override
-    public Optional<MinistereDTO> partialUpdate(MinistereDTO ministereDTO) {
+    public Optional<MinistereDTO> partialUpdate(Long id, MinistereDTO ministereDTO) {
         log.debug("Request to partially update Ministere : {}", ministereDTO);
+
+        validateMinistere(id, ministereDTO);
 
         return ministereRepository
             .findById(ministereDTO.getId())
             .map(existingMinistere -> {
                 ministereMapper.partialUpdate(existingMinistere, ministereDTO);
-
                 return existingMinistere;
             })
             .map(ministereRepository::save)
             .map(ministereMapper::toDto);
     }
+
+
 
     @Override
     @Transactional(readOnly = true)

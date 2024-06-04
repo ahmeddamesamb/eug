@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import sn.ugb.gir.domain.enumeration.Cycle;
-import sn.ugb.gir.service.dto.DomaineDTO;
 import sn.ugb.gir.service.dto.FormationDTO;
 
 /**
@@ -23,18 +22,20 @@ public interface FormationService {
     /**
      * Updates a formation.
      *
+     * @param id
      * @param formationDTO the entity to update.
      * @return the persisted entity.
      */
-    FormationDTO update(FormationDTO formationDTO);
+    FormationDTO update(Long id, FormationDTO formationDTO);
 
     /**
      * Partially updates a formation.
      *
+     * @param id
      * @param formationDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<FormationDTO> partialUpdate(FormationDTO formationDTO);
+    Optional<FormationDTO> partialUpdate(Long id, FormationDTO formationDTO);
 
     /**
      * Get all the formations.

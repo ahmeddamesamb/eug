@@ -21,18 +21,20 @@ public interface MinistereService {
     /**
      * Updates a ministere.
      *
+     * @param id
      * @param ministereDTO the entity to update.
      * @return the persisted entity.
      */
-    MinistereDTO update(MinistereDTO ministereDTO);
+    MinistereDTO update(Long id, MinistereDTO ministereDTO);
 
     /**
      * Partially updates a ministere.
      *
+     * @param id
      * @param ministereDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<MinistereDTO> partialUpdate(MinistereDTO ministereDTO);
+    Optional<MinistereDTO> partialUpdate(Long id, MinistereDTO ministereDTO);
 
     /**
      * Get all the ministeres.
