@@ -36,12 +36,10 @@ public class TypeFraisServiceImpl implements TypeFraisService {
     public TypeFraisDTO save(TypeFraisDTO typeFraisDTO) {
         log.debug("Request to save TypeFrais : {}", typeFraisDTO);
         TypeFrais typeFrais = typeFraisMapper.toEntity(typeFraisDTO);
-        if (typeFrais.getLibelleTypeFrais()==null){
-            throw new BadRequestAlertException("Le libellé typeFrais ne doit pas etre nul", "typeFrais", "libelleNull");
+        if (typeFrais.getLibelleTypeFrais()==null || typeFrais.getLibelleTypeFrais().trim().isEmpty()){
+            throw new BadRequestAlertException("Le libellé typeFrais est obligatoire", "typeFrais", "libelleNull");
         }
-        if (typeFrais.getLibelleTypeFrais().trim().isEmpty()){
-            throw new BadRequestAlertException("Le libellé ne doit pas etre vide", "typeFrais", "libelleVide");
-        }
+
         if (typeFraisRepository.findByLibelleTypeFrais(typeFrais.getLibelleTypeFrais()).isPresent()) {
             throw new BadRequestAlertException("Un type de frais avec ce libellé existe déjà", "typeFrais", "libelleExists");
         }
@@ -53,11 +51,8 @@ public class TypeFraisServiceImpl implements TypeFraisService {
     public TypeFraisDTO update(TypeFraisDTO typeFraisDTO) {
         log.debug("Request to update TypeFrais : {}", typeFraisDTO);
         TypeFrais typeFrais = typeFraisMapper.toEntity(typeFraisDTO);
-        if (typeFrais.getLibelleTypeFrais()==null){
-            throw new BadRequestAlertException("Le libellé typeFrais ne doit pas etre nul", "typeFrais", "libelleNull");
-        }
-        if (typeFrais.getLibelleTypeFrais().trim().isEmpty()){
-            throw new BadRequestAlertException("Le libellé ne doit pas etre vide", "typeFrais", "libelleVide");
+        if (typeFrais.getLibelleTypeFrais()==null || typeFrais.getLibelleTypeFrais().trim().isEmpty()){
+            throw new BadRequestAlertException("Le libellé typeFrais est obligatoire", "typeFrais", "libelleNull");
         }
         if (typeFraisRepository.findByLibelleTypeFrais(typeFrais.getLibelleTypeFrais()).isPresent()) {
             throw new BadRequestAlertException("Un type de frais avec ce libellé existe déjà", "typeFrais", "libelleExists");
@@ -70,11 +65,8 @@ public class TypeFraisServiceImpl implements TypeFraisService {
     public Optional<TypeFraisDTO> partialUpdate(TypeFraisDTO typeFraisDTO) {
         log.debug("Request to partially update TypeFrais : {}", typeFraisDTO);
 
-        if (typeFraisDTO.getLibelleTypeFrais()==null){
-            throw new BadRequestAlertException("Le libellé typeFrais ne doit pas etre nul", "typeFrais", "libelletypeFraisNull");
-        }
-        if (typeFraisDTO.getLibelleTypeFrais().trim().isEmpty()){
-            throw new BadRequestAlertException("Le libellé typeFrais ne doit pas etre vide", "typeFrais", "libelletypeFraisVide");
+        if (typeFraisDTO.getLibelleTypeFrais()==null || typeFraisDTO.getLibelleTypeFrais().trim().isEmpty()){
+            throw new BadRequestAlertException("Le libellé typeFrais est obligatoire", "typeFrais", "libelleNull");
         }
         return typeFraisRepository
                    .findById(typeFraisDTO.getId())

@@ -12,6 +12,7 @@ import sn.ugb.gir.repository.ZoneRepository;
 import sn.ugb.gir.service.ZoneService;
 import sn.ugb.gir.service.dto.ZoneDTO;
 import sn.ugb.gir.service.mapper.ZoneMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Zone}.
@@ -26,6 +27,8 @@ public class ZoneServiceImpl implements ZoneService {
 
     private final ZoneMapper zoneMapper;
 
+    private static final String ENTITY_NAME = "microserviceGirZone";
+
     public ZoneServiceImpl(ZoneRepository zoneRepository, ZoneMapper zoneMapper) {
         this.zoneRepository = zoneRepository;
         this.zoneMapper = zoneMapper;
@@ -34,6 +37,7 @@ public class ZoneServiceImpl implements ZoneService {
     @Override
     public ZoneDTO save(ZoneDTO zoneDTO) {
         log.debug("Request to save Zone : {}", zoneDTO);
+        validateData(zoneDTO);
         Zone zone = zoneMapper.toEntity(zoneDTO);
         zone = zoneRepository.save(zone);
         return zoneMapper.toDto(zone);
@@ -42,6 +46,7 @@ public class ZoneServiceImpl implements ZoneService {
     @Override
     public ZoneDTO update(ZoneDTO zoneDTO) {
         log.debug("Request to update Zone : {}", zoneDTO);
+        validateData(zoneDTO);
         Zone zone = zoneMapper.toEntity(zoneDTO);
         zone = zoneRepository.save(zone);
         return zoneMapper.toDto(zone);
@@ -50,7 +55,7 @@ public class ZoneServiceImpl implements ZoneService {
     @Override
     public Optional<ZoneDTO> partialUpdate(ZoneDTO zoneDTO) {
         log.debug("Request to partially update Zone : {}", zoneDTO);
-
+        validateData(zoneDTO);
         return zoneRepository
             .findById(zoneDTO.getId())
             .map(existingZone -> {
@@ -80,5 +85,15 @@ public class ZoneServiceImpl implements ZoneService {
     public void delete(Long id) {
         log.debug("Request to delete Zone : {}", id);
         zoneRepository.deleteById(id);
+    }
+
+    private void validateData(ZoneDTO zoneDTO) {
+        if (zoneDTO.getLibelleZone().isEmpty() || zoneDTO.getLibelleZone().isBlank()){
+            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleZoneNotNull");
+        }
+        Optional<Zone> existingZone = zoneRepository.findByLibelleZone(zoneDTO.getLibelleZone());
+        if (existingZone.isPresent() && !existingZone.get().getId().equals(zoneDTO.getId())) {
+            throw new BadRequestAlertException("Une zone avec le même libellé existe.", ENTITY_NAME, "libelleZoneExist");
+        }
     }
 }

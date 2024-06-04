@@ -4,48 +4,48 @@ export const routes: Routes = [
 
   {
     path: '',
+    
     redirectTo: 'attente',
     pathMatch: 'full'
-},
+  },
 
   // attente path
 
   { path: 'attente',
+    children:[
+      {
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full'
+      },
+      {
+        path: '', loadComponent: () => import('./ministere.component').then(m => m.MinistereComponent) ,
 
-  children:[
-    {
-      path: '',
-      redirectTo: '',
-      pathMatch: 'full'
-  },
-    {
-      path: '', loadComponent: () => import('./ministere.component').then(m => m.MinistereComponent) ,
-
-    },
-    {
-      path: '', loadComponent: () => import('../attente/attente.component').then(m => m.AttenteComponent), outlet:'secondary'
-    }
-  ],
+      },
+      {
+        path: '', loadComponent: () => import('../attente/attente.component').then(m => m.AttenteComponent), outlet:'secondary'
+      }
+    ],
 
   },
   // create path
 
   { path: 'create',
 
-  children:[
-    {
-      path: '',
-      redirectTo: '',
-      pathMatch: 'full'
-  },
-    {
-      path: '', loadComponent: () => import('./ministere.component').then(m => m.MinistereComponent) ,
+    children:[
+      {
+        path: '',
+        redirectTo: '',
+        pathMatch: 'full'
+      },
+      {
+        path: '', loadComponent: () => import('./ministere.component').then(m => m.MinistereComponent) ,
 
-    },
-    {
-      path: '', loadComponent: () => import('./components/create/create.component').then(m => m.CreateComponent), outlet:'secondary'
-    }
-  ],
+      },
+      {
+        path: '', loadComponent: () => import('./components/create/create.component').then(m => m.CreateComponent), outlet:'secondary'
+      }
+    ],
 
   },
 
@@ -58,7 +58,7 @@ export const routes: Routes = [
       path: '',
       redirectTo: '',
       pathMatch: 'full'
-  },
+    },
     {
       path: '', loadComponent: () => import('./ministere.component').then(m => m.MinistereComponent) ,
 
@@ -79,7 +79,7 @@ export const routes: Routes = [
       path: '',
       redirectTo: '',
       pathMatch: 'full'
-  },
+    },
     {
       path: '', loadComponent: () => import('./ministere.component').then(m => m.MinistereComponent) ,
 

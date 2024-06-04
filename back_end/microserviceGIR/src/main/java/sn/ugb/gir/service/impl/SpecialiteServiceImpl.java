@@ -8,10 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sn.ugb.gir.domain.Specialite;
+import sn.ugb.gir.domain.Ufr;
 import sn.ugb.gir.repository.SpecialiteRepository;
 import sn.ugb.gir.service.SpecialiteService;
 import sn.ugb.gir.service.dto.SpecialiteDTO;
+import sn.ugb.gir.service.dto.UfrDTO;
 import sn.ugb.gir.service.mapper.SpecialiteMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Specialite}.
@@ -26,6 +29,8 @@ public class SpecialiteServiceImpl implements SpecialiteService {
 
     private final SpecialiteMapper specialiteMapper;
 
+    private static final String ENTITY_NAME = "microserviceGirSpecialite";
+
     public SpecialiteServiceImpl(SpecialiteRepository specialiteRepository, SpecialiteMapper specialiteMapper) {
         this.specialiteRepository = specialiteRepository;
         this.specialiteMapper = specialiteMapper;
@@ -34,6 +39,7 @@ public class SpecialiteServiceImpl implements SpecialiteService {
     @Override
     public SpecialiteDTO save(SpecialiteDTO specialiteDTO) {
         log.debug("Request to save Specialite : {}", specialiteDTO);
+        validateData(specialiteDTO);
         Specialite specialite = specialiteMapper.toEntity(specialiteDTO);
         specialite = specialiteRepository.save(specialite);
         return specialiteMapper.toDto(specialite);
@@ -42,6 +48,7 @@ public class SpecialiteServiceImpl implements SpecialiteService {
     @Override
     public SpecialiteDTO update(SpecialiteDTO specialiteDTO) {
         log.debug("Request to update Specialite : {}", specialiteDTO);
+        validateData(specialiteDTO);
         Specialite specialite = specialiteMapper.toEntity(specialiteDTO);
         specialite = specialiteRepository.save(specialite);
         return specialiteMapper.toDto(specialite);
@@ -50,7 +57,7 @@ public class SpecialiteServiceImpl implements SpecialiteService {
     @Override
     public Optional<SpecialiteDTO> partialUpdate(SpecialiteDTO specialiteDTO) {
         log.debug("Request to partially update Specialite : {}", specialiteDTO);
-
+        validateData(specialiteDTO);
         return specialiteRepository
             .findById(specialiteDTO.getId())
             .map(existingSpecialite -> {
@@ -115,5 +122,22 @@ public class SpecialiteServiceImpl implements SpecialiteService {
     public Page<SpecialiteDTO> getAllSpecialiteByMinistere(Long ministereId, Pageable pageable) {
         log.debug("Request to get all Specialites by Ministere ID : {}", ministereId);
         return specialiteRepository.findByMentionDomaineUfrsUniversiteMinistereId(ministereId, pageable).map(specialiteMapper::toDto);
+    }
+
+    private void validateData(SpecialiteDTO specialiteDTO) {
+        if (specialiteDTO.getNomSpecialites().isEmpty() || specialiteDTO.getNomSpecialites().isBlank()){
+            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "nomSpecialiteNotNull");
+        }
+        if (specialiteDTO.getSigleSpecialites().isEmpty() || specialiteDTO.getSigleSpecialites().isBlank()){
+            throw new BadRequestAlertException("La sigle ne peut pas être vide.", ENTITY_NAME, "sigleSpecialiteNotNull");
+        }
+        Optional<Specialite> existingSpecialite = specialiteRepository.findByNomSpecialites(specialiteDTO.getNomSpecialites());
+        if (existingSpecialite.isPresent() && !existingSpecialite.get().getId().equals(specialiteDTO.getId())) {
+            throw new BadRequestAlertException("Une ufr avec le même libellé existe.", ENTITY_NAME, "nomSpecialiteExist");
+        }
+        existingSpecialite = specialiteRepository.findBySigleSpecialites(specialiteDTO.getSigleSpecialites());
+        if (existingSpecialite.isPresent() && !existingSpecialite.get().getId().equals(specialiteDTO.getId())) {
+            throw new BadRequestAlertException("Une ufr avec la même sigle existe.", ENTITY_NAME, "sigleSpecialiteExist");
+        }
     }
 }

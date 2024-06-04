@@ -37,12 +37,10 @@ public class DomaineServiceImpl implements DomaineService {
         log.debug("Request to save Domaine : {}", domaineDTO);
         Domaine domaine = domaineMapper.toEntity(domaineDTO);
 
-        if (domaine.getLibelleDomaine()==null){
-            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre nul", "LibelleDomaine", "LibelleDomaineNull");
+        if (domaine.getLibelleDomaine()==null || domaine.getLibelleDomaine().trim().isEmpty()){
+            throw new BadRequestAlertException("Le  LibelleDomaine est obligatoire", "LibelleDomaine", "LibelleDomaineNull");
         }
-        if (domaine.getLibelleDomaine().trim().isEmpty()){
-            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre vide", "LibelleDomaine", "LibelleDomaineRegionVide");
-        }
+
         if (domaineRepository.findByLibelleDomaine(domaine.getLibelleDomaine()).isPresent()) {
             throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
         }
@@ -54,11 +52,8 @@ public class DomaineServiceImpl implements DomaineService {
     public DomaineDTO update(DomaineDTO domaineDTO) {
         log.debug("Request to update Domaine : {}", domaineDTO);
         Domaine domaine = domaineMapper.toEntity(domaineDTO);
-        if (domaine.getLibelleDomaine()==null){
-            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre nul", "LibelleDomaine", "LibelleDomaineNull");
-        }
-        if (domaine.getLibelleDomaine().trim().isEmpty()){
-            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre vide", "LibelleDomaine", "LibelleDomaineRegionVide");
+        if (domaine.getLibelleDomaine()==null || domaine.getLibelleDomaine().trim().isEmpty()){
+            throw new BadRequestAlertException("Le  LibelleDomaine est obligatoire", "LibelleDomaine", "LibelleDomaineNull");
         }
         if (domaineRepository.findByLibelleDomaine(domaine.getLibelleDomaine()).isPresent()) {
             throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
@@ -70,16 +65,12 @@ public class DomaineServiceImpl implements DomaineService {
     @Override
     public Optional<DomaineDTO> partialUpdate(DomaineDTO domaineDTO) {
         log.debug("Request to partially update Domaine : {}", domaineDTO);
-        if (domaineDTO.getLibelleDomaine()==null){
-            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre nul", "LibelleDomaine", "LibelleDomaineNull");
-        }
-        if (domaineDTO.getLibelleDomaine().trim().isEmpty()){
-            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre vide", "LibelleDomaine", "LibelleDomaineRegionVide");
+        if (domaineDTO.getLibelleDomaine()==null || domaineDTO.getLibelleDomaine().trim().isEmpty()){
+            throw new BadRequestAlertException("Le  LibelleDomaine est obligatoire", "LibelleDomaine", "LibelleDomaineNull");
         }
         return domaineRepository
                    .findById(domaineDTO.getId())
                    .map(existingTypeFrais -> {
-                       // Vérifier si un autre TypeFrais avec le même libelle existe
                        domaineRepository.findByLibelleDomaine(domaineDTO.getLibelleDomaine()).ifPresent(existing -> {
                            if (!existing.getId().equals(existingTypeFrais.getId())) {
                                throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
