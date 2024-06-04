@@ -30,4 +30,9 @@ export class MinistereServiceService {
 
     return this.http.get<MinistereModel>(`${this.ministereUrl}/${id}`);
   }
+
+  deleteMinistere(id:number):Observable<void>{
+
+    return this.http.delete<void>(`${this.ministereUrl}/${id}`);
+  }
 }

@@ -12,14 +12,28 @@ import {
   IColumn,
   SmartTableComponent,
   TemplateIdDirective,
-  TextColorDirective
+  TextColorDirective,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
+  ModalTitleDirective,
+  ModalToggleDirective,
+  CardBodyComponent,
+  CardComponent,
+  CardHeaderComponent,
+  ColComponent,
 } from '@coreui/angular-pro';
+
+
 import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-ministere-list',
   standalone: true,
-  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe],
+  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
+    ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective,CardBodyComponent,CardComponent,CardHeaderComponent,  ColComponent,
+  ],
   templateUrl: './ministere-list.component.html',
   styleUrl: './ministere-list.component.scss'
 })
@@ -89,5 +103,22 @@ export class MinistereListComponent {
   create() {
     this.route.navigate(['/gir/parametrage/ministere/create'])
 
+  }
+  delete(item: number){
+    this.ministereService.deleteMinistere(item).subscribe((data)=>{
+      console.log(data);
+ 
+    })
+    this.route.navigate(['/gir/parametrage/ministere/attente'])
+  }
+
+  public liveDemoVisible = false;
+
+  toggleLiveDemo() {
+    this.liveDemoVisible = !this.liveDemoVisible;
+  }
+
+  handleLiveDemoChange(event: boolean) {
+    this.liveDemoVisible = event;
   }
 }
