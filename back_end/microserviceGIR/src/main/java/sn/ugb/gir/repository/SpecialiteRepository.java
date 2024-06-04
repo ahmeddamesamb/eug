@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import sn.ugb.gir.domain.Specialite;
 
+import java.util.Optional;
+
 /**
  * Spring Data JPA repository for the Specialite entity.
  */
@@ -21,4 +23,8 @@ public interface SpecialiteRepository extends JpaRepository<Specialite, Long> {
     Page<Specialite> findByMentionDomaineUfrsUniversiteId(Long universiteId, Pageable pageable);
 
     Page<Specialite> findByMentionDomaineUfrsUniversiteMinistereId(Long ministereId, Pageable pageable);
+
+    Optional<Specialite> findByNomSpecialites(String nomSpecialites);
+
+    Optional<Specialite> findBySigleSpecialites(String sigleSpecialites);
 }

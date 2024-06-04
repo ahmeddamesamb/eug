@@ -37,12 +37,10 @@ public RegionServiceImpl(RegionRepository regionRepository, RegionMapper regionM
 public RegionDTO save(RegionDTO regionDTO) {
     log.debug("Request to save Region : {}", regionDTO);
     Region region = regionMapper.toEntity(regionDTO);
-    if (region.getLibelleRegion()==null){
-        throw new BadRequestAlertException("Le libellé Region ne doit pas etre nul", "region", "libelleRegionNull");
+    if (region.getLibelleRegion()==null || region.getLibelleRegion().trim().isEmpty()){
+        throw new BadRequestAlertException("Le libellé Region est obligatoire", "region", "libelleRegionNull");
     }
-    if (region.getLibelleRegion().trim().isEmpty()){
-        throw new BadRequestAlertException("Le libellé Region ne doit pas etre vide", "region", "libelleRegionVide");
-    }
+
     if (regionRepository.findByLibelleRegion(region.getLibelleRegion()).isPresent()) {
         throw new BadRequestAlertException("Une Region avec ce libellé existe déjà", "region", "libelleRegionExists");
     }
@@ -54,11 +52,8 @@ public RegionDTO save(RegionDTO regionDTO) {
 public RegionDTO update(RegionDTO regionDTO) {
     log.debug("Request to update Region : {}", regionDTO);
     Region region = regionMapper.toEntity(regionDTO);
-    if (region.getLibelleRegion()==null){
-        throw new BadRequestAlertException("Le libellé Region ne doit pas etre nul", "region", "libelleRegionNull");
-    }
-    if (region.getLibelleRegion().trim().isEmpty()){
-        throw new BadRequestAlertException("Le libellé Region ne doit pas etre vide", "region", "libelleRegionVide");
+    if (region.getLibelleRegion()==null || region.getLibelleRegion().trim().isEmpty()){
+        throw new BadRequestAlertException("Le libellé Region est obligatoire", "region", "libelleRegionNull");
     }
     if (regionRepository.findByLibelleRegion(region.getLibelleRegion()).isPresent()) {
         throw new BadRequestAlertException("Une Region avec ce libellé existe déjà", "region", "libelleRegionExists");
@@ -70,16 +65,12 @@ public RegionDTO update(RegionDTO regionDTO) {
 @Override
 public Optional<RegionDTO> partialUpdate(RegionDTO regionDTO) {
     log.debug("Request to partially update Region : {}", regionDTO);
-    if (regionDTO.getLibelleRegion()==null){
-        throw new BadRequestAlertException("Le libellé Region ne doit pas etre nul", "region", "libelleRegionNull");
-    }
-    if (regionDTO.getLibelleRegion().trim().isEmpty()){
-        throw new BadRequestAlertException("Le libellé Region ne doit pas etre vide", "region", "libelleRegionVide");
+    if (regionDTO.getLibelleRegion()==null || regionDTO.getLibelleRegion().trim().isEmpty()){
+        throw new BadRequestAlertException("Le libellé Region est obligatoire", "region", "libelleRegionNull");
     }
     return regionRepository
                .findById(regionDTO.getId())
                .map(existingTypeFrais -> {
-                   // Vérifier si un autre TypeFrais avec le même libelle existe
                    regionRepository.findByLibelleRegion(regionDTO.getLibelleRegion()).ifPresent(existing -> {
                        if (!existing.getId().equals(existingTypeFrais.getId())) {
                            throw new BadRequestAlertException("Une Region avec ce libellé existe déjà", "region", "libelleRegionExists");

@@ -66,28 +66,30 @@
         status="success"
         textColor="primary"
       />
-      <span class="d-none d-md-flex">Lamine gueye</span>
+      <span class="d-none d-md-flex">{{ userFirstName }} {{ userLastName }}</span>
       
       <i class="bi bi-caret-down"></i>
     </button>
     <ul cDropdownMenu class="p-2 w-auto index">
-      
+<!--   
       <li>
-        <a cDropdownItem routerLink="">
+        <a cDropdownItem  (click)="login()">
           <svg cIcon class="me-1" name="cilUser"></svg>
           Profile
         </a>
-      </li>
+      </li> -->
       <li>
-        <a cDropdownItem routerLink="">
+        <a cDropdownItem (click)="logout()">
           <svg cIcon class="me-1" name="cilAccountLogout"></svg>
-          Logout
+          Se déconnecter
         </a>
       </li>
     </ul>
   </c-dropdown>
   
 </ng-template>
+
+
 
 
 
