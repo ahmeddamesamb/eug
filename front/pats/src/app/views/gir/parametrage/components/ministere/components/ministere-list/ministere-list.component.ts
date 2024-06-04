@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IItem } from '@coreui/angular-pro';
 import { Router } from '@angular/router';
+import {MinistereServiceService} from '../../services/ministere-service.service'
+import {MinistereModel} from '../../models/ministere-model'
+import { NumberToStringPipe } from '../../../../../../../pipes/number-to-string.pipe'
 
 import {
   BadgeComponent,
@@ -11,31 +14,37 @@ import {
   TemplateIdDirective,
   TextColorDirective
 } from '@coreui/angular-pro';
+import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-ministere-list',
   standalone: true,
-  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective],
+  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe],
   templateUrl: './ministere-list.component.html',
   styleUrl: './ministere-list.component.scss'
 })
 export class MinistereListComponent {
-  constructor (private route:Router){
+  constructor (private route:Router,private ministereService: MinistereServiceService){
 
   }
 
-  usersData: IItem[] = [
-   
-    {id: 0, libelle: "Ministére de la Santé et de l'Action Social", sigle: 'MSAS', dateDebut: '2018/01/01' , dateFin: '2019/01/01', status: 'Inactive' },
-    {id: 1, libelle: 'Ministere de Zoulaykha', sigle: 'MZ', dateDebut: '2018/01/01', dateFin: '2019/01/01', status: 'Active'},
-  ]
+  ministereList : MinistereModel[] = [];
+
+
+  ngOnInit(): void {
+    this.ministereService.getMinistereList().subscribe((data)=>{
+      this.ministereList = data;
+ 
+    })
+    
+  }
 
   columns: IColumn[] = [
     {
-      key: 'libelle'
+      key: 'nomMinistere'
     },
     {
-      key: 'sigle'
+      key: 'sigleMinistere'
     },
     {
       key: 'dateDebut',
@@ -47,7 +56,7 @@ export class MinistereListComponent {
       label: 'Date Fin',
       _props: { class: 'text-truncate' }
     },
-    { key: 'status', _style: { width: '15%' } },
+    { key: 'enCoursYN', _style: { width: '15%' } },
     {
       key: 'show',
       label: 'Action',
@@ -58,15 +67,15 @@ export class MinistereListComponent {
   ];
   details_visible = Object.create({});
 
-  getBadge(status: string) {
-    switch (status) {
-      case 'Active':
+  getBadge(enCoursYN: number) {
+    switch (enCoursYN) {
+      case 1:
         return 'success';
-      case 'Inactive':
-        return 'secondary';
-      case 'Pending':
-        return 'warning';
-      case 'Banned':
+      // case 'Inactive':
+      //   return 'secondary';
+      // case 'Pending':
+      //   return 'warning';
+      case 0:
         return 'danger';
       default:
         return 'primary';

@@ -3,6 +3,8 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } 
 import { DocsExampleComponent } from '@docs-components/public-api';
 import { RowComponent, ColComponent, TextColorDirective, CardComponent,DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective } from '@coreui/angular-pro';
 import { DatePipe } from '@angular/common';
+import { MinistereServiceService } from '../../services/ministere-service.service';
+import {MinistereModel} from '../../models/ministere-model'
 
 
 @Component({
@@ -13,20 +15,35 @@ import { DatePipe } from '@angular/common';
   styleUrl: './create.component.scss'
 })
 export class CreateComponent {
+  ministere? :MinistereModel ;
   ministereForm: FormGroup | undefined;
   customStylesValidated = false;
 
+  constructor( private ministereService: MinistereServiceService){
+
+  }
+
   ngOnInit() {
     this.ministereForm = new FormGroup({
-      nom: new FormControl('', Validators.required),
-      sigle: new FormControl('', Validators.required),
-      dateCreation: new FormControl(null, Validators.required)
+      nomMinistere: new FormControl('', Validators.required),
+      sigleMinistere: new FormControl('', Validators.required),
+      dateDebut: new FormControl(null, Validators.required)
     });
   }
 
   onSubmit1() {
     this.customStylesValidated = true;
     if (this.ministereForm!.valid) {
+      this.ministere = this.ministereForm!.value;
+      if (this.ministere && this.ministere.dateDebut instanceof Date) {
+        const transformedDate = this.formatDate(this.ministere.dateDebut);
+        if (transformedDate !== null) {
+          this.ministere.dateDebut = transformedDate;
+        }
+      }
+      this.ministereService.createMinistere(this.ministere!).subscribe((data)=>{
+        console.log(data);
+      });
       console.log('Données du formulaire :', this.ministereForm!.value);
     } else {
       console.log('Formulaire invalide');
@@ -35,6 +52,13 @@ export class CreateComponent {
 
   onReset1() {
     this.ministereForm!.reset();
+  }
+
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
   }
 
 

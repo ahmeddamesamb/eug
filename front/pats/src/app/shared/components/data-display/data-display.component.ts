@@ -1,11 +1,15 @@
 import { Component, Input } from '@angular/core';
 
+
+
+import { NumberToStringPipe } from '../../../pipes/number-to-string.pipe'
+
 @Component({
-  selector: 'app-data-display',
-  standalone: true,
-  imports: [],
-  templateUrl: './data-display.component.html',
-  styleUrl: './data-display.component.scss'
+    selector: 'app-data-display',
+    standalone: true,
+    templateUrl: './data-display.component.html',
+    styleUrl: './data-display.component.scss',
+    imports: [NumberToStringPipe]
 })
 export class DataDisplayComponent {
 

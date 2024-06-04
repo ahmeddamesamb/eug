@@ -11,17 +11,17 @@
     >
         <c-col md="12">
             <label cLabel for="validationCustom01">Nom </label>
-            <input cFormControl id="validationCustom01" required type="text" value="" formControlName="nom"/>
+            <input cFormControl id="validationCustom01" required type="text" value="" formControlName="nomMinistere"/>
             <c-form-feedback [valid]="ministereForm?.get('nom')?.hasError('required')">Bon!</c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom02">Sigle </label>
-            <input cFormControl id="validationCustom02" required type="text" value="" formControlName="sigle"/>
+            <input cFormControl id="validationCustom02" required type="text" value="" formControlName="sigleMinistere"/>
             <c-form-feedback [valid]="ministereForm?.get('sigle')?.hasError('required')">Bon!</c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom03">Date de création </label>
-            <c-date-picker cFormControl id="validationCustom03"  required  locale="fr-FR"   formControlName="dateCreation"/>
+            <c-date-picker cFormControl id="validationCustom03"  required  locale="fr-FR"   formControlName="dateDebut"/>
             <c-form-feedback [valid]="ministereForm?.get('dateCreation')?.hasError('required')">Bon!</c-form-feedback>
 
         </c-col>

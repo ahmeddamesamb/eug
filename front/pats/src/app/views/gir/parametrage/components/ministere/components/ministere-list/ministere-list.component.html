@@ -13,7 +13,7 @@
   [columnFilter]="true"
   [itemsPerPageSelect]="true"
   [itemsPerPage]="5"
-  [items]="usersData"
+  [items]="ministereList"
   [sorterValue]="{ column: 'name', state: 'asc' }"
   [tableFilter]="false"
   [tableProps]="{ hover: true, striped: true, responsive: true }"
@@ -44,9 +44,9 @@
     
     <td>
       @switch (columnName) {
-        @case ('status') {
+        @case ('enCoursYN') {
           <c-badge [color]="getBadge(tdContent)">
-            {{ (item[columnName]) }}
+            {{ (item[columnName]) | numberToString }} 
           </c-badge>
         }
         @case ('show') {

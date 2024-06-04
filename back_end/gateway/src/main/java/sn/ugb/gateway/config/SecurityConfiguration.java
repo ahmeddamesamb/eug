@@ -90,12 +90,13 @@ public class SecurityConfiguration {
                 )
             )
             .cors(withDefaults())
-            .csrf(csrf ->
+            .csrf(csrf -> csrf.disable())
+            /*.csrf(csrf ->
                 csrf
                     .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
                     // See https://stackoverflow.com/q/74447118/65681
                     .csrfTokenRequestHandler(new ServerCsrfTokenRequestAttributeHandler())
-            )
+            )*/
             // See https://github.com/spring-projects/spring-security/issues/5766
             .addFilterAt(new CookieCsrfFilter(), SecurityWebFiltersOrder.REACTOR_CONTEXT)
             .addFilterAfter(new SpaWebFilter(), SecurityWebFiltersOrder.HTTPS_REDIRECT)
