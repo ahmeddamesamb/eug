@@ -107,10 +107,10 @@ public class UfrServiceImpl implements UfrService {
 
     private void validateData(UfrDTO ufrDTO) {
         if (ufrDTO.getLibeleUfr().isEmpty() || ufrDTO.getLibeleUfr().isBlank()){
-            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleNotNull");
+            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleUfrNotNull");
         }
         if (ufrDTO.getSigleUfr().isEmpty() || ufrDTO.getSigleUfr().isBlank()){
-            throw new BadRequestAlertException("La sigle ne peut pas être vide.", ENTITY_NAME, "sigleNotNull");
+            throw new BadRequestAlertException("La sigle ne peut pas être vide.", ENTITY_NAME, "sigleUfrNotNull");
         }
         Optional<Ufr> existingUfr = ufrRepository.findByLibeleUfr(ufrDTO.getLibeleUfr());
         if (existingUfr.isPresent() && !existingUfr.get().getId().equals(ufrDTO.getId())) {
