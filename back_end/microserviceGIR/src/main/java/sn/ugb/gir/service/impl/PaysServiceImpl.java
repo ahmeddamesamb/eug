@@ -37,25 +37,16 @@ public PaysServiceImpl(PaysRepository paysRepository, PaysMapper paysMapper) {
 public PaysDTO save(PaysDTO paysDTO) {
     log.debug("Request to save Pays : {}", paysDTO);
     Pays pays = paysMapper.toEntity(paysDTO);
-    if (pays.getLibellePays()==null){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre nul", "pays", "libellePaysNull");
-    }
-    if (pays.getLibellePays().trim().isEmpty()){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre vide", "pays", "libellePaysVide");
+    if (pays.getLibellePays()==null || pays.getLibellePays().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ libelle pays est obligatoire", "pays", "libellePaysNull");
     }
 
-    if (pays.getNationalite()==null){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre nul", "pays", "libellePaysNull");
-    }
-    if (pays.getNationalite().trim().isEmpty()){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre vide", "pays", "libellePaysVide");
+    if (pays.getNationalite()==null || pays.getNationalite().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ nationalite obligatoire", "pays", "libellePaysNull");
     }
 
-    if (pays.getCodePays()==null  ){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre nul", "pays", "libellePaysNull");
-    }
-    if (pays.getCodePays().trim().isEmpty()){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre vide", "pays", "libellePaysVide");
+    if (pays.getCodePays()==null || pays.getCodePays().trim().isEmpty() ){
+        throw new BadRequestAlertException("Le champ codePays ne doit pas etre nul", "pays", "libellePaysNull");
     }
 
     if (paysRepository.findByLibellePays(pays.getLibellePays()).isPresent() ) {
@@ -71,26 +62,18 @@ public PaysDTO update(PaysDTO paysDTO) {
     log.debug("Request to update Pays : {}", paysDTO);
     Pays pays = paysMapper.toEntity(paysDTO);
     //****************************************************TEST DE VALIDATION SUR LIBELLE PAYS***************************************************************
-    if (pays.getLibellePays()==null){
-        throw new BadRequestAlertException("Le champ libelle pays ne doit pas etre nul", "pays", "libellePaysNull");
-    }
-    if (pays.getLibellePays().trim().isEmpty()){
-        throw new BadRequestAlertException("Le champ libelle pays ne doit pas etre vide", "pays", "libellePaysVide");
+    if (pays.getLibellePays()==null || pays.getLibellePays().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ libelle pays est obligatoire", "pays", "libellePaysNull");
     }
 
-    if (pays.getNationalite()==null){
-        throw new BadRequestAlertException("Le champ nationalite ne doit pas etre nul", "pays", "libellePaysNull");
-    }
-    if (pays.getNationalite().trim().isEmpty()){
-        throw new BadRequestAlertException("Le champ nationalite ne doit pas etre vide", "pays", "libellePaysVide");
+    if (pays.getNationalite()==null || pays.getNationalite().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ nationalite obligatoire", "pays", "libellePaysNull");
     }
 
-    if (pays.getCodePays()==null  ){
+    if (pays.getCodePays()==null || pays.getCodePays().trim().isEmpty() ){
         throw new BadRequestAlertException("Le champ codePays ne doit pas etre nul", "pays", "libellePaysNull");
     }
-    if (pays.getCodePays().trim().isEmpty()){
-        throw new BadRequestAlertException("Le champ codePays ne doit pas etre vide", "pays", "libellePaysVide");
-    }
+
     if (paysRepository.findByLibellePays(pays.getLibellePays()).isPresent()) {
         throw new BadRequestAlertException("Une Pays avec ce libellé existe déjà", "pays", "libellePaysExists");
     }
@@ -102,27 +85,18 @@ public PaysDTO update(PaysDTO paysDTO) {
 @Override
 public Optional<PaysDTO> partialUpdate(PaysDTO paysDTO) {
     log.debug("Request to partially update Pays : {}", paysDTO);
-
-    if (paysDTO.getLibellePays()==null){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre nul", "pays", "libellePaysNull");
-    }
-    if (paysDTO.getLibellePays().trim().isEmpty()){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre vide", "pays", "libellePaysVide");
+    if (pays.getLibellePays()==null || pays.getLibellePays().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ libelle pays est obligatoire", "pays", "libellePaysNull");
     }
 
-    if (paysDTO.getNationalite()==null){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre nul", "pays", "libellePaysNull");
-    }
-    if (paysDTO.getNationalite().trim().isEmpty()){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre vide", "pays", "libellePaysVide");
+    if (pays.getNationalite()==null || pays.getNationalite().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ nationalite obligatoire", "pays", "libellePaysNull");
     }
 
-    if (paysDTO.getCodePays()==null  ){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre nul", "pays", "libellePaysNull");
+    if (pays.getCodePays()==null || pays.getCodePays().trim().isEmpty() ){
+        throw new BadRequestAlertException("Le champ codePays ne doit pas etre nul", "pays", "libellePaysNull");
     }
-    if (paysDTO.getCodePays().trim().isEmpty()){
-        throw new BadRequestAlertException("Tout les champ ne doit pas etre vide", "pays", "libellePaysVide");
-    }
+
     return paysRepository
                .findById(paysDTO.getId())
                .map(existingTypeFrais -> {
