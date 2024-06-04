@@ -7,11 +7,7 @@ import { authInterceptorInterceptor } from './core/interceptor/auth/auth-interce
 
 import {
   provideRouter,
-  withEnabledBlockingInitialNavigation,
-  withHashLocation,
-  withInMemoryScrolling,
-  withRouterConfig,
-  withViewTransitions
+
 } from '@angular/router';
 
 import { DropdownModule, SidebarModule } from '@coreui/angular-pro';
@@ -26,16 +22,7 @@ export const appConfig: ApplicationConfig = {
 
     //end http providers
     provideRouter(routes,
-      withRouterConfig({
-        onSameUrlNavigation: 'reload'
-      }),
-      withInMemoryScrolling({
-        scrollPositionRestoration: 'top',
-        anchorScrolling: 'enabled'
-      }),
-      withEnabledBlockingInitialNavigation(),
-      withViewTransitions(),
-      withHashLocation()
+  
     ),
     importProvidersFrom(SidebarModule, DropdownModule),
     IconSetService,
