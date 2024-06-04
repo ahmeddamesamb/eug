@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 // import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
+import { environment } from '../../config/environment';
 
 @Component({
   selector: 'app-header',
@@ -12,18 +12,6 @@ import { KeycloakService } from 'keycloak-angular';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-
-  isLoggedIn: boolean = false;
-  
-  userFirstName: string | undefined;
-  userLastName: string | undefined;
-  selectedProfile: string | undefined;
-
-  
-
-
-
-
   public newNotifications = [
     { id: 0, title: 'New user registered', icon: 'cilUserFollow', color: 'success' },
     { id: 1, title: 'User deleted', icon: 'cilUserUnfollow', color: 'danger' },
@@ -32,48 +20,23 @@ export class HeaderComponent {
     { id: 4, title: 'Server overloaded', icon: 'cilSpeedometer', color: 'warning' }
   ];
   
-  // constructor(private userService: UserService) {
+  public urlLogin = environment.urlLogin; 
+  public realm_pats = environment.realm_pats;
+  public realm_per = environment.realm_per;
+  public realm_etudiant = environment.realm_etudiant; 
+  public redirectUrl_pats = environment.redirectUrl_pats;
+  public redirectUrl_per = environment.redirectUrl_per;
+  public redirectUrl_etudiant = environment.redirectUrl_etudiant;
+  public clientId = environment.clientId;
+  public suiteUrlLogin = environment.suiteUrlLogin;
 
-  // }
+  public getUrl(realm:string, client:string): string{
+    return  `${this.urlLogin}${realm}${this.suiteUrlLogin}${this.clientId}`;
+   }
+  }
 
-  // ngOnInit() {
-  //       console.log("isLoggedIn",  this.isLoggedIn);
-  //       const token = this.userService.getToken();
-  //       console.log("Token récupéré depuis le localStorage :", token);
-
-     
-  // }
-
-  // login(profile: string) {
-  //   this.selectedProfile = profile;
-  //   if (this.selectedProfile === 'etudiant') {
-  //           //this.userService.initializeEtudiant();
-  //   } else if (this.selectedProfile === 'personnel') {
-  //       this.userService.initialize();
-  //       this.userService.login();
-  //       this.userService.isLoggedIn$.subscribe(isLoggedIn => {
-  //       this.isLoggedIn = isLoggedIn;
-  //       console.log("isLoggedIn",  this.isLoggedIn);
-    
-  //       if (isLoggedIn) {
-  //         // Mettre à jour les variables userFirstName et userLastName
-  //         this.userFirstName = this.userService.userFirstName;
-  //         this.userLastName = this.userService.userLastName;
-  //       }
-  //     });    
-  //   }
-  //   else{
-  //     //this.userService.initializePER();
-  //   }
-  // }
-
-  // logout() {
-  //   this.userService.logout();
-  // }
-
-  // showAlert(profile: string) {
-  //   alert(`Vous avez sélectionné le profil ${profile}`);
-  // }
+  
+ 
 
 
-}
+
