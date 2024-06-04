@@ -65,7 +65,7 @@ public RegionDTO update(RegionDTO regionDTO) {
 @Override
 public Optional<RegionDTO> partialUpdate(RegionDTO regionDTO) {
     log.debug("Request to partially update Region : {}", regionDTO);
-    if (region.getLibelleRegion()==null || region.getLibelleRegion().trim().isEmpty()){
+    if (regionDTO.getLibelleRegion()==null || regionDTO.getLibelleRegion().trim().isEmpty()){
         throw new BadRequestAlertException("Le libellé Region est obligatoire", "region", "libelleRegionNull");
     }
     return regionRepository
