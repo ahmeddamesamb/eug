@@ -57,18 +57,8 @@ public class OperateurResource {
     @PostMapping("")
     public ResponseEntity<OperateurDTO> createOperateur(@Valid @RequestBody OperateurDTO operateurDTO) throws URISyntaxException {
         log.debug("REST request to save Operateur : {}", operateurDTO);
-        if (operateurDTO.getId() != null) {
-            throw new BadRequestAlertException("A new operateur cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        if (  operateurRepository.existsOperateurByCodeOperateur(operateurDTO.getCodeOperateur())) {
-            throw new BadRequestAlertException("Ce codeOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme code. ", ENTITY_NAME, "codeoperateurexists");
-        }
-        if (  operateurRepository.existsOperateurByLibelleOperateur(operateurDTO.getLibelleOperateur())) {
-            throw new BadRequestAlertException("Ce libelleOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme libelle. ", ENTITY_NAME, "libelleoperateurexists");
-        }
-        if (operateurDTO.getCodeOperateur().isEmpty() || operateurDTO.getLibelleOperateur().isEmpty() || operateurDTO.getUserLogin().isEmpty()) {
-            throw new BadRequestAlertException("les champs code, libelle et userLogin doivent etre renseigne ", ENTITY_NAME, "champobligatoire");
-        }
+
+
         OperateurDTO result = operateurService.save(operateurDTO);
         return ResponseEntity
             .created(new URI("/api/operateurs/" + result.getId()))
@@ -92,18 +82,8 @@ public class OperateurResource {
         @Valid @RequestBody OperateurDTO operateurDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Operateur : {}, {}", id, operateurDTO);
-        if (operateurDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, operateurDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!operateurRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        OperateurDTO result = operateurService.update(operateurDTO);
+        OperateurDTO result = operateurService.update(operateurDTO,id);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, operateurDTO.getId().toString()))
@@ -127,18 +107,8 @@ public class OperateurResource {
         @NotNull @RequestBody OperateurDTO operateurDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Operateur partially : {}, {}", id, operateurDTO);
-        if (operateurDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, operateurDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!operateurRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<OperateurDTO> result = operateurService.partialUpdate(operateurDTO);
+        Optional<OperateurDTO> result = operateurService.partialUpdate(operateurDTO,id);
 
         return ResponseUtil.wrapOrNotFound(
             result,

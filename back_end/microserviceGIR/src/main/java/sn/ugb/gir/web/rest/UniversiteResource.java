@@ -57,15 +57,7 @@ public class UniversiteResource {
     @PostMapping("")
     public ResponseEntity<UniversiteDTO> createUniversite(@Valid @RequestBody UniversiteDTO universiteDTO) throws URISyntaxException {
         log.debug("REST request to save Universite : {}", universiteDTO);
-        if (universiteDTO.getId() != null) {
-            throw new BadRequestAlertException("A new universite cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        if ( universiteRepository.existsUniversiteByNomUniversite( universiteDTO.getNomUniversite() ) ) {
-            throw new BadRequestAlertException("Cet université exist deja !!!", ENTITY_NAME, "nomuniversiteexists");
-        }
-        if ( universiteDTO.getMinistere() == null) {
-            throw new BadRequestAlertException("Entite universite :  le ministere ratacher doit etre renseigne", ENTITY_NAME, "ministereidnull");
-        }
+
         UniversiteDTO result = universiteService.save(universiteDTO);
         return ResponseEntity
             .created(new URI("/api/universites/" + result.getId()))
@@ -89,18 +81,8 @@ public class UniversiteResource {
         @Valid @RequestBody UniversiteDTO universiteDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Universite : {}, {}", id, universiteDTO);
-        if (universiteDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, universiteDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!universiteRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        UniversiteDTO result = universiteService.update(universiteDTO);
+        UniversiteDTO result = universiteService.update(universiteDTO,id);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, universiteDTO.getId().toString()))
@@ -124,18 +106,8 @@ public class UniversiteResource {
         @NotNull @RequestBody UniversiteDTO universiteDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Universite partially : {}, {}", id, universiteDTO);
-        if (universiteDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, universiteDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!universiteRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<UniversiteDTO> result = universiteService.partialUpdate(universiteDTO);
+        Optional<UniversiteDTO> result = universiteService.partialUpdate(universiteDTO,id);
 
         return ResponseUtil.wrapOrNotFound(
             result,

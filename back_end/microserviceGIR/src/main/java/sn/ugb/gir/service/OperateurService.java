@@ -23,7 +23,7 @@ public interface OperateurService {
      * @param operateurDTO the entity to update.
      * @return the persisted entity.
      */
-    OperateurDTO update(OperateurDTO operateurDTO);
+    OperateurDTO update(OperateurDTO operateurDTO, Long id);
 
     /**
      * Partially updates a operateur.
@@ -31,7 +31,7 @@ public interface OperateurService {
      * @param operateurDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<OperateurDTO> partialUpdate(OperateurDTO operateurDTO);
+    Optional<OperateurDTO> partialUpdate(OperateurDTO operateurDTO, Long id);
 
     /**
      * Get all the operateurs.
