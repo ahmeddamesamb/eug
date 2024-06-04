@@ -12,6 +12,7 @@ import sn.ugb.gir.repository.DomaineRepository;
 import sn.ugb.gir.service.DomaineService;
 import sn.ugb.gir.service.dto.DomaineDTO;
 import sn.ugb.gir.service.mapper.DomaineMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Domaine}.
@@ -35,6 +36,14 @@ public class DomaineServiceImpl implements DomaineService {
     public DomaineDTO save(DomaineDTO domaineDTO) {
         log.debug("Request to save Domaine : {}", domaineDTO);
         Domaine domaine = domaineMapper.toEntity(domaineDTO);
+
+        if (domaine.getLibelleDomaine()==null || domaine.getLibelleDomaine().trim().isEmpty()){
+            throw new BadRequestAlertException("Le  LibelleDomaine est obligatoire", "LibelleDomaine", "LibelleDomaineNull");
+        }
+
+        if (domaineRepository.findByLibelleDomaine(domaine.getLibelleDomaine()).isPresent()) {
+            throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
+        }
         domaine = domaineRepository.save(domaine);
         return domaineMapper.toDto(domaine);
     }
@@ -43,6 +52,12 @@ public class DomaineServiceImpl implements DomaineService {
     public DomaineDTO update(DomaineDTO domaineDTO) {
         log.debug("Request to update Domaine : {}", domaineDTO);
         Domaine domaine = domaineMapper.toEntity(domaineDTO);
+        if (domaine.getLibelleDomaine()==null || domaine.getLibelleDomaine().trim().isEmpty()){
+            throw new BadRequestAlertException("Le  LibelleDomaine est obligatoire", "LibelleDomaine", "LibelleDomaineNull");
+        }
+        if (domaineRepository.findByLibelleDomaine(domaine.getLibelleDomaine()).isPresent()) {
+            throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
+        }
         domaine = domaineRepository.save(domaine);
         return domaineMapper.toDto(domaine);
     }
@@ -50,16 +65,23 @@ public class DomaineServiceImpl implements DomaineService {
     @Override
     public Optional<DomaineDTO> partialUpdate(DomaineDTO domaineDTO) {
         log.debug("Request to partially update Domaine : {}", domaineDTO);
-
+        if (domaineDTO.getLibelleDomaine()==null || domaineDTO.getLibelleDomaine().trim().isEmpty()){
+            throw new BadRequestAlertException("Le  LibelleDomaine est obligatoire", "LibelleDomaine", "LibelleDomaineNull");
+        }
         return domaineRepository
-            .findById(domaineDTO.getId())
-            .map(existingDomaine -> {
-                domaineMapper.partialUpdate(existingDomaine, domaineDTO);
+                   .findById(domaineDTO.getId())
+                   .map(existingTypeFrais -> {
+                       domaineRepository.findByLibelleDomaine(domaineDTO.getLibelleDomaine()).ifPresent(existing -> {
+                           if (!existing.getId().equals(existingTypeFrais.getId())) {
+                               throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
+                           }
+                       });
 
-                return existingDomaine;
-            })
-            .map(domaineRepository::save)
-            .map(domaineMapper::toDto);
+                       domaineMapper.partialUpdate(existingTypeFrais, domaineDTO);
+                       return existingTypeFrais;
+                   })
+                   .map(domaineRepository::save)
+                   .map(domaineMapper::toDto);
     }
 
     @Override

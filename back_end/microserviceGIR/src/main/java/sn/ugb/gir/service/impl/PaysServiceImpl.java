@@ -11,6 +11,7 @@ import sn.ugb.gir.repository.PaysRepository;
 import sn.ugb.gir.service.PaysService;
 import sn.ugb.gir.service.dto.PaysDTO;
 import sn.ugb.gir.service.mapper.PaysMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 import java.util.Optional;
 
@@ -36,6 +37,22 @@ public PaysServiceImpl(PaysRepository paysRepository, PaysMapper paysMapper) {
 public PaysDTO save(PaysDTO paysDTO) {
     log.debug("Request to save Pays : {}", paysDTO);
     Pays pays = paysMapper.toEntity(paysDTO);
+    if (pays.getLibellePays()==null || pays.getLibellePays().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ libelle pays est obligatoire", "pays", "libellePaysNull");
+    }
+
+    if (pays.getNationalite()==null || pays.getNationalite().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ nationalite est obligatoire", "pays", "nationalitePaysNull");
+    }
+
+    if (pays.getCodePays()==null || pays.getCodePays().trim().isEmpty() ){
+        throw new BadRequestAlertException("Le champ codePays est obligatoire", "pays", "codePaysNull");
+    }
+
+    if (paysRepository.findByLibellePays(pays.getLibellePays()).isPresent() ) {
+        throw new BadRequestAlertException("Une Pays avec ce champ existe déjà", "pays", "libellePaysExists");
+    }
+
     pays = paysRepository.save(pays);
     return paysMapper.toDto(pays);
 }
@@ -44,6 +61,23 @@ public PaysDTO save(PaysDTO paysDTO) {
 public PaysDTO update(PaysDTO paysDTO) {
     log.debug("Request to update Pays : {}", paysDTO);
     Pays pays = paysMapper.toEntity(paysDTO);
+    //****************************************************TEST DE VALIDATION SUR LIBELLE PAYS***************************************************************
+    if (pays.getLibellePays()==null || pays.getLibellePays().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ libelle pays est obligatoire", "pays", "libellePaysNull");
+    }
+
+    if (pays.getNationalite()==null || pays.getNationalite().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ nationalite est obligatoire", "pays", "nationalitePaysNull");
+    }
+
+    if (pays.getCodePays()==null || pays.getCodePays().trim().isEmpty() ){
+        throw new BadRequestAlertException("Le champ codePays est obligatoire", "pays", "codePaysNull");
+    }
+
+    if (paysRepository.findByLibellePays(pays.getLibellePays()).isPresent()) {
+        throw new BadRequestAlertException("Une Pays avec ce libellé existe déjà", "pays", "libellePaysExists");
+    }
+
     pays = paysRepository.save(pays);
     return paysMapper.toDto(pays);
 }
@@ -51,13 +85,29 @@ public PaysDTO update(PaysDTO paysDTO) {
 @Override
 public Optional<PaysDTO> partialUpdate(PaysDTO paysDTO) {
     log.debug("Request to partially update Pays : {}", paysDTO);
+    if (paysDTO.getLibellePays()==null || paysDTO.getLibellePays().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ libelle pays est obligatoire", "pays", "libellePaysNull");
+    }
+
+    if (paysDTO.getNationalite()==null || paysDTO.getNationalite().trim().isEmpty()){
+        throw new BadRequestAlertException("Le champ nationalite est obligatoire", "pays", "nationalitePaysNull");
+    }
+
+    if (paysDTO.getCodePays()==null || paysDTO.getCodePays().trim().isEmpty() ){
+        throw new BadRequestAlertException("Le champ codePays est obligatoire", "pays", "codePaysNull");
+    }
 
     return paysRepository
                .findById(paysDTO.getId())
-               .map(existingPays -> {
-                   paysMapper.partialUpdate(existingPays, paysDTO);
+               .map(existingTypeFrais -> {
+                   paysRepository.findByLibellePays(paysDTO.getLibellePays()).ifPresent(existing -> {
+                       if (!existing.getId().equals(existingTypeFrais.getId())) {
+                           throw new BadRequestAlertException("Une Region avec ce libellé existe déjà", "pays", "libellePaysExists");
+                       }
+                   });
 
-                   return existingPays;
+                   paysMapper.partialUpdate(existingTypeFrais, paysDTO);
+                   return existingTypeFrais;
                })
                .map(paysRepository::save)
                .map(paysMapper::toDto);

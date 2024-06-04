@@ -36,4 +36,6 @@ Page<Domaine> findByUfrsUniversiteId(Long universiteId, Pageable pageable);
 
 //-------------------------------------------- FIND ALL DOMAINES BY MINISTERE ------------------------------------------
 Page<Domaine> findByUfrsUniversiteMinistereId(Long ministereId, Pageable pageable);
+
+Optional<Domaine> findByLibelleDomaine(String libelleDomaine);
 }

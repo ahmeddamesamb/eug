@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ParametrageComponent } from './parametrage.component';
+import { noop } from 'chart.js/dist/helpers/helpers.core';
 export const routes: Routes = [
 
     {

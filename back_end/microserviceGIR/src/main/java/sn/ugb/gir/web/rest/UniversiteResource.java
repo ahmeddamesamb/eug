@@ -63,6 +63,9 @@ public class UniversiteResource {
         if ( universiteRepository.existsUniversiteByNomUniversite( universiteDTO.getNomUniversite() ) ) {
             throw new BadRequestAlertException("Cet université exist deja !!!", ENTITY_NAME, "nomuniversiteexists");
         }
+        if ( universiteDTO.getMinistere() == null) {
+            throw new BadRequestAlertException("Entite universite :  le ministere ratacher doit etre renseigne", ENTITY_NAME, "ministereidnull");
+        }
         UniversiteDTO result = universiteService.save(universiteDTO);
         return ResponseEntity
             .created(new URI("/api/universites/" + result.getId()))

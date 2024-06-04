@@ -66,4 +66,5 @@ public interface DisciplineSportiveEtudiantService {
      */
     Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantCodeEtu(Pageable pageable, String codeEtu);
     Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantId(Pageable pageable,Long id);
+    Page<DisciplineSportiveEtudiantDTO> findAllByDisciplineSportiveId(Pageable pageable,Long id);
 }

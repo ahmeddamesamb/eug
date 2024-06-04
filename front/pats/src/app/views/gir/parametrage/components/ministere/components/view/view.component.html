@@ -1,1 +1,33 @@
-<p>view works!</p>
+<div>
+
+  <!-- give label and data ( required) , if possible his color (not required) -->
+
+  <h3>Détail</h3>
+  <div class="d-flex flex-column gap-2">
+
+  <!-- display item data, label data and data -->
+
+  <app-data-display label="nom" [data]="ministere?.nomMinistere"  ></app-data-display>
+
+  <app-data-display label="sigle" [data]="ministere?.sigleMinistere"  ></app-data-display>
+
+  <app-data-display label="Date debut" [data]="ministere?.dateDebut"  ></app-data-display>
+  
+  @if (ministere?.dateFin) {
+    <app-data-display label="Date fin" [data]="ministere?.dateFin"  ></app-data-display>
+  }
+  @if (ministere?.enCoursYN) {
+    <app-data-display label="En cours" data="en cours" iclass="success"  ></app-data-display>
+  }
+  
+  
+
+
+  </div>
+
+
+
+
+
+</div>
+

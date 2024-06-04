@@ -1,6 +1,6 @@
 
 <div class="d-flex">
-    <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder fs-5">
+    <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder " (click)="create()" >
         Ajouter ministère
     </button>
 </div>
@@ -13,7 +13,7 @@
   [columnFilter]="true"
   [itemsPerPageSelect]="true"
   [itemsPerPage]="5"
-  [items]="usersData"
+  [items]="ministereList"
   [sorterValue]="{ column: 'name', state: 'asc' }"
   [tableFilter]="false"
   [tableProps]="{ hover: true, striped: true, responsive: true }"
@@ -44,22 +44,40 @@
     
     <td>
       @switch (columnName) {
-        @case ('status') {
+        @case ('enCoursYN') {
           <c-badge [color]="getBadge(tdContent)">
-            {{ (item[columnName]) }}
+            {{ (item[columnName]) | numberToString }} 
           </c-badge>
         }
         @case ('show') {
             <div class="d-flex gap-2">
-                <button (click)="toggleDetails(item.id)"  cButton color="info" size="sm" variant="outline">
+                <button (click)="view(item.id)"  cButton color="light" size="sm" variant="outline"  >
                     <i class="bi bi-eye-fill"></i>
                 </button>
                 <button  cButton color="primary" size="sm" variant="outline">
                     <i class="bi bi-pen-fill"></i>
                 </button>
-                <button  cButton color="danger" size="sm" variant="outline">
+                <!-- <button (click)="delete(item.id)"  cButton color="danger" size="sm" variant="outline">
                     <i class="bi bi-x-lg"></i>
+                </button> -->
+                <button (click)="toggleLiveDemo()"  cButton color="danger" size="sm" variant="outline">
+                  <i class="bi bi-x-lg"></i>
                 </button>
+
+                <!-- Modallllllllllllllllllllllllllllllllllllllllllllllllllllllll -->
+                <c-modal id="liveDemoModal" [visible]="liveDemoVisible" (visibleChange)="handleLiveDemoChange($event)">
+                  <c-modal-header>
+                    <h5 cModalTitle>Modal title</h5>
+                    <button (click)="toggleLiveDemo()" cButtonClose></button>
+                  </c-modal-header>
+                  <c-modal-body>Woohoo, you&#39;re reading this text in a modal!</c-modal-body>
+                  <c-modal-footer>
+                    <button (click)="toggleLiveDemo()" cButton color="secondary">
+                      Close
+                    </button>
+                    <button cButton (click)="delete(item.id)" color="primary">Save changes</button>
+                  </c-modal-footer>
+                </c-modal>
 
             </div>
           
@@ -75,3 +93,9 @@
     </td>
   </ng-template>
 </c-smart-table>
+
+
+
+
+
+

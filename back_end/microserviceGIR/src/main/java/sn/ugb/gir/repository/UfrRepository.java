@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import sn.ugb.gir.domain.Ufr;
 
+import java.util.Optional;
+
 /**
  * Spring Data JPA repository for the Ufr entity.
  */
@@ -15,4 +17,8 @@ public interface UfrRepository extends JpaRepository<Ufr, Long> {
     Page<Ufr> findByUniversiteId(Long universiteId, Pageable pageable);
 
     Page<Ufr> findByUniversiteMinistereId(Long mentionId, Pageable pageable);
+
+    Optional<Ufr> findByLibeleUfr(String libelleUfr);
+
+    Optional<Ufr> findBySigleUfr(String sigleUfr);
 }
