@@ -12,6 +12,7 @@ import sn.ugb.gir.repository.TypeFraisRepository;
 import sn.ugb.gir.service.TypeFraisService;
 import sn.ugb.gir.service.dto.TypeFraisDTO;
 import sn.ugb.gir.service.mapper.TypeFraisMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.TypeFrais}.
@@ -35,6 +36,15 @@ public class TypeFraisServiceImpl implements TypeFraisService {
     public TypeFraisDTO save(TypeFraisDTO typeFraisDTO) {
         log.debug("Request to save TypeFrais : {}", typeFraisDTO);
         TypeFrais typeFrais = typeFraisMapper.toEntity(typeFraisDTO);
+        if (typeFrais.getLibelleTypeFrais()==null){
+            throw new BadRequestAlertException("Le libellé typeFrais ne doit pas etre nul", "typeFrais", "libelleNull");
+        }
+        if (typeFrais.getLibelleTypeFrais().trim().isEmpty()){
+            throw new BadRequestAlertException("Le libellé ne doit pas etre vide", "typeFrais", "libelleVide");
+        }
+        if (typeFraisRepository.findByLibelleTypeFrais(typeFrais.getLibelleTypeFrais()).isPresent()) {
+            throw new BadRequestAlertException("Un type de frais avec ce libellé existe déjà", "typeFrais", "libelleExists");
+        }
         typeFrais = typeFraisRepository.save(typeFrais);
         return typeFraisMapper.toDto(typeFrais);
     }
@@ -43,6 +53,15 @@ public class TypeFraisServiceImpl implements TypeFraisService {
     public TypeFraisDTO update(TypeFraisDTO typeFraisDTO) {
         log.debug("Request to update TypeFrais : {}", typeFraisDTO);
         TypeFrais typeFrais = typeFraisMapper.toEntity(typeFraisDTO);
+        if (typeFrais.getLibelleTypeFrais()==null){
+            throw new BadRequestAlertException("Le libellé typeFrais ne doit pas etre nul", "typeFrais", "libelleNull");
+        }
+        if (typeFrais.getLibelleTypeFrais().trim().isEmpty()){
+            throw new BadRequestAlertException("Le libellé ne doit pas etre vide", "typeFrais", "libelleVide");
+        }
+        if (typeFraisRepository.findByLibelleTypeFrais(typeFrais.getLibelleTypeFrais()).isPresent()) {
+            throw new BadRequestAlertException("Un type de frais avec ce libellé existe déjà", "typeFrais", "libelleExists");
+        }
         typeFrais = typeFraisRepository.save(typeFrais);
         return typeFraisMapper.toDto(typeFrais);
     }
@@ -51,15 +70,27 @@ public class TypeFraisServiceImpl implements TypeFraisService {
     public Optional<TypeFraisDTO> partialUpdate(TypeFraisDTO typeFraisDTO) {
         log.debug("Request to partially update TypeFrais : {}", typeFraisDTO);
 
+        if (typeFraisDTO.getLibelleTypeFrais()==null){
+            throw new BadRequestAlertException("Le libellé typeFrais ne doit pas etre nul", "typeFrais", "libelletypeFraisNull");
+        }
+        if (typeFraisDTO.getLibelleTypeFrais().trim().isEmpty()){
+            throw new BadRequestAlertException("Le libellé typeFrais ne doit pas etre vide", "typeFrais", "libelletypeFraisVide");
+        }
         return typeFraisRepository
-            .findById(typeFraisDTO.getId())
-            .map(existingTypeFrais -> {
-                typeFraisMapper.partialUpdate(existingTypeFrais, typeFraisDTO);
+                   .findById(typeFraisDTO.getId())
+                   .map(existingTypeFrais -> {
+                       typeFraisRepository.findByLibelleTypeFrais(typeFraisDTO.getLibelleTypeFrais()).ifPresent(existing -> {
+                           if (!existing.getId().equals(existingTypeFrais.getId())) {
+                               throw new BadRequestAlertException("Un type de frais avec ce libellé existe déjà", "typeFrais", "libelletypeFraisExists");
+                           }
+                       });
 
-                return existingTypeFrais;
-            })
-            .map(typeFraisRepository::save)
-            .map(typeFraisMapper::toDto);
+                       typeFraisMapper.partialUpdate(existingTypeFrais, typeFraisDTO);
+                       return existingTypeFrais;
+                   })
+                   .map(typeFraisRepository::save)
+                   .map(typeFraisMapper::toDto);
+
     }
 
     @Override

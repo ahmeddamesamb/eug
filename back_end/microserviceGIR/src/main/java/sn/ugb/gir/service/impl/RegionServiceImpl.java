@@ -11,6 +11,7 @@ import sn.ugb.gir.repository.RegionRepository;
 import sn.ugb.gir.service.RegionService;
 import sn.ugb.gir.service.dto.RegionDTO;
 import sn.ugb.gir.service.mapper.RegionMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 import java.util.Optional;
 
@@ -36,6 +37,15 @@ public RegionServiceImpl(RegionRepository regionRepository, RegionMapper regionM
 public RegionDTO save(RegionDTO regionDTO) {
     log.debug("Request to save Region : {}", regionDTO);
     Region region = regionMapper.toEntity(regionDTO);
+    if (region.getLibelleRegion()==null){
+        throw new BadRequestAlertException("Le libellé Region ne doit pas etre nul", "region", "libelleRegionNull");
+    }
+    if (region.getLibelleRegion().trim().isEmpty()){
+        throw new BadRequestAlertException("Le libellé Region ne doit pas etre vide", "region", "libelleRegionVide");
+    }
+    if (regionRepository.findByLibelleRegion(region.getLibelleRegion()).isPresent()) {
+        throw new BadRequestAlertException("Une Region avec ce libellé existe déjà", "region", "libelleRegionExists");
+    }
     region = regionRepository.save(region);
     return regionMapper.toDto(region);
 }
@@ -44,6 +54,15 @@ public RegionDTO save(RegionDTO regionDTO) {
 public RegionDTO update(RegionDTO regionDTO) {
     log.debug("Request to update Region : {}", regionDTO);
     Region region = regionMapper.toEntity(regionDTO);
+    if (region.getLibelleRegion()==null){
+        throw new BadRequestAlertException("Le libellé Region ne doit pas etre nul", "region", "libelleRegionNull");
+    }
+    if (region.getLibelleRegion().trim().isEmpty()){
+        throw new BadRequestAlertException("Le libellé Region ne doit pas etre vide", "region", "libelleRegionVide");
+    }
+    if (regionRepository.findByLibelleRegion(region.getLibelleRegion()).isPresent()) {
+        throw new BadRequestAlertException("Une Region avec ce libellé existe déjà", "region", "libelleRegionExists");
+    }
     region = regionRepository.save(region);
     return regionMapper.toDto(region);
 }
@@ -51,13 +70,24 @@ public RegionDTO update(RegionDTO regionDTO) {
 @Override
 public Optional<RegionDTO> partialUpdate(RegionDTO regionDTO) {
     log.debug("Request to partially update Region : {}", regionDTO);
-
+    if (regionDTO.getLibelleRegion()==null){
+        throw new BadRequestAlertException("Le libellé Region ne doit pas etre nul", "region", "libelleRegionNull");
+    }
+    if (regionDTO.getLibelleRegion().trim().isEmpty()){
+        throw new BadRequestAlertException("Le libellé Region ne doit pas etre vide", "region", "libelleRegionVide");
+    }
     return regionRepository
                .findById(regionDTO.getId())
-               .map(existingRegion -> {
-                   regionMapper.partialUpdate(existingRegion, regionDTO);
+               .map(existingTypeFrais -> {
+                   // Vérifier si un autre TypeFrais avec le même libelle existe
+                   regionRepository.findByLibelleRegion(regionDTO.getLibelleRegion()).ifPresent(existing -> {
+                       if (!existing.getId().equals(existingTypeFrais.getId())) {
+                           throw new BadRequestAlertException("Une Region avec ce libellé existe déjà", "region", "libelleRegionExists");
+                       }
+                   });
 
-                   return existingRegion;
+                   regionMapper.partialUpdate(existingTypeFrais, regionDTO);
+                   return existingTypeFrais;
                })
                .map(regionRepository::save)
                .map(regionMapper::toDto);
