@@ -65,7 +65,7 @@ public class DomaineServiceImpl implements DomaineService {
     @Override
     public Optional<DomaineDTO> partialUpdate(DomaineDTO domaineDTO) {
         log.debug("Request to partially update Domaine : {}", domaineDTO);
-        if (domaine.getLibelleDomaine()==null || domaine.getLibelleDomaine().trim().isEmpty()){
+        if (domaineDTO.getLibelleDomaine()==null || domaineDTO.getLibelleDomaine().trim().isEmpty()){
             throw new BadRequestAlertException("Le  LibelleDomaine est obligatoire", "LibelleDomaine", "LibelleDomaineNull");
         }
         return domaineRepository

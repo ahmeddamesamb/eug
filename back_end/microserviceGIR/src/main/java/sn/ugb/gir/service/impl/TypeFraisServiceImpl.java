@@ -65,7 +65,7 @@ public class TypeFraisServiceImpl implements TypeFraisService {
     public Optional<TypeFraisDTO> partialUpdate(TypeFraisDTO typeFraisDTO) {
         log.debug("Request to partially update TypeFrais : {}", typeFraisDTO);
 
-        if (typeFrais.getLibelleTypeFrais()==null || typeFrais.getLibelleTypeFrais().trim().isEmpty()){
+        if (typeFraisDTO.getLibelleTypeFrais()==null || typeFraisDTO.getLibelleTypeFrais().trim().isEmpty()){
             throw new BadRequestAlertException("Le libellé typeFrais est obligatoire", "typeFrais", "libelleNull");
         }
         return typeFraisRepository
