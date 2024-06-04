@@ -1,7 +1,7 @@
 export interface MinistereModel {
-  nom:string,
-  sigle:string,
-  dateDebut: Date,
+  nomMinistere:string,
+  sigleMinistere:string,
+  dateDebut: Date | string,
   dateFin?: Date,
   enCoursYN?: number
 }
