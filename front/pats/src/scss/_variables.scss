@@ -2,13 +2,15 @@
 //
 // If you want to customize your project please add your variables below.
 
-@import "../../node_modules/@coreui/coreui/scss/coreui.scss";
+//@import "../../node_modules/@coreui/coreui/scss/coreui.scss";
 
 $enable-deprecation-messages: false !default;
 
 $primary: #3588B2;
 $secondary:#B25F35;
-$tertiaire:#D8843B;
+$light: #D8843B;
+$dark: #F1B33C;
+//$tertiaire:#D8843B;
 $success: #51cc8a ;
 $danger: #ef376e ;
 $warning: #fc0 ;
@@ -24,21 +26,21 @@ $background: #F3F6F7;
 $success: #198754;
 $warning: #FFC107;
 
-$custom-colors: (
-  "primary": $primary,
-  "secondary": $secondary,
-  "tertiaire": $marron-clair,
-  "orange": $orange,
-  "success": $success,
-  "danger": $danger,
-  "warning": $warning,
-  "info": $info,
-  "dark":rgb(32, 32, 32),
-  "white": #fff,
-);
+// $custom-colors: (
+//   "primary": $primary,
+//   "secondary": $secondary,
+//   "tertiaire": $marron-clair,
+//   "orange": $orange,
+//   "success": $success,
+//   "danger": $danger,
+//   "warning": $warning,
+//   "info": $info,
+//   "dark":rgb(32, 32, 32),
+//   "white": #fff,
+// );
 
-// Merge the maps
-$theme-colors: map-merge($theme-colors, $custom-colors);
+// // Merge the maps
+// $theme-colors: map-merge($theme-colors, $custom-colors);
 
 
 
