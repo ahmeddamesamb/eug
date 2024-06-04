@@ -91,6 +91,12 @@ public class SerieServiceImpl implements SerieService {
         if (serieDTO.getLibelleSerie().isEmpty() || serieDTO.getLibelleSerie().isBlank()){
             throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleSerieNotNull");
         }
+        if (serieDTO.getSigleSerie().isEmpty() || serieDTO.getSigleSerie().isBlank()){
+            throw new BadRequestAlertException("La sigle ne peut pas être vide.", ENTITY_NAME, "SigleSerieNotNull");
+        }
+        if (serieDTO.getCodeSerie().isEmpty() || serieDTO.getCodeSerie().isBlank()){
+            throw new BadRequestAlertException("Le code ne peut pas être vide.", ENTITY_NAME, "codeSerieNotNull");
+        }
         Optional<Serie> existingSerie = serieRepository.findByLibelleSerie(serieDTO.getLibelleSerie());
         if (existingSerie.isPresent() && !existingSerie.get().getId().equals(serieDTO.getId())) {
             throw new BadRequestAlertException("Une serie avec le même libellé existe.", ENTITY_NAME, "libelleSerieExist");
