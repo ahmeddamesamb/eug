@@ -30,23 +30,30 @@ public class Pays implements Serializable {
     @Column(name = "libelle_pays", nullable = false, unique = true)
     private String libellePays;
 
+
     @Column(name = "pays_en_anglais")
     private String paysEnAnglais;
+
 
     @Column(name = "nationalite")
     private String nationalite;
 
+
     @Column(name = "code_pays")
     private String codePays;
+
 
     @Column(name = "u_emoayn")
     private Integer uEMOAYN;
 
+
     @Column(name = "c_edeaoyn")
     private Integer cEDEAOYN;
 
+
     @Column(name = "r_imyn")
     private Integer rIMYN;
+
 
     @Column(name = "autre_yn")
     private Integer autreYN;

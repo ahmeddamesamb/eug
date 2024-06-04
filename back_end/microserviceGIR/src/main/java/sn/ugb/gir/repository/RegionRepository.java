@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import sn.ugb.gir.domain.Domaine;
 import sn.ugb.gir.domain.Region;
 
+import java.util.Optional;
+
 /**
  * Spring Data JPA repository for the Region entity.
  */
@@ -16,5 +18,6 @@ public interface RegionRepository extends JpaRepository<Region, Long> {
 
 //-------------------------------------------- FIND ALL REGIONS BY PAYS ------------------------------------------------
 Page<Region> findByPaysId(Long paysId, Pageable pageable);
-
+//-------------------------------------------- FIND BY  LIBELLEREGION ------------------------------------------------
+Optional<Region> findByLibelleRegion(String libelleRegion);
 }
