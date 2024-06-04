@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { KeycloakEventType, KeycloakService } from 'keycloak-angular';
 import { NavigationExtras, Router } from '@angular/router';
-import { environment} from '../config/environment';
+import { ENVIRONMENT, KeycloakConfig} from '../config/environment';
+import {UserModel} from '../model/user.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,10 +11,8 @@ export class UserService {
   private _isLoggedIn = new BehaviorSubject<boolean>(false);
   public isLoggedIn$: Observable<boolean> = this._isLoggedIn.asObservable();
   public accessToken: string = "";
-  public userFirstName: string | undefined;
-  public userLastName: string | undefined;
-  public userEmail: string | undefined;
-  public username: string | undefined;
+  userModel: UserModel = {};
+
 
   constructor(private keycloakService: KeycloakService,  private router: Router // Injecter le service Router
 ) {
@@ -23,11 +22,10 @@ export class UserService {
   async initialize() {
     try {
       const initSuccess = await this.keycloakService.init({
-        config: environment.keycloak, 
-
+        config: KeycloakConfig.keycloak, 
         initOptions: {
           pkceMethod: 'S256',
-          redirectUri: 'http://localhost:4200/',
+          redirectUri: ENVIRONMENT.UrlEspacePats,
           checkLoginIframe: false,
          // onLoad: 'login-required'
           
@@ -52,10 +50,10 @@ export class UserService {
       } else if (event.type === KeycloakEventType.OnAuthLogout) {
         this._isLoggedIn.next(false);
         this.accessToken = "";
-        this.userFirstName = undefined;
-        this.userLastName = undefined;
-        this.userEmail = undefined;
-        this.username = undefined;
+        this.userModel.firstName = undefined;
+        this.userModel.lastName = undefined;
+        this.userModel.email = undefined;
+        this.userModel.username = undefined;
       }
     });
   }
@@ -70,13 +68,13 @@ export class UserService {
 
   async logout() {
     try {
-      await this.keycloakService.logout('http://localhost:4201');
+      await this.keycloakService.logout(ENVIRONMENT.UrlEspaceHome);
       this._isLoggedIn.next(false);
       this.accessToken = "";
-      this.userFirstName = undefined;
-      this.userLastName = undefined;
-      this.userEmail = undefined;
-      this.username = undefined;
+      this.userModel.firstName = undefined;
+      this.userModel.lastName = undefined;
+      this.userModel.email = undefined;
+      this.userModel.username = undefined;
     } catch (error) {
       console.error('Erreur lors de la déconnexion', error);
     }
@@ -91,10 +89,10 @@ export class UserService {
     this.saveToken(this.accessToken);
 
     // Stocker les informations de l'utilisateur dans les variables appropriées
-    this.userFirstName = userInfo.firstName;
-    this.userLastName = userInfo.lastName;
-    this.userEmail = userInfo.email;
-    this.username = userInfo.username;
+    this.userModel.firstName = userInfo.firstName;
+    this.userModel.lastName = userInfo.lastName;
+    this.userModel.email = userInfo.email;
+    this.userModel.username= userInfo.username;
 
     this._isLoggedIn.next(true);
    
@@ -137,13 +135,13 @@ export class UserService {
   //   } 
   
   // }
-  public getUserFirstName(): string | undefined {
-    return this.userFirstName;
+  public getUserFirstName(){
+    return this.userModel.firstName;
   }
 
   // Nouvelle méthode pour récupérer le lastName
   public getUserLastName(): string | undefined {
-    return this.userLastName;
+    return this.userModel.lastName;
   }
 
   
@@ -161,12 +159,12 @@ saveToken(token: string) {
     console.log("Token: ", token);
     try {
       const initSuccess = await this.keycloakService.init({
-        config: environment.keycloak, 
+        config: KeycloakConfig.keycloak, 
         initOptions: {
           pkceMethod: 'S256',
-          redirectUri: 'http://localhost:4200/', // Remplacez par l'URL de redirection de votre application
+          redirectUri: ENVIRONMENT.UrlEspacePats, // Remplacez par l'URL de redirection de votre application
           checkLoginIframe: false,
-          onLoad: 'check-sso',
+         onLoad: 'login-required',
           token: token // Fournir le token d'accès existant
         }
       });

@@ -80,8 +80,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
       this.isLoggedIn = isLoggedIn;
       if (isLoggedIn) {
         // Mettre à jour les variables userFirstName et userLastName
-        this.userFirstName = this.userService.userFirstName;
-        this.userLastName = this.userService.userLastName;
+        this.userFirstName = this.userService.getUserFirstName();
+        this.userLastName = this.userService.getUserLastName();
       }
     });
 
