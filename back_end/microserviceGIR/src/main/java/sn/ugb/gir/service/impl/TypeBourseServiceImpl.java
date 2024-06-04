@@ -12,6 +12,9 @@ import sn.ugb.gir.repository.TypeBourseRepository;
 import sn.ugb.gir.service.TypeBourseService;
 import sn.ugb.gir.service.dto.TypeBourseDTO;
 import sn.ugb.gir.service.mapper.TypeBourseMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.TypeBourse}.
@@ -34,6 +37,11 @@ public class TypeBourseServiceImpl implements TypeBourseService {
     @Override
     public TypeBourseDTO save(TypeBourseDTO typeBourseDTO) {
         log.debug("Request to save TypeBourse : {}", typeBourseDTO);
+
+        if(typeBourseRepository.findByLibelleTypeBourse(typeBourseDTO.getLibelleTypeBourse()).isPresent()){
+            throw new BadRequestAlertException("A new niveau have an TypeBourse exists ", ENTITY_NAME, "TypeBourse exists");
+        }
+
         TypeBourse typeBourse = typeBourseMapper.toEntity(typeBourseDTO);
         typeBourse = typeBourseRepository.save(typeBourse);
         return typeBourseMapper.toDto(typeBourse);
@@ -42,6 +50,11 @@ public class TypeBourseServiceImpl implements TypeBourseService {
     @Override
     public TypeBourseDTO update(TypeBourseDTO typeBourseDTO) {
         log.debug("Request to update TypeBourse : {}", typeBourseDTO);
+
+        if(typeBourseRepository.findByLibelleTypeBourse(typeBourseDTO.getLibelleTypeBourse()).isPresent()){
+            throw new BadRequestAlertException("A new niveau have an TypeBourse exists ", ENTITY_NAME, "TypeBourse exists");
+        }
+
         TypeBourse typeBourse = typeBourseMapper.toEntity(typeBourseDTO);
         typeBourse = typeBourseRepository.save(typeBourse);
         return typeBourseMapper.toDto(typeBourse);

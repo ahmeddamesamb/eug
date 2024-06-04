@@ -61,6 +61,15 @@ public class TypeOperationResource {
         if (typeOperationDTO.getId() != null) {
             throw new BadRequestAlertException("A new typeOperation cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        if (typeOperationDTO.getLibelleTypeOperation()  ==  null) {
+            throw new BadRequestAlertException("A new typeOperation cannot already have an LibelleTypeOperation", ENTITY_NAME, "LibelleTypeOperation exists");
+        }
+
+        if (typeOperationDTO.getLibelleTypeOperation().isBlank()) {
+            throw new BadRequestAlertException("A new typeOperation cannot already have an LibelleTypeOperation", ENTITY_NAME, "LibelleTypeOperation is empty");
+        }
+
         TypeOperationDTO result = typeOperationService.save(typeOperationDTO);
         return ResponseEntity
             .created(new URI("/api/type-operations/" + result.getId()))
@@ -93,6 +102,14 @@ public class TypeOperationResource {
 
         if (!typeOperationRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        if (typeOperationDTO.getLibelleTypeOperation()  ==  null) {
+            throw new BadRequestAlertException("A update typeOperation cannot already have an LibelleTypeOperation", ENTITY_NAME, "LibelleTypeOperation exists");
+        }
+
+        if (typeOperationDTO.getLibelleTypeOperation().isBlank()) {
+            throw new BadRequestAlertException("A update typeOperation cannot already have an LibelleTypeOperation", ENTITY_NAME, "LibelleTypeOperation is empty");
         }
 
         TypeOperationDTO result = typeOperationService.update(typeOperationDTO);

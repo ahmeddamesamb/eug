@@ -12,6 +12,9 @@ import sn.ugb.gir.repository.TypeOperationRepository;
 import sn.ugb.gir.service.TypeOperationService;
 import sn.ugb.gir.service.dto.TypeOperationDTO;
 import sn.ugb.gir.service.mapper.TypeOperationMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.TypeOperation}.
@@ -34,6 +37,11 @@ public class TypeOperationServiceImpl implements TypeOperationService {
     @Override
     public TypeOperationDTO save(TypeOperationDTO typeOperationDTO) {
         log.debug("Request to save TypeOperation : {}", typeOperationDTO);
+
+        if(typeOperationRepository.findByLibelleTypeOperation(typeOperationDTO.getLibelleTypeOperation()).isPresent()){
+            throw new BadRequestAlertException("A Operation  have an TypeOperation exists ", ENTITY_NAME, "TypeOperation exists");
+        }
+
         TypeOperation typeOperation = typeOperationMapper.toEntity(typeOperationDTO);
         typeOperation = typeOperationRepository.save(typeOperation);
         return typeOperationMapper.toDto(typeOperation);
@@ -42,6 +50,11 @@ public class TypeOperationServiceImpl implements TypeOperationService {
     @Override
     public TypeOperationDTO update(TypeOperationDTO typeOperationDTO) {
         log.debug("Request to update TypeOperation : {}", typeOperationDTO);
+
+        if(typeOperationRepository.findByLibelleTypeOperation(typeOperationDTO.getLibelleTypeOperation()).isPresent()){
+            throw new BadRequestAlertException("A update Operation have an TypeOperation exists ", ENTITY_NAME, "TypeOperation exists");
+        }
+
         TypeOperation typeOperation = typeOperationMapper.toEntity(typeOperationDTO);
         typeOperation = typeOperationRepository.save(typeOperation);
         return typeOperationMapper.toDto(typeOperation);

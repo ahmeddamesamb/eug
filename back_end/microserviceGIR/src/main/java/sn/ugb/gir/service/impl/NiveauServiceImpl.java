@@ -15,6 +15,10 @@ import sn.ugb.gir.repository.NiveauRepository;
 import sn.ugb.gir.service.NiveauService;
 import sn.ugb.gir.service.dto.NiveauDTO;
 import sn.ugb.gir.service.mapper.NiveauMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+import static org.springframework.util.ClassUtils.isPresent;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Niveau}.
@@ -24,6 +28,8 @@ import sn.ugb.gir.service.mapper.NiveauMapper;
 public class NiveauServiceImpl implements NiveauService {
 
     private final Logger log = LoggerFactory.getLogger(NiveauServiceImpl.class);
+
+    private static final String ENTITY_NAME = "Niveau" ;
 
     private final NiveauRepository niveauRepository;
 
@@ -37,6 +43,14 @@ public class NiveauServiceImpl implements NiveauService {
     @Override
     public NiveauDTO save(NiveauDTO niveauDTO) {
         log.debug("Request to save Niveau : {}", niveauDTO);
+
+        if (niveauRepository.findByAnneeEtude(niveauDTO.getCodeNiveau()).isPresent()) {
+            throw new BadRequestAlertException("A new niveau have an Code Niveau ", ENTITY_NAME, "Code Niveau");
+        }
+
+        if (niveauRepository.findByAnneeEtude(niveauDTO.getAnneeEtude()).isPresent()) {
+            throw new BadRequestAlertException("A new niveau have an ANNEE_ETUDE", ENTITY_NAME, "Annnee Etude exists");
+        }
         Niveau niveau = niveauMapper.toEntity(niveauDTO);
         niveau = niveauRepository.save(niveau);
         return niveauMapper.toDto(niveau);
@@ -45,6 +59,15 @@ public class NiveauServiceImpl implements NiveauService {
     @Override
     public NiveauDTO update(NiveauDTO niveauDTO) {
         log.debug("Request to update Niveau : {}", niveauDTO);
+
+        if (niveauRepository.findByAnneeEtude(niveauDTO.getAnneeEtude()).isPresent()) {
+            throw new BadRequestAlertException("A new niveau have an ANNEE_ETUDE exists ", ENTITY_NAME, "Annnee Etude exists");
+        }
+
+        if (niveauRepository.findByAnneeEtude(niveauDTO.getCodeNiveau()).isPresent()) {
+            throw new BadRequestAlertException("A udate niveau have an Code Niveau ", ENTITY_NAME, "Code Niveau");
+        }
+
         Niveau niveau = niveauMapper.toEntity(niveauDTO);
         niveau = niveauRepository.save(niveau);
         return niveauMapper.toDto(niveau);
