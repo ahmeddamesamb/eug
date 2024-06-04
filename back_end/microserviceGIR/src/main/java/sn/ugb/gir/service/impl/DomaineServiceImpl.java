@@ -12,6 +12,7 @@ import sn.ugb.gir.repository.DomaineRepository;
 import sn.ugb.gir.service.DomaineService;
 import sn.ugb.gir.service.dto.DomaineDTO;
 import sn.ugb.gir.service.mapper.DomaineMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Domaine}.
@@ -35,6 +36,16 @@ public class DomaineServiceImpl implements DomaineService {
     public DomaineDTO save(DomaineDTO domaineDTO) {
         log.debug("Request to save Domaine : {}", domaineDTO);
         Domaine domaine = domaineMapper.toEntity(domaineDTO);
+
+        if (domaine.getLibelleDomaine()==null){
+            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre nul", "LibelleDomaine", "LibelleDomaineNull");
+        }
+        if (domaine.getLibelleDomaine().trim().isEmpty()){
+            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre vide", "LibelleDomaine", "LibelleDomaineRegionVide");
+        }
+        if (domaineRepository.findByLibelleDomaine(domaine.getLibelleDomaine()).isPresent()) {
+            throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
+        }
         domaine = domaineRepository.save(domaine);
         return domaineMapper.toDto(domaine);
     }
@@ -43,6 +54,15 @@ public class DomaineServiceImpl implements DomaineService {
     public DomaineDTO update(DomaineDTO domaineDTO) {
         log.debug("Request to update Domaine : {}", domaineDTO);
         Domaine domaine = domaineMapper.toEntity(domaineDTO);
+        if (domaine.getLibelleDomaine()==null){
+            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre nul", "LibelleDomaine", "LibelleDomaineNull");
+        }
+        if (domaine.getLibelleDomaine().trim().isEmpty()){
+            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre vide", "LibelleDomaine", "LibelleDomaineRegionVide");
+        }
+        if (domaineRepository.findByLibelleDomaine(domaine.getLibelleDomaine()).isPresent()) {
+            throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
+        }
         domaine = domaineRepository.save(domaine);
         return domaineMapper.toDto(domaine);
     }
@@ -50,16 +70,27 @@ public class DomaineServiceImpl implements DomaineService {
     @Override
     public Optional<DomaineDTO> partialUpdate(DomaineDTO domaineDTO) {
         log.debug("Request to partially update Domaine : {}", domaineDTO);
-
+        if (domaineDTO.getLibelleDomaine()==null){
+            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre nul", "LibelleDomaine", "LibelleDomaineNull");
+        }
+        if (domaineDTO.getLibelleDomaine().trim().isEmpty()){
+            throw new BadRequestAlertException("Le  LibelleDomaine ne doit pas etre vide", "LibelleDomaine", "LibelleDomaineRegionVide");
+        }
         return domaineRepository
-            .findById(domaineDTO.getId())
-            .map(existingDomaine -> {
-                domaineMapper.partialUpdate(existingDomaine, domaineDTO);
+                   .findById(domaineDTO.getId())
+                   .map(existingTypeFrais -> {
+                       // Vérifier si un autre TypeFrais avec le même libelle existe
+                       domaineRepository.findByLibelleDomaine(domaineDTO.getLibelleDomaine()).ifPresent(existing -> {
+                           if (!existing.getId().equals(existingTypeFrais.getId())) {
+                               throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
+                           }
+                       });
 
-                return existingDomaine;
-            })
-            .map(domaineRepository::save)
-            .map(domaineMapper::toDto);
+                       domaineMapper.partialUpdate(existingTypeFrais, domaineDTO);
+                       return existingTypeFrais;
+                   })
+                   .map(domaineRepository::save)
+                   .map(domaineMapper::toDto);
     }
 
     @Override
