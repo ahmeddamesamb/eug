@@ -42,11 +42,11 @@ public PaysDTO save(PaysDTO paysDTO) {
     }
 
     if (pays.getNationalite()==null || pays.getNationalite().trim().isEmpty()){
-        throw new BadRequestAlertException("Le champ nationalite obligatoire", "pays", "libellePaysNull");
+        throw new BadRequestAlertException("Le champ nationalite est obligatoire", "pays", "nationalitePaysNull");
     }
 
     if (pays.getCodePays()==null || pays.getCodePays().trim().isEmpty() ){
-        throw new BadRequestAlertException("Le champ codePays ne doit pas etre nul", "pays", "libellePaysNull");
+        throw new BadRequestAlertException("Le champ codePays est obligatoire", "pays", "codePaysNull");
     }
 
     if (paysRepository.findByLibellePays(pays.getLibellePays()).isPresent() ) {
@@ -67,11 +67,11 @@ public PaysDTO update(PaysDTO paysDTO) {
     }
 
     if (pays.getNationalite()==null || pays.getNationalite().trim().isEmpty()){
-        throw new BadRequestAlertException("Le champ nationalite est obligatoire", "pays", "libellePaysNull");
+        throw new BadRequestAlertException("Le champ nationalite est obligatoire", "pays", "nationalitePaysNull");
     }
 
     if (pays.getCodePays()==null || pays.getCodePays().trim().isEmpty() ){
-        throw new BadRequestAlertException("Le champ codePays est obligatoire", "pays", "libellePaysNull");
+        throw new BadRequestAlertException("Le champ codePays est obligatoire", "pays", "codePaysNull");
     }
 
     if (paysRepository.findByLibellePays(pays.getLibellePays()).isPresent()) {
@@ -90,11 +90,11 @@ public Optional<PaysDTO> partialUpdate(PaysDTO paysDTO) {
     }
 
     if (paysDTO.getNationalite()==null || paysDTO.getNationalite().trim().isEmpty()){
-        throw new BadRequestAlertException("Le champ nationalite est obligatoire", "pays", "libellePaysNull");
+        throw new BadRequestAlertException("Le champ nationalite est obligatoire", "pays", "nationalitePaysNull");
     }
 
     if (paysDTO.getCodePays()==null || paysDTO.getCodePays().trim().isEmpty() ){
-        throw new BadRequestAlertException("Le champ codePays est obligatoire", "pays", "libellePaysNull");
+        throw new BadRequestAlertException("Le champ codePays est obligatoire", "pays", "codePaysNull");
     }
 
     return paysRepository
