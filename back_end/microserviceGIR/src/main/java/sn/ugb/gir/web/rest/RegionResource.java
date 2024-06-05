@@ -176,7 +176,6 @@ public ResponseEntity<Void> deleteRegion(@PathVariable("id") Long id) {
                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
                .build();
 }
-//***************************************************************** GET ALL REGIONS BY PAYS ID************************************************
 
 @GetMapping("/pays/{paysId}")
 public ResponseEntity<List<RegionDTO>> getAllRegionByPays(@PathVariable Long paysId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
