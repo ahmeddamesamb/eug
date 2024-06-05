@@ -24,7 +24,7 @@ public interface DisciplineSportiveEtudiantService {
      * @param disciplineSportiveEtudiantDTO the entity to update.
      * @return the persisted entity.
      */
-    DisciplineSportiveEtudiantDTO update(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO);
+    DisciplineSportiveEtudiantDTO update(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO, Long id);
 
     /**
      * Partially updates a disciplineSportiveEtudiant.
@@ -32,7 +32,7 @@ public interface DisciplineSportiveEtudiantService {
      * @param disciplineSportiveEtudiantDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<DisciplineSportiveEtudiantDTO> partialUpdate(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO);
+    Optional<DisciplineSportiveEtudiantDTO> partialUpdate(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO, Long id);
 
     /**
      * Get all the disciplineSportiveEtudiants.

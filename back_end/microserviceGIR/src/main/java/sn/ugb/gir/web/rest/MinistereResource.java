@@ -58,10 +58,6 @@ public class MinistereResource {
      */
     @PostMapping("")
     public ResponseEntity<MinistereDTO> createMinistere(@Valid @RequestBody MinistereDTO ministereDTO) throws URISyntaxException {
-        log.debug("REST request to save Ministere : {}", ministereDTO);
-        if (ministereDTO.getId() != null) {
-            throw new BadRequestAlertException("A new ministere cannot already have an ID", ENTITY_NAME, "idexists");
-        }
         MinistereDTO result = ministereService.save(ministereDTO);
         return ResponseEntity
             .created(new URI("/api/ministeres/" + result.getId()))
@@ -95,13 +91,13 @@ public class MinistereResource {
         if (!ministereRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-
         MinistereDTO result = ministereService.update(ministereDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, ministereDTO.getId().toString()))
             .body(result);
     }
+
 
     /**
      * {@code PATCH  /ministeres/:id} : Partial updates given fields of an existing ministere, field will ignore if it is null

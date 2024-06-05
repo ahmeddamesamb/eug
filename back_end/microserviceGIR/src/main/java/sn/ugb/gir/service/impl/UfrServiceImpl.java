@@ -7,11 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sn.ugb.gir.domain.DisciplineSportive;
 import sn.ugb.gir.domain.Ufr;
 import sn.ugb.gir.repository.UfrRepository;
 import sn.ugb.gir.service.UfrService;
-import sn.ugb.gir.service.dto.DisciplineSportiveDTO;
 import sn.ugb.gir.service.dto.UfrDTO;
 import sn.ugb.gir.service.mapper.UfrMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
@@ -106,17 +104,17 @@ public class UfrServiceImpl implements UfrService {
     }
 
     private void validateData(UfrDTO ufrDTO) {
-        if (ufrDTO.getLibeleUfr().isEmpty() || ufrDTO.getLibeleUfr().isBlank()){
+        if (ufrDTO.getLibeleUfr().isBlank()){
             throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleUfrNotNull");
         }
-        if (ufrDTO.getSigleUfr().isEmpty() || ufrDTO.getSigleUfr().isBlank()){
+        if (ufrDTO.getSigleUfr().isBlank()){
             throw new BadRequestAlertException("La sigle ne peut pas être vide.", ENTITY_NAME, "sigleUfrNotNull");
         }
-        Optional<Ufr> existingUfr = ufrRepository.findByLibeleUfr(ufrDTO.getLibeleUfr());
+        Optional<Ufr> existingUfr = ufrRepository.findByLibeleUfrIgnoreCase(ufrDTO.getLibeleUfr());
         if (existingUfr.isPresent() && !existingUfr.get().getId().equals(ufrDTO.getId())) {
             throw new BadRequestAlertException("Une ufr avec le même libellé existe.", ENTITY_NAME, "libelleUfrExist");
         }
-        existingUfr = ufrRepository.findBySigleUfr(ufrDTO.getSigleUfr());
+        existingUfr = ufrRepository.findBySigleUfrIgnoreCase(ufrDTO.getSigleUfr());
         if (existingUfr.isPresent() && !existingUfr.get().getId().equals(ufrDTO.getId())) {
             throw new BadRequestAlertException("Une ufr avec la même sigle existe.", ENTITY_NAME, "sigleUfrExist");
         }

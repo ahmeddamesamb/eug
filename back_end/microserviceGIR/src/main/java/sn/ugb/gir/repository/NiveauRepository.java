@@ -40,4 +40,5 @@ public interface NiveauRepository extends JpaRepository<Niveau, Long> {
         "WHERE min.id = :ministereId")
     Page<Niveau> getAllNiveauByMinistereId(@Param("ministereId") Long universiteId, Pageable pageable);
 
+    Optional<Niveau> findByAnneeEtude(String anneeEtude);
 }

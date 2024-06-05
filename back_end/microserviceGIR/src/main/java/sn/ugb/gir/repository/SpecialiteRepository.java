@@ -24,7 +24,7 @@ public interface SpecialiteRepository extends JpaRepository<Specialite, Long> {
 
     Page<Specialite> findByMentionDomaineUfrsUniversiteMinistereId(Long ministereId, Pageable pageable);
 
-    Optional<Specialite> findByNomSpecialites(String nomSpecialites);
+    Optional<Specialite> findByNomSpecialitesIgnoreCase(String nomSpecialites);
 
-    Optional<Specialite> findBySigleSpecialites(String sigleSpecialites);
+    Optional<Specialite> findBySigleSpecialitesIgnoreCase(String sigleSpecialites);
 }

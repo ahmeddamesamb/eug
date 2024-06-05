@@ -88,10 +88,10 @@ public class TypeAdmissionServiceImpl implements TypeAdmissionService {
     }
 
     private void validateData(TypeAdmissionDTO typeAdmissionDto) {
-        if (typeAdmissionDto.getLibelleTypeAdmission().isEmpty() || typeAdmissionDto.getLibelleTypeAdmission().isBlank()){
+        if (typeAdmissionDto.getLibelleTypeAdmission().isBlank()){
             throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleTypeAdmissionNotNull");
         }
-        Optional<TypeAdmission> existingTypeAdmission = typeAdmissionRepository.findByLibelleTypeAdmission(typeAdmissionDto.getLibelleTypeAdmission());
+        Optional<TypeAdmission> existingTypeAdmission = typeAdmissionRepository.findByLibelleTypeAdmissionIgnoreCase(typeAdmissionDto.getLibelleTypeAdmission());
         if (existingTypeAdmission.isPresent() && !existingTypeAdmission.get().getId().equals(typeAdmissionDto.getId())) {
             throw new BadRequestAlertException("Un type admission avec le même libellé existe.", ENTITY_NAME, "libelleTypeAdmissionExist");
         }

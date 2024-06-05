@@ -24,6 +24,8 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+
 /**
  * REST controller for managing {@link sn.ugb.gir.domain.TypeBourse}.
  */
@@ -57,9 +59,14 @@ public class TypeBourseResource {
     @PostMapping("")
     public ResponseEntity<TypeBourseDTO> createTypeBourse(@Valid @RequestBody TypeBourseDTO typeBourseDTO) throws URISyntaxException {
         log.debug("REST request to save TypeBourse : {}", typeBourseDTO);
-        if (typeBourseDTO.getId() != null) {
-            throw new BadRequestAlertException("A new typeBourse cannot already have an ID", ENTITY_NAME, "idexists");
+
+        if (typeBourseDTO.getLibelleTypeBourse() == null) {
+            throw new BadRequestAlertException("A new typeBourse cannot already have an LibelleTypeBourse", ENTITY_NAME, "LibelleTypeBourse exists");
         }
+        if (typeBourseDTO.getLibelleTypeBourse().isBlank()) {
+            throw new BadRequestAlertException("A new typeBourse cannot already have an LibelleTypeBourse", ENTITY_NAME, "LibelleTypeBourse is empty");
+        }
+
         TypeBourseDTO result = typeBourseService.save(typeBourseDTO);
         return ResponseEntity
             .created(new URI("/api/type-bourses/" + result.getId()))

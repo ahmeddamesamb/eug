@@ -90,10 +90,10 @@ public class TypeSelectionServiceImpl implements TypeSelectionService {
     }
 
     private void validateData(TypeSelectionDTO typeSelectionDTO) {
-        if (typeSelectionDTO.getLibelleTypeSelection().isEmpty() || typeSelectionDTO.getLibelleTypeSelection().isBlank()){
+        if (typeSelectionDTO.getLibelleTypeSelection().isBlank()){
             throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleTypeselectionNotNull");
         }
-        Optional<TypeSelection> existingTypeSelection = typeSelectionRepository.findByLibelleTypeSelection(typeSelectionDTO.getLibelleTypeSelection());
+        Optional<TypeSelection> existingTypeSelection = typeSelectionRepository.findByLibelleTypeSelectionIgnoreCase(typeSelectionDTO.getLibelleTypeSelection());
         if (existingTypeSelection.isPresent() && !existingTypeSelection.get().getId().equals(typeSelectionDTO.getId())) {
             throw new BadRequestAlertException("Un type selection avec le même libellé existe.", ENTITY_NAME, "libelleTypeSelectionExist");
         }

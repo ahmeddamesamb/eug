@@ -66,7 +66,6 @@ Optional<PaysDTO> findOne(Long id);
  */
 void delete(Long id);
 
-//---------------------------------------- FIND ALL PAYS BY ZONE ID----------------------------------------------------
 Page<PaysDTO> findAllPaysByZone(Long zoneId, Pageable pageable);
 
 }

@@ -1,5 +1,6 @@
 package sn.ugb.gir.service.impl;
 
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,9 @@ import sn.ugb.gir.repository.LyceeRepository;
 import sn.ugb.gir.service.LyceeService;
 import sn.ugb.gir.service.dto.LyceeDTO;
 import sn.ugb.gir.service.mapper.LyceeMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Lycee}.
@@ -34,23 +38,59 @@ public class LyceeServiceImpl implements LyceeService {
     @Override
     public LyceeDTO save(LyceeDTO lyceeDTO) {
         log.debug("Request to save Lycee : {}", lyceeDTO);
+
+        if (lyceeDTO.getId() != null) {
+            throw new BadRequestAlertException("A new lycee cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        if (lyceeDTO.getCodeLycee().isEmpty() || lyceeDTO.getCodeLycee().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner le code du lycee", ENTITY_NAME, "codeLyceevide");
+        }
+        if (lyceeDTO.getNomLycee().isEmpty() || lyceeDTO.getNomLycee().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner le nom du lycee ", ENTITY_NAME, "nomLyceevide");
+        }
+        if (lyceeRepository.existsLyceeByNomLycee(lyceeDTO.getNomLycee())) {
+            throw new BadRequestAlertException("Ce Lycee existe. Deux Lycees ne peuvent pas avoir le même nom", ENTITY_NAME, "nomlyceeexists");
+        }
+
         Lycee lycee = lyceeMapper.toEntity(lyceeDTO);
         lycee = lyceeRepository.save(lycee);
         return lyceeMapper.toDto(lycee);
     }
 
     @Override
-    public LyceeDTO update(LyceeDTO lyceeDTO) {
+    public LyceeDTO update(LyceeDTO lyceeDTO, Long id) {
         log.debug("Request to update Lycee : {}", lyceeDTO);
+
+        if (lyceeDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, lyceeDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!lyceeRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
         Lycee lycee = lyceeMapper.toEntity(lyceeDTO);
         lycee = lyceeRepository.save(lycee);
         return lyceeMapper.toDto(lycee);
     }
 
     @Override
-    public Optional<LyceeDTO> partialUpdate(LyceeDTO lyceeDTO) {
+    public Optional<LyceeDTO> partialUpdate(LyceeDTO lyceeDTO, Long id) {
         log.debug("Request to partially update Lycee : {}", lyceeDTO);
 
+        if (lyceeDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, lyceeDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!lyceeRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
         return lyceeRepository
             .findById(lyceeDTO.getId())
             .map(existingLycee -> {

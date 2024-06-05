@@ -28,11 +28,7 @@ default List<Pays> findAllWithEagerRelationships() {
 default Page<Pays> findAllWithEagerRelationships(Pageable pageable) {
     return this.fetchBagRelationships(this.findAll(pageable));
 }
-//-------------------------------------------- FIND ALL PAYS BY ZONE ID ------------------------------------------------
 
 Page<Pays> findByZonesId(Long zoneId, Pageable pageable);
-
-//-------------------------------------------- FIND BY  LIBELLEPAYS ------------------------------------------------
-
-Optional<Pays> findByLibellePays(String libellePays);
+Optional<Pays> findByLibellePaysIgnoreCase(String libellePays);
 }

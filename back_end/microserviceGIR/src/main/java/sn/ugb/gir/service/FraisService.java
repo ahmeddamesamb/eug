@@ -26,7 +26,7 @@ public interface FraisService {
      * @param fraisDTO the entity to update.
      * @return the persisted entity.
      */
-    FraisDTO update(FraisDTO fraisDTO);
+    FraisDTO update(FraisDTO fraisDTO, Long id);
 
     /**
      * Partially updates a frais.
@@ -34,7 +34,7 @@ public interface FraisService {
      * @param fraisDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<FraisDTO> partialUpdate(FraisDTO fraisDTO);
+    Optional<FraisDTO> partialUpdate(FraisDTO fraisDTO, Long id);
 
     /**
      * Get all the frais.

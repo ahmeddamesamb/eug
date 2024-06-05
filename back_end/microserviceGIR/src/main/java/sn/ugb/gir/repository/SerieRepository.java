@@ -12,9 +12,9 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface SerieRepository extends JpaRepository<Serie, Long> {
-    Optional<Serie> findByLibelleSerie(String libelleSerie);
+    Optional<Serie> findByLibelleSerieIgnoreCase(String libelleSerie);
 
-    Optional<Serie> findBySigleSerie(String sigleSerie);
+    Optional<Serie> findBySigleSerieIgnoreCase(String sigleSerie);
 
-    Optional<Serie> findByCodeSerie(String codeSerie);
+    Optional<Serie> findByCodeSerieIgnoreCase(String codeSerie);
 }

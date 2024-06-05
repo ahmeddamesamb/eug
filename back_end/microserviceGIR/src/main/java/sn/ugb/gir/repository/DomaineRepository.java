@@ -28,14 +28,11 @@ public interface DomaineRepository extends DomaineRepositoryWithBagRelationships
         return this.fetchBagRelationships(this.findAll(pageable));
     }
 
-//-------------------------------------------- FIND ALL DOMAINES BY UFR ------------------------------------------------
 Page<Domaine> findByUfrsId(Long ufrId, Pageable pageable);
 
-//-------------------------------------------- FIND ALL DOMAINES BY UNIVERSITE -----------------------------------------
 Page<Domaine> findByUfrsUniversiteId(Long universiteId, Pageable pageable);
 
-//-------------------------------------------- FIND ALL DOMAINES BY MINISTERE ------------------------------------------
 Page<Domaine> findByUfrsUniversiteMinistereId(Long ministereId, Pageable pageable);
 
-Optional<Domaine> findByLibelleDomaine(String libelleDomaine);
+Optional<Domaine> findByLibelleDomaineIgnoreCase(String libelleDomaine);
 }

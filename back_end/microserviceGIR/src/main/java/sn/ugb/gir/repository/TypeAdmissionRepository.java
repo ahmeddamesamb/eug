@@ -12,5 +12,5 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface TypeAdmissionRepository extends JpaRepository<TypeAdmission, Long> {
-    Optional<TypeAdmission> findByLibelleTypeAdmission(String libelleTypeAdmission);
+    Optional<TypeAdmission> findByLibelleTypeAdmissionIgnoreCase(String libelleTypeAdmission);
 }
