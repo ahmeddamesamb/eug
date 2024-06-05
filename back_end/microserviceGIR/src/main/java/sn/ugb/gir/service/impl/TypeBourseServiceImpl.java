@@ -14,7 +14,6 @@ import sn.ugb.gir.service.dto.TypeBourseDTO;
 import sn.ugb.gir.service.mapper.TypeBourseMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
-import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.TypeBourse}.
@@ -24,9 +23,9 @@ import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 public class TypeBourseServiceImpl implements TypeBourseService {
 
     private final Logger log = LoggerFactory.getLogger(TypeBourseServiceImpl.class);
+    private static final String ENTITY_NAME = "typeBourse";
 
     private final TypeBourseRepository typeBourseRepository;
-
     private final TypeBourseMapper typeBourseMapper;
 
     public TypeBourseServiceImpl(TypeBourseRepository typeBourseRepository, TypeBourseMapper typeBourseMapper) {
@@ -38,9 +37,7 @@ public class TypeBourseServiceImpl implements TypeBourseService {
     public TypeBourseDTO save(TypeBourseDTO typeBourseDTO) {
         log.debug("Request to save TypeBourse : {}", typeBourseDTO);
 
-        if(typeBourseRepository.findByLibelleTypeBourse(typeBourseDTO.getLibelleTypeBourse()).isPresent()){
-            throw new BadRequestAlertException("A new niveau have an TypeBourse exists ", ENTITY_NAME, "TypeBourse exists");
-        }
+        validateData(typeBourseDTO.getLibelleTypeBourse(), typeBourseDTO.getId());
 
         TypeBourse typeBourse = typeBourseMapper.toEntity(typeBourseDTO);
         typeBourse = typeBourseRepository.save(typeBourse);
@@ -51,9 +48,8 @@ public class TypeBourseServiceImpl implements TypeBourseService {
     public TypeBourseDTO update(TypeBourseDTO typeBourseDTO) {
         log.debug("Request to update TypeBourse : {}", typeBourseDTO);
 
-        if(typeBourseRepository.findByLibelleTypeBourseAndIdNot(typeBourseDTO.getLibelleTypeBourse(), typeBourseDTO.getId()).isPresent()){
-            throw new BadRequestAlertException("A update Bourse have an TypeBourse exists ", ENTITY_NAME, "TypeBourse exists");
-        }
+        validateData(typeBourseDTO.getLibelleTypeBourse(), typeBourseDTO.getId());
+
         TypeBourse typeBourse = typeBourseMapper.toEntity(typeBourseDTO);
         typeBourse = typeBourseRepository.save(typeBourse);
         return typeBourseMapper.toDto(typeBourse);
@@ -63,15 +59,12 @@ public class TypeBourseServiceImpl implements TypeBourseService {
     public Optional<TypeBourseDTO> partialUpdate(TypeBourseDTO typeBourseDTO) {
         log.debug("Request to partially update TypeBourse : {}", typeBourseDTO);
 
-        if(typeBourseRepository.findByLibelleTypeBourseAndIdNot(typeBourseDTO.getLibelleTypeBourse(), typeBourseDTO.getId()).isPresent()){
-            throw new BadRequestAlertException("A update Bourse have an TypeBourse exists ", ENTITY_NAME, "TypeBourse exists");
-        }
+        validateData(typeBourseDTO.getLibelleTypeBourse(), typeBourseDTO.getId());
 
         return typeBourseRepository
             .findById(typeBourseDTO.getId())
             .map(existingTypeBourse -> {
                 typeBourseMapper.partialUpdate(existingTypeBourse, typeBourseDTO);
-
                 return existingTypeBourse;
             })
             .map(typeBourseRepository::save)
@@ -89,12 +82,34 @@ public class TypeBourseServiceImpl implements TypeBourseService {
     @Transactional(readOnly = true)
     public Optional<TypeBourseDTO> findOne(Long id) {
         log.debug("Request to get TypeBourse : {}", id);
-        return typeBourseRepository.findById(id).map(typeBourseMapper::toDto);
+        return typeBourseRepository.findById(id)
+            .map(typeBourseMapper::toDto)
+            .or(() -> {
+                log.warn("TypeBourse with id {} not found", id);
+                return Optional.empty();
+            });
     }
 
     @Override
     public void delete(Long id) {
         log.debug("Request to delete TypeBourse : {}", id);
+
+        if (!typeBourseRepository.existsById(id)) {
+            throw new BadRequestAlertException("TypeBourse with id " + id + " not found", ENTITY_NAME, "typeBourseNotFound");
+        }
+
         typeBourseRepository.deleteById(id);
     }
+
+    private void validateData(String libelleTypeBourse, Long id) {
+        if (libelleTypeBourse == null || libelleTypeBourse.trim().isBlank()) {
+            throw new BadRequestAlertException("TypeBourse label cannot be empty", ENTITY_NAME, "emptyLibelleTypeBourse");
+        }
+
+        Optional<TypeBourse> existingTypeBourse = typeBourseRepository.findByLibelleTypeBourseIgnoreCase(libelleTypeBourse.trim());
+        if (existingTypeBourse.isPresent() && !existingTypeBourse.get().getId().equals(id)) {
+            throw new BadRequestAlertException("A TypeBourse with the same name already exists", ENTITY_NAME, "typeBourseExists");
+        }
+    }
+
 }

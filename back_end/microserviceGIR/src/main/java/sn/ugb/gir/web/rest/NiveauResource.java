@@ -61,17 +61,6 @@ public class NiveauResource {
             throw new BadRequestAlertException("A new niveau cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        if (niveauDTO.getAnneeEtude() != null) {
-            throw new BadRequestAlertException("A new niveau cannot already have an ANNEE_ETUDE", ENTITY_NAME, "idexists");
-        }
-
-        if (niveauDTO.getCodeNiveau() != null) {
-            throw new BadRequestAlertException("A new niveau cannot already have an Code Niveau", ENTITY_NAME, " Code Niveau exists");
-        }
-
-        if (niveauDTO.getCycleNiveau() != null) {
-            throw new BadRequestAlertException("A new niveau cannot already have an Cycle Niveau", ENTITY_NAME, " Cycle Niveau exists");
-        }
 
         NiveauDTO result = niveauService.save(niveauDTO);
         return ResponseEntity
@@ -96,28 +85,6 @@ public class NiveauResource {
         @Valid @RequestBody NiveauDTO niveauDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Niveau : {}, {}", id, niveauDTO);
-        if (niveauDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, niveauDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (niveauDTO.getAnneeEtude() != null) {
-            throw new BadRequestAlertException("A new niveau cannot already have an ANNEE_ETUDE", ENTITY_NAME, "ANNEE_ETUDE exists");
-        }
-
-        if (niveauDTO.getCodeNiveau() != null) {
-            throw new BadRequestAlertException("A new niveau cannot already have an Code Niveau", ENTITY_NAME, " Code Niveau exists");
-        }
-
-        if (niveauDTO.getCycleNiveau() != null) {
-            throw new BadRequestAlertException("A new niveau cannot already have an Cycle Niveau", ENTITY_NAME, " Cycle Niveau exists");
-        }
-
-        if (!niveauRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
 
         NiveauDTO result = niveauService.update(niveauDTO);
         return ResponseEntity
@@ -142,17 +109,6 @@ public class NiveauResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody NiveauDTO niveauDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Niveau partially : {}, {}", id, niveauDTO);
-        if (niveauDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, niveauDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!niveauRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
 
         Optional<NiveauDTO> result = niveauService.partialUpdate(niveauDTO);
 
