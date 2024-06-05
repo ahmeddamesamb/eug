@@ -113,14 +113,14 @@ public class MinistereServiceImpl implements MinistereService {
 
     private void validateMinistere(MinistereDTO ministereDTO) {
 
-        if (ministereDTO.getNomMinistere().isEmpty() || ministereDTO.getNomMinistere().isBlank()){
+        if (ministereDTO.getNomMinistere().isBlank()){
             throw new BadRequestAlertException("Le nom du ministere ne peut pas être vide.", ENTITY_NAME, "nomMinistereNotNull");
         }
         Optional<Ministere> ministereWithName = ministereRepository.findByNomMinistereIgnoreCase(ministereDTO.getNomMinistere());
         if (ministereWithName.isPresent() && !ministereWithName.get().getId().equals(ministereDTO.getId())) {
             throw new BadRequestAlertException("Un ministère avec ce nom existe déjà", ENTITY_NAME, "nomMinistereExists");
         }
-        if (ministereDTO.getSigleMinistere().isEmpty() || ministereDTO.getSigleMinistere().isBlank()) {
+        if (ministereDTO.getSigleMinistere().isBlank()) {
             throw new BadRequestAlertException("Le sigle du ministere ne peut pas être vide.", ENTITY_NAME, "sigleMinistereNotNull");
         }
         if (ministereDTO.getDateDebut() == null) {
@@ -129,7 +129,7 @@ public class MinistereServiceImpl implements MinistereService {
         if (ministereDTO.getDateFin() != null && !ministereDTO.getDateFin().isAfter(ministereDTO.getDateDebut())) {
             throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidOrdreDate");
         }
-        String regex = "^[\\p{L}\\p{N}\\s]+$";
+        String regex = "^[\\p{L}\\p{N}\\_\\-\\.\\s]+$";
         if (!ministereDTO.getNomMinistere().matches(regex)) {
             throw new BadRequestAlertException("Le nom du ministere contient des caractères non autorisés.", ENTITY_NAME, "nomMinistereInvalidCharacters");
         }
