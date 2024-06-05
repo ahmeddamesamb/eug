@@ -41,20 +41,21 @@ public class FormationServiceImpl implements FormationService {
     @Override
     public FormationDTO save(FormationDTO formationDTO) {
         log.debug("Request to save Formation : {}", formationDTO);
+        validateFormation(formationDTO);
         return storeFormation(formationDTO);
     }
 
     @Override
-    public FormationDTO update(Long id, FormationDTO formationDTO) {
+    public FormationDTO update(FormationDTO formationDTO) {
         log.debug("Request to update Formation : {}", formationDTO);
-        validateFormation(id, formationDTO);
+        validateFormation(formationDTO);
         return storeFormation(formationDTO);
     }
 
     @Override
-    public Optional<FormationDTO> partialUpdate(Long id, FormationDTO formationDTO) {
+    public Optional<FormationDTO> partialUpdate(FormationDTO formationDTO) {
         log.debug("Request to partially update Formation : {}", formationDTO);
-        validateFormation(id, formationDTO);
+        validateFormation(formationDTO);
         return formationRepository
             .findById(formationDTO.getId())
             .map(existingFormation -> {
@@ -65,34 +66,21 @@ public class FormationServiceImpl implements FormationService {
             .map(formationMapper::toDto);
     }
 
-    private void validateFormation(Long id, FormationDTO formationDTO) {
-        if (formationDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+    private void validateFormation(FormationDTO formationDTO) {
+        Optional<Formation> existingFormation = formationRepository.findByNiveauIdAndSpecialiteId(formationDTO.getNiveau().getId(), formationDTO.getSpecialite().getId());
+
+        if(formationDTO.getNiveau()==null) {
+            throw new BadRequestAlertException("Le niveau du ministere ne dois pas etre null", ENTITY_NAME, "NiveauNotNull");
         }
-        if (!Objects.equals(id, formationDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        if(formationDTO.getSpecialite()==null) {
+            throw new BadRequestAlertException("La spécialité du ministere ne dois pas etre null", ENTITY_NAME, "SpecialiteNotNull");
         }
-        if (!formationRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        if (existingFormation.isPresent()) {
+            throw new BadRequestAlertException("Cette Formation existe deja avec le meme Niveau et la meme Specialite", ENTITY_NAME, "FormationDuplicate");
         }
     }
 
     private FormationDTO storeFormation(FormationDTO formationDTO) {
-
-        Optional<Formation> existingFormation = formationRepository.findByNiveauIdAndSpecialiteId(formationDTO.getNiveau().getId(), formationDTO.getSpecialite().getId());
-
-        if(formationDTO.getNiveau()==null) {
-            throw new BadRequestAlertException("Le niveau du ministere ne dois pas etre null", ENTITY_NAME, "idNiveauNotNull");
-        }
-
-        if(formationDTO.getSpecialite()==null) {
-            throw new BadRequestAlertException("La spécialité du ministere ne dois pas etre null", ENTITY_NAME, "idSpecialiteNotNull");
-        }
-
-        if (existingFormation.isPresent()) {
-            throw new BadRequestAlertException("Cette Formation existe deja avec le meme Niveau et la meme Specialite", ENTITY_NAME, "FormationDuplicate");
-        }
-
         Formation formation = formationMapper.toEntity(formationDTO);
         formation = formationRepository.save(formation);
         return formationMapper.toDto(formation);
