@@ -43,6 +43,7 @@ export class MinistereListComponent {
   }
 
   ministereList : MinistereModel[] = [];
+  itemDelete!: MinistereModel;
 
 
   ngOnInit(): void {
@@ -90,7 +91,7 @@ export class MinistereListComponent {
       // case 'Pending':
       //   return 'warning';
       case 0:
-        return 'danger';
+        return 'warning';
       default:
         return 'primary';
     }
@@ -104,17 +105,18 @@ export class MinistereListComponent {
     this.route.navigate(['/gir/parametrage/ministere/create'])
 
   }
-  delete(item: number){
-    this.ministereService.deleteMinistere(item).subscribe((data)=>{
-      console.log(data);
- 
+  delete(){
+    this.ministereService.deleteMinistere(this.itemDelete.id).subscribe((data)=>{
+      //console.log(data);
+      this.route.navigate(['/gir/parametrage/ministere/attente'])
     })
-    this.route.navigate(['/gir/parametrage/ministere/attente'])
+    
   }
 
   public liveDemoVisible = false;
 
-  toggleLiveDemo() {
+  toggleLiveDemo(item : MinistereModel) {
+    this.itemDelete = item;
     this.liveDemoVisible = !this.liveDemoVisible;
   }
 
