@@ -12,5 +12,5 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface DisciplineSportiveRepository extends JpaRepository<DisciplineSportive, Long> {
-    Optional<DisciplineSportive> findByLibelleDisciplineSportive(String libelleDisciplineSportive);
+    Optional<DisciplineSportive> findByLibelleDisciplineSportiveIgnoreCase(String libelleDisciplineSportive);
 }
