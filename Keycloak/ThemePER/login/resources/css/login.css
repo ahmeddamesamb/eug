@@ -1,0 +1,264 @@
+/* Couleur de fond de la page */
+body {
+    background-color: #8B4513; /* Couleur marron */
+  }
+  
+  /* Couleur de texte */
+  body, h1, h2, h3, h4, h5, h6 {
+    color: #FFE4B5; /* Couleur brun clair */
+  }
+  
+  /* Couleur de bordure des champs de formulaire */
+  input[type="text"], input[type="password"] {
+    border: none !important /* Couleur marron foncé */
+  }
+  
+  /* Couleur d'arrière-plan des boutons */
+  /* input[type="submit"] {
+    background-color: #A0522D; 
+    color: #FFE4B5;
+  } */
+
+
+
+  .alert-error{
+    color: #ffffffb5 !important;
+  }
+  .cutom-form{
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    background-color: #bfcad05b  !important;
+  }
+
+  .cutom-form input {
+    width: -webkit-fill-available;
+    display: flex;
+    background-color: transparent;
+    font-size: 15px;
+    color: #ffffff;
+    
+
+}
+.cutom-form input:focus {
+  outline: none !important;
+
+  
+
+}
+
+.custom-icon-button{
+  border: none;
+  background-color: transparent;
+  color: white;
+
+}
+
+.custom-icon-button:focus {
+  outline: none !important;
+}
+.custom-icon-button i{
+  
+}
+
+/* 
+.cutom-form input[type="password"] {
+
+  flex-direction: row;
+
+} */
+
+
+.c-color{
+  color: #ffffff !important;
+  font-weight: bold;
+}
+
+.droite{
+
+  background-color:#B25F35 !important ;
+
+}
+
+#input-error{
+  color:#ffffffb5 ;
+}
+
+
+@media (max-width: 767px) {
+  
+
+
+  .custom-icon-button{
+    
+    color: #494646;
+  
+  }
+
+  .alert-error{
+    color: #797979 !important;
+  }
+
+  
+
+
+  #input-error{
+    color:#797979 ;
+  }
+
+
+  .image{
+    /* can not do dynamic, correct after for dynamic link */
+    background-image: url("/resources/rhebq/login/myTheme/images/DesktopBG.png");
+    background-size: cover;
+  }
+
+  .droite{
+
+    background-color:#ffffff !important ;
+  
+  }
+  .cutom-form{
+    border: 2px solid #494646;
+    border-radius: 10px;
+    background-color: #ffffff3f  !important;
+  }
+
+  .cutom-form input {
+    width: -webkit-fill-available;
+    display: flex;
+    background-color: transparent;
+    font-size: 15px;
+    color: #494646;
+    border: none;   
+
+  }
+  
+  .input-custom::placeholder{
+
+  color: rgba(131, 129, 129, 0.822) !important;
+
+  }
+
+  .cutom-form .c-fill {
+
+    fill:#494646; ;
+    
+
+  }
+
+  .cutom-form .c-stroke {
+
+    stroke:#494646;
+    
+
+  }
+
+  .custom-button input{
+    width: -webkit-fill-available;
+    padding-top : 10px;
+    padding-bottom : 10px;
+  
+    border: none;
+    border-radius: 15px;
+    color: white !important;
+  
+    background-color: #8B4513;
+  
+  
+  }
+
+  .c-color{
+    color: #494646 !important;
+    font-weight:bold;
+  }
+
+
+}
+
+
+.custom-button{
+  margin-top: 35px;
+}
+
+.custom-button input{
+  width: -webkit-fill-available;
+  padding-top : 10px;
+  padding-bottom : 10px;
+
+  border: none;
+  border-radius: 15px;
+
+  color: #8B4513;
+
+
+}
+
+.input-custom::placeholder{
+
+  color: rgba(233, 230, 230, 0.671);
+
+}
+
+.c-margin{
+  margin-bottom: 100px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+@media (min-width: 768px) and (max-width: 990px) {
+    .size-title{
+      font-size: 50px !important;
+    }
+}
+
+@media (min-width: 992px) {
+  .size-title {
+    font-size: 71px !important;
+  }
+}
+
+/*  responsive */
+
+@media (max-width: 767px) {
+  .custom-d {
+      display: none !important;
+  }
+  .custom-d-phone {
+    display: block !important;
+  }
+}
+
+
+
+@media (min-width: 768px) {
+  .custom-d-phone {
+      display: none !important;
+  }
+  .custom-d {
+    display: block !important;
+  }
+  
+}
+
+
+.form-control {
+  background-color: #ffffff00 !important;
+}
+
+.custom-bar{
+  width: 100%;
+}
+
+
+
