@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sn.ugb.gir.domain.enumeration.Cycle;
+import sn.ugb.gir.repository.FormationRepository;
 import sn.ugb.gir.service.FormationService;
 import sn.ugb.gir.service.dto.FormationDTO;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
@@ -39,8 +41,11 @@ public class FormationResource {
 
     private final FormationService formationService;
 
-    public FormationResource(FormationService formationService) {
+    private final FormationRepository formationRepository;
+
+    public FormationResource(FormationService formationService, FormationRepository formationRepository) {
         this.formationService = formationService;
+        this.formationRepository = formationRepository;
     }
 
     /**
@@ -79,13 +84,23 @@ public class FormationResource {
         @Valid @RequestBody FormationDTO formationDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Formation : {}, {}", id, formationDTO);
-        FormationDTO result = formationService.update(id, formationDTO);
+        if (formationDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, formationDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!formationRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        FormationDTO result = formationService.update(formationDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, formationDTO.getId().toString()))
             .body(result);
     }
-
 
     /**
      * {@code PATCH  /formations/:id} : Partial updates given fields of an existing formation, field will ignore if it is null
@@ -104,14 +119,24 @@ public class FormationResource {
         @NotNull @RequestBody FormationDTO formationDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Formation partially : {}, {}", id, formationDTO);
-        Optional<FormationDTO> result = formationService.partialUpdate(id, formationDTO);
+        if (formationDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, formationDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!formationRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Optional<FormationDTO> result = formationService.partialUpdate(formationDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
             HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, formationDTO.getId().toString())
         );
     }
-
 
     /**
      * {@code GET  /formations} : get all the formations.

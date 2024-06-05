@@ -14,6 +14,8 @@ import sn.ugb.gir.service.dto.DomaineDTO;
 import sn.ugb.gir.service.mapper.DomaineMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Domaine}.
  */
@@ -35,15 +37,8 @@ public class DomaineServiceImpl implements DomaineService {
     @Override
     public DomaineDTO save(DomaineDTO domaineDTO) {
         log.debug("Request to save Domaine : {}", domaineDTO);
+        validateData(domaineDTO);
         Domaine domaine = domaineMapper.toEntity(domaineDTO);
-
-        if (domaine.getLibelleDomaine()==null || domaine.getLibelleDomaine().trim().isEmpty()){
-            throw new BadRequestAlertException("Le  LibelleDomaine est obligatoire", "LibelleDomaine", "LibelleDomaineNull");
-        }
-
-        if (domaineRepository.findByLibelleDomaine(domaine.getLibelleDomaine()).isPresent()) {
-            throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
-        }
         domaine = domaineRepository.save(domaine);
         return domaineMapper.toDto(domaine);
     }
@@ -51,13 +46,8 @@ public class DomaineServiceImpl implements DomaineService {
     @Override
     public DomaineDTO update(DomaineDTO domaineDTO) {
         log.debug("Request to update Domaine : {}", domaineDTO);
+        validateData(domaineDTO);
         Domaine domaine = domaineMapper.toEntity(domaineDTO);
-        if (domaine.getLibelleDomaine()==null || domaine.getLibelleDomaine().trim().isEmpty()){
-            throw new BadRequestAlertException("Le  LibelleDomaine est obligatoire", "LibelleDomaine", "LibelleDomaineNull");
-        }
-        if (domaineRepository.findByLibelleDomaine(domaine.getLibelleDomaine()).isPresent()) {
-            throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
-        }
         domaine = domaineRepository.save(domaine);
         return domaineMapper.toDto(domaine);
     }
@@ -65,20 +55,18 @@ public class DomaineServiceImpl implements DomaineService {
     @Override
     public Optional<DomaineDTO> partialUpdate(DomaineDTO domaineDTO) {
         log.debug("Request to partially update Domaine : {}", domaineDTO);
-        if (domaineDTO.getLibelleDomaine()==null || domaineDTO.getLibelleDomaine().trim().isEmpty()){
-            throw new BadRequestAlertException("Le  LibelleDomaine est obligatoire", "LibelleDomaine", "LibelleDomaineNull");
-        }
+        validateData(domaineDTO);
         return domaineRepository
                    .findById(domaineDTO.getId())
-                   .map(existingTypeFrais -> {
-                       domaineRepository.findByLibelleDomaine(domaineDTO.getLibelleDomaine()).ifPresent(existing -> {
-                           if (!existing.getId().equals(existingTypeFrais.getId())) {
+                   .map(existingDomaine -> {
+                       domaineRepository.findByLibelleDomaineIgnoreCase(domaineDTO.getLibelleDomaine()).ifPresent(existing -> {
+                           if (!existing.getId().equals(existingDomaine.getId())) {
                                throw new BadRequestAlertException("Une LibelleDomaine avec ce libellé existe déjà", "LibelleDomaine", "LibelleDomaineRegionExists");
                            }
                        });
 
-                       domaineMapper.partialUpdate(existingTypeFrais, domaineDTO);
-                       return existingTypeFrais;
+                       domaineMapper.partialUpdate(existingDomaine, domaineDTO);
+                       return existingDomaine;
                    })
                    .map(domaineRepository::save)
                    .map(domaineMapper::toDto);
@@ -123,5 +111,16 @@ public Page<DomaineDTO> findAllDomaineByUniversite(Long universiteId, Pageable p
 @Override
 public Page<DomaineDTO> findAllDomaineByMinistere(Long ministereId, Pageable pageable) {
     return domaineRepository.findByUfrsUniversiteMinistereId(ministereId, pageable).map(domaineMapper::toDto);
+}
+//************************************************ FONCTION TESTE VALIDATE DATA **************************************
+
+private void validateData(DomaineDTO domaineDto) {
+    if (domaineDto.getLibelleDomaine().isEmpty() || domaineDto.getLibelleDomaine().isBlank()){
+        throw new BadRequestAlertException("Le Domaine ne peut pas être vide.", ENTITY_NAME, "getLibelleDomaineNotNull");
+    }
+    Optional<Domaine> existingDomaine = domaineRepository.findByLibelleDomaineIgnoreCase(domaineDto.getLibelleDomaine());
+    if (existingDomaine.isPresent() && !existingDomaine.get().getId().equals(domaineDto.getId())) {
+        throw new BadRequestAlertException("Un Domaine avec le même libellé existe.", ENTITY_NAME, "getLibelleDomaineExist");
+    }
 }
 }

@@ -56,7 +56,6 @@ public interface RegionService {
      */
     void delete(Long id);
 
-//---------------------------------------- FIND ALL REGIOND BY PAYS ID ----------------------------------------------------
     Page<RegionDTO> findAllRegionByPays(Long paysId, Pageable pageable);
 
 }
