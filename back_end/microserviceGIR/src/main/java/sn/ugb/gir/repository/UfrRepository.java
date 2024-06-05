@@ -18,7 +18,7 @@ public interface UfrRepository extends JpaRepository<Ufr, Long> {
 
     Page<Ufr> findByUniversiteMinistereId(Long mentionId, Pageable pageable);
 
-    Optional<Ufr> findByLibeleUfr(String libelleUfr);
+    Optional<Ufr> findByLibeleUfrIgnoreCase(String libelleUfr);
 
-    Optional<Ufr> findBySigleUfr(String sigleUfr);
+    Optional<Ufr> findBySigleUfrIgnoreCase(String sigleUfr);
 }

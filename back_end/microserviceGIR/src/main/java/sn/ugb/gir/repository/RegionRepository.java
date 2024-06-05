@@ -16,8 +16,6 @@ import java.util.Optional;
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Long> {
 
-//-------------------------------------------- FIND ALL REGIONS BY PAYS ------------------------------------------------
 Page<Region> findByPaysId(Long paysId, Pageable pageable);
-//-------------------------------------------- FIND BY  LIBELLEREGION ------------------------------------------------
-Optional<Region> findByLibelleRegion(String libelleRegion);
+Optional<Region> findByLibelleRegionIgnoreCase(String libelleRegion);
 }

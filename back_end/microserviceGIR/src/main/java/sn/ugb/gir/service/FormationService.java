@@ -22,20 +22,18 @@ public interface FormationService {
     /**
      * Updates a formation.
      *
-     * @param id
      * @param formationDTO the entity to update.
      * @return the persisted entity.
      */
-    FormationDTO update(Long id, FormationDTO formationDTO);
+    FormationDTO update(FormationDTO formationDTO);
 
     /**
      * Partially updates a formation.
      *
-     * @param id
      * @param formationDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<FormationDTO> partialUpdate(Long id, FormationDTO formationDTO);
+    Optional<FormationDTO> partialUpdate(FormationDTO formationDTO);
 
     /**
      * Get all the formations.
@@ -45,11 +43,6 @@ public interface FormationService {
      */
     Page<FormationDTO> findAll(Pageable pageable);
 
-    /**
-     * Get all the FormationDTO where FormationPrivee is {@code null}.
-     *
-     * @return the {@link List} of entities.
-     */
     /**
      * Get the "id" formation.
      *

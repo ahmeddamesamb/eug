@@ -187,7 +187,6 @@ public ResponseEntity<Void> deletePays(@PathVariable("id") Long id) {
                .build();
 }
 
-//***************************************************************** GET ALL PAYS BY ZONE ID****************************************************
 
 @GetMapping("/zones/{zoneId}")
 public ResponseEntity<List<PaysDTO>> getAllDomaineByUfr(@PathVariable Long zoneId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {

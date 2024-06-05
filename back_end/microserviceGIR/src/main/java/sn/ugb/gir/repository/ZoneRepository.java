@@ -12,5 +12,5 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface ZoneRepository extends JpaRepository<Zone, Long> {
-    Optional<Zone> findByLibelleZone(String libelleZone);
+    Optional<Zone> findByLibelleZoneIgnoreCase(String libelleZone);
 }
