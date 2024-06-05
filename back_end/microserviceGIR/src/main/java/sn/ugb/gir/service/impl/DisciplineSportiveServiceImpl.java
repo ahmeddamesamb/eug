@@ -91,7 +91,7 @@ public class DisciplineSportiveServiceImpl implements DisciplineSportiveService 
     }
 
     private void validateData(DisciplineSportiveDTO disciplineSportiveDTO) {
-        if (disciplineSportiveDTO.getLibelleDisciplineSportive().isEmpty() || disciplineSportiveDTO.getLibelleDisciplineSportive().isBlank()){
+        if (disciplineSportiveDTO.getLibelleDisciplineSportive().isBlank()){
             throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleDisciplineSportiveNotNull");
         }
         Optional<DisciplineSportive> existingDisciplineSportive = disciplineSportiveRepository.findByLibelleDisciplineSportiveIgnoreCase(disciplineSportiveDTO.getLibelleDisciplineSportive());
