@@ -95,24 +95,20 @@ public class DomaineServiceImpl implements DomaineService {
         log.debug("Request to delete Domaine : {}", id);
         domaineRepository.deleteById(id);
     }
-//************************************************ FIND ALL DOMAINES BY UFR ********************************************
 @Override
 public Page<DomaineDTO> findAllDomaineByUfr(Long ufrId, Pageable pageable) {
     return domaineRepository.findByUfrsId(ufrId, pageable).map(domaineMapper::toDto);
 }
 
-//************************************************ FIND ALL DOMAINES BY UNIVERSITE *************************************
 @Override
 public Page<DomaineDTO> findAllDomaineByUniversite(Long universiteId, Pageable pageable) {
     return domaineRepository.findByUfrsUniversiteId(universiteId, pageable).map(domaineMapper::toDto);
 }
 
-//************************************************ FIND ALL DOMAINES BY MINISTERE **************************************
 @Override
 public Page<DomaineDTO> findAllDomaineByMinistere(Long ministereId, Pageable pageable) {
     return domaineRepository.findByUfrsUniversiteMinistereId(ministereId, pageable).map(domaineMapper::toDto);
 }
-//************************************************ FONCTION TESTE VALIDATE DATA **************************************
 
 private void validateData(DomaineDTO domaineDto) {
     if (domaineDto.getLibelleDomaine().isEmpty() || domaineDto.getLibelleDomaine().isBlank()){
