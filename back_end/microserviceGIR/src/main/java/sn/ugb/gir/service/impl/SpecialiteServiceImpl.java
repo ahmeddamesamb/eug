@@ -125,17 +125,17 @@ public class SpecialiteServiceImpl implements SpecialiteService {
     }
 
     private void validateData(SpecialiteDTO specialiteDTO) {
-        if (specialiteDTO.getNomSpecialites().isEmpty() || specialiteDTO.getNomSpecialites().isBlank()){
+        if (specialiteDTO.getNomSpecialites().isBlank()){
             throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "nomSpecialiteNotNull");
         }
-        if (specialiteDTO.getSigleSpecialites().isEmpty() || specialiteDTO.getSigleSpecialites().isBlank()){
+        if (specialiteDTO.getSigleSpecialites().isBlank()){
             throw new BadRequestAlertException("La sigle ne peut pas être vide.", ENTITY_NAME, "sigleSpecialiteNotNull");
         }
-        Optional<Specialite> existingSpecialite = specialiteRepository.findByNomSpecialites(specialiteDTO.getNomSpecialites());
+        Optional<Specialite> existingSpecialite = specialiteRepository.findByNomSpecialitesIgnoreCase(specialiteDTO.getNomSpecialites());
         if (existingSpecialite.isPresent() && !existingSpecialite.get().getId().equals(specialiteDTO.getId())) {
             throw new BadRequestAlertException("Une ufr avec le même libellé existe.", ENTITY_NAME, "nomSpecialiteExist");
         }
-        existingSpecialite = specialiteRepository.findBySigleSpecialites(specialiteDTO.getSigleSpecialites());
+        existingSpecialite = specialiteRepository.findBySigleSpecialitesIgnoreCase(specialiteDTO.getSigleSpecialites());
         if (existingSpecialite.isPresent() && !existingSpecialite.get().getId().equals(specialiteDTO.getId())) {
             throw new BadRequestAlertException("Une ufr avec la même sigle existe.", ENTITY_NAME, "sigleSpecialiteExist");
         }

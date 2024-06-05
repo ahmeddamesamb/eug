@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +18,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import sn.ugb.gir.repository.MinistereRepository;
 import sn.ugb.gir.service.MinistereService;
 import sn.ugb.gir.service.dto.MinistereDTO;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -39,9 +42,11 @@ public class MinistereResource {
 
     private final MinistereService ministereService;
 
+    private final MinistereRepository ministereRepository;
 
-    public MinistereResource(MinistereService ministereService) {
+    public MinistereResource(MinistereService ministereService, MinistereRepository ministereRepository) {
         this.ministereService = ministereService;
+        this.ministereRepository = ministereRepository;
     }
 
     /**
@@ -76,7 +81,17 @@ public class MinistereResource {
         @Valid @RequestBody MinistereDTO ministereDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Ministere : {}, {}", id, ministereDTO);
-        MinistereDTO result = ministereService.update(id, ministereDTO);
+        if (ministereDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, ministereDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!ministereRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+        MinistereDTO result = ministereService.update(ministereDTO);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, ministereDTO.getId().toString()))
@@ -101,13 +116,24 @@ public class MinistereResource {
         @NotNull @RequestBody MinistereDTO ministereDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Ministere partially : {}, {}", id, ministereDTO);
-        Optional<MinistereDTO> result = ministereService.partialUpdate(id, ministereDTO);
+        if (ministereDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, ministereDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!ministereRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Optional<MinistereDTO> result = ministereService.partialUpdate(ministereDTO);
+
         return ResponseUtil.wrapOrNotFound(
             result,
             HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, ministereDTO.getId().toString())
         );
     }
-
 
     /**
      * {@code GET  /ministeres} : get all the ministeres.
