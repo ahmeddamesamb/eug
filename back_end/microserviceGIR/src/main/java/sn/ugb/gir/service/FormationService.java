@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import sn.ugb.gir.domain.enumeration.Cycle;
-import sn.ugb.gir.service.dto.DomaineDTO;
 import sn.ugb.gir.service.dto.FormationDTO;
 
 /**
@@ -44,11 +43,6 @@ public interface FormationService {
      */
     Page<FormationDTO> findAll(Pageable pageable);
 
-    /**
-     * Get all the FormationDTO where FormationPrivee is {@code null}.
-     *
-     * @return the {@link List} of entities.
-     */
     /**
      * Get the "id" formation.
      *

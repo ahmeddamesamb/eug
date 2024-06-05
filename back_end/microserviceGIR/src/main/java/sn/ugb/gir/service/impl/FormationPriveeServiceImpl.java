@@ -51,10 +51,12 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
 
         FormationDTO formationDTO = formationPriveeDTO.getFormation();
 
-        if (formationDTO.getNiveau() == null || formationDTO.getSpecialite() == null) {
-            throw new IllegalArgumentException("Le niveau et la spécialité ne doivent pas être null.");
+        if (formationDTO.getNiveau() == null) {
+            throw new IllegalArgumentException("Le niveau de la formation ne doit pas être vide");
         }
-
+        if (formationDTO.getSpecialite() == null) {
+            throw new IllegalArgumentException("La spécialité de la formation ne doit pas être vide");
+        }
         Optional<Formation> existingFormation = formationRepository.findByNiveauIdAndSpecialiteId(formationDTO.getNiveau().getId(), formationDTO.getSpecialite().getId());
 
         if (existingFormation.isPresent()) {
@@ -62,13 +64,23 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
         }
 
         if (formationDTO.getTypeFormation() == TypeFormation.PRIVEE) {
-            if (formationPriveeDTO.getNombreMensualites() == null ||
-                formationPriveeDTO.getPaiementPremierMoisYN() == null ||
-                formationPriveeDTO.getPaiementDernierMoisYN() == null ||
-                formationPriveeDTO.getFraisDossierYN() == null ||
-                formationPriveeDTO.getCoutTotal() == null ||
-                formationPriveeDTO.getMensualite() == null) {
-                throw new IllegalArgumentException("Les champs 'nombreMensualites', 'paiementPremierMoisYN', 'paiementDernierMoisYN', 'fraisDossierYN', 'coutTotal', et 'mensualite' ne doivent pas être nuls pour une formation privée.");
+            if (formationPriveeDTO.getNombreMensualites() == null) {
+                throw new IllegalArgumentException("Le champ 'nombreMensualites' ne doit pas être nul pour une formation privée.");
+            }
+            if (formationPriveeDTO.getPaiementPremierMoisYN() == null) {
+                throw new IllegalArgumentException("Le champ 'paiementPremierMoisYN' ne doit pas être nul pour une formation privée.");
+            }
+            if (formationPriveeDTO.getPaiementDernierMoisYN() == null) {
+                throw new IllegalArgumentException("Le champ 'paiementDernierMoisYN' ne doit pas être nul pour une formation privée.");
+            }
+            if (formationPriveeDTO.getFraisDossierYN() == null) {
+                throw new IllegalArgumentException("Le champ 'fraisDossierYN' ne doit pas être nul pour une formation privée.");
+            }
+            if (formationPriveeDTO.getCoutTotal() == null) {
+                throw new IllegalArgumentException("Le champ 'coutTotal' ne doit pas être nul pour une formation privée.");
+            }
+            if (formationPriveeDTO.getMensualite() == null) {
+                throw new IllegalArgumentException("Le champ 'mensualite' ne doit pas être nul pour une formation privée.");
             }
         }
 

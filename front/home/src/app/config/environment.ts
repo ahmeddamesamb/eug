@@ -11,4 +11,3 @@ export const environment = {
 
   };
 
-  // http://localhost:8080/realms/pats/protocol/openid-connect/auth?client_id=e-ugb&redirect_uri=http%3A%2F%2Flocalhost%3A4201%2F

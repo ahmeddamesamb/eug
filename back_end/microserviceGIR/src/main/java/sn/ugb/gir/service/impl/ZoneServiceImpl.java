@@ -88,10 +88,10 @@ public class ZoneServiceImpl implements ZoneService {
     }
 
     private void validateData(ZoneDTO zoneDTO) {
-        if (zoneDTO.getLibelleZone().isEmpty() || zoneDTO.getLibelleZone().isBlank()){
+        if (zoneDTO.getLibelleZone().isBlank()){
             throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleZoneNotNull");
         }
-        Optional<Zone> existingZone = zoneRepository.findByLibelleZone(zoneDTO.getLibelleZone());
+        Optional<Zone> existingZone = zoneRepository.findByLibelleZoneIgnoreCase(zoneDTO.getLibelleZone());
         if (existingZone.isPresent() && !existingZone.get().getId().equals(zoneDTO.getId())) {
             throw new BadRequestAlertException("Une zone avec le même libellé existe.", ENTITY_NAME, "libelleZoneExist");
         }

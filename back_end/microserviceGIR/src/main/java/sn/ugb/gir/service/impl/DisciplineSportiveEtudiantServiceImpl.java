@@ -1,5 +1,6 @@
 package sn.ugb.gir.service.impl;
 
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,9 @@ import sn.ugb.gir.repository.DisciplineSportiveEtudiantRepository;
 import sn.ugb.gir.service.DisciplineSportiveEtudiantService;
 import sn.ugb.gir.service.dto.DisciplineSportiveEtudiantDTO;
 import sn.ugb.gir.service.mapper.DisciplineSportiveEtudiantMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.DisciplineSportiveEtudiant}.
@@ -37,22 +41,50 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
     @Override
     public DisciplineSportiveEtudiantDTO save(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO) {
         log.debug("Request to save DisciplineSportiveEtudiant : {}", disciplineSportiveEtudiantDTO);
+
+        if (disciplineSportiveEtudiantDTO.getId() != null) {
+            throw new BadRequestAlertException("A new disciplineSportiveEtudiant cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+
         DisciplineSportiveEtudiant disciplineSportiveEtudiant = disciplineSportiveEtudiantMapper.toEntity(disciplineSportiveEtudiantDTO);
         disciplineSportiveEtudiant = disciplineSportiveEtudiantRepository.save(disciplineSportiveEtudiant);
         return disciplineSportiveEtudiantMapper.toDto(disciplineSportiveEtudiant);
     }
 
     @Override
-    public DisciplineSportiveEtudiantDTO update(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO) {
+    public DisciplineSportiveEtudiantDTO update(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO, Long id) {
         log.debug("Request to update DisciplineSportiveEtudiant : {}", disciplineSportiveEtudiantDTO);
+
+        if (disciplineSportiveEtudiantDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, disciplineSportiveEtudiantDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!disciplineSportiveEtudiantRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
         DisciplineSportiveEtudiant disciplineSportiveEtudiant = disciplineSportiveEtudiantMapper.toEntity(disciplineSportiveEtudiantDTO);
         disciplineSportiveEtudiant = disciplineSportiveEtudiantRepository.save(disciplineSportiveEtudiant);
         return disciplineSportiveEtudiantMapper.toDto(disciplineSportiveEtudiant);
     }
 
     @Override
-    public Optional<DisciplineSportiveEtudiantDTO> partialUpdate(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO) {
+    public Optional<DisciplineSportiveEtudiantDTO> partialUpdate(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO, Long id) {
         log.debug("Request to partially update DisciplineSportiveEtudiant : {}", disciplineSportiveEtudiantDTO);
+
+        if (disciplineSportiveEtudiantDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, disciplineSportiveEtudiantDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!disciplineSportiveEtudiantRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
 
         return disciplineSportiveEtudiantRepository
             .findById(disciplineSportiveEtudiantDTO.getId())

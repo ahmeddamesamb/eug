@@ -40,10 +40,7 @@ public class MinistereServiceImpl implements MinistereService {
     public MinistereDTO save(MinistereDTO ministereDTO) {
         log.debug("Request to save Ministere : {}", ministereDTO);
 
-        if (ministereRepository.findByNomMinistereIgnoreCase(ministereDTO.getNomMinistere()).isPresent()) {
-            throw new BadRequestAlertException("Un ministère avec ce nom existe déjà", ENTITY_NAME, "nomMinistereExists");
-        }
-
+        validateMinistere(ministereDTO);
         Optional<Ministere> currentMinistere = ministereRepository.findByEnCoursYN(1);
 
         if (currentMinistere.isPresent()) {
@@ -66,17 +63,13 @@ public class MinistereServiceImpl implements MinistereService {
         return ministereMapper.toDto(ministere);
     }
 
+
     @Transactional
     @Override
     public MinistereDTO update(MinistereDTO ministereDTO) {
         log.debug("Request to update Ministere : {}", ministereDTO);
 
-        Optional<Ministere> ministereWithName = ministereRepository.findByNomMinistereIgnoreCase(ministereDTO.getNomMinistere());
-
-        if (ministereWithName.isPresent() && !ministereWithName.get().getId().equals(ministereDTO.getId())) {
-            throw new BadRequestAlertException("Un ministère avec ce nom existe déjà", ENTITY_NAME, "nomMinistereExists");
-        }
-
+        validateMinistere(ministereDTO);
 
         if (ministereDTO.getEnCoursYN() == 1) {
 
@@ -88,42 +81,63 @@ public class MinistereServiceImpl implements MinistereService {
                 existingMinistere.setDateFin(LocalDate.now());
                 ministereRepository.save(existingMinistere);
             }
-            if (ministereDTO.getDateFin()!=null) {
+            if (ministereDTO.getDateFin() != null) {
                 ministereDTO.setDateFin(null);
             }
         }
 
-        if (ministereDTO.getDateFin() != null && !ministereDTO.getDateFin().isAfter(ministereDTO.getDateDebut())) {
-           throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidDateRange");
-        }
-
         Ministere ministere = ministereMapper.toEntity(ministereDTO);
-
         if (ministereDTO.getEnCoursYN() == 0 && ministereRepository.findById(ministere.getId()).orElseThrow().getEnCoursYN() == 1) {
             ministere.setDateFin(LocalDate.now());
         }
 
         ministere = ministereRepository.save(ministere);
-
         return ministereMapper.toDto(ministere);
     }
-
-
 
     @Override
     public Optional<MinistereDTO> partialUpdate(MinistereDTO ministereDTO) {
         log.debug("Request to partially update Ministere : {}", ministereDTO);
 
+        validateMinistere(ministereDTO);
+
         return ministereRepository
             .findById(ministereDTO.getId())
             .map(existingMinistere -> {
                 ministereMapper.partialUpdate(existingMinistere, ministereDTO);
-
                 return existingMinistere;
             })
             .map(ministereRepository::save)
             .map(ministereMapper::toDto);
     }
+
+    private void validateMinistere(MinistereDTO ministereDTO) {
+
+        if (ministereDTO.getNomMinistere().isBlank()){
+            throw new BadRequestAlertException("Le nom du ministere ne peut pas être vide.", ENTITY_NAME, "nomMinistereNotNull");
+        }
+        Optional<Ministere> ministereWithName = ministereRepository.findByNomMinistereIgnoreCase(ministereDTO.getNomMinistere());
+        if (ministereWithName.isPresent() && !ministereWithName.get().getId().equals(ministereDTO.getId())) {
+            throw new BadRequestAlertException("Un ministère avec ce nom existe déjà", ENTITY_NAME, "nomMinistereExists");
+        }
+        if (ministereDTO.getSigleMinistere().isBlank()) {
+            throw new BadRequestAlertException("Le sigle du ministere ne peut pas être vide.", ENTITY_NAME, "sigleMinistereNotNull");
+        }
+        if (ministereDTO.getDateDebut() == null) {
+            throw new BadRequestAlertException("La date de début ne peut pas être nulle.", ENTITY_NAME, "dateDebutNotNull");
+        }
+        if (ministereDTO.getDateFin() != null && !ministereDTO.getDateFin().isAfter(ministereDTO.getDateDebut())) {
+            throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidOrdreDate");
+        }
+        String regex = "^[\\p{L}\\p{N}\\_\\-\\.\\s]+$";
+        if (!ministereDTO.getNomMinistere().matches(regex)) {
+            throw new BadRequestAlertException("Le nom du ministere contient des caractères non autorisés.", ENTITY_NAME, "nomMinistereInvalidCharacters");
+        }
+        if (!ministereDTO.getSigleMinistere().matches(regex)) {
+            throw new BadRequestAlertException("Le Sigle du ministere contient des caractères non autorisés.", ENTITY_NAME, "sigleMinistereInvalidCharacters");
+        }
+    }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -144,7 +158,6 @@ public class MinistereServiceImpl implements MinistereService {
         log.debug("Request to delete Ministere : {}", id);
         ministereRepository.deleteById(id);
     }
-
 
     /**
      * @return

@@ -12,7 +12,5 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface TypeFraisRepository extends JpaRepository<TypeFrais, Long> {
-//-------------------------------------------- FIND BY  LIBELLE TYPE DE FRAIS ------------------------------------------------
-
-Optional<TypeFrais> findByLibelleTypeFrais(String libelleTypeFrais);
+Optional<TypeFrais> findByLibelleTypeFraisIgnoreCase(String libelleTypeFrais);
 }

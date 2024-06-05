@@ -57,21 +57,15 @@ public class LyceeResource {
     @PostMapping("")
     public ResponseEntity<LyceeDTO> createLycee(@Valid @RequestBody LyceeDTO lyceeDTO) throws URISyntaxException {
         log.debug("REST request to save Lycee : {}", lyceeDTO);
-        if (lyceeDTO.getId() != null) {
-            throw new BadRequestAlertException("A new lycee cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        if (lyceeRepository.existsLyceeByNomLycee(lyceeDTO.getNomLycee())) {
-            throw new BadRequestAlertException("Ce Lycee existe. Deux Lycees ne peuvent pas avoir le même nom", ENTITY_NAME, "nomlyceeexists");
-        }
-        if (lyceeDTO.getCodeLycee().isEmpty() || lyceeDTO.getNomLycee().isEmpty()) {
-            throw new BadRequestAlertException("Le nom et le code du lycee sont obligatoires", ENTITY_NAME, "nom_ou_codelycee_vide");
-        }
+
         LyceeDTO result = lyceeService.save(lyceeDTO);
         return ResponseEntity
             .created(new URI("/api/lycees/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
+
+
 
     /**
      * {@code PUT  /lycees/:id} : Updates an existing lycee.
@@ -89,18 +83,8 @@ public class LyceeResource {
         @Valid @RequestBody LyceeDTO lyceeDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Lycee : {}, {}", id, lyceeDTO);
-        if (lyceeDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, lyceeDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!lyceeRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        LyceeDTO result = lyceeService.update(lyceeDTO);
+        LyceeDTO result = lyceeService.update(lyceeDTO,id);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, lyceeDTO.getId().toString()))
@@ -124,18 +108,8 @@ public class LyceeResource {
         @NotNull @RequestBody LyceeDTO lyceeDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Lycee partially : {}, {}", id, lyceeDTO);
-        if (lyceeDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, lyceeDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!lyceeRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<LyceeDTO> result = lyceeService.partialUpdate(lyceeDTO);
+        Optional<LyceeDTO> result = lyceeService.partialUpdate(lyceeDTO,id);
 
         return ResponseUtil.wrapOrNotFound(
             result,

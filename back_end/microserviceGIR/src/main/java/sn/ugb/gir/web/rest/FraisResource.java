@@ -59,28 +59,7 @@ public class FraisResource {
     @PostMapping("")
     public ResponseEntity<FraisDTO> createFrais(@Valid @RequestBody FraisDTO fraisDTO) throws URISyntaxException {
         log.debug("REST request to save Frais : {}", fraisDTO);
-        LocalDate currentDate = LocalDate.now();
 
-        if (fraisDTO.getId() != null) {
-            throw new BadRequestAlertException("A new frais cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-
-        if (fraisDTO.getDateApplication().isBefore(currentDate))
-        {
-            throw new BadRequestAlertException("La date d_appliaction d_un nouveau frais ne peut pas etre dans le passe", ENTITY_NAME, "dateapplicationinvalide");
-        }
-        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription") && (fraisDTO.getDia() == null || fraisDTO.getDip() == null))
-        {
-            throw new BadRequestAlertException("les droits d'inscriptions requiert les repartitions en  dia et un dip", ENTITY_NAME, "dia_dip_null");
-        }
-        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription du privée") && (fraisDTO.getDia() == null || fraisDTO.getDip() == null) || (fraisDTO.getDipPrivee() == null))
-        {
-            throw new BadRequestAlertException("les droits d'inscriptions du privée requiert les repartitions en  dia et un dip et dipPrivée", ENTITY_NAME, "dia_dip_dipprivee_null");
-        }
-
-        fraisDTO.setDateFin(null);
-        fraisRepository.updateIfEstEnApplicationIsOneAndCycleLike(fraisDTO.getCycle());
-        fraisDTO.setEstEnApplicationYN(1);
         FraisDTO result = fraisService.save(fraisDTO);
         return ResponseEntity
             .created(new URI("/api/frais/" + result.getId()))
@@ -104,20 +83,8 @@ public class FraisResource {
         @Valid @RequestBody FraisDTO fraisDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Frais : {}, {}", id, fraisDTO);
-        if (fraisDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, fraisDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!fraisRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-        if (fraisDTO.getEstEnApplicationYN() == 1) {
-            fraisDTO.setDateFin(null);
-        }
-        FraisDTO result = fraisService.update(fraisDTO);
+        FraisDTO result = fraisService.update(fraisDTO, id);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, fraisDTO.getId().toString()))
@@ -141,20 +108,8 @@ public class FraisResource {
         @NotNull @RequestBody FraisDTO fraisDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Frais partially : {}, {}", id, fraisDTO);
-        if (fraisDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, fraisDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!fraisRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-        if (fraisDTO.getEstEnApplicationYN() == 1) {
-            fraisDTO.setDateFin(null);
-        }
-        Optional<FraisDTO> result = fraisService.partialUpdate(fraisDTO);
+        Optional<FraisDTO> result = fraisService.partialUpdate(fraisDTO, id);
 
         return ResponseUtil.wrapOrNotFound(
             result,

@@ -14,4 +14,6 @@ import java.util.Optional;
 public interface AnneeAcademiqueRepository extends JpaRepository<AnneeAcademique, Long> {
 
     Optional<AnneeAcademique> findByAnneeCouranteYN(int i);
+
+    Optional<AnneeAcademique> findByAnneeAc(String anneeAc);
 }

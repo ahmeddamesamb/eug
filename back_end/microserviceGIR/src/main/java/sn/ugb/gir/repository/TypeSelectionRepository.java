@@ -13,5 +13,5 @@ import java.util.Optional;
 @Repository
 public interface TypeSelectionRepository extends JpaRepository<TypeSelection, Long> {
 
-    Optional<TypeSelection> findByLibelleTypeSelection(String libelleTypeSelection);
+    Optional<TypeSelection> findByLibelleTypeSelectionIgnoreCase(String libelleTypeSelection);
 }

@@ -12,6 +12,9 @@ import sn.ugb.gir.repository.TypeHandicapRepository;
 import sn.ugb.gir.service.TypeHandicapService;
 import sn.ugb.gir.service.dto.TypeHandicapDTO;
 import sn.ugb.gir.service.mapper.TypeHandicapMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.TypeHandicap}.
@@ -34,6 +37,11 @@ public class TypeHandicapServiceImpl implements TypeHandicapService {
     @Override
     public TypeHandicapDTO save(TypeHandicapDTO typeHandicapDTO) {
         log.debug("Request to save TypeHandicap : {}", typeHandicapDTO);
+
+        if(typeHandicapRepository.findByLibelleTypeHandicapAndIdNot(typeHandicapDTO.getLibelleTypeHandicap(), typeHandicapDTO.getId()).isPresent()){
+            throw new BadRequestAlertException("A update Handicap have an TypeHandicap exists ", ENTITY_NAME, "TypeHandicap exists");
+        }
+
         TypeHandicap typeHandicap = typeHandicapMapper.toEntity(typeHandicapDTO);
         typeHandicap = typeHandicapRepository.save(typeHandicap);
         return typeHandicapMapper.toDto(typeHandicap);
@@ -42,6 +50,10 @@ public class TypeHandicapServiceImpl implements TypeHandicapService {
     @Override
     public TypeHandicapDTO update(TypeHandicapDTO typeHandicapDTO) {
         log.debug("Request to update TypeHandicap : {}", typeHandicapDTO);
+
+        if(typeHandicapRepository.findByLibelleTypeHandicapAndIdNot(typeHandicapDTO.getLibelleTypeHandicap(), typeHandicapDTO.getId()).isPresent()){
+            throw new BadRequestAlertException("A update Handicap have an TypeHandicap exists ", ENTITY_NAME, "TypeHandicap exists");
+        }
         TypeHandicap typeHandicap = typeHandicapMapper.toEntity(typeHandicapDTO);
         typeHandicap = typeHandicapRepository.save(typeHandicap);
         return typeHandicapMapper.toDto(typeHandicap);

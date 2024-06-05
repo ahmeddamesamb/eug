@@ -91,10 +91,10 @@ public class DisciplineSportiveServiceImpl implements DisciplineSportiveService 
     }
 
     private void validateData(DisciplineSportiveDTO disciplineSportiveDTO) {
-        if (disciplineSportiveDTO.getLibelleDisciplineSportive().isEmpty() || disciplineSportiveDTO.getLibelleDisciplineSportive().isBlank()){
+        if (disciplineSportiveDTO.getLibelleDisciplineSportive().isBlank()){
             throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleDisciplineSportiveNotNull");
         }
-        Optional<DisciplineSportive> existingDisciplineSportive = disciplineSportiveRepository.findByLibelleDisciplineSportive(disciplineSportiveDTO.getLibelleDisciplineSportive());
+        Optional<DisciplineSportive> existingDisciplineSportive = disciplineSportiveRepository.findByLibelleDisciplineSportiveIgnoreCase(disciplineSportiveDTO.getLibelleDisciplineSportive());
         if (existingDisciplineSportive.isPresent() && !existingDisciplineSportive.get().getId().equals(disciplineSportiveDTO.getId())) {
             throw new BadRequestAlertException("Une discipline sportive avec le même libellé existe.", ENTITY_NAME, "libelleDisciplineSportiveExist");
         }

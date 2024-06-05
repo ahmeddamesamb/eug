@@ -61,6 +61,15 @@ public class TypeHandicapResource {
         if (typeHandicapDTO.getId() != null) {
             throw new BadRequestAlertException("A new typeHandicap cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        if (typeHandicapDTO.getLibelleTypeHandicap() == null) {
+            throw new BadRequestAlertException("A new typeHandicap cannot already have an LibelleTypeHandicap", ENTITY_NAME, "LibelleTypeHandicap exists");
+        }
+
+        if (typeHandicapDTO.getLibelleTypeHandicap().isBlank()) {
+            throw new BadRequestAlertException("A new typeHandicap cannot already have an LibelleTypeHandicap", ENTITY_NAME, "LibelleTypeHandicap is empty");
+        }
+
         TypeHandicapDTO result = typeHandicapService.save(typeHandicapDTO);
         return ResponseEntity
             .created(new URI("/api/type-handicaps/" + result.getId()))
@@ -93,6 +102,13 @@ public class TypeHandicapResource {
 
         if (!typeHandicapRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+        if (typeHandicapDTO.getLibelleTypeHandicap() == null) {
+            throw new BadRequestAlertException("A new typeHandicap cannot already have an LibelleTypeHandicap", ENTITY_NAME, "LibelleTypeHandicap exists");
+        }
+
+        if (typeHandicapDTO.getLibelleTypeHandicap().isBlank()) {
+            throw new BadRequestAlertException("A new typeHandicap cannot already have an LibelleTypeHandicap", ENTITY_NAME, "LibelleTypeHandicap is empty");
         }
 
         TypeHandicapDTO result = typeHandicapService.update(typeHandicapDTO);

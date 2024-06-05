@@ -188,7 +188,6 @@ public class DomaineResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
-//***************************************************************** GET ALL DOMAINES BY UFR ID****************************************************
 
 @GetMapping("/ufrs/{ufrId}")
 public ResponseEntity<List<DomaineDTO>> getAllDomaineByUfr(@PathVariable Long ufrId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
@@ -198,7 +197,6 @@ public ResponseEntity<List<DomaineDTO>> getAllDomaineByUfr(@PathVariable Long uf
     return ResponseEntity.ok().headers(headers).body(page.getContent());
 }
 
-//***************************************************************** GET ALL DOMAINES BY UNIVERSITE ID*********************************************
 @GetMapping("/universites/{universiteId}")
 public ResponseEntity<List<DomaineDTO>> getAllDomaineByUniversite(@PathVariable Long universiteId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
     log.debug("REST request to get a page of Domaine by Universite ID : {}", universiteId);
@@ -207,7 +205,6 @@ public ResponseEntity<List<DomaineDTO>> getAllDomaineByUniversite(@PathVariable 
     return ResponseEntity.ok().headers(headers).body(page.getContent());
 }
 
-//***************************************************************** GET ALL DOMAINES BY MINISTER ID************************************************
 @GetMapping("/ministeres/{ministereId}")
 public ResponseEntity<List<DomaineDTO>> getAllDomaineByMinistere(@PathVariable Long ministereId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
     log.debug("REST request to get a page of Domaine by Ministere ID : {}", ministereId);

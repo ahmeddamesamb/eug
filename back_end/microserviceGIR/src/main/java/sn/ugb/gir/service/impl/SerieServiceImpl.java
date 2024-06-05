@@ -88,24 +88,24 @@ public class SerieServiceImpl implements SerieService {
     }
 
     private void validateData(SerieDTO serieDTO) {
-        if (serieDTO.getLibelleSerie().isEmpty() || serieDTO.getLibelleSerie().isBlank()){
+        if (serieDTO.getLibelleSerie().isBlank()){
             throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleSerieNotNull");
         }
-        if (serieDTO.getSigleSerie().isEmpty() || serieDTO.getSigleSerie().isBlank()){
+        if (serieDTO.getSigleSerie().isBlank()){
             throw new BadRequestAlertException("La sigle ne peut pas être vide.", ENTITY_NAME, "SigleSerieNotNull");
         }
-        if (serieDTO.getCodeSerie().isEmpty() || serieDTO.getCodeSerie().isBlank()){
+        if (serieDTO.getCodeSerie().isBlank()){
             throw new BadRequestAlertException("Le code ne peut pas être vide.", ENTITY_NAME, "codeSerieNotNull");
         }
-        Optional<Serie> existingSerie = serieRepository.findByLibelleSerie(serieDTO.getLibelleSerie());
+        Optional<Serie> existingSerie = serieRepository.findByLibelleSerieIgnoreCase(serieDTO.getLibelleSerie());
         if (existingSerie.isPresent() && !existingSerie.get().getId().equals(serieDTO.getId())) {
             throw new BadRequestAlertException("Une serie avec le même libellé existe.", ENTITY_NAME, "libelleSerieExist");
         }
-        existingSerie = serieRepository.findBySigleSerie(serieDTO.getSigleSerie());
+        existingSerie = serieRepository.findBySigleSerieIgnoreCase(serieDTO.getSigleSerie());
         if (existingSerie.isPresent() && !existingSerie.get().getId().equals(serieDTO.getId())) {
             throw new BadRequestAlertException("Une serie avec la même sigle existe.", ENTITY_NAME, "sigleSerieExist");
         }
-        existingSerie = serieRepository.findByCodeSerie(serieDTO.getCodeSerie());
+        existingSerie = serieRepository.findByCodeSerieIgnoreCase(serieDTO.getCodeSerie());
         if (existingSerie.isPresent() && !existingSerie.get().getId().equals(serieDTO.getId())) {
             throw new BadRequestAlertException("Une serie avec le même code existe.", ENTITY_NAME, "codeSerieExist");
         }

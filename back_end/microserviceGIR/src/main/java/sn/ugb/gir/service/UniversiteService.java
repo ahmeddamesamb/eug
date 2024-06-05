@@ -23,7 +23,7 @@ public interface UniversiteService {
      * @param universiteDTO the entity to update.
      * @return the persisted entity.
      */
-    UniversiteDTO update(UniversiteDTO universiteDTO);
+    UniversiteDTO update(UniversiteDTO universiteDTO, Long id);
 
     /**
      * Partially updates a universite.
@@ -31,7 +31,7 @@ public interface UniversiteService {
      * @param universiteDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<UniversiteDTO> partialUpdate(UniversiteDTO universiteDTO);
+    Optional<UniversiteDTO> partialUpdate(UniversiteDTO universiteDTO, Long id);
 
     /**
      * Get all the universites.

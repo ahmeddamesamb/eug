@@ -24,7 +24,7 @@ public interface LyceeService {
      * @param lyceeDTO the entity to update.
      * @return the persisted entity.
      */
-    LyceeDTO update(LyceeDTO lyceeDTO);
+    LyceeDTO update(LyceeDTO lyceeDTO, Long id);
 
     /**
      * Partially updates a lycee.
@@ -32,7 +32,7 @@ public interface LyceeService {
      * @param lyceeDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<LyceeDTO> partialUpdate(LyceeDTO lyceeDTO);
+    Optional<LyceeDTO> partialUpdate(LyceeDTO lyceeDTO, Long id);
 
     /**
      * Get all the lycees.
