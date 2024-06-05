@@ -51,10 +51,9 @@ public class TypeBourseServiceImpl implements TypeBourseService {
     public TypeBourseDTO update(TypeBourseDTO typeBourseDTO) {
         log.debug("Request to update TypeBourse : {}", typeBourseDTO);
 
-        if(typeBourseRepository.findByLibelleTypeBourse(typeBourseDTO.getLibelleTypeBourse()).isPresent()){
-            throw new BadRequestAlertException("A new niveau have an TypeBourse exists ", ENTITY_NAME, "TypeBourse exists");
+        if(typeBourseRepository.findByLibelleTypeBourseAndIdNot(typeBourseDTO.getLibelleTypeBourse(), typeBourseDTO.getId()).isPresent()){
+            throw new BadRequestAlertException("A update Bourse have an TypeBourse exists ", ENTITY_NAME, "TypeBourse exists");
         }
-
         TypeBourse typeBourse = typeBourseMapper.toEntity(typeBourseDTO);
         typeBourse = typeBourseRepository.save(typeBourse);
         return typeBourseMapper.toDto(typeBourse);
@@ -63,6 +62,10 @@ public class TypeBourseServiceImpl implements TypeBourseService {
     @Override
     public Optional<TypeBourseDTO> partialUpdate(TypeBourseDTO typeBourseDTO) {
         log.debug("Request to partially update TypeBourse : {}", typeBourseDTO);
+
+        if(typeBourseRepository.findByLibelleTypeBourseAndIdNot(typeBourseDTO.getLibelleTypeBourse(), typeBourseDTO.getId()).isPresent()){
+            throw new BadRequestAlertException("A update Bourse have an TypeBourse exists ", ENTITY_NAME, "TypeBourse exists");
+        }
 
         return typeBourseRepository
             .findById(typeBourseDTO.getId())

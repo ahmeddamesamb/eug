@@ -15,4 +15,6 @@ import java.util.Optional;
 public interface TypeOperationRepository extends JpaRepository<TypeOperation, Long> {
 
     Optional<TypeOperation> findByLibelleTypeOperation(String libelleTypeOperation);
+
+    Optional<TypeOperation>findByLibelleTypeOperationAndIdNot(String libelleTypeOperation, Long id);
 }

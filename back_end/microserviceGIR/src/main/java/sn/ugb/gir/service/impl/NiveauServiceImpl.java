@@ -64,7 +64,7 @@ public class NiveauServiceImpl implements NiveauService {
             throw new BadRequestAlertException("A new niveau have an ANNEE_ETUDE exists ", ENTITY_NAME, "Annnee Etude exists");
         }
 
-        if (niveauRepository.findByAnneeEtude(niveauDTO.getCodeNiveau()).isPresent()) {
+        if (niveauRepository.findByAnneeEtude(niveauDTO.getCodeNiveau()).isPresent() ) {
             throw new BadRequestAlertException("A udate niveau have an Code Niveau ", ENTITY_NAME, "Code Niveau");
         }
 

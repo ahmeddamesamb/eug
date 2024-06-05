@@ -51,7 +51,11 @@ public class TypeOperationServiceImpl implements TypeOperationService {
     public TypeOperationDTO update(TypeOperationDTO typeOperationDTO) {
         log.debug("Request to update TypeOperation : {}", typeOperationDTO);
 
-        if(typeOperationRepository.findByLibelleTypeOperation(typeOperationDTO.getLibelleTypeOperation()).isPresent()){
+        /*if(typeOperationRepository.findByLibelleTypeOperation(typeOperationDTO.getLibelleTypeOperation()).isPresent()){
+            throw new BadRequestAlertException("A update Operation have an TypeOperation exists ", ENTITY_NAME, "TypeOperation exists");
+        }*/
+
+        if(typeOperationRepository.findByLibelleTypeOperationAndIdNot(typeOperationDTO.getLibelleTypeOperation(), typeOperationDTO.getId()).isPresent()){
             throw new BadRequestAlertException("A update Operation have an TypeOperation exists ", ENTITY_NAME, "TypeOperation exists");
         }
 
@@ -63,6 +67,10 @@ public class TypeOperationServiceImpl implements TypeOperationService {
     @Override
     public Optional<TypeOperationDTO> partialUpdate(TypeOperationDTO typeOperationDTO) {
         log.debug("Request to partially update TypeOperation : {}", typeOperationDTO);
+
+        if(typeOperationRepository.findByLibelleTypeOperationAndIdNot(typeOperationDTO.getLibelleTypeOperation(), typeOperationDTO.getId()).isPresent()){
+            throw new BadRequestAlertException("A update Operation have an TypeOperation exists ", ENTITY_NAME, "TypeOperation exists");
+        }
 
         return typeOperationRepository
             .findById(typeOperationDTO.getId())

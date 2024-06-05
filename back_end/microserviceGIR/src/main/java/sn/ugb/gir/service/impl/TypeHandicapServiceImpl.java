@@ -38,8 +38,8 @@ public class TypeHandicapServiceImpl implements TypeHandicapService {
     public TypeHandicapDTO save(TypeHandicapDTO typeHandicapDTO) {
         log.debug("Request to save TypeHandicap : {}", typeHandicapDTO);
 
-        if(typeHandicapRepository.findByLibelleTypeHandicap(typeHandicapDTO.getLibelleTypeHandicap()).isPresent()){
-            throw new BadRequestAlertException("A new niveau have an TypeHandicap exists ", ENTITY_NAME, "TypeHandicap exists");
+        if(typeHandicapRepository.findByLibelleTypeHandicapAndIdNot(typeHandicapDTO.getLibelleTypeHandicap(), typeHandicapDTO.getId()).isPresent()){
+            throw new BadRequestAlertException("A update Handicap have an TypeHandicap exists ", ENTITY_NAME, "TypeHandicap exists");
         }
 
         TypeHandicap typeHandicap = typeHandicapMapper.toEntity(typeHandicapDTO);
@@ -51,8 +51,8 @@ public class TypeHandicapServiceImpl implements TypeHandicapService {
     public TypeHandicapDTO update(TypeHandicapDTO typeHandicapDTO) {
         log.debug("Request to update TypeHandicap : {}", typeHandicapDTO);
 
-        if(typeHandicapRepository.findByLibelleTypeHandicap(typeHandicapDTO.getLibelleTypeHandicap()).isPresent()){
-            throw new BadRequestAlertException("A new niveau have an TypeHandicap exists ", ENTITY_NAME, "TypeHandicap exists");
+        if(typeHandicapRepository.findByLibelleTypeHandicapAndIdNot(typeHandicapDTO.getLibelleTypeHandicap(), typeHandicapDTO.getId()).isPresent()){
+            throw new BadRequestAlertException("A update Handicap have an TypeHandicap exists ", ENTITY_NAME, "TypeHandicap exists");
         }
         TypeHandicap typeHandicap = typeHandicapMapper.toEntity(typeHandicapDTO);
         typeHandicap = typeHandicapRepository.save(typeHandicap);

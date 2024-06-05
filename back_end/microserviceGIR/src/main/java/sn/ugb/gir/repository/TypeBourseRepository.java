@@ -13,4 +13,6 @@ import java.util.Optional;
 @Repository
 public interface TypeBourseRepository extends JpaRepository<TypeBourse, Long> {
     Optional<TypeBourse> findByLibelleTypeBourse(String libelleTypeBourse);
+
+    Optional<TypeBourse> findByLibelleTypeBourseAndIdNot(String libelleTypeBourse, Long id);
 }

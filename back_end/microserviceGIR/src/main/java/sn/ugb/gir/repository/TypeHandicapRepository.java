@@ -13,4 +13,6 @@ import java.util.Optional;
 @Repository
 public interface TypeHandicapRepository extends JpaRepository<TypeHandicap, Long> {
     Optional<TypeHandicap> findByLibelleTypeHandicap(String libelleTypeHandicap);
+
+    Optional<TypeHandicap> findByLibelleTypeHandicapAndIdNot(String libelleTypeHandicap, Long id);
 }
