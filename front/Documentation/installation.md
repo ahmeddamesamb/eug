@@ -1,8 +1,7 @@
 # ETAPE 0
-- Sur le dossier exemple copier le fichier docker-compose.yml
-- Coller le fichier docker-compose.yml sur le dossier keycloak à la racine du dossier eugb
-- A l'interieur du fichier docker-compose.yml , sur (volumes: ) mettre le chemin vers le dossier keycloak
-- Se placer au répertoire eugb/keycloak et lancer la commande docker-compose up --build
+- Aller sur le repertoire Keycloak
+- lancer la commande pour builder l'image de keycloak: docker-compose  up 
+
 
 # ETAPE 1
 - Sur le dossier exemple copier le fichier environment-home.ts
@@ -18,6 +17,7 @@
 - Sur le dossier exemple copier le fichier keycloak.environment-pats.ts
 - Renommer le fichier keycloak.environment-pats.ts en keycloak.environment.ts
 - sur le fichier keycloak.environment.ts remplacer url par l'url de votre serveur keycloak
+- Lancer la commande npm install
 - Lancer la commance ng serve --port 4201
 
 
