@@ -12,8 +12,9 @@ import sn.ugb.gir.domain.Universite;
 @SuppressWarnings("unused")
 @Repository
 public interface UniversiteRepository extends JpaRepository<Universite, Long> {
-    public Page<Universite> findByMinistereId(Pageable pageable, Long id);
-   // public String findByName(String nomUniversite);
-   // public boolean NomUniversiteExists();
-    public boolean existsUniversiteByNomUniversite(String nomUniversite);
+     Page<Universite> findByMinistereId(Pageable pageable, Long id);
+   //  String findByName(String nomUniversite);
+   //  boolean NomUniversiteExists();
+     boolean existsUniversiteByNomUniversite(String nomUniversite);
+     Universite findByNomUniversite(String nomUnivesite);
 }

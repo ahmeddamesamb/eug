@@ -14,7 +14,6 @@ import sn.ugb.gir.service.dto.TypeOperationDTO;
 import sn.ugb.gir.service.mapper.TypeOperationMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
-import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.TypeOperation}.
@@ -24,9 +23,9 @@ import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 public class TypeOperationServiceImpl implements TypeOperationService {
 
     private final Logger log = LoggerFactory.getLogger(TypeOperationServiceImpl.class);
+    private static final String ENTITY_NAME = "typeOperation";
 
     private final TypeOperationRepository typeOperationRepository;
-
     private final TypeOperationMapper typeOperationMapper;
 
     public TypeOperationServiceImpl(TypeOperationRepository typeOperationRepository, TypeOperationMapper typeOperationMapper) {
@@ -38,9 +37,7 @@ public class TypeOperationServiceImpl implements TypeOperationService {
     public TypeOperationDTO save(TypeOperationDTO typeOperationDTO) {
         log.debug("Request to save TypeOperation : {}", typeOperationDTO);
 
-        if(typeOperationRepository.findByLibelleTypeOperation(typeOperationDTO.getLibelleTypeOperation()).isPresent()){
-            throw new BadRequestAlertException("A Operation  have an TypeOperation exists ", ENTITY_NAME, "TypeOperation exists");
-        }
+        validateData(typeOperationDTO.getLibelleTypeOperation(), typeOperationDTO.getId());
 
         TypeOperation typeOperation = typeOperationMapper.toEntity(typeOperationDTO);
         typeOperation = typeOperationRepository.save(typeOperation);
@@ -51,13 +48,7 @@ public class TypeOperationServiceImpl implements TypeOperationService {
     public TypeOperationDTO update(TypeOperationDTO typeOperationDTO) {
         log.debug("Request to update TypeOperation : {}", typeOperationDTO);
 
-        /*if(typeOperationRepository.findByLibelleTypeOperation(typeOperationDTO.getLibelleTypeOperation()).isPresent()){
-            throw new BadRequestAlertException("A update Operation have an TypeOperation exists ", ENTITY_NAME, "TypeOperation exists");
-        }*/
-
-        if(typeOperationRepository.findByLibelleTypeOperationAndIdNot(typeOperationDTO.getLibelleTypeOperation(), typeOperationDTO.getId()).isPresent()){
-            throw new BadRequestAlertException("A update Operation have an TypeOperation exists ", ENTITY_NAME, "TypeOperation exists");
-        }
+        validateData(typeOperationDTO.getLibelleTypeOperation(), typeOperationDTO.getId());
 
         TypeOperation typeOperation = typeOperationMapper.toEntity(typeOperationDTO);
         typeOperation = typeOperationRepository.save(typeOperation);
@@ -68,15 +59,12 @@ public class TypeOperationServiceImpl implements TypeOperationService {
     public Optional<TypeOperationDTO> partialUpdate(TypeOperationDTO typeOperationDTO) {
         log.debug("Request to partially update TypeOperation : {}", typeOperationDTO);
 
-        if(typeOperationRepository.findByLibelleTypeOperationAndIdNot(typeOperationDTO.getLibelleTypeOperation(), typeOperationDTO.getId()).isPresent()){
-            throw new BadRequestAlertException("A update Operation have an TypeOperation exists ", ENTITY_NAME, "TypeOperation exists");
-        }
+        validateData(typeOperationDTO.getLibelleTypeOperation(), typeOperationDTO.getId());
 
         return typeOperationRepository
             .findById(typeOperationDTO.getId())
             .map(existingTypeOperation -> {
                 typeOperationMapper.partialUpdate(existingTypeOperation, typeOperationDTO);
-
                 return existingTypeOperation;
             })
             .map(typeOperationRepository::save)
@@ -94,12 +82,34 @@ public class TypeOperationServiceImpl implements TypeOperationService {
     @Transactional(readOnly = true)
     public Optional<TypeOperationDTO> findOne(Long id) {
         log.debug("Request to get TypeOperation : {}", id);
-        return typeOperationRepository.findById(id).map(typeOperationMapper::toDto);
+        return typeOperationRepository.findById(id)
+            .map(typeOperationMapper::toDto)
+            .or(() -> {
+                log.warn("TypeOperation with id {} not found", id);
+                return Optional.empty();
+            });
     }
 
     @Override
     public void delete(Long id) {
         log.debug("Request to delete TypeOperation : {}", id);
+
+        if (!typeOperationRepository.existsById(id)) {
+            throw new BadRequestAlertException("TypeOperation with id " + id + " not found", ENTITY_NAME, "typeOperationNotFound");
+        }
+
         typeOperationRepository.deleteById(id);
     }
+
+    private void validateData(String libelleTypeOperation, Long id) {
+        if (libelleTypeOperation == null || libelleTypeOperation.trim().isBlank()) {
+            throw new BadRequestAlertException("TypeOperation label cannot be empty", ENTITY_NAME, "emptyLibelleTypeOperation");
+        }
+
+        Optional<TypeOperation> existingTypeOperation = typeOperationRepository.findByLibelleTypeOperationIgnoreCase(libelleTypeOperation.trim());
+        if (existingTypeOperation.isPresent() && !existingTypeOperation.get().getId().equals(id)) {
+            throw new BadRequestAlertException("A TypeOperation with the same name already exists", ENTITY_NAME, "typeOperationExists");
+        }
+    }
+
 }

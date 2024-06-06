@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {environment} from '../../../../../../../environments/environment.development'
 import {MinistereModel} from '../models/ministere-model'
+import { ENVIRONMENT} from '../../../../../../config/environment';
+import {CONSTANTES_GLOBALES} from '../../../../../../config/constantes.globales';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class MinistereServiceService {
   private ministereUrl;
 
   constructor(private http: HttpClient) {
-    const baseUrl = environment.apiURL;
+    const baseUrl = ENVIRONMENT.endpointURL + CONSTANTES_GLOBALES.girURL;
     this.ministereUrl = `${baseUrl}/ministeres`;
   }
 
