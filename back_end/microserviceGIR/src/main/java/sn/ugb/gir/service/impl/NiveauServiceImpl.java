@@ -1,9 +1,5 @@
 package sn.ugb.gir.service.impl;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,8 +13,8 @@ import sn.ugb.gir.service.dto.NiveauDTO;
 import sn.ugb.gir.service.mapper.NiveauMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
-import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
-import static org.springframework.util.ClassUtils.isPresent;
+import java.util.Optional;
+
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Niveau}.
@@ -28,11 +24,9 @@ import static org.springframework.util.ClassUtils.isPresent;
 public class NiveauServiceImpl implements NiveauService {
 
     private final Logger log = LoggerFactory.getLogger(NiveauServiceImpl.class);
-
-    private static final String ENTITY_NAME = "Niveau" ;
+    private static final String ENTITY_NAME = "Niveau";
 
     private final NiveauRepository niveauRepository;
-
     private final NiveauMapper niveauMapper;
 
     public NiveauServiceImpl(NiveauRepository niveauRepository, NiveauMapper niveauMapper) {
@@ -44,13 +38,8 @@ public class NiveauServiceImpl implements NiveauService {
     public NiveauDTO save(NiveauDTO niveauDTO) {
         log.debug("Request to save Niveau : {}", niveauDTO);
 
-        if (niveauRepository.findByAnneeEtude(niveauDTO.getCodeNiveau()).isPresent()) {
-            throw new BadRequestAlertException("A new niveau have an Code Niveau ", ENTITY_NAME, "Code Niveau");
-        }
+        validateData(niveauDTO);
 
-        if (niveauRepository.findByAnneeEtude(niveauDTO.getAnneeEtude()).isPresent()) {
-            throw new BadRequestAlertException("A new niveau have an ANNEE_ETUDE", ENTITY_NAME, "Annnee Etude exists");
-        }
         Niveau niveau = niveauMapper.toEntity(niveauDTO);
         niveau = niveauRepository.save(niveau);
         return niveauMapper.toDto(niveau);
@@ -60,13 +49,7 @@ public class NiveauServiceImpl implements NiveauService {
     public NiveauDTO update(NiveauDTO niveauDTO) {
         log.debug("Request to update Niveau : {}", niveauDTO);
 
-        if (niveauRepository.findByAnneeEtude(niveauDTO.getAnneeEtude()).isPresent()) {
-            throw new BadRequestAlertException("A new niveau have an ANNEE_ETUDE exists ", ENTITY_NAME, "Annnee Etude exists");
-        }
-
-        if (niveauRepository.findByAnneeEtude(niveauDTO.getCodeNiveau()).isPresent() ) {
-            throw new BadRequestAlertException("A udate niveau have an Code Niveau ", ENTITY_NAME, "Code Niveau");
-        }
+        validateData(niveauDTO);
 
         Niveau niveau = niveauMapper.toEntity(niveauDTO);
         niveau = niveauRepository.save(niveau);
@@ -77,11 +60,12 @@ public class NiveauServiceImpl implements NiveauService {
     public Optional<NiveauDTO> partialUpdate(NiveauDTO niveauDTO) {
         log.debug("Request to partially update Niveau : {}", niveauDTO);
 
+        validateData(niveauDTO);
+
         return niveauRepository
             .findById(niveauDTO.getId())
             .map(existingNiveau -> {
                 niveauMapper.partialUpdate(existingNiveau, niveauDTO);
-
                 return existingNiveau;
             })
             .map(niveauRepository::save)
@@ -105,8 +89,74 @@ public class NiveauServiceImpl implements NiveauService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Niveau : {}", id);
+
+        if (!niveauRepository.existsById(id)) {
+            throw new BadRequestAlertException("Niveau with id " + id + " not found", ENTITY_NAME, "niveauNotFound");
+        }
+
         niveauRepository.deleteById(id);
     }
+
+    private void validateData(NiveauDTO niveauDTO) {
+        if (niveauDTO == null) {
+            throw new BadRequestAlertException("Niveau cannot be null", ENTITY_NAME, "nullNiveau");
+        }
+
+        String codeNiveau = niveauDTO.getCodeNiveau();
+        String anneeEtude = niveauDTO.getAnneeEtude();
+        String libelleNiveau = niveauDTO.getLibelleNiveau();
+
+        if (isEmptyOrBlank(anneeEtude)) {
+            throw new BadRequestAlertException("Niveau year of study cannot be empty", ENTITY_NAME, "emptyAnneeEtude");
+        }
+
+        if (isEmptyOrBlank(codeNiveau)) {
+            throw new BadRequestAlertException("Niveau code cannot be empty", ENTITY_NAME, "emptyCodeNiveau");
+        }
+
+        if (isEmptyOrBlank(libelleNiveau)) {
+            throw new BadRequestAlertException("Niveau year of study cannot be empty", ENTITY_NAME, "emptyAnneeEtude");
+        }
+        Long id = niveauDTO.getId();
+        if (id == null) {
+            // Save operation
+            if (niveauRepository.existsByAnneeEtudeIgnoreCase(anneeEtude)) {
+                throw new BadRequestAlertException("A niveau with the same year of study already exists", ENTITY_NAME, "anneeEtude.exists");
+            }
+
+            if (niveauRepository.existsByCodeNiveauIgnoreCase(codeNiveau)) {
+                throw new BadRequestAlertException("A niveau with the same code already exists", ENTITY_NAME, "CodeNiveau.exists");
+            }
+
+            if (niveauRepository.existsByLibelleNiveauIgnoreCase(libelleNiveau)) {
+                throw new BadRequestAlertException("A niveau with the same year of study already exists", ENTITY_NAME, "LibelleNiveau.exists");
+            }
+        } else {
+            // Update or PartialUpdate operation
+            Optional<Niveau> existingNiveau = niveauRepository.findById(id);
+            if (existingNiveau.isEmpty()) {
+                throw new BadRequestAlertException("Niveau with id " + id + " not found", ENTITY_NAME, "niveauNotFound");
+            }
+
+            Niveau niveau = existingNiveau.get();
+            if (!niveau.getAnneeEtude().equalsIgnoreCase(anneeEtude) && niveauRepository.existsByAnneeEtudeIgnoreCase(anneeEtude)) {
+                throw new BadRequestAlertException("A niveau with the same year of study already exists", ENTITY_NAME, "anneeEtude.exists");
+            }
+            if (!niveau.getCodeNiveau().equalsIgnoreCase(codeNiveau) && niveauRepository.existsByCodeNiveauIgnoreCase(codeNiveau)) {
+                throw new BadRequestAlertException("A niveau with the same code already exists", ENTITY_NAME, "CodeNiveau.exists");
+            }
+
+            if (!niveau.getLibelleNiveau().equalsIgnoreCase(libelleNiveau) && niveauRepository.existsByLibelleNiveauIgnoreCase(anneeEtude)) {
+                throw new BadRequestAlertException("A niveau with the same year of study already exists", ENTITY_NAME, "LibelleNiveau.exists");
+            }
+        }
+    }
+
+
+    private boolean isEmptyOrBlank(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+
 
     @Override
     public Page<NiveauDTO> getAllNiveauByUniversite(Long universiteId, Pageable pageable) {
@@ -119,5 +169,5 @@ public class NiveauServiceImpl implements NiveauService {
         return niveauRepository.getAllNiveauByMinistereId(ministereId, pageable)
             .map(niveauMapper::toDto);
     }
-
 }
+

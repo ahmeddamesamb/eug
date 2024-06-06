@@ -41,4 +41,15 @@ public interface NiveauRepository extends JpaRepository<Niveau, Long> {
     Page<Niveau> getAllNiveauByMinistereId(@Param("ministereId") Long universiteId, Pageable pageable);
 
     Optional<Niveau> findByAnneeEtude(String anneeEtude);
+
+
+   boolean existsByCodeNiveauIgnoreCase(String codeNiveau);
+
+   boolean existsByAnneeEtudeIgnoreCase(String anneeEtude);
+
+    boolean existsByAnneeEtudeAndIdNot(String anneeEtude, Long id);
+
+    boolean existsByCodeNiveauAndIdNot(String codeNiveau, Long id);
+
+    boolean existsByLibelleNiveauIgnoreCase(String anneeEtude);
 }
