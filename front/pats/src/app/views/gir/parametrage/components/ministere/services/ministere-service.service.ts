@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {MinistereModel} from '../models/ministere-model'
 import { ENVIRONMENT} from '../../../../../../config/environment';
+import {CONSTANTES_GLOBALES} from '../../../../../../config/constantes.globales';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class MinistereServiceService {
   private ministereUrl;
 
   constructor(private http: HttpClient) {
-    const baseUrl = ENVIRONMENT.apiURL;
+    const baseUrl = ENVIRONMENT.endpointURL + CONSTANTES_GLOBALES.girURL;
     this.ministereUrl = `${baseUrl}/ministeres`;
   }
 
