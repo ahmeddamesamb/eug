@@ -6,6 +6,17 @@
 # Ignorer le fichier application-dev.yml dans gateway
 /back_end/gateway/src/main/resources/config/application-dev.yml
 
+# Ignorer le fichier environment.ts dans home
+/front/home/src/app/config/environment.ts
+
+
+# Ignorer le fichier environment.ts dans pats
+/front/pats/src/app/config/environment.ts
+
+# Ignorer le fichier keycloak.environment.ts dans pats
+/front/pats/src/app/config/keycloak.environment.ts
+
+
 
 ######################
 # Node
