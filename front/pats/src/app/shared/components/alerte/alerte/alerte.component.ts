@@ -2,15 +2,17 @@ import { ChangeDetectorRef, Component, ElementRef, forwardRef, Input, Renderer2 
 
 import { ToastComponent, ToasterService, ToastHeaderComponent, ToastBodyComponent, ToastCloseDirective, ProgressBarDirective, ProgressComponent } from '@coreui/angular-pro';
 
+
 @Component({
-    selector: 'app-toast-simple',
-    templateUrl: './toast.component.html',
-    styleUrls: ['./toast.component.scss'],
-    providers: [{ provide: ToastComponent, useExisting: forwardRef(() => AppToastComponent) }],
-    standalone: true,
-    imports: [ToastHeaderComponent, ToastBodyComponent, ToastCloseDirective, ProgressBarDirective, ProgressComponent]
+  selector: 'app-alerte',
+
+  templateUrl: './alerte.component.html',
+  styleUrl: './alerte.component.scss',
+  providers: [{ provide: ToastComponent, useExisting: forwardRef(() => AlerteComponent) }],
+  standalone: true,
+  imports: [ToastHeaderComponent, ToastBodyComponent, ToastCloseDirective, ProgressBarDirective, ProgressComponent]
 })
-export class AppToastComponent extends ToastComponent {
+export class AlerteComponent extends ToastComponent{
 
   @Input() closeButton = true;
   @Input() title = '';
@@ -24,4 +26,5 @@ export class AppToastComponent extends ToastComponent {
   ) {
     super(hostElement, renderer, toasterService, changeDetectorRef);
   }
+
 }
