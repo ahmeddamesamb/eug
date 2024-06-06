@@ -14,4 +14,7 @@ import sn.ugb.gir.domain.Operateur;
 public interface OperateurRepository extends JpaRepository<Operateur, Long> {
     boolean existsOperateurByCodeOperateur(String codeOperateur);
     boolean existsOperateurByLibelleOperateur(String libelleOperateur);
+    Operateur findByCodeOperateur(String codeOperateur);
+    Operateur findByLibelleOperateur(String libelleOperateur);
+
 }

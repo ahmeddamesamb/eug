@@ -12,6 +12,7 @@ import sn.ugb.gir.domain.Operateur;
 import sn.ugb.gir.repository.OperateurRepository;
 import sn.ugb.gir.service.OperateurService;
 import sn.ugb.gir.service.dto.OperateurDTO;
+import sn.ugb.gir.service.dto.UniversiteDTO;
 import sn.ugb.gir.service.mapper.OperateurMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
@@ -42,24 +43,13 @@ public class OperateurServiceImpl implements OperateurService {
         if (operateurDTO.getId() != null) {
             throw new BadRequestAlertException("A new operateur cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if (operateurDTO.getCodeOperateur().isEmpty() || operateurDTO.getCodeOperateur().isBlank() ) {
-            throw new BadRequestAlertException("Veuillez renseigner le champs code operateur ", ENTITY_NAME, "codeOperateurobligatoire");
-        }
-        if ( operateurDTO.getUserLogin().isEmpty() || operateurDTO.getUserLogin().isBlank()) {
-            throw new BadRequestAlertException("Veuillez renseigner le champs userLogin  ", ENTITY_NAME, "userLoginobligatoire");
-        }
-        if ( operateurDTO.getLibelleOperateur().isEmpty() || operateurDTO.getLibelleOperateur().isBlank()) {
-            throw new BadRequestAlertException("Veuillez renseigner le champs libelle operateur  ", ENTITY_NAME, "libelleOperateurobligatoire");
-        }
-
         if (  operateurRepository.existsOperateurByCodeOperateur(operateurDTO.getCodeOperateur())) {
             throw new BadRequestAlertException("Ce codeOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme code. ", ENTITY_NAME, "codeoperateurexists");
         }
         if (  operateurRepository.existsOperateurByLibelleOperateur(operateurDTO.getLibelleOperateur())) {
             throw new BadRequestAlertException("Ce libelleOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme libelle. ", ENTITY_NAME, "libelleoperateurexists");
         }
-
-
+        validateData(operateurDTO);
         Operateur operateur = operateurMapper.toEntity(operateurDTO);
         operateur = operateurRepository.save(operateur);
         return operateurMapper.toDto(operateur);
@@ -69,17 +59,8 @@ public class OperateurServiceImpl implements OperateurService {
     public OperateurDTO update(OperateurDTO operateurDTO, Long id) {
         log.debug("Request to update Operateur : {}", operateurDTO);
 
-        if (operateurDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, operateurDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!operateurRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateData(operateurDTO);
+        validateDataUpdateUnique(operateurDTO);
         Operateur operateur = operateurMapper.toEntity(operateurDTO);
         operateur = operateurRepository.save(operateur);
         return operateurMapper.toDto(operateur);
@@ -89,17 +70,8 @@ public class OperateurServiceImpl implements OperateurService {
     public Optional<OperateurDTO> partialUpdate(OperateurDTO operateurDTO, Long id) {
         log.debug("Request to partially update Operateur : {}", operateurDTO);
 
-        if (operateurDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, operateurDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!operateurRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateData(operateurDTO);
+        validateDataUpdateUnique(operateurDTO);
         return operateurRepository
             .findById(operateurDTO.getId())
             .map(existingOperateur -> {
@@ -130,4 +102,27 @@ public class OperateurServiceImpl implements OperateurService {
         log.debug("Request to delete Operateur : {}", id);
         operateurRepository.deleteById(id);
     }
+
+    public void validateData(OperateurDTO operateurDTO){
+        if (operateurDTO.getCodeOperateur().isEmpty() || operateurDTO.getCodeOperateur().isBlank() ) {
+            throw new BadRequestAlertException("Veuillez renseigner le champs code operateur ", ENTITY_NAME, "codeOperateurobligatoire");
+        }
+        if ( operateurDTO.getUserLogin().isEmpty() || operateurDTO.getUserLogin().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner le champs userLogin  ", ENTITY_NAME, "userLoginobligatoire");
+        }
+        if ( operateurDTO.getLibelleOperateur().isEmpty() || operateurDTO.getLibelleOperateur().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner le champs libelle operateur  ", ENTITY_NAME, "libelleOperateurobligatoire");
+        }
+    }
+
+    public void validateDataUpdateUnique(OperateurDTO operateurDTO){
+        if (!operateurRepository.findByLibelleOperateur( operateurDTO.getLibelleOperateur()).getId().equals(operateurDTO.getId())){
+            throw new BadRequestAlertException("Un autre operateur porte deja ce libelle ", ENTITY_NAME, "libelleOperateurExistedeja");
+        }
+        if (!operateurRepository.findByCodeOperateur(operateurDTO.getCodeOperateur()).getId().equals(operateurDTO.getId())){
+            throw new BadRequestAlertException("Un autre operateur porte deja ce code ", ENTITY_NAME, "codeOperateurExistedeja");
+        }
+    }
+
+
 }
