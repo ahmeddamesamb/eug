@@ -10,7 +10,7 @@
 - Remplacer urlLogin par l'url de votre serveur keycloak (http://localhost:9080 par exemple)
 - Aller sur le dossier home : cd /eugb/front/home
 - Si c'est la premiere fois que vous lancer le projet, lancer la commande : npm install
-- Lancer la commande :  ng serve --o --port 4200
+- Lancer la commande :  npm start
 
 # ETAPE 2
 - Sur le dossier exemple copier le fichier environment-pats.ts
@@ -21,7 +21,7 @@
 - Renommer le fichier keycloak.environment-pats.ts en keycloak.environment.ts
 - sur le fichier keycloak.environment.ts remplacer url par l'url de votre serveur keycloak (http://localhost:9080 par exemple)
 - Si c'est la premiere fois que vous lancer le projet, lancer la commande : npm install
-- Lancer la commance ng serve --o --port 4201
+- Lancer la commande : npm start
 
 
 
