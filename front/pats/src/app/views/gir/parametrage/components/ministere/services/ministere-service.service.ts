@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {environment} from '../../../../../../../environments/environment.development'
 import {MinistereModel} from '../models/ministere-model'
+import { ENVIRONMENT} from '../../../../../../config/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class MinistereServiceService {
   private ministereUrl;
 
   constructor(private http: HttpClient) {
-    const baseUrl = environment.apiURL;
+    const baseUrl = ENVIRONMENT.apiURL;
     this.ministereUrl = `${baseUrl}/ministeres`;
   }
 
