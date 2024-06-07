@@ -3,7 +3,7 @@
     <h3>Ajout Ministere</h3>
     <form #customStylesForm="ngForm"
         (ngSubmit)="onSubmit1()"
-        [validated]="ministereForm?.valid"
+
         cForm
         class="row g-3 needs-validation"
         [formGroup]="ministereForm"
@@ -48,7 +48,7 @@
                 </button>
             </div>
             <div class=" w-50 ps-1">
-                <button cButton class=" w-100 text-white"  color="primary" type="submit">
+                <button cButton class=" w-100 text-white" [disabled]="!ministereForm?.valid"  color="primary" type="submit">
                     Enregistrer
                 </button>
 
