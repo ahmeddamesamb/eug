@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-// import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
-import { environment } from '../../config/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {MinistereModel} from '../models/ministere-model'
-import { ENVIRONMENT} from '../../../../../../config/environment';
+import { ENVIRONMENT} from '../../../../../../../environments/environment';
 import {CONSTANTES_GLOBALES} from '../../../../../../config/constantes.globales';
 
 @Injectable({
