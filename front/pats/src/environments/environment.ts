@@ -10,9 +10,9 @@ export const ENVIRONMENT = {
 export const KeycloakConfig = {
   production: true,
     keycloak: {
-      url: 'https://authentification.ugb.sn:8443/auth',
-      realm: 'ugbapps',
-      clientId: 'pse',
+      url: 'http://localhost:9080',
+      realm: 'pats',
+      clientId: 'e-ugb',
       'ssl-required': "external",
       "public-client": true,
     },

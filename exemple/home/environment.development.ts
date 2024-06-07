@@ -1,5 +1,5 @@
 export const environment = {
-    // production:false,
+    production:false,
     urlLogin: 'http://localhost:9080/realms/',
     realm_pats: 'pats',
     realm_per: 'per',
@@ -9,4 +9,4 @@ export const environment = {
     redirectUrl_etudiant: 'http://localhost:4203/',
     clientId: 'e-ugb',
     suiteUrlLogin: '/protocol/openid-connect/auth?client_id='
-  };
+};

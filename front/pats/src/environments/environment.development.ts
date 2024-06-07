@@ -15,6 +15,3 @@ export const KeycloakConfig = {
       clientId: 'e-ugb' 
     },
   };
-
-
-

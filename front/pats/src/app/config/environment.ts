@@ -1,4 +1,4 @@
-import {KeycloakConfig} from './keycloak.environment';
+import { KeycloakConfig } from './keycloak.environment';
 
 export const ENVIRONMENT = {
     UrlEspaceHome : 'http://localhost:4200',
@@ -6,7 +6,6 @@ export const ENVIRONMENT = {
     UrlEspacePer : 'http://localhost:4202',
     UrlEspaceEtudiant : 'http://localhost:4203',
     endpointURL: 'http://localhost:8081/services/'
-
 }
 
 export { KeycloakConfig };
