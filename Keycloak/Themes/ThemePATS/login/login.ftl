@@ -60,7 +60,18 @@
                                                 <#if !usernameHidden??>
 
                                                 <!-- spacer -->
-                                                <div style="height: 10vh;"></div>
+                                                <div style="height: 5vh;"></div>
+
+                                                    <!-- error message form -->
+                                                    <div class="d-flex justify-content-center bg-danger text-white">
+                                                        <#if messagesPerField.existsError('username','password')>
+                                                                <span id="input-error" class="${properties.kcInputErrorMessageClass!} "  aria-live="polite">
+                                                                        ${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}
+                                                                </span>
+                                                        </#if>
+                                                    </div>
+                                                    
+
 
                                                     <!-- email field -->
 
@@ -78,13 +89,17 @@
 
                                                         </div>
 
+
+
+                                                         <!-- old version error message -->
+
                                                     
 
-                                                        <#if messagesPerField.existsError('username','password')>
+                                                        <!-- <#if messagesPerField.existsError('username','password')>
                                                             <span id="input-error" class="${properties.kcInputErrorMessageClass!} "  aria-live="polite">
                                                                     ${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}
                                                             </span>
-                                                        </#if>
+                                                        </#if> -->
 
                                                     </div>
                                                 </#if>
