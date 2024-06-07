@@ -1,3 +1,4 @@
-export const CONSTANTE_GLOBALES = {
+export const CONSTANTES_GLOBALES = {
+    girURL : 'microservicegir/api',
   
 }

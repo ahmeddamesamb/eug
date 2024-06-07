@@ -24,6 +24,8 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+
 /**
  * REST controller for managing {@link sn.ugb.gir.domain.Universite}.
  */
@@ -82,6 +84,7 @@ public class UniversiteResource {
     ) throws URISyntaxException {
         log.debug("REST request to update Universite : {}, {}", id, universiteDTO);
 
+        validateDataUpdate(universiteDTO,id);
         UniversiteDTO result = universiteService.update(universiteDTO,id);
         return ResponseEntity
             .ok()
@@ -107,8 +110,9 @@ public class UniversiteResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Universite partially : {}, {}", id, universiteDTO);
 
-        Optional<UniversiteDTO> result = universiteService.partialUpdate(universiteDTO,id);
+        validateDataUpdate(universiteDTO,id);
 
+        Optional<UniversiteDTO> result = universiteService.partialUpdate(universiteDTO,id);
         return ResponseUtil.wrapOrNotFound(
             result,
             HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, universiteDTO.getId().toString())
@@ -170,5 +174,17 @@ public class UniversiteResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    public void validateDataUpdate(UniversiteDTO universiteDTO, Long id){
+        if (universiteDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, universiteDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+        if (!universiteRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
     }
 }

@@ -24,6 +24,8 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+
 /**
  * REST controller for managing {@link sn.ugb.gir.domain.Operateur}.
  */
@@ -83,6 +85,7 @@ public class OperateurResource {
     ) throws URISyntaxException {
         log.debug("REST request to update Operateur : {}, {}", id, operateurDTO);
 
+        validateDataUpdate(operateurDTO,id);
         OperateurDTO result = operateurService.update(operateurDTO,id);
         return ResponseEntity
             .ok()
@@ -108,8 +111,8 @@ public class OperateurResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Operateur partially : {}, {}", id, operateurDTO);
 
+        validateDataUpdate(operateurDTO,id);
         Optional<OperateurDTO> result = operateurService.partialUpdate(operateurDTO,id);
-
         return ResponseUtil.wrapOrNotFound(
             result,
             HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, operateurDTO.getId().toString())
@@ -157,5 +160,16 @@ public class OperateurResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+    public void validateDataUpdate(OperateurDTO operateurDTO, Long id){
+        if (operateurDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, operateurDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+        if (!operateurRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
     }
 }

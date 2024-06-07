@@ -24,6 +24,8 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+
 /**
  * REST controller for managing {@link sn.ugb.gir.domain.Lycee}.
  */
@@ -84,6 +86,7 @@ public class LyceeResource {
     ) throws URISyntaxException {
         log.debug("REST request to update Lycee : {}, {}", id, lyceeDTO);
 
+        validateDataUpdate(lyceeDTO,id);
         LyceeDTO result = lyceeService.update(lyceeDTO,id);
         return ResponseEntity
             .ok()
@@ -109,8 +112,8 @@ public class LyceeResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Lycee partially : {}, {}", id, lyceeDTO);
 
+        validateDataUpdate(lyceeDTO,id);
         Optional<LyceeDTO> result = lyceeService.partialUpdate(lyceeDTO,id);
-
         return ResponseUtil.wrapOrNotFound(
             result,
             HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, lyceeDTO.getId().toString())
@@ -174,5 +177,18 @@ public class LyceeResource {
         Page<LyceeDTO> page = lyceeService.findAllByRegionId(pageable,id);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    public void validateDataUpdate(LyceeDTO lyceeDTO, Long id){
+        if (lyceeDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, lyceeDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!lyceeRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
     }
 }

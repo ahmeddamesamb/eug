@@ -42,40 +42,10 @@ public class FraisServiceImpl implements FraisService {
         log.debug("Request to save Frais : {}", fraisDTO);
         LocalDate currentDate = LocalDate.now();
 
-//        DOIT ON RENSEIGNER LE CHAMP ESTENAPPLICATION LORS DE LA CREATION ??????????????????????????????????????????????????????????????????????????????????
-        if (fraisDTO.getId() != null) {
-            throw new BadRequestAlertException("A new frais cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        if (fraisDTO.getDescriptionFrais().isEmpty() || fraisDTO.getDescriptionFrais().isBlank()) {
-            throw new BadRequestAlertException("Veuillez renseigner la description du frais", ENTITY_NAME, "descriptionobligatoire");
-        }
-        if (fraisDTO.getCycle().describeConstable().isEmpty() ) {
-            throw new BadRequestAlertException("Veuillez renseigner le cycle associé au frais", ENTITY_NAME, "cycleobligatoire");
-        }
-        if (fraisDTO.getValeurFrais().isNaN() ) {
-            throw new BadRequestAlertException("Veuillez renseigner la valeur du frais", ENTITY_NAME, "valeurfraisobligatoire");
-        }
-        // A VALIDER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (fraisDTO.getValeurFrais() < 5000 ) {
-            throw new BadRequestAlertException("Veuillez renseigner une valeur de frais correcte", ENTITY_NAME, "valeurfraisinvalid");
-        }
-        if (fraisDTO.getDateApplication() == null ) {
-            throw new BadRequestAlertException("Veuillez renseigner la date d'application du frais", ENTITY_NAME, "dateapplicationobligatoire");
-        }
-        if (fraisDTO.getTypeFrais().getId().describeConstable().isEmpty()) {
-            throw new BadRequestAlertException("Veuillez renseigner le type de frais", ENTITY_NAME, "typefraisobligatoire");
-        }
-
+        validateData(fraisDTO);
         if (fraisDTO.getDateApplication().isBefore(currentDate)) {
-            throw new BadRequestAlertException("La date d'appliaction d'un nouveau frais ne peut pas etre dans le passe", ENTITY_NAME, "dateapplicationinvalide");
+            throw new BadRequestAlertException("La date d'appliaction d'un nouveau frais ne peut pas etre dans le passe", ENTITY_NAME, "dateDApplicationInvalide");
         }
-        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription") && (fraisDTO.getDia() == null || fraisDTO.getDip() == null)) {
-            throw new BadRequestAlertException("les droits d'inscriptions requiert les repartitions en  dia et un dip", ENTITY_NAME, "dia_dip_null");
-        }
-        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription du privée") && (fraisDTO.getDia() == null || fraisDTO.getDip() == null) || (fraisDTO.getDipPrivee() == null)) {
-            throw new BadRequestAlertException("les droits d'inscriptions du privée requiert les repartitions en  dia et un dip et dipPrivée", ENTITY_NAME, "dia_dip_dipprivee_null");
-        }
-
         fraisDTO.setDateFin(null);
         fraisRepository.updateIfEstEnApplicationIsOneAndCycleLike(fraisDTO.getCycle());
         fraisDTO.setEstEnApplicationYN(1);
@@ -89,19 +59,7 @@ public class FraisServiceImpl implements FraisService {
     public FraisDTO update(FraisDTO fraisDTO, Long id) {
         log.debug("Request to update Frais : {}", fraisDTO);
 
-        if (fraisDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, fraisDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!fraisRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-        if (fraisDTO.getEstEnApplicationYN() == 1) {
-            fraisDTO.setDateFin(null);
-        }
+        validateData(fraisDTO);
 
         Frais frais = fraisMapper.toEntity(fraisDTO);
         frais = fraisRepository.save(frais);
@@ -112,19 +70,7 @@ public class FraisServiceImpl implements FraisService {
     public Optional<FraisDTO> partialUpdate(FraisDTO fraisDTO, Long id) {
         log.debug("Request to partially update Frais : {}", fraisDTO);
 
-        if (fraisDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, fraisDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!fraisRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-        if (fraisDTO.getEstEnApplicationYN() == 1) {
-            fraisDTO.setDateFin(null);
-        }
+        validateData(fraisDTO);
 
         return fraisRepository
             .findById(fraisDTO.getId())
@@ -161,8 +107,45 @@ public class FraisServiceImpl implements FraisService {
     @Transactional(readOnly = true)
     public Page<FraisDTO> findAllFraisByCycle(Pageable pageable, Cycle cycle) {
         log.debug("Request to get all Frais for a cycle");
-        return fraisRepository.findFraisByCycle(pageable,cycle).map(fraisMapper::toDto);
+        return fraisRepository.findByCycle(pageable,cycle).map(fraisMapper::toDto);
     }
+
+    private void validateData (FraisDTO fraisDTO) {
+
+        //        DOIT ON RENSEIGNER LE CHAMP ESTENAPPLICATION LORS DE LA CREATION ??????????????????????????????????????????????????????????????????????????????????
+        if (fraisDTO.getDescriptionFrais().isEmpty() || fraisDTO.getDescriptionFrais().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner la description du frais", ENTITY_NAME, "descriptionObligatoire");
+        }
+        if (fraisDTO.getCycle().describeConstable().isEmpty() ) {
+            throw new BadRequestAlertException("Veuillez renseigner le cycle associé au frais", ENTITY_NAME, "cycleObligatoire");
+        }
+        if (fraisDTO.getValeurFrais().isNaN() ) {
+            throw new BadRequestAlertException("Veuillez renseigner la valeur du frais", ENTITY_NAME, "valeurFraisObligatoire");
+        }
+        // A VALIDER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//        if (fraisDTO.getValeurFrais() < 5000 ) {
+//            throw new BadRequestAlertException("Veuillez renseigner une valeur de frais correcte", ENTITY_NAME, "valeurFraisInvalid");
+//        }
+        if (fraisDTO.getDateApplication() == null ) {
+            throw new BadRequestAlertException("Veuillez renseigner la date d'application du frais", ENTITY_NAME, "dateDApplicationObligatoire");
+        }
+        if (fraisDTO.getTypeFrais().getId().describeConstable().isEmpty()) {
+            throw new BadRequestAlertException("Veuillez renseigner le type de frais", ENTITY_NAME, "typeFraisobligatoire");
+        }
+
+        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription") && (fraisDTO.getDia() == null || fraisDTO.getDip() == null)) {
+            throw new BadRequestAlertException("les droits d'inscriptions requiert les repartitions en  dia et un dip", ENTITY_NAME, "dia_dip_null");
+        }
+        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription du privée") && (fraisDTO.getDia() == null || fraisDTO.getDip() == null) || (fraisDTO.getDipPrivee() == null)) {
+            throw new BadRequestAlertException("les droits d'inscriptions du privée requiert les repartitions en  dia et un dip et dipPrivée", ENTITY_NAME, "dia_dip_dipprivee_null");
+        }
+//        if (){
+//
+//        }
+    }
+
+
+
 
 
 }

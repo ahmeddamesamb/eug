@@ -14,8 +14,9 @@ import sn.ugb.gir.domain.enumeration.Cycle;
 @SuppressWarnings("unused")
 @Repository
 public interface FraisRepository extends JpaRepository<Frais, Long> {
-     Page<Frais> findFraisByCycle(Pageable pageable, Cycle cycle);
-     boolean existsFraisByCycleAndTypeFraisLibelleTypeFrais(Cycle cycle,String typeFrais);
+     Page<Frais> findByCycle(Pageable pageable, Cycle cycle);
+     boolean existsByCycleAndTypeFraisLibelleTypeFrais(Cycle cycle,String libelleTypeFrais);
+    // boolean existByCycleAnd();
 
     @Modifying
     @Transactional

@@ -42,16 +42,7 @@ public class LyceeServiceImpl implements LyceeService {
         if (lyceeDTO.getId() != null) {
             throw new BadRequestAlertException("A new lycee cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if (lyceeDTO.getCodeLycee().isEmpty() || lyceeDTO.getCodeLycee().isBlank()) {
-            throw new BadRequestAlertException("Veuillez renseigner le code du lycee", ENTITY_NAME, "codeLyceevide");
-        }
-        if (lyceeDTO.getNomLycee().isEmpty() || lyceeDTO.getNomLycee().isBlank()) {
-            throw new BadRequestAlertException("Veuillez renseigner le nom du lycee ", ENTITY_NAME, "nomLyceevide");
-        }
-        if (lyceeRepository.existsLyceeByNomLycee(lyceeDTO.getNomLycee())) {
-            throw new BadRequestAlertException("Ce Lycee existe. Deux Lycees ne peuvent pas avoir le même nom", ENTITY_NAME, "nomlyceeexists");
-        }
-
+        validateData(lyceeDTO);
         Lycee lycee = lyceeMapper.toEntity(lyceeDTO);
         lycee = lyceeRepository.save(lycee);
         return lyceeMapper.toDto(lycee);
@@ -61,17 +52,7 @@ public class LyceeServiceImpl implements LyceeService {
     public LyceeDTO update(LyceeDTO lyceeDTO, Long id) {
         log.debug("Request to update Lycee : {}", lyceeDTO);
 
-        if (lyceeDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, lyceeDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!lyceeRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateData(lyceeDTO);
         Lycee lycee = lyceeMapper.toEntity(lyceeDTO);
         lycee = lyceeRepository.save(lycee);
         return lyceeMapper.toDto(lycee);
@@ -81,16 +62,7 @@ public class LyceeServiceImpl implements LyceeService {
     public Optional<LyceeDTO> partialUpdate(LyceeDTO lyceeDTO, Long id) {
         log.debug("Request to partially update Lycee : {}", lyceeDTO);
 
-        if (lyceeDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, lyceeDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!lyceeRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
+        validateData(lyceeDTO);
         return lyceeRepository
             .findById(lyceeDTO.getId())
             .map(existingLycee -> {
@@ -127,5 +99,18 @@ public class LyceeServiceImpl implements LyceeService {
     public Page<LyceeDTO> findAllByRegionId(Pageable pageable, Long id) {
         log.debug("Request to get all Lycees having an id region");
         return lyceeRepository.findAllByRegionId(pageable,id).map(lyceeMapper::toDto);
+    }
+
+
+    public void validateData(LyceeDTO lyceeDTO){
+        if (lyceeDTO.getCodeLycee().isEmpty() || lyceeDTO.getCodeLycee().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner le code du lycee", ENTITY_NAME, "codeLyceevide");
+        }
+        if (lyceeDTO.getNomLycee().isEmpty() || lyceeDTO.getNomLycee().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner le nom du lycee ", ENTITY_NAME, "nomLyceevide");
+        }
+        if (lyceeRepository.existsLyceeByNomLycee(lyceeDTO.getNomLycee())) {
+            throw new BadRequestAlertException("Ce Lycee existe. Deux Lycees ne peuvent pas avoir le même nom", ENTITY_NAME, "nomlyceeexists");
+        }
     }
 }

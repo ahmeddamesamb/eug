@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { DocsExampleComponent } from '@docs-components/public-api';
-import { RowComponent, ColComponent, TextColorDirective, CardComponent,DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective } from '@coreui/angular-pro';
+import { RowComponent, ColComponent, TextColorDirective, CardComponent,DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective, ToasterComponent, ToasterPlacement } from '@coreui/angular-pro';
 import { DatePipe } from '@angular/common';
 import { MinistereServiceService } from '../../services/ministere-service.service';
 import {MinistereModel} from '../../models/ministere-model';
 import { Router } from '@angular/router';
+import {AlerteComponent} from 'src/app/shared/components/alerte/alerte/alerte.component'
 
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective,DatePipe,DatePickerComponent_1],
+  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective,DatePipe,DatePickerComponent_1,ToasterComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -43,9 +44,16 @@ export class CreateComponent {
           this.ministere.dateDebut = transformedDate;
         }
       } */
-      this.ministereService.createMinistere(this.ministere!).subscribe((data)=>{
-        console.log(data);
-        this.route.navigate(['/gir/parametrage/ministere/view',data.id])
+      this.ministereService.createMinistere(this.ministere!).subscribe({
+        
+        next: (data) => {
+          console.log(data);
+          this.addToast(true);
+          this.route.navigate(['/gir/parametrage/ministere/view',data.id])
+        },
+        error: (err) => {
+          this.addToast(false);
+        }
       });
       console.log('Données du formulaire :', this.ministereForm!.value);
     } else {
@@ -58,12 +66,34 @@ export class CreateComponent {
     this.customStylesValidated = false;
   }
 
-  /* formatDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  } */
+  //Pour le toaster
+
+  @ViewChild(ToasterComponent) toaster!: ToasterComponent;
+  placement = ToasterPlacement.BottomEnd;
+  
+  addToast(value: boolean) {
+    var options = {
+      title: `Creation`,
+      texte: `Echec de creation du ministere`,
+      delay: 5000,
+      placement: this.placement,
+      color: 'danger',
+      autohide: true,
+    };
+    if(value){
+      options.texte = `Creation du ministere avec succes`;
+      options.color = 'success';
+
+    }
+    
+    
+    const componentRef = this.toaster.addToast(AlerteComponent, options, {});
+    componentRef.instance['visibleChange'].subscribe((value: any) => {
+      console.log('onVisibleChange', value)
+    });
+    componentRef.instance['visibleChange'].emit(true);
+
+  }
 
 
 }

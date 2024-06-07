@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { KeycloakEventType, KeycloakService } from 'keycloak-angular';
 import { NavigationExtras, Router } from '@angular/router';
-import { ENVIRONMENT, KeycloakConfig} from '../config/environment';
+import { ENVIRONMENT, KeycloakConfig} from '../../environments/environment';
 import {UserModel} from '../model/user.model';
 @Injectable({
   providedIn: 'root'
