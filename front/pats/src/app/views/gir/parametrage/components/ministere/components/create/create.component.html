@@ -3,7 +3,7 @@
     <h3>Ajout Ministere</h3>
     <form #customStylesForm="ngForm"
         (ngSubmit)="onSubmit1()"
-        [validated]="customStylesValidated"
+
         cForm
         class="row g-3 needs-validation"
         [formGroup]="ministereForm"
@@ -11,18 +11,31 @@
     >
         <c-col md="12">
             <label cLabel for="validationCustom01">Nom </label>
-            <input cFormControl id="validationCustom01" required type="text" value="" formControlName="nomMinistere"/>
-            <c-form-feedback [valid]="ministereForm?.get('nom')?.hasError('required')">Bon!</c-form-feedback>
+            <input cFormControl id="validationCustom01" required type="text" value=""
+            [valid]="(ministereForm?.get('nomMinistere')?.touched && ministereForm?.get('nomMinistere')?.valid) ? true
+               : (ministereForm?.get('nomMinistere')?.touched) && ministereForm?.get('nomMinistere')?.invalid ? false : undefined"
+            formControlName="nomMinistere"/>
+            <c-form-feedback>nom requis </c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom02">Sigle </label>
-            <input cFormControl id="validationCustom02" required type="text" value="" formControlName="sigleMinistere"/>
-            <c-form-feedback [valid]="ministereForm?.get('sigle')?.hasError('required')">Bon!</c-form-feedback>
+            <input cFormControl id="validationCustom02" required type="text"
+              value="" formControlName="sigleMinistere" [autofocus]="true"
+              [valid]="(ministereForm?.get('sigleMinistere')?.touched && ministereForm?.get('sigleMinistere')?.valid) ? true
+               : (ministereForm?.get('sigleMinistere')?.touched) && ministereForm?.get('sigleMinistere')?.invalid ? false : undefined"/>
+            <c-form-feedback >sigle requis</c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom03">Date de création </label>
-            <c-date-picker cFormControl id="validationCustom03"  required  locale="fr-FR"   formControlName="dateDebut"/>
-            <c-form-feedback [valid]="ministereForm?.get('dateCreation')?.hasError('required')">Bon!</c-form-feedback>
+            <c-date-picker cFormControl id="validationCustom03"
+              [valid]="(ministereForm?.get('dateDebut')?.touched && ministereForm?.get('dateDebut')?.valid) ? true : (ministereForm?.get('dateDebut')?.touched) && ministereForm?.get('dateDebut')?.invalid ? false : undefined"
+              required  locale="fr-FR"   formControlName="dateDebut"/>
+
+
+            @if ((ministereForm?.get('dateDebut')?.touched && ministereForm?.get('dateDebut')?.hasError('required'))) {
+              <span class="text-danger" > date requise</span>
+            }
+
 
         </c-col>
 
@@ -35,12 +48,12 @@
                 </button>
             </div>
             <div class=" w-50 ps-1">
-                <button cButton class=" w-100 text-white"  color="primary" type="submit">
+                <button cButton class=" w-100 text-white" [disabled]="!ministereForm?.valid"  color="primary" type="submit">
                     Enregistrer
                 </button>
 
             </div>
-            
+
 
 
 
@@ -50,5 +63,7 @@
         </div>
     </form>
 </div>
+
+<c-toaster class="p-3" position="fixed" [placement]="placement" />
 
 

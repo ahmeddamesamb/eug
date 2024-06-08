@@ -14,6 +14,7 @@ export class AppToastComponent extends ToastComponent {
 
   @Input() closeButton = true;
   @Input() title = '';
+  @Input() texte = '';
 
   constructor(
     public override hostElement: ElementRef,

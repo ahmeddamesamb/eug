@@ -26,6 +26,8 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+
 /**
  * REST controller for managing {@link sn.ugb.gir.domain.Frais}.
  */
@@ -59,7 +61,9 @@ public class FraisResource {
     @PostMapping("")
     public ResponseEntity<FraisDTO> createFrais(@Valid @RequestBody FraisDTO fraisDTO) throws URISyntaxException {
         log.debug("REST request to save Frais : {}", fraisDTO);
-
+        if (fraisDTO.getId() != null) {
+            throw new BadRequestAlertException("Un nouveau frais ne doit pas avoir un ID", ENTITY_NAME, "idexists");
+        }
         FraisDTO result = fraisService.save(fraisDTO);
         return ResponseEntity
             .created(new URI("/api/frais/" + result.getId()))
@@ -84,6 +88,7 @@ public class FraisResource {
     ) throws URISyntaxException {
         log.debug("REST request to update Frais : {}, {}", id, fraisDTO);
 
+        validateDataUpdate(fraisDTO,id);
         FraisDTO result = fraisService.update(fraisDTO, id);
         return ResponseEntity
             .ok()
@@ -109,6 +114,7 @@ public class FraisResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Frais partially : {}, {}", id, fraisDTO);
 
+        validateDataUpdate(fraisDTO,id);
         Optional<FraisDTO> result = fraisService.partialUpdate(fraisDTO, id);
 
         return ResponseUtil.wrapOrNotFound(
@@ -172,5 +178,22 @@ public class FraisResource {
         Page<FraisDTO> page = fraisService.findAllFraisByCycle(pageable,cycle);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    private void validateDataUpdate(FraisDTO fraisDTO,Long id){
+        if (fraisDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, fraisDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!fraisRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+        if (fraisDTO.getEstEnApplicationYN() == 1) {
+            fraisDTO.setDateFin(null);
+        }
+
     }
 }

@@ -22,6 +22,8 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+
 /**
  * REST controller for managing {@link sn.ugb.gir.domain.DisciplineSportiveEtudiant}.
  */
@@ -85,6 +87,7 @@ public class DisciplineSportiveEtudiantResource {
     ) throws URISyntaxException {
         log.debug("REST request to update DisciplineSportiveEtudiant : {}, {}", id, disciplineSportiveEtudiantDTO);
 
+        validateDataUpdate(disciplineSportiveEtudiantDTO,id);
         DisciplineSportiveEtudiantDTO result = disciplineSportiveEtudiantService.update(disciplineSportiveEtudiantDTO,id);
         return ResponseEntity
             .ok()
@@ -112,6 +115,7 @@ public class DisciplineSportiveEtudiantResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update DisciplineSportiveEtudiant partially : {}, {}", id, disciplineSportiveEtudiantDTO);
 
+        validateDataUpdate(disciplineSportiveEtudiantDTO,id);
         Optional<DisciplineSportiveEtudiantDTO> result = disciplineSportiveEtudiantService.partialUpdate(disciplineSportiveEtudiantDTO,id);
 
         return ResponseUtil.wrapOrNotFound(
@@ -208,6 +212,19 @@ public class DisciplineSportiveEtudiantResource {
         Page<DisciplineSportiveEtudiantDTO> page = disciplineSportiveEtudiantService.findAllByDisciplineSportiveId(pageable,id);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    private void validateDataUpdate (DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO, Long id){
+        if (disciplineSportiveEtudiantDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, disciplineSportiveEtudiantDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!disciplineSportiveEtudiantRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
     }
 
 

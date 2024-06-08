@@ -45,6 +45,7 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
         if (disciplineSportiveEtudiantDTO.getId() != null) {
             throw new BadRequestAlertException("A new disciplineSportiveEtudiant cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        validateData(disciplineSportiveEtudiantDTO);
 
         DisciplineSportiveEtudiant disciplineSportiveEtudiant = disciplineSportiveEtudiantMapper.toEntity(disciplineSportiveEtudiantDTO);
         disciplineSportiveEtudiant = disciplineSportiveEtudiantRepository.save(disciplineSportiveEtudiant);
@@ -55,17 +56,7 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
     public DisciplineSportiveEtudiantDTO update(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO, Long id) {
         log.debug("Request to update DisciplineSportiveEtudiant : {}", disciplineSportiveEtudiantDTO);
 
-        if (disciplineSportiveEtudiantDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, disciplineSportiveEtudiantDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!disciplineSportiveEtudiantRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateData(disciplineSportiveEtudiantDTO);
         DisciplineSportiveEtudiant disciplineSportiveEtudiant = disciplineSportiveEtudiantMapper.toEntity(disciplineSportiveEtudiantDTO);
         disciplineSportiveEtudiant = disciplineSportiveEtudiantRepository.save(disciplineSportiveEtudiant);
         return disciplineSportiveEtudiantMapper.toDto(disciplineSportiveEtudiant);
@@ -75,17 +66,7 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
     public Optional<DisciplineSportiveEtudiantDTO> partialUpdate(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO, Long id) {
         log.debug("Request to partially update DisciplineSportiveEtudiant : {}", disciplineSportiveEtudiantDTO);
 
-        if (disciplineSportiveEtudiantDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, disciplineSportiveEtudiantDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!disciplineSportiveEtudiantRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateData(disciplineSportiveEtudiantDTO);
         return disciplineSportiveEtudiantRepository
             .findById(disciplineSportiveEtudiantDTO.getId())
             .map(existingDisciplineSportiveEtudiant -> {
@@ -136,4 +117,20 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
         log.debug("Request to get all DisciplineSportiveEtudiants for an id of a DisciplineSportive");
         return disciplineSportiveEtudiantRepository.findAllByDisciplineSportiveId(pageable,id).map(disciplineSportiveEtudiantMapper::toDto);
     }
+
+    private void validateData(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO){
+        if (disciplineSportiveEtudiantDTO.getLicenceSportiveYN().describeConstable().isEmpty()) {
+            throw new BadRequestAlertException("Veuillez renseigner si l'etudiant à une licence sportive (Oui/Non)", ENTITY_NAME, "licenceSportiveNull");
+        }
+        if (disciplineSportiveEtudiantDTO.getCompetitionUGBYN().describeConstable().isEmpty()) {
+            throw new BadRequestAlertException("Veuillez renseigner si l'etudiant à fait une competition à l'UGB sportive (Oui/Non)", ENTITY_NAME, "competitionSportiveNull");
+        }
+        if (disciplineSportiveEtudiantDTO.getEtudiant().getId().describeConstable().isEmpty()) {
+            throw new BadRequestAlertException("Veuillez renseigner l'id de l'etudiant", ENTITY_NAME, "etudiantNull");
+        }
+        if (disciplineSportiveEtudiantDTO.getDisciplineSportive().getId().describeConstable().isEmpty()) {
+            throw new BadRequestAlertException("Veuillez renseigner l'id du discipline sportive", ENTITY_NAME, "disciplineSportiveEtudiantNull");
+        }
+    }
+
 }

@@ -1,1 +1,0 @@
-import { environment } from "./keycloak.environment.prod";
