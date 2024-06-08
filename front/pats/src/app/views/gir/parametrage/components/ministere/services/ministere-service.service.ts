@@ -16,6 +16,7 @@ export class MinistereServiceService {
   constructor(private http: HttpClient) {
     const baseUrl = ENVIRONMENT.endpointURL + CONSTANTES_GLOBALES.girURL;
     this.ministereUrl = `${baseUrl}/ministeres`;
+    
   }
 
   getMinistereList(): Observable<MinistereModel[]> {

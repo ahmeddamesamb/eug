@@ -13,27 +13,41 @@ import { AlerteComponent } from 'src/app/shared/components/alerte/alerte/alerte.
   standalone: true,
   imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective, DatePipe, DatePickerComponent_1, ToasterComponent],
   templateUrl: './update.component.html',
-  styleUrl: './update.component.scss'
+  styleUrls: ['./update.component.scss']
 })
 export class UpdateComponent implements OnInit {
-  ministere?: MinistereModel;
-  ministereForm: FormGroup | undefined;
+  ministere: MinistereModel = {
+    id: 0,
+    nomMinistere: '',
+    sigleMinistere: '',
+    dateDebut: '',
+    dateFin: '',
+    enCoursYN: 0,
+  };
+  ministereForm: FormGroup;
   customStylesValidated = false;
+  id: string = "";
 
-  constructor(private ministereService: MinistereServiceService, private route: ActivatedRoute, private router: Router) {}
-
-  ngOnInit() {
+  constructor(private ministereService: MinistereServiceService, private route: ActivatedRoute, private router: Router) {
     this.ministereForm = new FormGroup({
       nomMinistere: new FormControl('', Validators.required),
       sigleMinistere: new FormControl('', Validators.required),
-      dateDebut: new FormControl(null, Validators.required)
+      dateDebut: new FormControl(null, Validators.required),
+      dateFin: new FormControl(null),
+      enCoursYN: new FormControl(0)
     });
+  }
+
+  ngOnInit() {
+    this.id = this.route.snapshot.params['id'];
+    console.log('ID récupéré :', this.id);
 
     const id = this.route.snapshot.params['id'];
     this.ministereService.getMinistereById(id).subscribe(
       (data) => {
         this.ministere = data;
-        this.ministereForm!.patchValue(data);
+        console.log(this.ministere);
+        this.initializeForm(data);
       },
       (err) => {
         console.log(err);
@@ -41,11 +55,23 @@ export class UpdateComponent implements OnInit {
     );
   }
 
+  initializeForm(ministere: MinistereModel) {
+    this.ministereForm.setValue({
+      nomMinistere: ministere.nomMinistere || '',
+      sigleMinistere: ministere.sigleMinistere || '',
+      dateDebut: ministere.dateDebut || null,
+      dateFin: ministere.dateFin || null,
+      enCoursYN: ministere.enCoursYN || 0
+    });
+  }
+
   onSubmit1() {
     this.customStylesValidated = true;
-    if (this.ministereForm!.valid) {
-      this.ministere = this.ministereForm!.value;
-      this.ministereService.updateMinistere(this.ministere!.id!, this.ministere!).subscribe({
+    if (this.ministereForm.valid) {
+      this.ministere = { ...this.ministereForm.value, id: Number(this.id) };
+      console.log("MISE A JOUR:", this.ministere);
+      console.log("ID MINISTERE: ", this.id);
+      this.ministereService.updateMinistere(Number(this.id), this.ministere).subscribe({
         next: (data) => {
           console.log(data);
           this.addToast(true);
@@ -55,14 +81,20 @@ export class UpdateComponent implements OnInit {
           this.addToast(false);
         }
       });
-      console.log('Données du formulaire :', this.ministereForm!.value);
+      console.log('Données du formulaire :', this.ministereForm.value);
     } else {
       console.log('Formulaire invalide');
     }
   }
 
   onReset1() {
-    this.ministereForm!.reset();
+    this.ministereForm.reset({
+      nomMinistere: '',
+      sigleMinistere: '',
+      dateDebut: null,
+      dateFin: null,
+      enCoursYN: 0
+    });
   }
 
   // Pour le toaster
