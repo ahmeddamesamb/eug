@@ -48,6 +48,7 @@ export class MinistereListComponent {
 
   ministereList : MinistereModel[] = [];
   itemDelete!: MinistereModel;
+  itemUpdate!: MinistereModel;
   public liveDemoVisible = false;
 
 
@@ -112,8 +113,14 @@ export class MinistereListComponent {
   }
   create() {
     
-    
     this.route.navigate(['/gir/parametrage/ministere/create'])
+
+  }
+
+  update(item:number) {
+    this.route.navigate(['/gir/parametrage/ministere/update',item])
+
+      
 
   }
   delete(){
