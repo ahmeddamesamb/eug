@@ -28,6 +28,7 @@ import{
   ToasterPlacement,
   ToasterComponent,
 } from '@coreui/angular-pro';
+import { delay } from 'rxjs';
 
 
 
@@ -50,6 +51,7 @@ export class MinistereListComponent {
   itemDelete!: MinistereModel;
   itemUpdate!: MinistereModel;
   public liveDemoVisible = false;
+  isloading = false;
 
 
   ngOnInit(): void {
@@ -58,11 +60,23 @@ export class MinistereListComponent {
   }
 
   getListe(){
-    this.ministereService.getMinistereList().subscribe((data)=>{
-      this.ministereList = data;
- 
-    })
+    this.isloading = true;
+    this.ministereService.getMinistereList().subscribe({
+      next: (data) => {
+        this.ministereList = data;
+        this.isloading = false;
+        
+        
+
+      },
+      error: (err) => {
+
+
+      }
+    });
   }
+
+  
 
   columns: IColumn[] = [
     {
@@ -137,15 +151,7 @@ export class MinistereListComponent {
       
     })
   }
-  deleter(){
-    this.ministereService.deleteMinistere(this.itemDelete.id).subscribe((data)=>{
-      console.log(data);
-      this.getListe();
-      this.liveDemoVisible = false;
-      this.addToast(true);
-      
-    })
-  }
+
 
   
 

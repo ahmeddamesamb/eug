@@ -13,6 +13,7 @@
   [columnFilter]="true"
   [itemsPerPageSelect]="true"
   [itemsPerPage]="5"
+  itemsPerPageLabel="ministere par page"
   [items]="ministereList"
   [sorterValue]="{ column: 'name', state: 'asc' }"
   [tableFilter]="false"
@@ -22,6 +23,8 @@
   footer
   header
   pagination
+  noItemsLabel="La liste est vide"
+  [loading]="isloading"
 >
   <!-- <ng-template cTemplateId="tableDetails" let-item="item">
     <div>
