@@ -68,7 +68,10 @@ export class UpdateComponent implements OnInit {
   onSubmit1() {
     this.customStylesValidated = true;
     if (this.ministereForm.valid) {
-      this.ministere = { ...this.ministereForm.value, id: Number(this.id) };
+      const enCoursYN = this.ministereForm.value.enCoursYN ? 1 : 0;
+
+      this.ministere = { ...this.ministereForm.value, id: Number(this.id), enCoursYN };      // Convertir la valeur booléenne en entier
+
       console.log("MISE A JOUR:", this.ministere);
       console.log("ID MINISTERE: ", this.id);
       this.ministereService.updateMinistere(Number(this.id), this.ministere).subscribe({
