@@ -166,7 +166,7 @@ export class MinistereListComponent {
   //Pour le toaster
 
   @ViewChild(ToasterComponent) toaster!: ToasterComponent;
-  placement = ToasterPlacement.BottomEnd;
+  placement = ToasterPlacement.TopEnd;
   
   addToast(value: boolean) {
     var options = {
