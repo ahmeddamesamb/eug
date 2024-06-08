@@ -23,7 +23,7 @@
   header
   pagination
 >
-  <ng-template cTemplateId="tableDetails" let-item="item">
+  <!-- <ng-template cTemplateId="tableDetails" let-item="item">
     <div>
       <div [visible]="this.details_visible[item.id]===true" cCollapse>
         <div class="card-body">
@@ -38,10 +38,11 @@
         </div>
       </div>
     </div>
-  </ng-template>
+  </ng-template> -->
   
   <ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent">
-    
+  
+  
     <td>
       @switch (columnName) {
         @case ('enCoursYN') {

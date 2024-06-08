@@ -7,6 +7,7 @@ import { MinistereServiceService } from '../../services/ministere-service.servic
 import { MinistereModel } from '../../models/ministere-model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlerteComponent } from 'src/app/shared/components/alerte/alerte/alerte.component';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-update',
@@ -39,20 +40,33 @@ export class UpdateComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    
+
+
+
+
     this.id = this.route.snapshot.params['id'];
+    const id: Observable<string> = this.route.params.pipe(map(p=>p['id']));
+
     console.log('ID récupéré :', this.id);
 
-    const id = this.route.snapshot.params['id'];
-    this.ministereService.getMinistereById(id).subscribe(
-      (data) => {
-        this.ministere = data;
-        console.log(this.ministere);
-        this.initializeForm(data);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+
+    id.subscribe((id)=>{
+      this.ministereService.getMinistereById(parseInt(id)).subscribe(
+        (data) => {
+          this.ministere = data;
+          console.log(this.ministere);
+          this.id = id;
+          this.initializeForm(data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    })
+
+    
   }
 
   initializeForm(ministere: MinistereModel) {
@@ -81,6 +95,7 @@ export class UpdateComponent implements OnInit {
           this.router.navigate(['/gir/parametrage/ministere/view', data.id]);
         },
         error: (err) => {
+          console.log(err);
           this.addToast(false);
         }
       });

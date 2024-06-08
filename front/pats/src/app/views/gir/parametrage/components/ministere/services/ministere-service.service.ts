@@ -38,7 +38,7 @@ export class MinistereServiceService {
     return this.http.delete<void>(`${this.ministereUrl}/${id}`);
   }
 
-  updateMinistere(id: number, ministere: any): Observable<MinistereModel> {
+  updateMinistere(id: number, ministere: MinistereModel): Observable<MinistereModel> {
     return this.http.put<MinistereModel>(`${this.ministereUrl}/${id}`, ministere);
 }
 
