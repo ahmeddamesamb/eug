@@ -19,6 +19,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sn.ugb.gir.repository.MentionRepository;
 import sn.ugb.gir.service.MentionService;
 import sn.ugb.gir.service.dto.MentionDTO;
+import sn.ugb.gir.service.dto.MentionDTO;
+import sn.ugb.gir.service.dto.MentionDTO;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -148,7 +150,10 @@ public class MentionResource {
         log.debug("REST request to get a page of Mentions");
         Page<MentionDTO> page = mentionService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        return ResponseEntity
+            .ok()
+            .headers(headers)
+            .body(page.getContent());
     }
 
     /**
@@ -178,5 +183,53 @@ public class MentionResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/ufrs/{ufrId}")
+    public ResponseEntity<List<MentionDTO>> getAllMentionByUFR(
+        @PathVariable Long ufrId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+
+        log.debug("REST request to get a page of Mentions by UFR ID : {}", ufrId);
+
+        Page<MentionDTO> page = mentionService.getAllMentionByUfr(ufrId, pageable);
+
+        HttpHeaders headers = PaginationUtil
+            .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity
+            .ok()
+            .headers(headers)
+            .body(page.getContent());
+    }
+
+    @GetMapping("/universites/{universiteId}")
+    public ResponseEntity<List<MentionDTO>> getAllMentionByUniversite(
+        @PathVariable Long universiteId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Mentions by Universite ID : {}", universiteId);
+        Page<MentionDTO> page = mentionService.getAllMentionByUniversite(universiteId, pageable);
+        HttpHeaders headers = PaginationUtil
+            .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity
+            .ok()
+            .headers(headers)
+            .body(page.getContent());
+    }
+
+    @GetMapping("/ministeres/{ministereId}")
+    public ResponseEntity<List<MentionDTO>> getAllMentionByMinistere(
+        @PathVariable Long ministereId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+
+        log.debug("REST request to get a page of Mentions by Ministere ID : {}", ministereId);
+
+        Page<MentionDTO> page = mentionService.getAllMentionByMinistere(ministereId, pageable);
+
+        HttpHeaders headers = PaginationUtil
+            .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity
+            .ok()
+            .headers(headers)
+            .body(page.getContent());
     }
 }

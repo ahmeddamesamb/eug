@@ -39,6 +39,9 @@ public class AnneeAcademiqueServiceImpl implements AnneeAcademiqueService {
     public AnneeAcademiqueDTO save(AnneeAcademiqueDTO anneeAcademiqueDTO) {
         log.debug("Request to save AnneeAcademique : {}", anneeAcademiqueDTO);
 
+        if (anneeAcademiqueDTO.getAnneeAc().isBlank()) {
+            throw new BadRequestAlertException("A new niveau have an ANNEE_ACADEMIQUE empty ", ENTITY_NAME, "Annnee Academique empty");
+        }
         if(anneeAcademiqueRepository.findByAnneeAc(anneeAcademiqueDTO.getAnneeAc()).isPresent()){
             throw new BadRequestAlertException("A new niveau have an ANNEE_ACADEMIQUE exists ", ENTITY_NAME, "Annnee Academique exists");
         }
@@ -64,6 +67,9 @@ public class AnneeAcademiqueServiceImpl implements AnneeAcademiqueService {
     public AnneeAcademiqueDTO update(AnneeAcademiqueDTO anneeAcademiqueDTO) {
         log.debug("Request to update AnneeAcademique : {}", anneeAcademiqueDTO);
 
+        if (anneeAcademiqueDTO.getAnneeAc().isBlank()) {
+            throw new BadRequestAlertException("A new niveau have an ANNEE_ACADEMIQUE empty ", ENTITY_NAME, "Annnee Academique empty");
+        }
         if (anneeAcademiqueRepository.findByAnneeAc(anneeAcademiqueDTO.getAnneeAc()).isPresent()){
             throw new BadRequestAlertException("A new niveau have an ANNEE_ACADEMIQUE exists ", ENTITY_NAME, "Annnee Academique exists");
         }

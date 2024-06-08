@@ -17,5 +17,6 @@ public interface MentionMapper extends EntityMapper<MentionDTO, Mention> {
     @Named("domaineId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleDomaine", source = "libelleDomaine")
     DomaineDTO toDtoDomaineId(Domaine domaine);
 }
