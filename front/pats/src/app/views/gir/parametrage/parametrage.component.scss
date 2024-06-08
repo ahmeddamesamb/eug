@@ -5,12 +5,9 @@
     .gauche{
         padding: 20px;
         height: 80vh;
+        overflow-y: scroll;
         
-        .list{
-            width: 100%;
-            height: 65vh;
-
-        }
+        
         
     }
     .droite{
