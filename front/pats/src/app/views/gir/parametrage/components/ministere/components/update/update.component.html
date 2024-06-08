@@ -1,1 +1,68 @@
-<p>update works!</p>
+
+<div class="">
+    <h3>Mise à jour Ministere</h3>
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+        [validated]="customStylesValidated"
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="ministereForm"
+
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom01">Nom </label>
+            <input cFormControl id="validationCustom01" required type="text" value="" formControlName="nomMinistere"/>
+            <c-form-feedback [valid]="ministereForm?.get('nom')?.hasError('required')">Bon!</c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom02">Sigle </label>
+            <input cFormControl id="validationCustom02" required type="text" value="" formControlName="sigleMinistere"/>
+            <c-form-feedback [valid]="ministereForm?.get('sigle')?.hasError('required')">Bon!</c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Date de création </label>
+            <c-date-picker cFormControl id="validationCustom03"  required  locale="fr-FR"   formControlName="dateDebut"/>
+            <c-form-feedback [valid]="ministereForm?.get('dateCreation')?.hasError('required')">Bon!</c-form-feedback>
+
+            
+
+        </c-col>
+        <c-col md="12">
+            <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" formControlName="enCoursYN" id="enCoursYN">
+                  <label class="form-check-label" for="enCoursYN">En cours</label>
+                </div>
+              </div>
+            </c-col>
+
+
+
+
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                    Vider
+                </button>
+            </div>
+            <div class=" w-50 ps-1">
+                <button cButton class=" w-100 text-white"  color="primary" type="submit">
+                    Enregistrer
+                </button>
+
+            </div>
+            
+
+
+
+
+
+
+        </div>
+    </form>
+</div>
+
+<c-toaster class="p-3" position="fixed" [placement]="placement" />
+
+
