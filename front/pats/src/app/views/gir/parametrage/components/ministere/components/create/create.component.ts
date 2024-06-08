@@ -34,8 +34,9 @@ export class CreateComponent {
   }
 
   onSubmit1() {
-    this.customStylesValidated = true;
+
     if (this.ministereForm!.valid) {
+      this.customStylesValidated = true;
       this.ministere = this.ministereForm!.value;
       /* if (this.ministere && this.ministere.dateDebut instanceof Date) {
         const transformedDate = this.formatDate(this.ministere.dateDebut);
@@ -62,6 +63,7 @@ export class CreateComponent {
 
   onReset1() {
     this.ministereForm!.reset();
+    this.customStylesValidated = false;
   }
 
   //Pour le toaster

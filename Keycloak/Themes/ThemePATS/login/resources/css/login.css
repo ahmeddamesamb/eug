@@ -22,7 +22,10 @@ body {
 
 
   .alert-error{
-    color: #ffffffb5 !important;
+    margin-top: 29px;
+    width: 100%;
+    background-color: #fa4646;
+    color: #ffffff !important;
   }
   .cutom-form{
     border: 2px solid #ffffff;
@@ -68,6 +71,11 @@ body {
 } */
 
 
+.alert-success{
+  margin-top: 20px;
+}
+
+
 .c-color{
   color: #ffffff !important;
   font-weight: bold;
@@ -80,7 +88,7 @@ body {
 }
 
 #input-error{
-  color:#ffffffb5 ;
+  color:#ffffff ;
 }
 
 
@@ -94,15 +102,15 @@ body {
   
   }
 
-  .alert-error{
+  /* .alert-error{
     color: #797979 !important;
-  }
+  } */
 
   
 
 
   #input-error{
-    color:#797979 ;
+    color:#ffffff ;
   }
 
 
