@@ -115,7 +115,7 @@ public class NiveauServiceImpl implements NiveauService {
         }
 
         if (isEmptyOrBlank(libelleNiveau)) {
-            throw new BadRequestAlertException("Niveau year of study cannot be empty", ENTITY_NAME, "emptyAnneeEtude");
+            throw new BadRequestAlertException("Niveau year of study cannot be empty", ENTITY_NAME, "emptyLibelleNiveau");
         }
         Long id = niveauDTO.getId();
         if (id == null) {
