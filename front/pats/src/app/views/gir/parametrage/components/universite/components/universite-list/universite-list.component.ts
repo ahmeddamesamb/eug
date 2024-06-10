@@ -107,18 +107,22 @@ export class UniversiteListComponent {
 
 
   delete(){
-    this.universiteService.deleteUniversite(this.itemDelete.id).subscribe({
-      next: (data) => {
-        this.getListe();
-        this.liveDemoVisible = false;
-        this.addToast(true);
-      },
-      error: (err) => {
-        this.liveDemoVisible = false;
-        this.addToast(false);
-      }
-      
-    })
+    if (this.itemDelete && this.itemDelete.id !== undefined) {
+      this.universiteService.deleteUniversite(this.itemDelete.id).subscribe({
+        next: (data) => {
+          this.getListe();
+          this.liveDemoVisible = false;
+          this.addToast(true);
+        },
+        error: (err) => {
+          this.liveDemoVisible = false;
+          this.addToast(false);
+        }
+      });
+    } else {
+      // Handle the case where id is undefined, if needed
+      console.error('Item to delete does not have a valid id.');
+    }
   }
 
   toggleLiveDemo(item : UniversiteModel) {
