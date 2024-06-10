@@ -42,13 +42,13 @@ public class FraisServiceImpl implements FraisService {
         log.debug("Request to save Frais : {}", fraisDTO);
         LocalDate currentDate = LocalDate.now();
 
-        validateData(fraisDTO);
+
         if (fraisDTO.getDateApplication().isBefore(currentDate)) {
-            throw new BadRequestAlertException("La date d'appliaction d'un nouveau frais ne peut pas etre dans le passe", ENTITY_NAME, "dateDApplicationInvalide");
+            throw new BadRequestAlertException("La date d'appliaction d'un nouveau frais ne peut pas etre dans le passe", ENTITY_NAME, "dateDapplicationInvalide");
         }
-        fraisDTO.setDateFin(null);
-        fraisRepository.updateIfEstEnApplicationIsOneAndCycleLike(fraisDTO.getCycle());
+        fraisRepository.updateIfEstEnApplicationIsOneAndCycleAndFraisPourAssimileYNLike(fraisDTO.getCycle(),fraisDTO.getFraisPourAssimileYN());
         fraisDTO.setEstEnApplicationYN(1);
+        validateData(fraisDTO);
 
         Frais frais = fraisMapper.toEntity(fraisDTO);
         frais = fraisRepository.save(frais);
@@ -113,35 +113,34 @@ public class FraisServiceImpl implements FraisService {
     private void validateData (FraisDTO fraisDTO) {
 
         //        DOIT ON RENSEIGNER LE CHAMP ESTENAPPLICATION LORS DE LA CREATION ??????????????????????????????????????????????????????????????????????????????????
+
         if (fraisDTO.getDescriptionFrais().isEmpty() || fraisDTO.getDescriptionFrais().isBlank()) {
             throw new BadRequestAlertException("Veuillez renseigner la description du frais", ENTITY_NAME, "descriptionObligatoire");
         }
+
         if (fraisDTO.getCycle().describeConstable().isEmpty() ) {
             throw new BadRequestAlertException("Veuillez renseigner le cycle associé au frais", ENTITY_NAME, "cycleObligatoire");
         }
-        if (fraisDTO.getValeurFrais().isNaN() ) {
-            throw new BadRequestAlertException("Veuillez renseigner la valeur du frais", ENTITY_NAME, "valeurFraisObligatoire");
+        if (fraisDTO.getValeurFrais().isNaN() || fraisDTO.getValeurFrais().describeConstable().isEmpty() || fraisDTO.getValeurFrais() <= 0) {
+            throw new BadRequestAlertException("Veuillez renseigner une valeur correcte du frais", ENTITY_NAME, "InvalidvaleurFrais");
         }
-        // A VALIDER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//        if (fraisDTO.getValeurFrais() < 5000 ) {
-//            throw new BadRequestAlertException("Veuillez renseigner une valeur de frais correcte", ENTITY_NAME, "valeurFraisInvalid");
-//        }
         if (fraisDTO.getDateApplication() == null ) {
             throw new BadRequestAlertException("Veuillez renseigner la date d'application du frais", ENTITY_NAME, "dateDApplicationObligatoire");
         }
         if (fraisDTO.getTypeFrais().getId().describeConstable().isEmpty()) {
-            throw new BadRequestAlertException("Veuillez renseigner le type de frais", ENTITY_NAME, "typeFraisobligatoire");
+            throw new BadRequestAlertException("Veuillez renseigner le type de frais", ENTITY_NAME, "typeFraisObligatoire");
         }
 
         if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription") && (fraisDTO.getDia() == null || fraisDTO.getDip() == null)) {
             throw new BadRequestAlertException("les droits d'inscriptions requiert les repartitions en  dia et un dip", ENTITY_NAME, "dia_dip_null");
         }
-        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription du privée") && (fraisDTO.getDia() == null || fraisDTO.getDip() == null) || (fraisDTO.getDipPrivee() == null)) {
+        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription du privée") && ((fraisDTO.getDia() == null || fraisDTO.getDip() == null) || (fraisDTO.getDipPrivee() == null))) {
             throw new BadRequestAlertException("les droits d'inscriptions du privée requiert les repartitions en  dia et un dip et dipPrivée", ENTITY_NAME, "dia_dip_dipprivee_null");
         }
-//        if (){
-//
-//        }
+        if (fraisDTO.getEstEnApplicationYN() == 1){
+            fraisDTO.setDateFin(null);
+        }
+        //POUR LA DATE PRECEDANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
 

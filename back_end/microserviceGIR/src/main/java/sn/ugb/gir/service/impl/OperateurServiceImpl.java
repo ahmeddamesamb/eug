@@ -60,7 +60,6 @@ public class OperateurServiceImpl implements OperateurService {
         log.debug("Request to update Operateur : {}", operateurDTO);
 
         validateData(operateurDTO);
-        validateDataUpdateUnique(operateurDTO);
         Operateur operateur = operateurMapper.toEntity(operateurDTO);
         operateur = operateurRepository.save(operateur);
         return operateurMapper.toDto(operateur);
@@ -71,7 +70,6 @@ public class OperateurServiceImpl implements OperateurService {
         log.debug("Request to partially update Operateur : {}", operateurDTO);
 
         validateData(operateurDTO);
-        validateDataUpdateUnique(operateurDTO);
         return operateurRepository
             .findById(operateurDTO.getId())
             .map(existingOperateur -> {
@@ -113,16 +111,16 @@ public class OperateurServiceImpl implements OperateurService {
         if ( operateurDTO.getLibelleOperateur().isEmpty() || operateurDTO.getLibelleOperateur().isBlank()) {
             throw new BadRequestAlertException("Veuillez renseigner le champs libelle operateur  ", ENTITY_NAME, "libelleOperateurobligatoire");
         }
-    }
-
-    public void validateDataUpdateUnique(OperateurDTO operateurDTO){
-        if (!operateurRepository.findByLibelleOperateur( operateurDTO.getLibelleOperateur()).getId().equals(operateurDTO.getId())){
+        Optional<Operateur> existingOperateur = operateurRepository.findByLibelleOperateur( operateurDTO.getLibelleOperateur());
+        if (existingOperateur.isPresent() && !existingOperateur.get().getId().equals(operateurDTO.getId())){
             throw new BadRequestAlertException("Un autre operateur porte deja ce libelle ", ENTITY_NAME, "libelleOperateurExistedeja");
         }
-        if (!operateurRepository.findByCodeOperateur(operateurDTO.getCodeOperateur()).getId().equals(operateurDTO.getId())){
+        existingOperateur = operateurRepository.findByCodeOperateur(operateurDTO.getCodeOperateur());
+        if (existingOperateur.isPresent() && !existingOperateur.get().getId().equals(operateurDTO.getId())){
             throw new BadRequestAlertException("Un autre operateur porte deja ce code ", ENTITY_NAME, "codeOperateurExistedeja");
         }
     }
+
 
 
 }

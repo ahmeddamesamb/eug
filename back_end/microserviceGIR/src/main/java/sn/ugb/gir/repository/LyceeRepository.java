@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import sn.ugb.gir.domain.Lycee;
 
+import java.util.Optional;
+
 /**
  * Spring Data JPA repository for the Lycee entity.
  */
@@ -14,4 +16,6 @@ import sn.ugb.gir.domain.Lycee;
 public interface LyceeRepository extends JpaRepository<Lycee, Long> {
     boolean existsLyceeByNomLycee(String nonLycee);
     Page<Lycee> findAllByRegionId(Pageable pageable, Long id);
+    Optional <Lycee> findByNomLycee(String nomLycee);
+
 }

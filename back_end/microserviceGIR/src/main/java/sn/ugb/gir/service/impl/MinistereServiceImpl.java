@@ -45,6 +45,9 @@ public class MinistereServiceImpl implements MinistereService {
 
         if (currentMinistere.isPresent()) {
             Ministere existingMinistere = currentMinistere.get();
+            if (!LocalDate.now().isAfter(existingMinistere.getDateDebut())) {
+                throw new BadRequestAlertException("La date de fin de debut de l'ancien Ministere doit être strictement antérieur à la date de début", ENTITY_NAME, "invalidOrdreDate");
+            }
             existingMinistere.setEnCoursYN(0);
             existingMinistere.setDateFin(LocalDate.now());
             ministereRepository.save(existingMinistere);
@@ -159,9 +162,6 @@ public class MinistereServiceImpl implements MinistereService {
         ministereRepository.deleteById(id);
     }
 
-    /**
-     * @return
-     */
     @Override
     public Optional<MinistereDTO> findCurrent() {
         Ministere ministereEnCours = ministereRepository.findByEnCoursYN(1)

@@ -22,7 +22,6 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
-import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * REST controller for managing {@link sn.ugb.gir.domain.DisciplineSportiveEtudiant}.
@@ -180,7 +179,7 @@ public class DisciplineSportiveEtudiantResource {
     public ResponseEntity<List<DisciplineSportiveEtudiantDTO>> getAllDisciplineSportiveEtudiantsByEtudiantcodeEtu(
         @org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("codeEtu") String codeEtu
     ) {
-        log.debug("REST request to get a page of DisciplineSportiveEtudiants for etudiant : {}", codeEtu);
+        log.debug("REST request to get a page of DisciplineSportiveEtudiants by a codeEtudiant : {}", codeEtu);
         Page<DisciplineSportiveEtudiantDTO> page = disciplineSportiveEtudiantService.findAllByEtudiantCodeEtu(pageable,codeEtu);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
@@ -198,7 +197,7 @@ public class DisciplineSportiveEtudiantResource {
     public ResponseEntity<List<DisciplineSportiveEtudiantDTO>> getAllDisciplineSportiveEtudiantsByEtudiantId(
         @org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("id") Long id
     ) {
-        log.debug("REST request to get a page of DisciplineSportiveEtudiants for etudiant : {}", id);
+        log.debug("REST request to get a page of DisciplineSportiveEtudiants by an Id of etudiant : {}", id);
         Page<DisciplineSportiveEtudiantDTO> page = disciplineSportiveEtudiantService.findAllByEtudiantId(pageable,id);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

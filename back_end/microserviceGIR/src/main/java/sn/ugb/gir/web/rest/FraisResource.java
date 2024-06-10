@@ -194,6 +194,5 @@ public class FraisResource {
         if (fraisDTO.getEstEnApplicationYN() == 1) {
             fraisDTO.setDateFin(null);
         }
-
     }
 }

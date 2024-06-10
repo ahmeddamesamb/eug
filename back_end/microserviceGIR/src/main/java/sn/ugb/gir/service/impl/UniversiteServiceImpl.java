@@ -43,9 +43,9 @@ public class UniversiteServiceImpl implements UniversiteService {
         if (universiteDTO.getId() != null) {
             throw new BadRequestAlertException("A new universite cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if ( universiteRepository.existsUniversiteByNomUniversite( universiteDTO.getNomUniversite() ) ) {
-            throw new BadRequestAlertException("Cet université exist deja !!!", ENTITY_NAME, "nomuniversiteexists");
-        }
+//        if ( universiteRepository.existsUniversiteByNomUniversite( universiteDTO.getNomUniversite() ) ) {
+//            throw new BadRequestAlertException("Cet université exist deja !!!", ENTITY_NAME, "nomuniversiteexists");
+//        }
         validateData(universiteDTO);
         Universite universite = universiteMapper.toEntity(universiteDTO);
         universite = universiteRepository.save(universite);
@@ -57,7 +57,6 @@ public class UniversiteServiceImpl implements UniversiteService {
         log.debug("Request to update Universite : {}", universiteDTO);
 
         validateData(universiteDTO);
-        valideNomUniversiteUpdate(universiteDTO);
         Universite universite = universiteMapper.toEntity(universiteDTO);
         universite = universiteRepository.save(universite);
         return universiteMapper.toDto(universite);
@@ -68,7 +67,6 @@ public class UniversiteServiceImpl implements UniversiteService {
         log.debug("Request to partially update Universite : {}", universiteDTO);
 
         validateData(universiteDTO);
-        valideNomUniversiteUpdate(universiteDTO);
         return universiteRepository
             .findById(universiteDTO.getId())
             .map(existingUniversite -> {
@@ -116,12 +114,10 @@ public class UniversiteServiceImpl implements UniversiteService {
             throw new BadRequestAlertException("veuillez renseigné le sigle de l'universite", ENTITY_NAME, "sigleUniversiteNull");
         }
         if ( universiteDTO.getMinistere().getId().describeConstable().isEmpty() ) {
-            throw new BadRequestAlertException("Entite universite :  le ministere rataché doit etre renseigné", ENTITY_NAME, "ministereidnull");
+            throw new BadRequestAlertException("Entite universite :  le ministere rataché doit etre renseigné", ENTITY_NAME, "ministereIdNull");
         }
-    }
-
-    public void valideNomUniversiteUpdate(UniversiteDTO universiteDTO){
-        if(!universiteRepository.findByNomUniversite(universiteDTO.getNomUniversite()).getId().equals(universiteDTO.getId())){
+        Optional<Universite> existingNomUniversite = universiteRepository.findByNomUniversite(universiteDTO.getNomUniversite());
+        if( existingNomUniversite.isPresent() && !existingNomUniversite.get().getId().equals(universiteDTO.getId())){
             throw new BadRequestAlertException("Un autre universite porte deja ce nom ", ENTITY_NAME, "nomUniversiteExistedeja");
         }
     }
