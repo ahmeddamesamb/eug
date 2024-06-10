@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface OperateurRepository extends JpaRepository<Operateur, Long> {
     boolean existsOperateurByCodeOperateur(String codeOperateur);
     boolean existsOperateurByLibelleOperateur(String libelleOperateur);
-    Optional <Operateur> findByCodeOperateur(String codeOperateur);
-    Optional <Operateur> findByLibelleOperateur(String libelleOperateur);
+    Optional <Operateur> findByCodeOperateurIgnoreCase(String codeOperateur);
+    Optional <Operateur> findByLibelleOperateurIgnoreCase(String libelleOperateur);
 
 }

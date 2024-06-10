@@ -16,6 +16,6 @@ import java.util.Optional;
 public interface LyceeRepository extends JpaRepository<Lycee, Long> {
     boolean existsLyceeByNomLycee(String nonLycee);
     Page<Lycee> findAllByRegionId(Pageable pageable, Long id);
-    Optional <Lycee> findByNomLycee(String nomLycee);
+    Optional <Lycee> findByNomLyceeIgnoreCase(String nomLycee);
 
 }

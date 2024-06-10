@@ -16,5 +16,5 @@ import java.util.Optional;
 public interface UniversiteRepository extends JpaRepository<Universite, Long> {
      Page<Universite> findByMinistereId(Pageable pageable, Long id);
      boolean existsUniversiteByNomUniversite(String nomUniversite);
-     Optional<Universite> findByNomUniversite(String nomUnivesite);
+     Optional<Universite> findByNomUniversiteIgnoreCase(String nomUnivesite);
 }

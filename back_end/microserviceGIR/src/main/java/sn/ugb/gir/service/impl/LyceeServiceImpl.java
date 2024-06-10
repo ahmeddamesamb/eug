@@ -109,7 +109,7 @@ public class LyceeServiceImpl implements LyceeService {
         if (lyceeDTO.getNomLycee().isEmpty() || lyceeDTO.getNomLycee().isBlank()) {
             throw new BadRequestAlertException("Veuillez renseigner le nom du lycee ", ENTITY_NAME, "nomLyceevide");
         }
-        Optional<Lycee> existingNomLycee = lyceeRepository.findByNomLycee( lyceeDTO.getNomLycee());
+        Optional<Lycee> existingNomLycee = lyceeRepository.findByNomLyceeIgnoreCase( lyceeDTO.getNomLycee());
         if ( existingNomLycee.isPresent() && !existingNomLycee.get().getId().equals(lyceeDTO.getId())){
             throw new BadRequestAlertException("Ce Lycee existe. Deux Lycees ne peuvent pas avoir le même nom", ENTITY_NAME, "nomlyceeexists");
         }

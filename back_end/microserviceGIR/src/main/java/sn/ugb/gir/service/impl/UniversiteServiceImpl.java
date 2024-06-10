@@ -116,7 +116,7 @@ public class UniversiteServiceImpl implements UniversiteService {
         if ( universiteDTO.getMinistere().getId().describeConstable().isEmpty() ) {
             throw new BadRequestAlertException("Entite universite :  le ministere rataché doit etre renseigné", ENTITY_NAME, "ministereIdNull");
         }
-        Optional<Universite> existingNomUniversite = universiteRepository.findByNomUniversite(universiteDTO.getNomUniversite());
+        Optional<Universite> existingNomUniversite = universiteRepository.findByNomUniversiteIgnoreCase(universiteDTO.getNomUniversite());
         if( existingNomUniversite.isPresent() && !existingNomUniversite.get().getId().equals(universiteDTO.getId())){
             throw new BadRequestAlertException("Un autre universite porte deja ce nom ", ENTITY_NAME, "nomUniversiteExistedeja");
         }

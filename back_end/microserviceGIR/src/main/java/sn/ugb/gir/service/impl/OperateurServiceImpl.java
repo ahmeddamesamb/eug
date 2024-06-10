@@ -111,11 +111,11 @@ public class OperateurServiceImpl implements OperateurService {
         if ( operateurDTO.getLibelleOperateur().isEmpty() || operateurDTO.getLibelleOperateur().isBlank()) {
             throw new BadRequestAlertException("Veuillez renseigner le champs libelle operateur  ", ENTITY_NAME, "libelleOperateurobligatoire");
         }
-        Optional<Operateur> existingOperateur = operateurRepository.findByLibelleOperateur( operateurDTO.getLibelleOperateur());
+        Optional<Operateur> existingOperateur = operateurRepository.findByLibelleOperateurIgnoreCase( operateurDTO.getLibelleOperateur());
         if (existingOperateur.isPresent() && !existingOperateur.get().getId().equals(operateurDTO.getId())){
             throw new BadRequestAlertException("Un autre operateur porte deja ce libelle ", ENTITY_NAME, "libelleOperateurExistedeja");
         }
-        existingOperateur = operateurRepository.findByCodeOperateur(operateurDTO.getCodeOperateur());
+        existingOperateur = operateurRepository.findByCodeOperateurIgnoreCase(operateurDTO.getCodeOperateur());
         if (existingOperateur.isPresent() && !existingOperateur.get().getId().equals(operateurDTO.getId())){
             throw new BadRequestAlertException("Un autre operateur porte deja ce code ", ENTITY_NAME, "codeOperateurExistedeja");
         }
