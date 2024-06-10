@@ -30,7 +30,7 @@ export class HeaderComponent {
 
   public getUrl(realm:string, client:string): string{
     return  `${this.urlLogin}${realm}${this.suiteUrlLogin}${this.clientId}`;
-   }
+  }
   }
 
   

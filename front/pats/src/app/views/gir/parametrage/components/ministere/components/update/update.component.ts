@@ -105,7 +105,11 @@ export class UpdateComponent implements OnInit {
     }
   }
 
-  onReset1() {
+  annuler(){
+    this.router.navigate(['/gir/parametrage/ministere/attente']);
+  }
+
+/*   onReset1() {
     this.ministereForm.reset({
       nomMinistere: '',
       sigleMinistere: '',
@@ -113,7 +117,7 @@ export class UpdateComponent implements OnInit {
       dateFin: null,
       enCoursYN: 0
     });
-  }
+  } */
 
   // Pour le toaster
   @ViewChild(ToasterComponent) toaster!: ToasterComponent;
