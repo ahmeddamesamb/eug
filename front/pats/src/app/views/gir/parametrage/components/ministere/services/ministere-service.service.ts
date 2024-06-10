@@ -24,7 +24,7 @@ export class MinistereServiceService {
   }
 
 
-  createMinistere(ministere: any): Observable<MinistereModel> {
+  createMinistere(ministere: MinistereModel): Observable<MinistereModel> {
     return this.http.post<any>(`${this.ministereUrl}`, ministere);
   }
 
@@ -40,6 +40,6 @@ export class MinistereServiceService {
 
   updateMinistere(id: number, ministere: MinistereModel): Observable<MinistereModel> {
     return this.http.put<MinistereModel>(`${this.ministereUrl}/${id}`, ministere);
-}
+  }
 
 }

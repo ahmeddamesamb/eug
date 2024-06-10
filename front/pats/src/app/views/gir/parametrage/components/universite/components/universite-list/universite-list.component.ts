@@ -1,7 +1,7 @@
 import { Component, QueryList, ViewChild, ViewChildren, } from '@angular/core';
 import { Router } from '@angular/router';
-import {MinistereServiceService} from '../../services/ministere-service.service'
-import {MinistereModel} from '../../models/ministere-model'
+import {UniversiteService} from '../../services/universite.service'
+import {UniversiteModel} from '../../models/universite-model'
 import { NumberToStringPipe } from '../../../../../../../pipes/number-to-string.pipe'
 import {AlerteComponent} from 'src/app/shared/components/alerte/alerte/alerte.component'
 
@@ -30,28 +30,27 @@ import{
 } from '@coreui/angular-pro';
 import { delay } from 'rxjs';
 
-
-
 @Component({
-    selector: 'app-ministere-list',
-    standalone: true,
-    templateUrl: './ministere-list.component.html',
-    styleUrl: './ministere-list.component.scss',
-    imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
-        ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
-        CardComponent, CardHeaderComponent, ColComponent,ToasterComponent,AlerteComponent
-        ]
+  selector: 'app-universite-list',
+  standalone: true,
+  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
+    ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
+    CardComponent, CardHeaderComponent, ColComponent,ToasterComponent,AlerteComponent
+    ],
+  templateUrl: './universite-list.component.html',
+  styleUrl: './universite-list.component.scss'
 })
-export class MinistereListComponent {
-  constructor (private route:Router,private ministereService: MinistereServiceService){
+export class UniversiteListComponent {
+  constructor (private route:Router,private universiteService: UniversiteService){
 
   }
 
-  ministereList : MinistereModel[] = [];
-  itemDelete!: MinistereModel;
-  itemUpdate!: MinistereModel;
+  universiteList : UniversiteModel[] = [];
+  itemDelete!: UniversiteModel;
+  itemUpdate!: UniversiteModel;
   public liveDemoVisible = false;
   isloading = false;
+
 
 
   ngOnInit(): void {
@@ -61,13 +60,10 @@ export class MinistereListComponent {
 
   getListe(){
     this.isloading = true;
-    this.ministereService.getMinistereList().subscribe({
+    this.universiteService.getUniversiteList().subscribe({
       next: (data) => {
-        this.ministereList = data;
+        this.universiteList = data;
         this.isloading = false;
-        
-        
-
       },
       error: (err) => {
 
@@ -76,26 +72,16 @@ export class MinistereListComponent {
     });
   }
 
-  
-
   columns: IColumn[] = [
     {
-      key: 'nomMinistere'
+      key: 'nomUniversite'
     },
     {
-      key: 'sigleMinistere'
+      key: 'sigleUniversite'
     },
     {
-      key: 'dateDebut',
-      label: 'Date debut',
-      _props: { class: 'text-truncate' }
+      key: 'ministere'
     },
-    {
-      key: 'dateFin',
-      label: 'Date Fin',
-      _props: { class: 'text-truncate' }
-    },
-    { key: 'enCoursYN', _style: { width: '15%' } },
     {
       key: 'show',
       label: 'Action',
@@ -104,38 +90,24 @@ export class MinistereListComponent {
       sorter: false
     }
   ];
-/*   details_visible = Object.create({}); */
-
-  getBadge(enCoursYN: number) {
-    switch (enCoursYN) {
-      case 1:
-        return 'success';
-      // case 'Inactive':
-      //   return 'secondary';
-      // case 'Pending':
-      //   return 'warning';
-      case 0:
-        return 'warning';
-      default:
-        return 'primary';
-    }
-  }
 
   view(item: number) {
-    this.route.navigate(['/gir/parametrage/ministere/view',item])
+    this.route.navigate(['/gir/parametrage/universite/view',item])
 
   }
   create() {
     
-    this.route.navigate(['/gir/parametrage/ministere/create'])
+    this.route.navigate(['/gir/parametrage/universite/create'])
 
   }
 
   update(item:number) {
-    this.route.navigate(['/gir/parametrage/ministere/update',item])
+    this.route.navigate(['/gir/parametrage/universite/update',item])
   }
+
+
   delete(){
-    this.ministereService.deleteMinistere(this.itemDelete.id).subscribe({
+    this.universiteService.deleteUniversite(this.itemDelete.id).subscribe({
       next: (data) => {
         this.getListe();
         this.liveDemoVisible = false;
@@ -149,10 +121,7 @@ export class MinistereListComponent {
     })
   }
 
-
-  
-
-  toggleLiveDemo(item : MinistereModel) {
+  toggleLiveDemo(item : UniversiteModel) {
     this.itemDelete = item;
     this.liveDemoVisible = !this.liveDemoVisible;
   }
@@ -166,7 +135,8 @@ export class MinistereListComponent {
 
 
 
-  //Pour le toaster
+
+
 
   @ViewChild(ToasterComponent) toaster!: ToasterComponent;
   placement = ToasterPlacement.TopEnd;
@@ -194,8 +164,4 @@ export class MinistereListComponent {
     componentRef.instance['visibleChange'].emit(true);
 
   }
-  
-
-
-
 }
