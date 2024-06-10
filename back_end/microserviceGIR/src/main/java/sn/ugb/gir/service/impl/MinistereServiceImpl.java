@@ -162,9 +162,6 @@ public class MinistereServiceImpl implements MinistereService {
         ministereRepository.deleteById(id);
     }
 
-    /**
-     * @return
-     */
     @Override
     public Optional<MinistereDTO> findCurrent() {
         Ministere ministereEnCours = ministereRepository.findByEnCoursYN(1)
