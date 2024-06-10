@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import sn.ugb.gir.domain.Universite;
 
+import java.util.Optional;
+
 /**
  * Spring Data JPA repository for the Universite entity.
  */
@@ -13,8 +15,6 @@ import sn.ugb.gir.domain.Universite;
 @Repository
 public interface UniversiteRepository extends JpaRepository<Universite, Long> {
      Page<Universite> findByMinistereId(Pageable pageable, Long id);
-   //  String findByName(String nomUniversite);
-   //  boolean NomUniversiteExists();
      boolean existsUniversiteByNomUniversite(String nomUniversite);
-     Universite findByNomUniversite(String nomUnivesite);
+     Optional<Universite> findByNomUniversite(String nomUnivesite);
 }

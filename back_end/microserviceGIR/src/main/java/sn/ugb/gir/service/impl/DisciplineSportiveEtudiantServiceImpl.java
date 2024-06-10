@@ -1,6 +1,5 @@
 package sn.ugb.gir.service.impl;
 
-import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +45,6 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
             throw new BadRequestAlertException("A new disciplineSportiveEtudiant cannot already have an ID", ENTITY_NAME, "idexists");
         }
         validateData(disciplineSportiveEtudiantDTO);
-
         DisciplineSportiveEtudiant disciplineSportiveEtudiant = disciplineSportiveEtudiantMapper.toEntity(disciplineSportiveEtudiantDTO);
         disciplineSportiveEtudiant = disciplineSportiveEtudiantRepository.save(disciplineSportiveEtudiant);
         return disciplineSportiveEtudiantMapper.toDto(disciplineSportiveEtudiant);
@@ -101,13 +99,13 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
     @Override
     @Transactional(readOnly = true)
     public Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantCodeEtu(Pageable pageable, String codeEtu){
-        log.debug("Request to get all DisciplineSportiveEtudiants for an et entity etudiant");
+        log.debug("Request to get all DisciplineSportiveEtudiants for an entity etudiant");
         return disciplineSportiveEtudiantRepository.findAllByEtudiantCodeEtu(pageable,codeEtu).map(disciplineSportiveEtudiantMapper::toDto);
     }
     @Override
     @Transactional(readOnly = true)
     public Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantId(Pageable pageable, Long id){
-        log.debug("Request to get all DisciplineSportiveEtudiants");
+        log.debug("Request to get all DisciplineSportiveEtudiants by an id of etudiant");
         return disciplineSportiveEtudiantRepository.findAllByEtudiantId(pageable,id).map(disciplineSportiveEtudiantMapper::toDto);
     }
 
@@ -130,6 +128,14 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
         }
         if (disciplineSportiveEtudiantDTO.getDisciplineSportive().getId().describeConstable().isEmpty()) {
             throw new BadRequestAlertException("Veuillez renseigner l'id du discipline sportive", ENTITY_NAME, "disciplineSportiveEtudiantNull");
+        }
+
+        Long disciplineSportive = disciplineSportiveEtudiantDTO.getDisciplineSportive().getId();
+        Long etudiant = disciplineSportiveEtudiantDTO.getEtudiant().getId();
+
+        Optional <DisciplineSportiveEtudiant> existingDisciplineSportiveEtudiant =  disciplineSportiveEtudiantRepository.findByDisciplineSportiveIdAndEtudiantId(disciplineSportive,etudiant);
+        if (existingDisciplineSportiveEtudiant.isPresent() && !existingDisciplineSportiveEtudiant.get().getId().equals(disciplineSportiveEtudiantDTO.getId())  ){
+            throw new BadRequestAlertException("Cet etudiant est deja relier a ce discipline sportive", ENTITY_NAME, "disciplineSportiveEtudiantExiste");
         }
     }
 

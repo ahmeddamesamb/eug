@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import sn.ugb.gir.domain.DisciplineSportiveEtudiant;
 import sn.ugb.gir.domain.Lycee;
 
+import java.util.Optional;
+
 /**
  * Spring Data JPA repository for the DisciplineSportiveEtudiant entity.
  */
@@ -17,4 +19,5 @@ public interface DisciplineSportiveEtudiantRepository extends JpaRepository<Disc
     Page<DisciplineSportiveEtudiant> findAllByEtudiantCodeEtu(Pageable pageable, String codeEtu);
     Page<DisciplineSportiveEtudiant> findAllByEtudiantId(Pageable pageable,Long id);
     Page<DisciplineSportiveEtudiant> findAllByDisciplineSportiveId(Pageable pageable,Long id);
+    Optional<DisciplineSportiveEtudiant> findByDisciplineSportiveIdAndEtudiantId(Long idDS, Long idEtu);
 }

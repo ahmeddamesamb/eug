@@ -16,12 +16,11 @@ import sn.ugb.gir.domain.enumeration.Cycle;
 public interface FraisRepository extends JpaRepository<Frais, Long> {
      Page<Frais> findByCycle(Pageable pageable, Cycle cycle);
      boolean existsByCycleAndTypeFraisLibelleTypeFrais(Cycle cycle,String libelleTypeFrais);
-    // boolean existByCycleAnd();
 
     @Modifying
     @Transactional
-    @Query("UPDATE Frais f SET f.estEnApplicationYN = 0 WHERE f.estEnApplicationYN = 1 and f.cycle= :cycle")
-    void updateIfEstEnApplicationIsOneAndCycleLike(Cycle cycle);
+    @Query("UPDATE Frais f SET f.estEnApplicationYN = 0 WHERE f.estEnApplicationYN = 1 and f.cycle= :cycle and f.fraisPourAssimileYN = :fraisPourAssimileYN")
+    void updateIfEstEnApplicationIsOneAndCycleAndFraisPourAssimileYNLike(Cycle cycle, Integer fraisPourAssimileYN );
 
 
 }
