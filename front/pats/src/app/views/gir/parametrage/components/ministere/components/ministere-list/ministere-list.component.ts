@@ -80,10 +80,12 @@ export class MinistereListComponent {
 
   columns: IColumn[] = [
     {
-      key: 'nomMinistere'
+      key: 'nomMinistere',
+      label: 'Nom ministère'
     },
     {
-      key: 'sigleMinistere'
+      key: 'sigleMinistere',
+      label: 'Sigle ministère'
     },
     {
       key: 'dateDebut',

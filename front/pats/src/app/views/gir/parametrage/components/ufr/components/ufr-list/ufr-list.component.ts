@@ -1,11 +1,9 @@
 import { Component, QueryList, ViewChild, ViewChildren, } from '@angular/core';
 import { Router } from '@angular/router';
-import {UniversiteService} from '../../services/universite.service'
-import {UniversiteModel} from '../../models/universite-model'
+import {UfrServiceService} from '../../services/ufr-service.service';
+import {UfrModel} from '../../models/ufr-model';
 import { NumberToStringPipe } from '../../../../../../../pipes/number-to-string.pipe'
 import {AlerteComponent} from 'src/app/shared/components/alerte/alerte/alerte.component'
-
-
 
 import{
   BadgeComponent,
@@ -31,27 +29,26 @@ import{
 import { delay } from 'rxjs';
 
 @Component({
-  selector: 'app-universite-list',
+  selector: 'app-ufr-list',
   standalone: true,
   imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
     ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
     CardComponent, CardHeaderComponent, ColComponent,ToasterComponent,AlerteComponent
     ],
-  templateUrl: './universite-list.component.html',
-  styleUrl: './universite-list.component.scss'
+  templateUrl: './ufr-list.component.html',
+  styleUrl: './ufr-list.component.scss'
 })
-export class UniversiteListComponent {
-  constructor (private route:Router,private universiteService: UniversiteService){
+export class UfrListComponent {
+
+  constructor (private route:Router,private ufrService: UfrServiceService){
 
   }
 
-  universiteList : UniversiteModel[] = [];
-  itemDelete!: UniversiteModel;
-  itemUpdate!: UniversiteModel;
+  ufrList : UfrModel[] = [];
+  itemDelete!: UfrModel;
+  itemUpdate!: UfrModel;
   public liveDemoVisible = false;
   isloading = false;
-
-
 
   ngOnInit(): void {
     this.getListe();
@@ -60,9 +57,9 @@ export class UniversiteListComponent {
 
   getListe(){
     this.isloading = true;
-    this.universiteService.getUniversiteList().subscribe({
+    this.ufrService.getUfrList().subscribe({
       next: (data) => {
-        this.universiteList = data;
+        this.ufrList = data;
         this.isloading = false;
       },
       error: (err) => {
@@ -74,15 +71,17 @@ export class UniversiteListComponent {
 
   columns: IColumn[] = [
     {
-      key: 'nomUniversite',
-      label: 'Nom université'
+      key: 'libeleUfr',
+      label: 'Libellé Ufr'
     },
     {
-      key: 'sigleUniversite'
+      key: 'sigleUfr'
     },
+    { key: 'systemeLMDYN', label: 'LMD', _style: { width: '15%' } },
+    { key: 'ordreStat', _style: { width: '15%' } },
     {
-      key: 'ministere',
-      label: 'Ministère'
+      key: 'universite',
+      label: 'Université'
     },
     {
       key: 'show',
@@ -94,23 +93,22 @@ export class UniversiteListComponent {
   ];
 
   view(item: number) {
-    this.route.navigate(['/gir/parametrage/universite/view',item])
+    this.route.navigate(['/gir/parametrage/ufr/view',item])
 
   }
   create() {
     
-    this.route.navigate(['/gir/parametrage/universite/create'])
+    this.route.navigate(['/gir/parametrage/ufr/create'])
 
   }
 
   update(item:number) {
-    this.route.navigate(['/gir/parametrage/universite/update',item])
+    this.route.navigate(['/gir/parametrage/ufr/update',item])
   }
-
 
   delete(){
     if (this.itemDelete && this.itemDelete.id !== undefined) {
-      this.universiteService.deleteUniversite(this.itemDelete.id).subscribe({
+      this.ufrService.deleteUfr(this.itemDelete.id).subscribe({
         next: (data) => {
           this.getListe();
           this.liveDemoVisible = false;
@@ -127,7 +125,7 @@ export class UniversiteListComponent {
     }
   }
 
-  toggleLiveDemo(item : UniversiteModel) {
+  toggleLiveDemo(item : UfrModel) {
     this.itemDelete = item;
     this.liveDemoVisible = !this.liveDemoVisible;
   }
@@ -150,14 +148,14 @@ export class UniversiteListComponent {
   addToast(value: boolean) {
     var options = {
       title: `Suppression`,
-      texte: `Echec de suppression de l'Université`,
+      texte: `Echec de suppression de l'UFR`,
       delay: 5000,
       placement: this.placement,
       color: 'danger',
       autohide: true,
     };
     if(value){
-      options.texte = `Suppression de l'Université avec succes`;
+      options.texte = `Suppression de l'UFR avec succes`;
       options.color = 'success';
 
     }
@@ -170,4 +168,7 @@ export class UniversiteListComponent {
     componentRef.instance['visibleChange'].emit(true);
 
   }
+
+
+
 }

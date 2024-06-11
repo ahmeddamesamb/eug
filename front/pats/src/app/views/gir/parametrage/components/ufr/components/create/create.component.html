@@ -1,1 +1,74 @@
-<p>create works!</p>
+<div class="">
+    <h3>Nouvelle Ufr</h3>
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="ufrForm"
+
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom01">Libellé Ufr </label>
+            <input cFormControl id="validationCustom01" required type="text" value=""
+            [valid]="(ufrForm?.get('libeleUfr')?.touched && ufrForm?.get('libeleUfr')?.valid) ? true
+               : (ufrForm?.get('libeleUfr')?.touched) && ufrForm?.get('libeleUfr')?.invalid ? false : undefined"
+            formControlName="libeleUfr"/>
+            <c-form-feedback>Libellé requis </c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom02">Sigle Ufr </label>
+            <input cFormControl id="validationCustom02" required type="text"
+              value="" formControlName="sigleUfr" [autofocus]="true"
+              [valid]="(ufrForm?.get('sigleUfr')?.touched && ufrForm?.get('sigleUfr')?.valid) ? true
+               : (ufrForm?.get('sigleUfr')?.touched) && ufrForm?.get('sigleUfr')?.invalid ? false : undefined"/>
+            <c-form-feedback >Sigle requis</c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom02">LMD</label>
+            <input cFormControl id="validationCustom02" required type="text"
+              value="" formControlName="systemeLMDYN" [autofocus]="true"
+              [valid]="(ufrForm?.get('systemeLMDYN')?.touched && ufrForm?.get('systemeLMDYN')?.valid) ? true
+               : (ufrForm?.get('systemeLMDYN')?.touched) && ufrForm?.get('systemeLMDYN')?.invalid ? false : undefined"/>
+            <c-form-feedback >LMD requis</c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom02">Ordre stat </label>
+            <input cFormControl id="validationCustom02" required type="text"
+              value="" formControlName="ordreStat" [autofocus]="true"
+              [valid]="(ufrForm?.get('ordreStat')?.touched && ufrForm?.get('ordreStat')?.valid) ? true
+               : (ufrForm?.get('ordreStat')?.touched) && ufrForm?.get('ordreStat')?.invalid ? false : undefined"/>
+            <c-form-feedback >Ordre requis</c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Université </label>
+            <select cFormControl aria-label="Default select example" formControlName="universite" cSelect>
+                
+                @for (universite of universiteList; track $index) {
+                    <option [value]="universite.id">{{universite.nomUniversite}}</option>
+                }
+                
+            </select>
+            
+        </c-col>
+        
+
+
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                    Vider
+                </button>
+            </div>
+            <div class=" w-50 ps-1">
+                <button cButton class=" w-100 text-white" [disabled]="!ufrForm?.valid"  color="primary" type="submit">
+                    Enregistrer
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<c-toaster class="p-3" position="fixed" [placement]="placement" />
