@@ -1,1 +1,91 @@
-<p>update works!</p>
+<div class="">
+    <h3>Mis a jour Ufr</h3>
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="ufrForm"
+
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom01">Libellé Ufr </label>
+            <input cFormControl id="validationCustom01" required type="text" value=""
+            [valid]="(ufrForm?.get('libeleUfr')?.touched && ufrForm?.get('libeleUfr')?.valid) ? true
+               : (ufrForm?.get('libeleUfr')?.touched) && ufrForm?.get('libeleUfr')?.invalid ? false : undefined"
+            formControlName="libeleUfr"/>
+            <c-form-feedback>Libellé requis </c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom02">Sigle Ufr </label>
+            <input cFormControl id="validationCustom02" required type="text"
+              value="" formControlName="sigleUfr" [autofocus]="true"
+              [valid]="(ufrForm?.get('sigleUfr')?.touched && ufrForm?.get('sigleUfr')?.valid) ? true
+               : (ufrForm?.get('sigleUfr')?.touched) && ufrForm?.get('sigleUfr')?.invalid ? false : undefined"/>
+            <c-form-feedback >Sigle requis</c-form-feedback>
+        </c-col>
+
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Université </label>
+            <select cFormControl aria-label="Default select example" formControlName="universite" cSelect>
+                
+                @for (universite of universiteList; track $index) {
+                    <option [value]="universite.id">{{universite.nomUniversite}}</option>
+                }
+                
+            </select>
+            
+        </c-col>
+        <c-col md="12">
+            <div class="form-group">
+                <div class="form-check">
+                  <input 
+                    cFormControl
+                    
+                    class="form-check-input" 
+                    type="checkbox" 
+                    formControlName="systemeLMDYN" 
+                    [autofocus]="true"
+                    id="validationCustom02" />
+                  <label class="form-check-label ms-2" for="validationCustom02">Systeme LMD</label>
+                </div>
+            </div>
+        </c-col>
+
+        <c-col md="12">
+            <div class="form-group">
+                <div class="form-check">
+                  <input 
+                    cFormControl
+                    class="form-check-input" 
+                    type="checkbox" 
+                    formControlName="ordreStat" 
+                    [autofocus]="true"
+                    id="validationCustom03" />
+                  <label class="form-check-label ms-2" for="validationCustom03" for="enCoursYN">Ordre stat</label>
+                </div>
+            </div>
+        </c-col>
+        
+        
+
+
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                <button (click)="annuler()"  class=" w-100" cButton color="secondary" type="reset">
+                    Annuler
+                </button>
+            </div>
+            <div class=" w-50 ps-1">
+                <button cButton class=" w-100 text-white" [disabled]="!ufrForm?.valid"  color="primary" type="submit">
+                    Enregistrer
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<c-toaster class="p-3" position="fixed" [placement]="placement" />
+

@@ -43,8 +43,6 @@ export class ViewComponent {
         // })
       })
     })
-
-
   }
 
 }

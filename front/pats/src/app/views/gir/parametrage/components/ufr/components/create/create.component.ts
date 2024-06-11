@@ -38,8 +38,8 @@ export class CreateComponent {
     this.ufrForm = new FormGroup({
       libeleUfr: new FormControl('', Validators.required),
       sigleUfr: new FormControl('', Validators.required),
-      systemeLMDYN: new FormControl('', Validators.required),
-      ordreStat: new FormControl('', Validators.required),
+      systemeLMDYN: new FormControl(''),
+      ordreStat: new FormControl(''),
       universite: new FormControl('', Validators.required)
     });
     this.getListeUniversite();
@@ -67,8 +67,8 @@ export class CreateComponent {
           if (this.ufr && this.ufr.universite) {
               this.ufr.libeleUfr = this.ufrForm!.get('libeleUfr')?.value; 
               this.ufr.sigleUfr = this.ufrForm!.get('sigleUfr')?.value;
-              this.ufr.systemeLMDYN = this.ufrForm!.get('systemeLMDYN')?.value;
-              this.ufr.ordreStat = this.ufrForm!.get('ordreStat')?.value; 
+              this.ufr.systemeLMDYN = this.ufrForm!.get('systemeLMDYN')?.value ? 1 : 0;
+              this.ufr.ordreStat = this.ufrForm!.get('ordreStat')?.value ? 1 : 0; 
               this.ufr.universite.id = parseInt(this.ufrForm!.get('universite')?.value) ; 
           }
       }
