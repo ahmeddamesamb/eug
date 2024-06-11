@@ -36,7 +36,7 @@ export class CreateComponent {
     this.universiteForm = new FormGroup({
       nomUniversite: new FormControl('', Validators.required),
       sigleUniversite: new FormControl('', Validators.required),
-      ministere: new FormControl('', Validators.required)
+      ministere: new FormControl('', Validators.required),
     });
     this.getListeMinistere();
   }
@@ -70,6 +70,7 @@ export class CreateComponent {
 
       
       console.log('Données du formulaire :', this.universite);
+      console.log('Données du formulaire :', this.universite?.ministere?.id);
 
       this.universiteService.createUniversite(this.universite!).subscribe({
         
