@@ -26,9 +26,16 @@
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom03">Ministere </label>
-            <select cFormControl aria-label="Default select example" formControlName="ministere" cSelect>
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="ministere"
+                [valid]="(universiteForm?.get('ministere')?.touched && universiteForm?.get('ministere')?.valid) ? true
+               : (universiteForm?.get('ministere')?.touched) && universiteForm?.get('ministere')?.invalid ? false : undefined"
+                cSelect>
                 
                 @for (ministere of ministereList; track $index) {
+                    
                     <option [value]="ministere.id">{{ministere.nomMinistere}}</option>
                 }
                 

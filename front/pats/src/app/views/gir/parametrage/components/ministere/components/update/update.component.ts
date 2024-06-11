@@ -40,12 +40,6 @@ export class UpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    
-
-
-
-
     this.id = this.route.snapshot.params['id'];
     const id: Observable<string> = this.route.params.pipe(map(p=>p['id']));
 
@@ -65,8 +59,6 @@ export class UpdateComponent implements OnInit {
         }
       );
     })
-
-    
   }
 
   initializeForm(ministere: MinistereModel) {
