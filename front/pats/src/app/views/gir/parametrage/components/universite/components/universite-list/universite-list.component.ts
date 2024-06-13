@@ -27,6 +27,7 @@ import{
   ColComponent,
   ToasterPlacement,
   ToasterComponent,
+  PopoverModule,
 } from '@coreui/angular-pro';
 import { delay } from 'rxjs';
 
@@ -35,7 +36,7 @@ import { delay } from 'rxjs';
   standalone: true,
   imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
     ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
-    CardComponent, CardHeaderComponent, ColComponent,ToasterComponent,AlerteComponent
+    CardComponent, CardHeaderComponent,PopoverModule, ColComponent,ToasterComponent,AlerteComponent
     ],
   templateUrl: './universite-list.component.html',
   styleUrl: './universite-list.component.scss'
@@ -75,10 +76,11 @@ export class UniversiteListComponent {
   columns: IColumn[] = [
     {
       key: 'nomUniversite',
-      label: 'Nom université'
+      label: 'Nom'
     },
     {
-      key: 'sigleUniversite'
+      key: 'sigleUniversite',
+      label: 'Sigle'
     },
     {
       key: 'ministere',

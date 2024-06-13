@@ -13,7 +13,7 @@
   [columnFilter]="true"
   [itemsPerPageSelect]="true"
   [itemsPerPage]="5"
-  itemsPerPageLabel="ministere par page"
+  itemsPerPageLabel="Ministère par page"
   [items]="ministereList"
   [sorterValue]="{ column: 'name', state: 'asc' }"
   [tableFilter]="false"
@@ -57,16 +57,17 @@
         }
         @case ('show') {
             <div class="d-flex gap-2">
-                <button (click)="view(item.id)"  cButton color="light" size="sm" variant="outline"  >
+                <button (click)="view(item.id)"  cButton cPopover="Détail!" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >
                     <i class="bi bi-eye-fill"></i>
                 </button>
-                <button  cButton color="primary" size="sm" variant="outline" (click)="update(item.id)" >
+                <button  cButton cPopover="Mise à jour!" cPopoverPlacement="top" 
+                color="primary" size="sm" variant="outline" (click)="update(item.id)" >
                     <i class="bi bi-pen-fill"></i>
                 </button>
                 <!-- <button (click)="delete(item.id)"  cButton color="danger" size="sm" variant="outline">
                     <i class="bi bi-x-lg"></i>
                 </button> -->
-                <button (click)="toggleLiveDemo(item)"  cButton color="danger" size="sm" variant="outline">
+                <button (click)="toggleLiveDemo(item)"  cButton cPopover="Suppression!" cPopoverPlacement="right" color="danger" size="sm" variant="outline">
                   <i class="bi bi-x-lg"></i>
                 </button>
 

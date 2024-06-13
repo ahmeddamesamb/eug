@@ -7,6 +7,7 @@ import {AlerteComponent} from 'src/app/shared/components/alerte/alerte/alerte.co
 
 
 
+
 import{
   BadgeComponent,
   ButtonDirective,
@@ -27,6 +28,7 @@ import{
   ColComponent,
   ToasterPlacement,
   ToasterComponent,
+  PopoverModule,
 } from '@coreui/angular-pro';
 import { delay } from 'rxjs';
 
@@ -39,7 +41,7 @@ import { delay } from 'rxjs';
     styleUrl: './ministere-list.component.scss',
     imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
         ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
-        CardComponent, CardHeaderComponent, ColComponent,ToasterComponent,AlerteComponent
+        CardComponent, CardHeaderComponent,PopoverModule, ColComponent,ToasterComponent,AlerteComponent
         ]
 })
 export class MinistereListComponent {
@@ -81,15 +83,15 @@ export class MinistereListComponent {
   columns: IColumn[] = [
     {
       key: 'nomMinistere',
-      label: 'Nom ministère'
+      label: 'Nom'
     },
     {
       key: 'sigleMinistere',
-      label: 'Sigle ministère'
+      label: 'Sigle'
     },
     {
       key: 'dateDebut',
-      label: 'Date debut',
+      label: 'Date début',
       _props: { class: 'text-truncate' }
     },
     {
@@ -97,7 +99,7 @@ export class MinistereListComponent {
       label: 'Date Fin',
       _props: { class: 'text-truncate' }
     },
-    { key: 'enCoursYN', _style: { width: '15%' } },
+    { key: 'enCoursYN',label: 'Status', _style: { width: '15%' } },
     {
       key: 'show',
       label: 'Action',

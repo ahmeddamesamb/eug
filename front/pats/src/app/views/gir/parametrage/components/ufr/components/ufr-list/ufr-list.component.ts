@@ -25,6 +25,7 @@ import{
   ColComponent,
   ToasterPlacement,
   ToasterComponent,
+  PopoverModule,
 } from '@coreui/angular-pro';
 import { delay } from 'rxjs';
 
@@ -33,7 +34,7 @@ import { delay } from 'rxjs';
   standalone: true,
   imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
     ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
-    CardComponent, CardHeaderComponent, ColComponent,ToasterComponent,AlerteComponent
+    CardComponent, CardHeaderComponent,PopoverModule, ColComponent,ToasterComponent,AlerteComponent
     ],
   templateUrl: './ufr-list.component.html',
   styleUrl: './ufr-list.component.scss'
@@ -72,10 +73,11 @@ export class UfrListComponent {
   columns: IColumn[] = [
     {
       key: 'libeleUfr',
-      label: 'Libellé Ufr'
+      label: 'Nom'
     },
     {
-      key: 'sigleUfr'
+      key: 'sigleUfr',
+      label: 'Sigle'
     },
     { key: 'systemeLMDYN', label: 'LMD', _style: { width: '15%' } },
     { key: 'ordreStat', _style: { width: '15%' } },
