@@ -8,6 +8,7 @@ import { MinistereModel } from '../../models/ministere-model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlerteComponent } from 'src/app/shared/components/alerte/alerte/alerte.component';
 import { map, Observable } from 'rxjs';
+import {  AlertServiceService} from 'src/app/shared/services/alert/alert-service.service'
 
 @Component({
   selector: 'app-update',
@@ -29,7 +30,7 @@ export class UpdateComponent implements OnInit {
   customStylesValidated = false;
   id: string = "";
 
-  constructor(private ministereService: MinistereServiceService, private route: ActivatedRoute, private router: Router) {
+  constructor(private ministereService: MinistereServiceService, private route: ActivatedRoute, private router: Router , private alertService:AlertServiceService) {
     this.ministereForm = new FormGroup({
       nomMinistere: new FormControl('', Validators.required),
       sigleMinistere: new FormControl('', Validators.required),
@@ -83,12 +84,14 @@ export class UpdateComponent implements OnInit {
       this.ministereService.updateMinistere(Number(this.id), this.ministere).subscribe({
         next: (data) => {
           console.log(data);
-          this.addToast(true);
+          //this.addToast(true);
+          this.alertService.showToast("Creation","Mise à jour du ministère avec succès","success");
           this.router.navigate(['/gir/parametrage/ministere/view', data.id]);
         },
         error: (err) => {
-          console.log(err);
-          this.addToast(false);
+          //console.log(err);
+          //this.addToast(false);
+          this.alertService.showToast("Creation","Échec de la mise à jour du ministère","danger");
         }
       });
       console.log('Données du formulaire :', this.ministereForm.value);
@@ -111,28 +114,4 @@ export class UpdateComponent implements OnInit {
     });
   } */
 
-  // Pour le toaster
-  @ViewChild(ToasterComponent) toaster!: ToasterComponent;
-  placement = ToasterPlacement.TopEnd;
-
-  addToast(value: boolean) {
-    var options = {
-      title: `Mise à jour`,
-      texte: `Échec de la mise à jour du ministère`,
-      delay: 5000,
-      placement: this.placement,
-      color: 'danger',
-      autohide: true,
-    };
-    if (value) {
-      options.texte = `Mise à jour du ministère avec succès`;
-      options.color = 'success';
-    }
-
-    const componentRef = this.toaster.addToast(AlerteComponent, options, {});
-    componentRef.instance['visibleChange'].subscribe((value: any) => {
-      console.log('onVisibleChange', value);
-    });
-    componentRef.instance['visibleChange'].emit(true);
-  }
 }

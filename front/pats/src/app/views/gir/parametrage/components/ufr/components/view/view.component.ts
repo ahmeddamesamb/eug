@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {DataDisplayComponent} from "../../../../../../../shared/components/data-display/data-display.component";
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { UfrServiceService } from '../../services/ufr-service.service';
 import {UfrModel} from '../../models/ufr-model'
-import { Observable,map } from 'rxjs';
+import { Observable,filter,map } from 'rxjs';
 
 import {LoaderComponent} from '../../../../../../../shared/components/loader/loader.component';
 import {LoaderService} from '../../../../../../../services/loader/loader.service';
@@ -21,10 +21,14 @@ export class ViewComponent {
 
   id: string ="";
   loadState : boolean = false;
+  previousUrl: string | null = null;
 
 
-  constructor(private activeRoute: ActivatedRoute, private ufrService: UfrServiceService, private loaderservice:LoaderService){
+  constructor(private activeRoute: ActivatedRoute,private router: Router, private ufrService: UfrServiceService, private loaderservice:LoaderService){
+    this.previousUrl = '';
 
+    const previousUrl = this.router.getCurrentNavigation();
+    console.log('URL précédente :', previousUrl);
   }
 
   ufr? :UfrModel ;
@@ -40,6 +44,10 @@ export class ViewComponent {
         this.loadState = false
       })
     })
+
+
   }
+
+
 
 }

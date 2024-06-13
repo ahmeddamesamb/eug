@@ -1,18 +1,19 @@
 import { Component, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { DocsExampleComponent } from '@docs-components/public-api';
-import { RowComponent, ColComponent, TextColorDirective, CardComponent,DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective, ToasterComponent, ToasterPlacement } from '@coreui/angular-pro';
+import { RowComponent, ColComponent, TextColorDirective, CardComponent,DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective } from '@coreui/angular-pro';
 import { DatePipe } from '@angular/common';
 import { MinistereServiceService } from '../../services/ministere-service.service';
 import {MinistereModel} from '../../models/ministere-model';
 import { Router } from '@angular/router';
-import {AlerteComponent} from 'src/app/shared/components/alerte/alerte/alerte.component'
+import {  AlertServiceService} from 'src/app/shared/services/alert/alert-service.service'
+
 
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective,DatePipe,DatePickerComponent_1,ToasterComponent],
+  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective,DatePipe,DatePickerComponent_1],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -21,7 +22,7 @@ export class CreateComponent {
   ministereForm: FormGroup | undefined;
   customStylesValidated = false;
 
-  constructor( private ministereService: MinistereServiceService,private route:Router ){
+  constructor( private ministereService: MinistereServiceService,private route:Router , private alertService:AlertServiceService){
 
   }
 
@@ -48,11 +49,12 @@ export class CreateComponent {
         
         next: (data) => {
           console.log(data);
-          this.addToast(true);
+          this.alertService.showToast("Creation","Creation du ministere avec succes","success");
+          //this.addToast(true);
           this.route.navigate(['/gir/parametrage/ministere/view',data.id])
         },
         error: (err) => {
-          this.addToast(false);
+          this.alertService.showToast("Creation","Echec de creation du ministere","danger");
         }
       });
       console.log('Données du formulaire :', this.ministereForm!.value);
@@ -66,34 +68,6 @@ export class CreateComponent {
     this.customStylesValidated = false;
   }
 
-  //Pour le toaster
-
-  @ViewChild(ToasterComponent) toaster!: ToasterComponent;
-  placement = ToasterPlacement.TopEnd;
   
-  addToast(value: boolean) {
-    var options = {
-      title: `Creation`,
-      texte: `Echec de creation du ministere`,
-      delay: 5000,
-      placement: this.placement,
-      color: 'danger',
-      autohide: true,
-    };
-    if(value){
-      options.texte = `Creation du ministere avec succes`;
-      options.color = 'success';
-
-    }
-    
-    
-    const componentRef = this.toaster.addToast(AlerteComponent, options, {});
-    componentRef.instance['visibleChange'].subscribe((value: any) => {
-      console.log('onVisibleChange', value)
-    });
-    componentRef.instance['visibleChange'].emit(true);
-
-  }
-
 
 }
