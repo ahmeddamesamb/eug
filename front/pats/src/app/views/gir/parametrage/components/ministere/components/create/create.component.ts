@@ -5,8 +5,9 @@ import { RowComponent, ColComponent, TextColorDirective, CardComponent,DatePicke
 import { DatePipe } from '@angular/common';
 import { MinistereServiceService } from '../../services/ministere-service.service';
 import {MinistereModel} from '../../models/ministere-model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {  AlertServiceService} from 'src/app/shared/services/alert/alert-service.service'
+import { map, Observable } from 'rxjs';
 
 
 
@@ -18,15 +19,19 @@ import {  AlertServiceService} from 'src/app/shared/services/alert/alert-service
   styleUrl: './create.component.scss'
 })
 export class CreateComponent {
-  ministere? :MinistereModel ;
-  ministereForm: FormGroup | undefined;
+  ministere: MinistereModel = {
+    id: 0,
+    nomMinistere: '',
+    sigleMinistere: '',
+    dateDebut: '',
+    dateFin: '',
+    enCoursYN: 0,
+  };
+  ministereForm: FormGroup;
   customStylesValidated = false;
+  id: number | undefined ;
 
-  constructor( private ministereService: MinistereServiceService,private route:Router , private alertService:AlertServiceService){
-
-  }
-
-  ngOnInit() {
+  constructor( private ministereService: MinistereServiceService, private route: ActivatedRoute, private router:Router , private alertService:AlertServiceService){
     this.ministereForm = new FormGroup({
       nomMinistere: new FormControl('', Validators.required),
       sigleMinistere: new FormControl('', Validators.required),
@@ -34,33 +39,95 @@ export class CreateComponent {
     });
   }
 
+  ngOnInit() {
+
+    const id: Observable<string> = this.route.params.pipe(map(p=>p['id']));
+    if(id){
+      
+      id.subscribe((id)=>{
+
+        this.ministereService.getMinistereById(parseInt(id)).subscribe(
+          (data) => {
+            this.ministere = data;
+            console.log(this.ministere);
+            this.id = parseInt(id);
+            this.initializeForm(data);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      })
+
+    }
+    
+  }
+
+  initializeForm(ministere: MinistereModel) {
+    this.ministereForm.setValue({
+      nomMinistere: ministere.nomMinistere || '',
+      sigleMinistere: ministere.sigleMinistere || '',
+      dateDebut: ministere.dateDebut || null,
+      dateFin: ministere.dateFin || null,
+      enCoursYN: ministere.enCoursYN || 0
+    });
+  }
+
   onSubmit1() {
 
     if (this.ministereForm!.valid) {
       this.customStylesValidated = true;
-      this.ministere = this.ministereForm!.value;
-      /* if (this.ministere && this.ministere.dateDebut instanceof Date) {
-        const transformedDate = this.formatDate(this.ministere.dateDebut);
-        if (transformedDate !== null) {
-          this.ministere.dateDebut = transformedDate;
-        }
-      } */
-      this.ministereService.createMinistere(this.ministere!).subscribe({
-        
-        next: (data) => {
-          console.log(data);
-          this.alertService.showToast("Creation","Creation du ministere avec succes","success");
-          //this.addToast(true);
-          this.route.navigate(['/gir/parametrage/ministere/view',data.id])
-        },
-        error: (err) => {
-          this.alertService.showToast("Creation","Echec de creation du ministere","danger");
-        }
-      });
+      
+
+
+      if(this.id !=null){
+        //Si c'est une mis a jour
+        const enCoursYN = this.ministereForm.value.enCoursYN ? 1 : 0;
+
+        this.ministere = { ...this.ministereForm.value, id: Number(this.id), enCoursYN };      // Convertir la valeur booléenne en entier
+        this.ministereService.updateMinistere(this.id, this.ministere).subscribe({
+          next: (data) => {
+            console.log(data);
+            //this.addToast(true);
+            this.alertService.showToast("Creation","Mise à jour du ministère avec succès","success");
+            this.router.navigate(['/gir/parametrage/ministere/view', data.id]);
+          },
+          error: (err) => {
+            //console.log(err);
+            //this.addToast(false);
+            this.alertService.showToast("Creation","Échec de la mise à jour du ministère","danger");
+          }
+        });
+
+      }else{
+        //Si c'est une creation
+        this.ministere = this.ministereForm!.value;
+        this.ministereService.createMinistere(this.ministere!).subscribe({
+          
+          next: (data) => {
+            console.log(data);
+            this.alertService.showToast("Creation","Creation du ministere avec succes","success");
+            //this.addToast(true);
+            this.router.navigate(['/gir/parametrage/ministere/view',data.id])
+          },
+          error: (err) => {
+            this.alertService.showToast("Creation","Echec de creation du ministere","danger");
+          }
+        });
+
+
+      }
+
+
+
       console.log('Données du formulaire :', this.ministereForm!.value);
     } else {
       console.log('Formulaire invalide');
     }
+  }
+
+  annuler(){
+    this.router.navigate(['/gir/parametrage/ministere/attente']);
   }
 
   onReset1() {
