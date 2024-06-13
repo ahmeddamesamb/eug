@@ -1,5 +1,10 @@
 <div class="">
-    <h3>Nouvelle Université</h3>
+    
+    @if (id !=null) {
+        <h3>Mis a jour</h3>
+    }@else {
+        <h3>Nouvelle Université</h3>
+    }
     <form #customStylesForm="ngForm"
         (ngSubmit)="onSubmit1()"
 
@@ -48,9 +53,18 @@
 
         <div class="col-12 d-flex justify-content-between ">
             <div class=" w-50 pe-1">
-                <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
-                    Vider
-                </button>
+                @if (id !=null) {
+                    
+
+                    <button (click)="annuler()"  class=" w-100" cButton color="secondary" type="reset">
+                        Annuler
+                    </button>
+                }@else {
+                    <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                        Vider
+                    </button>
+                }
+                
             </div>
             <div class=" w-50 ps-1">
                 <button cButton class=" w-100 text-white" [disabled]="!universiteForm?.valid"  color="primary" type="submit">
@@ -61,5 +75,3 @@
         </div>
     </form>
 </div>
-
-<c-toaster class="p-3" position="fixed" [placement]="placement" />

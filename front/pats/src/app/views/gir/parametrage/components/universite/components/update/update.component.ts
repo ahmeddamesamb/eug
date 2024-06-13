@@ -114,7 +114,7 @@ export class UpdateComponent {
     }
   }
   annuler(){
-    this.router.navigate(['/gir/parametrage/ministere/attente']);
+    this.router.navigate(['/gir/parametrage/universite/attente']);
   }
 
 

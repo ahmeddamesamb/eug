@@ -1,19 +1,20 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { DocsExampleComponent } from '@docs-components/public-api';
-import { RowComponent, ColComponent, TextColorDirective, CardComponent,DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective, ToasterComponent, ToasterPlacement } from '@coreui/angular-pro';
+import { RowComponent, ColComponent, TextColorDirective, CardComponent, DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective } from '@coreui/angular-pro';
 import { DatePipe } from '@angular/common';
 import { UniversiteService } from '../../services/universite.service';
-import {UniversiteModel} from '../../models/universite-model';
-import {MinistereModel} from '../../../ministere/models/ministere-model';
-import {MinistereServiceService} from '../../../ministere/services/ministere-service.service';
-import { Router } from '@angular/router';
-import {AlerteComponent} from 'src/app/shared/components/alerte/alerte/alerte.component'
+import { MinistereServiceService } from '../../../ministere/services/ministere-service.service';
+import { UniversiteModel } from '../../models/universite-model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { map, Observable } from 'rxjs';
+import { MinistereModel } from '../../../ministere/models/ministere-model';
+import {AlertServiceService} from 'src/app/shared/services/alert/alert-service.service'
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective,DatePipe,DatePickerComponent_1,ToasterComponent],
+  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective,DatePipe,DatePickerComponent_1],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
@@ -25,20 +26,47 @@ export class CreateComponent {
       id: 0
     } 
   }; 
-  universiteForm: FormGroup | undefined;
+  universiteForm: FormGroup;
   customStylesValidated = false;
   ministereList : MinistereModel[] = []; //Pour le select du formulaire
-  constructor( private universiteService: UniversiteService,private ministereService: MinistereServiceService ,private route:Router ){
+  id: number | undefined ;
 
-  }
 
-  ngOnInit() {
+  constructor( private universiteService: UniversiteService,private ministereService: MinistereServiceService , private router: ActivatedRoute ,private route:Router, private alertService: AlertServiceService ){
     this.universiteForm = new FormGroup({
       nomUniversite: new FormControl('', Validators.required),
       sigleUniversite: new FormControl('', Validators.required),
       ministere: new FormControl('', Validators.required),
     });
+  }
+
+  ngOnInit() {
+    const id: Observable<string> = this.router.params.pipe(map(p=>p['id']));
+    if(id){
+      
+      id.subscribe((id)=>{
+        this.universiteService.getUniversiteById(parseInt(id)).subscribe(
+          (data) => {
+            this.universite = data;
+            this.id = parseInt(id);
+            this.initializeForm(this.universite);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      })
+
+    }
     this.getListeMinistere();
+  }
+
+  initializeForm(universite: UniversiteModel) {
+    this.universiteForm.setValue({
+      nomUniversite: universite.nomUniversite || '',
+      sigleUniversite: universite.sigleUniversite || '',
+      ministere : universite.ministere?.id || 0 
+    });
   }
 
   //Pour le select du formulaire
@@ -48,8 +76,6 @@ export class CreateComponent {
         this.ministereList = data;
       },
       error: (err) => {
-
-
       }
     });
   }
@@ -68,25 +94,53 @@ export class CreateComponent {
           }
       }
 
-      
-      console.log('Données du formulaire :', this.universite);
-      console.log('Données du formulaire :', this.universite?.ministere?.id);
-
-      this.universiteService.createUniversite(this.universite!).subscribe({
+      if(this.id !=null){
+        //Si c'est une mis a jour
         
-        next: (data) => {
-          console.log(data);
-          this.addToast(true);
-          this.route.navigate(['/gir/parametrage/universite/view',data.id])
-        },
-        error: (err) => {
-          this.addToast(false);
-        }
-      });
-      console.log('Données du formulaire :', this.universite);
+
+
+        this.universiteService.updateUniversite(Number(this.id), this.universite).subscribe({
+          next: (data) => {
+            console.log(data);
+            this.alertService.showToast("Mis a jour","Mis a jour de l'université avec success","success");
+            this.route.navigate(['/gir/parametrage/universite/view', data.id]);
+          },
+          error: (err) => {
+            this.alertService.showToast("Mis a jour","Erreur sur la mis a jour de l'université","danger");
+          }
+        });
+        
+      }else{
+        //Si c'est une creation
+
+        this.universiteService.createUniversite(this.universite!).subscribe({
+        
+          next: (data) => {
+            console.log(data);
+            //this.addToast(true);
+            this.alertService.showToast("Creation","Creation université avec succes","success");
+            this.route.navigate(['/gir/parametrage/universite/view',data.id])
+          },
+          error: (err) => {
+            //this.addToast(false);
+            this.alertService.showToast("Creation","Echec de creation de l'université","danger");
+          }
+        });
+        
+        
+
+      }
+
+
+      
+      
     } else {
       console.log('Formulaire invalide');
     }
+  }
+
+  annuler(){
+    this.route.navigate(['/gir/parametrage/universite/attente']);
   }
 
   onReset1() {
@@ -95,32 +149,5 @@ export class CreateComponent {
   }
 
 
-
-  @ViewChild(ToasterComponent) toaster!: ToasterComponent;
-  placement = ToasterPlacement.TopEnd;
-  
-  addToast(value: boolean) {
-    var options = {
-      title: `Creation`,
-      texte: `Echec de creation de l'université`,
-      delay: 5000,
-      placement: this.placement,
-      color: 'danger',
-      autohide: true,
-    };
-    if(value){
-      options.texte = `Creation université avec succes`;
-      options.color = 'success';
-
-    }
-    
-    
-    const componentRef = this.toaster.addToast(AlerteComponent, options, {});
-    componentRef.instance['visibleChange'].subscribe((value: any) => {
-      console.log('onVisibleChange', value)
-    });
-    componentRef.instance['visibleChange'].emit(true);
-
-  }
 
 }

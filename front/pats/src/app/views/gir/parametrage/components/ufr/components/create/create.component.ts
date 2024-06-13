@@ -7,7 +7,6 @@ import { UfrServiceService } from '../../services/ufr-service.service';
 import { UniversiteService } from '../../../universite/services/universite.service';
 import { UfrModel } from '../../models/ufr-model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlerteComponent } from 'src/app/shared/components/alerte/alerte/alerte.component';
 import { map, Observable } from 'rxjs';
 import { UniversiteModel } from '../../../universite/models/universite-model';
 import {AlertServiceService} from 'src/app/shared/services/alert/alert-service.service'
@@ -34,7 +33,6 @@ export class CreateComponent {
   customStylesValidated = false;
   universiteList : UniversiteModel[] = []; //Pour le select du formulaire
   id: number | undefined ;
-  msg:any = "teste";
   constructor(private ufrService: UfrServiceService, private universiteService: UniversiteService, private route: ActivatedRoute, private router: Router,private alertService:AlertServiceService) {
 
     this.ufrForm = new FormGroup({
