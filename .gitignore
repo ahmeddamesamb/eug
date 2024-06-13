@@ -9,11 +9,13 @@
 # Ignorer le fichier environment.development.ts dans home
 /front/home/src/environments/environment.development.ts
 
-
 # Ignorer le fichier environment.development.ts dans pats
 /front/pats/src/environments/environment.development.ts
 
 
+#back_end/microserviceGIR/src/main/java/sn/ugb/gir/generator
+#back_end/microserviceGIR/src/main/java/sn/ugb/gir/FakerDataGenerator.java
+#back_end/microserviceGIR/src/main/java/sn/ugb/gir/InitData.java
 
 
 ######################
@@ -26,9 +28,6 @@ npm-debug.log.*
 /.awcache/*
 /.cache-loader/*
 
-#back_end/microserviceGIR/src/main/java/sn/ugb/gir/generator
-#back_end/microserviceGIR/src/main/java/sn/ugb/gir/FakerDataGenerator.java
-#back_end/microserviceGIR/src/main/java/sn/ugb/gir/InitData.java
 
 *application-dev.yml
 
