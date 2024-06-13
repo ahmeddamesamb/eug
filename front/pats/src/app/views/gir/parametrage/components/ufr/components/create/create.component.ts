@@ -147,6 +147,10 @@ export class CreateComponent {
     
   }
 
+  annuler(){
+    this.router.navigate(['/gir/parametrage/ufr/attente']);
+  }
+
   onReset1() {
     this.ufrForm!.reset();
     this.customStylesValidated = false;
