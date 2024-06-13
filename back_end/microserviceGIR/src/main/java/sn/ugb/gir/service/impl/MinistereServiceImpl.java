@@ -132,13 +132,6 @@ public class MinistereServiceImpl implements MinistereService {
         if (ministereDTO.getDateFin() != null && !ministereDTO.getDateFin().isAfter(ministereDTO.getDateDebut())) {
             throw new BadRequestAlertException("La date de fin doit être strictement postérieure à la date de début", ENTITY_NAME, "invalidOrdreDate");
         }
-        String regex = "^[\\p{L}\\p{N}\\_\\-\\.\\s]+$";
-        if (!ministereDTO.getNomMinistere().matches(regex)) {
-            throw new BadRequestAlertException("Le nom du ministere contient des caractères non autorisés.", ENTITY_NAME, "nomMinistereInvalidCharacters");
-        }
-        if (!ministereDTO.getSigleMinistere().matches(regex)) {
-            throw new BadRequestAlertException("Le Sigle du ministere contient des caractères non autorisés.", ENTITY_NAME, "sigleMinistereInvalidCharacters");
-        }
     }
 
 
