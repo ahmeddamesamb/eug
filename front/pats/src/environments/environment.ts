@@ -10,7 +10,7 @@ export const ENVIRONMENT = {
 export const KeycloakConfig = {
   production: true,
     keycloak: {
-      url: 'http://localhost:9080',
+      url: 'http://localhost:9080/',
       realm: 'pats',
       clientId: 'e-ugb',
       'ssl-required': "external",
