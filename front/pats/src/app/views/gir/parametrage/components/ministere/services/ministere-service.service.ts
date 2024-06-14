@@ -20,7 +20,7 @@ export class MinistereServiceService {
   }
 
   getMinistereList(): Observable<MinistereModel[]> {
-    return this.http.get<MinistereModel[]>(`${this.ministereUrl}`);
+    return this.http.get<MinistereModel[]>(`${this.ministereUrl}?sort=enCoursYN,desc`);
   }
 
 

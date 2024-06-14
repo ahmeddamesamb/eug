@@ -1,8 +1,9 @@
 <div class="d-flex">
     <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder " (click)="create()" >
-        Ajouter Ufr
+        Ajouter
     </button>
 </div>
+
 
 <c-smart-table
   [activePage]="1"
@@ -11,8 +12,8 @@
   [columnFilter]="true"
   [itemsPerPageSelect]="true"
   [itemsPerPage]="5"
-  itemsPerPageLabel="Ufr par page"
-  [items]="ufrList"
+  itemsPerPageLabel="Domaine(s) par page"
+  [items]="domaineList"
   [sorterValue]="{ column: 'libeleUfr', state: 'asc' }"
   [tableFilter]="false"
   [tableProps]="{ hover: true, striped: true, responsive: true }"
@@ -32,17 +33,14 @@
     
     <td>
       @switch (columnName) {
-        @case ('universite') {
-          
-            {{ (item[columnName].sigleUniversite)  }} 
+        @case ('ufrs') {
+            @for (ufr of item[columnName]; track $index) {
 
+                {{ufr.libeleUfr }}
+                
+                <span>-</span>
+            }
         }
-        <!-- @case ('systemeLMDYN') {
-           {{ (item[columnName]) | numberToString }}
-        }
-        @case ('ordreStat') {
-            {{ (item[columnName]) | numberToString }}
-         } -->
         @case ('show') {
             <div class="d-flex gap-2">
                 <button (click)="view(item.id)"  cButton cPopover="Détail!" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >
@@ -51,9 +49,6 @@
                 <button  cButton cPopover="Mise à jour!" cPopoverPlacement="top" color="primary" size="sm" variant="outline" (click)="update(item.id)" >
                     <i class="bi bi-pen-fill"></i>
                 </button>
-                <!-- <button (click)="delete(item.id)"  cButton color="danger" size="sm" variant="outline">
-                    <i class="bi bi-x-lg"></i>
-                </button> -->
                 <button (click)="toggleLiveDemo(item)"  cButton cPopover="Suppréssion!" cPopoverPlacement="right" color="danger" size="sm" variant="outline">
                   <i class="bi bi-x-lg"></i>
                 </button>
@@ -81,7 +76,7 @@
                       
                       @if (liveDemoVisible) {
                         <span class="mt-2">
-                          Voulez-vous supprimer l'élément {{ (itemDelete.libeleUfr) }} 
+                          Voulez-vous supprimer l'élément {{ (itemDelete.libelleDomaine) }} 
                         </span>
                       }
                       
@@ -113,4 +108,3 @@
     </td>
   </ng-template>
 </c-smart-table>
-

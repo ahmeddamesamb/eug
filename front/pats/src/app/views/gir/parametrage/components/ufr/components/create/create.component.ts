@@ -39,8 +39,8 @@ export class CreateComponent {
       libeleUfr: new FormControl('', Validators.required),
       sigleUfr: new FormControl('', Validators.required),
       universite: new FormControl('', Validators.required),
-      systemeLMDYN: new FormControl(0),
-      ordreStat: new FormControl(0),
+      /* systemeLMDYN: new FormControl(0),
+      ordreStat: new FormControl(0), */
 
     });
   }
@@ -75,8 +75,8 @@ export class CreateComponent {
       libeleUfr: ufr.libeleUfr || '',
       sigleUfr: ufr.sigleUfr || '',
       universite : ufr.universite?.id || 0,
-      systemeLMDYN : ufr.systemeLMDYN || 0,
-      ordreStat : ufr.ordreStat || 0,
+      /* systemeLMDYN : ufr.systemeLMDYN || 0,
+      ordreStat : ufr.ordreStat || 0, */
     });
   }
 
@@ -102,8 +102,8 @@ export class CreateComponent {
           if (this.ufr && this.ufr.universite) {
               this.ufr.libeleUfr = this.ufrForm!.get('libeleUfr')?.value; 
               this.ufr.sigleUfr = this.ufrForm!.get('sigleUfr')?.value;
-              this.ufr.systemeLMDYN = this.ufrForm!.get('systemeLMDYN')?.value ? 1 : 0;
-              this.ufr.ordreStat = this.ufrForm!.get('ordreStat')?.value ? 1 : 0; 
+              /* this.ufr.systemeLMDYN = this.ufrForm!.get('systemeLMDYN')?.value ? 1 : 0;
+              this.ufr.ordreStat = this.ufrForm!.get('ordreStat')?.value ? 1 : 0;  */
               this.ufr.universite.id = parseInt(this.ufrForm!.get('universite')?.value) ; 
           }
       }

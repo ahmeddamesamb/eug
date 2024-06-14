@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UpdateComponent } from './update.component';
+import { DomaineListComponent } from './domaine-list.component';
 
-describe('UpdateComponent', () => {
-  let component: UpdateComponent;
-  let fixture: ComponentFixture<UpdateComponent>;
+describe('DomaineListComponent', () => {
+  let component: DomaineListComponent;
+  let fixture: ComponentFixture<DomaineListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UpdateComponent]
+      imports: [DomaineListComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(UpdateComponent);
+    fixture = TestBed.createComponent(DomaineListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

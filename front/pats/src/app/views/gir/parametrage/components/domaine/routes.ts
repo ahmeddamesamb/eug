@@ -64,7 +64,7 @@ export const routes: Routes = [
 
     },
     {
-      path: '', loadComponent: () => import('./components/update/update.component').then(m => m.UpdateComponent), outlet:'secondary'
+      path: '', loadComponent: () => import('./components/create/create.component').then(m => m.CreateComponent), outlet:'secondary'
     }
   ],
 
