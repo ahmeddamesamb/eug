@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { environment } from '../../../environments/environment';
-
+import { KeycloakService } from 'keycloak-angular';
+import { UserService } from '../../services/user.service';
+import { environment } from '../../config/environment';
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [],
-  // providers:[UserService, KeycloakService],
+  providers:[UserService, KeycloakService],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -27,9 +28,17 @@ export class HeaderComponent {
   public redirectUrl_etudiant = environment.redirectUrl_etudiant;
   public clientId = environment.clientId;
   public suiteUrlLogin = environment.suiteUrlLogin;
+  constructor(private userService: UserService){
+    this.userService.initialize();
+
+  }
 
   public getUrl(realm:string, client:string): string{
     return  `${this.urlLogin}${realm}${this.suiteUrlLogin}${this.clientId}`;
+  }
+
+  login() {
+    this.userService.login();
   }
   }
 

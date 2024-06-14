@@ -48,7 +48,9 @@
         <li class="d-flex align-items-center"><a class="dropdown-item etudiant" href="#" > <i class="bi bi-mortarboard"></i> <span> Espace étudiant</span> <i class="flaiche bi bi-arrow-right"></i></a> </li>
         <li class="d-flex align-items-center"><a class="dropdown-item enseignant" href="#"><i class="bi bi-person"></i> <span> Espace PER </span>  <i class="flaiche bi bi-arrow-right"></i></a> </li>
         <!-- <li class="d-flex align-items-center"><a class="dropdown-item personnel" href="http://localhost:8080/realms/pats/protocol/openid-connect/auth?client_id=e-ugb&redirect_uri=http%3A%2F%2Flocalhost%3A4201%2F&state=b509304b-9044-45df-abad-ffde21acdd4e&response_mode=fragment&response_type=code&scope=openid&nonce=85d76c58-befe-4612-b083-fa833c15bedd&code_challenge=zmuh3P0Rl7Afhp3xxG1O67WO2jALoL5dMq8FkN4HtSQ&code_challenge_method=S256" > <i class="bi bi-shield-check"></i> <span> Espace PATS </span>   <i class="flaiche bi bi-arrow-right"></i></a> </li> -->
-        <li class="d-flex align-items-center"><a class="dropdown-item personnel" [href]="getUrl(realm_pats,clientId)" > <i class="bi bi-shield-check"></i> <span> Espace PATS </span>   <i class="flaiche bi bi-arrow-right"></i></a> </li>
+        <!-- <li class="d-flex align-items-center"><a class="dropdown-item personnel" [href]="getUrl(realm_pats,clientId)" > <i class="bi bi-shield-check"></i> <span> Espace PATS </span>   <i class="flaiche bi bi-arrow-right"></i></a> </li> -->
+        <li class="d-flex align-items-center"><a class="dropdown-item personnel" (click)="login()"> <i class="bi bi-shield-check"></i> <span> Espace PATS </span>   <i class="flaiche bi bi-arrow-right"></i></a> </li>
+
 
     </ul>
       </div>
