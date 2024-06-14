@@ -1,9 +1,9 @@
 
 <div class="">
     @if (id !=null) {
-        <h3>Mis a jour</h3>
+        <h3>Mise à jour</h3>
     }@else {
-        <h3>Ajout Ministere</h3>
+        <h3>Ajout Ministère</h3>
     }
     <form #customStylesForm="ngForm"
         (ngSubmit)="onSubmit1()"
@@ -19,7 +19,7 @@
             [valid]="(ministereForm?.get('nomMinistere')?.touched && ministereForm?.get('nomMinistere')?.valid) ? true
                : (ministereForm?.get('nomMinistere')?.touched) && ministereForm?.get('nomMinistere')?.invalid ? false : undefined"
             formControlName="nomMinistere"/>
-            <c-form-feedback>nom requis </c-form-feedback>
+            <c-form-feedback>Le nom est obligatoire </c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom02">Sigle </label>
@@ -27,7 +27,7 @@
               value="" formControlName="sigleMinistere" [autofocus]="true"
               [valid]="(ministereForm?.get('sigleMinistere')?.touched && ministereForm?.get('sigleMinistere')?.valid) ? true
                : (ministereForm?.get('sigleMinistere')?.touched) && ministereForm?.get('sigleMinistere')?.invalid ? false : undefined"/>
-            <c-form-feedback >sigle requis</c-form-feedback>
+            <c-form-feedback >Le sigle est obligatoire</c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom03">Date de création </label>
@@ -37,7 +37,7 @@
 
 
             @if ((ministereForm?.get('dateDebut')?.touched && ministereForm?.get('dateDebut')?.hasError('required'))) {
-              <span class="text-danger" > date requise</span>
+              <span class="text-danger" > La date de création est obligatoire</span>
             }
         </c-col>
         @if (id !=null) {

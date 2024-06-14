@@ -89,13 +89,13 @@ export class CreateComponent {
           next: (data) => {
             console.log(data);
             //this.addToast(true);
-            this.alertService.showToast("Creation","Mise à jour du ministère avec succès","success");
+            this.alertService.showToast("Création","Mise à jour du ministère avec succès","success");
             this.router.navigate(['/gir/parametrage/ministere/view', data.id]);
           },
           error: (err) => {
             //console.log(err);
             //this.addToast(false);
-            this.alertService.showToast("Creation","Échec de la mise à jour du ministère","danger");
+            this.alertService.showToast("Création","Échec de la mise à jour du ministère","danger");
           }
         });
 
@@ -106,12 +106,12 @@ export class CreateComponent {
           
           next: (data) => {
             console.log(data);
-            this.alertService.showToast("Creation","Creation du ministere avec succes","success");
+            this.alertService.showToast("Création","Creation du ministère avec succes","success");
             //this.addToast(true);
             this.router.navigate(['/gir/parametrage/ministere/view',data.id])
           },
           error: (err) => {
-            this.alertService.showToast("Creation","Echec de creation du ministere","danger");
+            this.alertService.showToast("Création","Echec de création du ministère","danger");
           }
         });
 

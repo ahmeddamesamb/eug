@@ -19,10 +19,8 @@ export class AlertServiceService {
 
   showToast(title: string, texte: string, color: string, placement: ToasterPlacement = ToasterPlacement.TopEnd) {
     if (!this.toaster) {
-      console.error('ToasterComponent not set. Please set it using setToaster method.');
       return;
     }
-    console.log("grerghpçeoijrjkg,operijg,eoirpgj,erpoigjeràpoigjerpi",texte);
     var delay = 5000;
     if(color == "danger"){
       delay = 500000;
@@ -38,7 +36,6 @@ export class AlertServiceService {
 
     const componentRef = this.toaster.addToast(AlerteComponent, options, {});
     componentRef.instance['visibleChange'].subscribe((value: any) => {
-      console.log('onVisibleChange', value);
     });
     componentRef.instance['visibleChange'].emit(true);
   }
