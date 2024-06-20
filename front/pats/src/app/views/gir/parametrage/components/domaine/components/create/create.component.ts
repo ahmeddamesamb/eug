@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { DocsExampleComponent } from '@docs-components/public-api';
 import { RowComponent, ColComponent, TextColorDirective, CardComponent, DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective, ToasterComponent, MultiSelectComponent as MultiSelectComponent_1,MultiSelectOptgroupComponent,MultiSelectOptionComponent, } from '@coreui/angular-pro';
@@ -34,7 +34,7 @@ export class CreateComponent {
 
     this.domaineForm = new FormGroup({
       libelleDomaine: new FormControl('', Validators.required),
-      ufrs: new FormControl([], Validators.required),
+      ufrs: new FormControl(null, Validators.required),
 
     });
   }
@@ -49,9 +49,13 @@ export class CreateComponent {
       id.subscribe((id)=>{
         this.domaineService.getDomaineById(parseInt(id)).subscribe(
           (data) => {
+            this.domaine = {
+              libelleDomaine: '',
+              ufrs : []
+            }; 
             this.domaine = data;
             this.id = parseInt(id);
-            this.initializeForm(this.domaine); 
+            this.initializeForm(this.domaine);          
           },
           (err) => {
             console.log(err);
@@ -65,11 +69,23 @@ export class CreateComponent {
   }
 
   initializeForm(domaine: DomaineModel) {
+    //this.domaineForm.reset();
+    this.domaineForm.setValue({
+      libelleDomaine: '',
+      ufrs: null,
+    });
+    console.log("Information du formulaire avant initialisation", this.domaineForm.value);
+    var ufrsChoisis = domaine.ufrs!.map(ufr => ufr.id);
+  
+    // Mettez à jour le formulaire avec les nouvelles données
     this.domaineForm.setValue({
       libelleDomaine: domaine.libelleDomaine || '',
-      ufrs: domaine.ufrs || '',
+      ufrs: ufrsChoisis,
     });
+  
+    console.log("Information du formulaire après initialisation", this.domaineForm.value);
   }
+
 
   //Pour le select du formulaire
   getListeUfr(){
@@ -96,15 +112,7 @@ export class CreateComponent {
       this.domaine.libelleDomaine = this.domaineForm!.get('libelleDomaine')?.value; 
       
       var idUfrChoisi = this.domaineForm!.get('ufrs')?.value;
-      var ufrsChoisis : UfrModel[] = [];
-      for (let index = 0; index < idUfrChoisi.length; index++) {
-        //const element = ufrsChoisi[index];
-        var ufr :UfrModel = {
-          id: idUfrChoisi[index],
-        };
-        ufrsChoisis[index] = ufr;  
-      }
-      this.domaine.ufrs = ufrsChoisis;
+      this.domaine.ufrs = idUfrChoisi.map((id: number) => ({ id: id }));
               
       
 

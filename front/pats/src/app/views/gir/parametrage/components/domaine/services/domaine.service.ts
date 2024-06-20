@@ -22,8 +22,8 @@ export class DomaineService {
     return this.http.get<DomaineModel[]>(`${this.url}`);
   }
 
-  createDomaine(ufr: DomaineModel): Observable<DomaineModel> {
-    return this.http.post<any>(`${this.url}`, ufr);
+  createDomaine(domaine: DomaineModel): Observable<DomaineModel> {
+    return this.http.post<any>(`${this.url}`, domaine);
   }
 
   getDomaineById(id:number):Observable<DomaineModel>{
@@ -35,7 +35,7 @@ export class DomaineService {
 
     return this.http.delete<void>(`${this.url}/${id}`);
   }
-  updateDomaine(id: number, ufr: DomaineModel): Observable<DomaineModel> {
-    return this.http.put<DomaineModel>(`${this.url}/${id}`, ufr);
+  updateDomaine(id: number, domaine: DomaineModel): Observable<DomaineModel> {
+    return this.http.put<DomaineModel>(`${this.url}/${id}`, domaine);
   }
 }

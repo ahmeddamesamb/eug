@@ -1,1 +1,38 @@
-<p>view works!</p>
+<div>
+
+    <!-- give label and data ( required) , if possible his color (not required) -->
+  
+    <h3>Détail</h3>
+  
+    @if (!loadState) {
+        <div class="d-flex flex-column gap-2">
+  
+            <!-- display item data, label data and data -->
+    
+            <app-data-display label="libelé" [data]="domaine?.libelleDomaine"  ></app-data-display>
+
+            <div class="c-color px-2">Ufrs</div>
+            <div class="d-flex flex-wrap">
+                @for (ufrDo of domaine.ufrs; track $index) {
+                    <span class="border  rounded p-2 fw-bolder me-2" >
+                        {{ufrDo.libeleUfr }}
+                    </span>
+                }
+
+            </div>
+            
+            
+           
+
+        </div>
+    }
+  
+  
+  
+  
+    <app-loader [isLoading]="loadState"></app-loader>
+    
+  
+  
+  
+</div>
