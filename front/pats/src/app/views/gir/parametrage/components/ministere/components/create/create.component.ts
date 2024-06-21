@@ -35,7 +35,9 @@ export class CreateComponent {
     this.ministereForm = new FormGroup({
       nomMinistere: new FormControl('', Validators.required),
       sigleMinistere: new FormControl('', Validators.required),
-      dateDebut: new FormControl(null, Validators.required)
+      dateDebut: new FormControl(null, Validators.required),
+      dateFin: new FormControl(null),
+      enCoursYN: new FormControl(1)
     });
   }
 

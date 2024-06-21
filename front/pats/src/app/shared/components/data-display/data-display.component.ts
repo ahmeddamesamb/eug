@@ -18,6 +18,8 @@ export class DataDisplayComponent {
 
   @Input() public data: string | undefined ="";
 
+  @Input() public dataTable: string[] | undefined =[];
+
   @Input() public iclass: string | undefined ="";
 
   customClass = "text-"+this.iclass +" border-"+this.iclass;

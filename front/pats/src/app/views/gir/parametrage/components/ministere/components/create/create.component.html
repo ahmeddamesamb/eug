@@ -31,7 +31,7 @@
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom03">Date de création </label>
-            <c-date-picker cFormControl id="validationCustom03"
+            <c-date-picker closeOnSelect cFormControl id="validationCustom03"
               [valid]="(ministereForm?.get('dateDebut')?.touched && ministereForm?.get('dateDebut')?.valid) ? true : (ministereForm?.get('dateDebut')?.touched) && ministereForm?.get('dateDebut')?.invalid ? false : undefined"
               required  locale="fr-FR"   formControlName="dateDebut"/>
 
@@ -50,6 +50,7 @@
                     </div>
                 </div>
             </c-col>
+
         }
         
 

@@ -1,6 +1,6 @@
 <div class="d-flex">
     <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder " (click)="create()" >
-        Ajouter Ufr
+        Ajouter mention
     </button>
 </div>
 
@@ -11,9 +11,9 @@
   [columnFilter]="true"
   [itemsPerPageSelect]="true"
   [itemsPerPage]="5"
-  itemsPerPageLabel="Ufr par page"
-  [items]="ufrList"
-  [sorterValue]="{ column: 'libeleUfr', state: 'asc' }"
+  itemsPerPageLabel="Mention (s) par page"
+  [items]="mentionList"
+  [sorterValue]="{ column: 'libelleMention', state: 'asc' }"
   [tableFilter]="false"
   [tableProps]="{ hover: true, striped: true, responsive: true }"
   [tableBodyProps]="{ align: 'middle' }"
@@ -32,17 +32,11 @@
     
     <td>
       @switch (columnName) {
-        @case ('universite') {
+        @case ('domaine') {
           
-            {{ (item[columnName].sigleUniversite)  }} 
+            {{ (item[columnName].libelleDomaine)  }} 
 
         }
-        <!-- @case ('systemeLMDYN') {
-           {{ (item[columnName]) | numberToString }}
-        }
-        @case ('ordreStat') {
-            {{ (item[columnName]) | numberToString }}
-         } -->
         @case ('show') {
             <div class="d-flex gap-2">
                 <button (click)="view(item.id)"  cButton cPopover="Détail!" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >
@@ -81,7 +75,7 @@
                       
                       @if (liveDemoVisible) {
                         <span class="mt-2">
-                          Voulez-vous supprimer l'élément {{ (itemDelete.libeleUfr) }} 
+                          Voulez-vous supprimer l'élément {{ (itemDelete.libelleMention) }} 
                         </span>
                       }
                       
@@ -113,4 +107,5 @@
     </td>
   </ng-template>
 </c-smart-table>
+
 

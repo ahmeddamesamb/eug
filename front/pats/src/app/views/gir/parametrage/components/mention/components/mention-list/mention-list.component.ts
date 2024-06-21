@@ -1,8 +1,7 @@
 import { Component, QueryList, ViewChild, ViewChildren, } from '@angular/core';
 import { Router } from '@angular/router';
-import {UfrServiceService} from '../../services/ufr-service.service';
-import {UfrModel} from '../../models/ufr-model';
-import { NumberToStringPipe } from '../../../../../../../pipes/number-to-string.pipe'
+import {MentionServiceService} from '../../services/mention-service.service';
+import {MentionModel} from '../../models/mention-model';
 import {AlertServiceService} from 'src/app/shared/services/alert/alert-service.service'
 
 import{
@@ -30,24 +29,24 @@ import{
 import { delay } from 'rxjs';
 
 @Component({
-  selector: 'app-ufr-list',
+  selector: 'app-mention-list',
   standalone: true,
-  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
+  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective,
     ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
     CardComponent, CardHeaderComponent,PopoverModule, ColComponent,ToasterComponent
     ],
-  templateUrl: './ufr-list.component.html',
-  styleUrl: './ufr-list.component.scss'
+  templateUrl: './mention-list.component.html',
+  styleUrl: './mention-list.component.scss'
 })
-export class UfrListComponent {
+export class MentionListComponent {
 
-  constructor (private route:Router,private ufrService: UfrServiceService ,private alertService: AlertServiceService){
+  constructor (private route:Router,private mentionService: MentionServiceService,private alertService: AlertServiceService){
 
   }
 
-  ufrList : UfrModel[] = [];
-  itemDelete!: UfrModel;
-  itemUpdate!: UfrModel;
+  mentionList : MentionModel[] = [];
+  itemDelete!: MentionModel;
+  itemUpdate!: MentionModel;
   public liveDemoVisible = false;
   isloading = false;
 
@@ -55,12 +54,11 @@ export class UfrListComponent {
     this.getListe();
  
   }
-
   getListe(){
     this.isloading = true;
-    this.ufrService.getUfrList().subscribe({
+    this.mentionService.getMentionList().subscribe({
       next: (data) => {
-        this.ufrList = data;
+        this.mentionList = data;
         this.isloading = false;
       },
       error: (err) => {
@@ -72,18 +70,13 @@ export class UfrListComponent {
 
   columns: IColumn[] = [
     {
-      key: 'libeleUfr',
+      key: 'libelleMention',
       label: 'Nom'
     },
+    
     {
-      key: 'sigleUfr',
-      label: 'Sigle'
-    },
-   /*  { key: 'systemeLMDYN', label: 'LMD', _style: { width: '15%' } },
-    { key: 'ordreStat', _style: { width: '15%' } }, */
-    {
-      key: 'universite',
-      label: 'Université'
+      key: 'domaine',
+      label: 'Domaine'
     },
     {
       key: 'show',
@@ -95,31 +88,31 @@ export class UfrListComponent {
   ];
 
   view(item: number) {
-    this.route.navigate(['/gir/parametrage/ufr/view',item])
+    this.route.navigate(['/gir/parametrage/mention/view',item])
 
   }
   create() {
     
-    this.route.navigate(['/gir/parametrage/ufr/create'])
+    this.route.navigate(['/gir/parametrage/mention/create'])
 
   }
 
   update(item:number) {
-    this.route.navigate(['/gir/parametrage/ufr/update',item])
+    this.route.navigate(['/gir/parametrage/mention/update',item])
   }
 
   delete(){
     if (this.itemDelete && this.itemDelete.id !== undefined) {
-      this.ufrService.deleteUfr(this.itemDelete.id).subscribe({
+      this.mentionService.deleteMention(this.itemDelete.id).subscribe({
         next: (data) => {
           this.getListe();
           this.liveDemoVisible = false;
-          this.alertService.showToast("Suppression","Suppression de l'UFR avec succes","success");
+          this.alertService.showToast("Suppression","Suppression d'une mention avec succes","success");
 
         },
         error: (err) => {
           this.liveDemoVisible = false;
-          this.alertService.showToast("Suppression","Echec de la suppression de l'UFR","danger");
+          this.alertService.showToast("Suppression","Echec de la suppression de la mention","danger");
         }
       });
     } else {
@@ -128,7 +121,7 @@ export class UfrListComponent {
     }
   }
 
-  toggleLiveDemo(item : UfrModel) {
+  toggleLiveDemo(item : MentionModel) {
     this.itemDelete = item;
     this.liveDemoVisible = !this.liveDemoVisible;
   }
@@ -136,9 +129,6 @@ export class UfrListComponent {
   handleLiveDemoChange(event: boolean) {
     this.liveDemoVisible = event;
   }
-
-
-
 
 
 }
