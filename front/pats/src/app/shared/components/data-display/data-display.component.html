@@ -7,7 +7,7 @@
       {{data }}
     </div>
   }
-  @if (dataTable != []) {
+  @else if (dataTable != []) {
     <div class="d-flex flex-wrap">
       @for (data of dataTable; track $index) {
           <span class="border  rounded p-2 fw-bolder me-2" >
@@ -16,10 +16,9 @@
       }
 
     </div>
+  }@else{
+    <div [class]="'border  rounded p-2 fw-bolder '+ ' text-'+iclass + ' border-'+iclass" >
+      N/A
+    </div>
   }
-    
-
-
-
-
 </div>
