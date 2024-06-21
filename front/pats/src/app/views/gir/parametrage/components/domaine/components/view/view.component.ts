@@ -22,6 +22,7 @@ export class ViewComponent {
   id: string ="";
   loadState : boolean = false;
   previousUrl: string | null = null;
+  listeUfr: string[] = [];
 
 
   constructor(private activeRoute: ActivatedRoute,private router: Router, private domaineService: DomaineService, private loaderservice:LoaderService){
@@ -40,6 +41,7 @@ export class ViewComponent {
     id.subscribe((id)=>{
       this.domaineService.getDomaineById(parseInt(id)).subscribe((data)=>{
         this.domaine = data;
+        this.listeUfr = this.domaine.ufrs?.map(ufr => ufr.sigleUfr!).filter((sigle): sigle is string => !!sigle) || [];
 
         this.loadState = false
       })
