@@ -25,10 +25,7 @@ export class ViewComponent {
 
 
   constructor(private activeRoute: ActivatedRoute,private router: Router, private ufrService: UfrServiceService, private loaderservice:LoaderService){
-    this.previousUrl = '';
 
-    const previousUrl = this.router.getCurrentNavigation();
-    console.log('URL précédente :', previousUrl);
   }
 
   ufr? :UfrModel ;
