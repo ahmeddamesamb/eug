@@ -26,25 +26,20 @@
 
         <c-col md="12">
             <label cLabel for="validationCustom03">Ufrs </label>
+
             <c-multi-select multiple selectionType="text" formControlName="ufrs">
                 @for (ufr of ufrList; track $index) {
-
-                    @if (id !=null) {
-                        @for (ufrDo of domaine.ufrs; track $index) {
-                            @if (ufr.id == ufrDo.id ) 
-                            {
-                                <c-multi-select-option selected [value]="ufr.id">{{ufr.libeleUfr}}</c-multi-select-option>
-                            }@else {
-                                <c-multi-select-option  [value]="ufr.id">{{ufr.libeleUfr}}</c-multi-select-option>
-                            }
-
-                        }
-                    }@else {
-                        <c-multi-select-option  [value]="ufr.id">{{ufr.libeleUfr}}</c-multi-select-option>
-                    } 
-                }
+                    <c-multi-select-option 
+                        [selected]="isUfrSelected(ufr.id)" 
+                        [value]="ufr.id">
+                        {{ ufr.libeleUfr }}
+                    </c-multi-select-option>
                     
+                }
+                
             </c-multi-select>
+              
+              
 
             
               

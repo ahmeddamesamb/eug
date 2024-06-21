@@ -43,10 +43,14 @@ export class CreateComponent {
   ngOnInit() {
     //this.id = this.route.snapshot.params['id'];
     
-    const id: Observable<string> = this.route.params.pipe(map(p=>p['id']));
+    var id: Observable<string> = this.route.params.pipe(map(p=>p['id']));
     if(id){
       
       id.subscribe((id)=>{
+        this.domaineForm.setValue({
+          libelleDomaine: '',
+          ufrs: null,
+        });
         this.domaineService.getDomaineById(parseInt(id)).subscribe(
           (data) => {
             this.domaine = {
@@ -70,10 +74,7 @@ export class CreateComponent {
 
   initializeForm(domaine: DomaineModel) {
     //this.domaineForm.reset();
-    this.domaineForm.setValue({
-      libelleDomaine: '',
-      ufrs: null,
-    });
+    
     console.log("Information du formulaire avant initialisation", this.domaineForm.value);
     var ufrsChoisis = domaine.ufrs!.map(ufr => ufr.id);
   
@@ -161,6 +162,10 @@ export class CreateComponent {
   onReset1() {
     this.domaineForm!.reset();
     this.customStylesValidated = false;
+  }
+
+  isUfrSelected(ufrId: number): boolean {
+    return this.domaine.ufrs?.some(selectedUfr => selectedUfr.id === ufrId) || false;
   }
 
 
