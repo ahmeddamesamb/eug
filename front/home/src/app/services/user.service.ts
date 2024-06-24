@@ -22,7 +22,7 @@ export class UserService {
       const initSuccess = await this.keycloakService.init({
         config: KeycloakConfig.keycloak, 
         initOptions: {
-          pkceMethod: 'S256',git
+          pkceMethod: 'S256',
           redirectUri: ENVIRONMENT.UrlEspacePats,
           checkLoginIframe: false,
           
