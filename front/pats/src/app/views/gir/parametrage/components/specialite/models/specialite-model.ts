@@ -3,7 +3,7 @@ export interface SpecialiteModel {
     id?:number,
     nomSpecialites?:string,
     sigleSpecialites?:string,
-    specialiteParticulierYN?:boolean,
-    specialitesPayanteYN?:boolean,
+    specialiteParticulierYN?:number,
+    specialitesPayanteYN?:number,
     mention?: MentionModel,
 }

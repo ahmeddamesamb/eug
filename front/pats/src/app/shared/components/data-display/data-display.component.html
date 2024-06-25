@@ -1,16 +1,16 @@
 <!-- display item data, label data and data -->
 <div class="d-flex flex-column">
-  <div class="c-color px-2">{{label}}</div>
+  <div class="c-color px-2 fw-bolder">{{label}}</div>
   
   @if (data != "") {
-    <div [class]="'border  rounded p-2 fw-bolder '+ ' text-'+iclass + ' border-'+iclass" >
+    <div [class]="'border  rounded p-2  '+ ' text-'+iclass + ' border-'+iclass" >
       {{data }}
     </div>
   }
   @else if (dataTable != []) {
     <div class="d-flex flex-wrap">
       @for (data of dataTable; track $index) {
-          <span class="border  rounded p-2 fw-bolder me-2" >
+          <span class="border  rounded p-2  me-2" >
               {{data }}
           </span>
       }

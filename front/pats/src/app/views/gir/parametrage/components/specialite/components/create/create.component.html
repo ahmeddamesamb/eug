@@ -1,1 +1,105 @@
-<p>create works!</p>
+<div class="">
+    @if (id !=null) {
+        <h3>Mise à jour</h3>
+    }@else {
+        <h3>Nouvelle Spécialité</h3>
+    }
+    
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="specialiteForm"
+
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom01">Nom </label>
+            <input cFormControl id="validationCustom01" required type="text" value=""
+            [valid]="(specialiteForm?.get('nomSpecialites')?.touched && specialiteForm?.get('nomSpecialites')?.valid) ? true
+               : (specialiteForm?.get('nomSpecialites')?.touched) && specialiteForm?.get('nomSpecialites')?.invalid ? false : undefined"
+            formControlName="nomSpecialites"/>
+            <c-form-feedback>Libellé requis </c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom02">Sigle </label>
+            <input cFormControl id="validationCustom02" required type="text"
+              value="" formControlName="sigleSpecialites" [autofocus]="true"
+              [valid]="(specialiteForm?.get('sigleSpecialites')?.touched && specialiteForm?.get('sigleSpecialites')?.valid) ? true
+               : (specialiteForm?.get('sigleSpecialites')?.touched) && specialiteForm?.get('sigleSpecialites')?.invalid ? false : undefined"/>
+            <c-form-feedback >Sigle requis</c-form-feedback>
+        </c-col>
+
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Mention </label>
+            <select cFormControl aria-label="Default select example" formControlName="mention" cSelect>
+                
+                @for (mention of mentionList; track $index) {
+                    <option [value]="mention.id">{{mention.libelleMention}}</option>
+                }
+                
+            </select>
+            
+        </c-col>
+        <c-col md="12">
+            <div class="form-group">
+                <div class="form-check">
+                  <input 
+                    cFormControl
+                    
+                    class="form-check-input" 
+                    type="checkbox" 
+                    formControlName="specialiteParticulierYN" 
+                    [autofocus]="true"
+                    id="validationCustom02" />
+                  <label class="form-check-label ms-2" for="validationCustom02">Particulier</label>
+                </div>
+            </div>
+        </c-col>
+
+        <c-col md="12">
+            <div class="form-group">
+                <div class="form-check">
+                  <input 
+                    cFormControl
+                    class="form-check-input" 
+                    type="checkbox" 
+                    formControlName="specialitesPayanteYN" 
+                    [autofocus]="true"
+                    id="validationCustom03" />
+                  <label class="form-check-label ms-2" for="validationCustom03" for="specialitesPayanteYN">Payante</label>
+                </div>
+            </div>
+        </c-col>
+        
+        
+
+
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                @if (id !=null) {
+                    <button (click)="annuler()"  class=" w-100" cButton color="secondary" type="reset">
+                        Annuler
+                    </button>
+                }@else {
+                    <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                        Vider
+                    </button>
+                }
+                
+                
+                
+            </div>
+
+            <div class=" w-50 ps-1">
+                <button cButton class=" w-100 text-white" [disabled]="!specialiteForm?.valid"  color="primary" type="submit">
+                    Enregistrer
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
