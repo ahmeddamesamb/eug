@@ -96,5 +96,26 @@
 
 
 
+//Architecture de certain page
+.content{
+    min-height: 80vh;
+    .gauche{
+        padding: 20px;
+        height: 80vh;
+        overflow-y: scroll;
+        
+        
+        
+    }
+    .droite{
+        height: 80vh;
+        overflow-y: scroll;
+        
+    }
+
+}
+
+
+
 
 

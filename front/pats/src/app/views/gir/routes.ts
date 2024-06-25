@@ -44,7 +44,7 @@ export const routes: Routes = [
             path: 'gestion-etudiant',
             loadComponent: () => import('./gestion-etudiants/gestion-etudiants.component').then(m => m.GestionEtudiantsComponent),
             data: {
-                title: 'Gestion des etudiant'
+                title: 'Gestion des étudiants'
             }
         },
         {
