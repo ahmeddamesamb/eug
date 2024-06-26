@@ -9,9 +9,9 @@
 
       <!-- display item data, label data and data -->
 
-      <app-data-display label="nom" [data]="ministere?.nomMinistere"  ></app-data-display>
+      <app-data-display label="Nom" [data]="ministere?.nomMinistere"  ></app-data-display>
 
-      <app-data-display label="sigle" [data]="ministere?.sigleMinistere"  ></app-data-display>
+      <app-data-display label="Sigle" [data]="ministere?.sigleMinistere"  ></app-data-display>
 
       <app-data-display label="Date debut" [data]="ministere?.dateDebut"  ></app-data-display>
 
@@ -19,7 +19,7 @@
         <app-data-display label="Date fin" [data]="ministere?.dateFin"  ></app-data-display>
       }
       @if (ministere?.enCoursYN) {
-        <app-data-display label="En cours" data="en cours" iclass="success"  ></app-data-display>
+        <app-data-display label="En cours" data="oui" iclass="success"  ></app-data-display>
       }
 
 

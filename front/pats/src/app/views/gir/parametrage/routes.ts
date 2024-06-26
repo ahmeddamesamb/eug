@@ -79,6 +79,9 @@ export const routes: Routes = [
     },
     {
       path: 'ministere',
+      data: {
+        title: 'ministere'
+    },
       children: [
         // Default component
         {

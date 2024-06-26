@@ -1,1 +1,77 @@
-<p>create works!</p>
+<div class="">
+    
+    @if (id !=null) {
+        <h3>Mise à jour</h3>
+    }@else {
+        <h3>Nouvelle Université</h3>
+    }
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="universiteForm"
+
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom01">Nom </label>
+            <input cFormControl id="validationCustom01" required type="text" value=""
+            [valid]="(universiteForm?.get('nomUniversite')?.touched && universiteForm?.get('nomUniversite')?.valid) ? true
+               : (universiteForm?.get('nomUniversite')?.touched) && universiteForm?.get('nomUniversite')?.invalid ? false : undefined"
+            formControlName="nomUniversite"/>
+            <c-form-feedback>nom requis </c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom02">Sigle </label>
+            <input cFormControl id="validationCustom02" required type="text"
+              value="" formControlName="sigleUniversite" [autofocus]="true"
+              [valid]="(universiteForm?.get('sigleUniversite')?.touched && universiteForm?.get('sigleUniversite')?.valid) ? true
+               : (universiteForm?.get('sigleUniversite')?.touched) && universiteForm?.get('sigleUniversite')?.invalid ? false : undefined"/>
+            <c-form-feedback >sigle requis</c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Ministere </label>
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="ministere"
+                [valid]="(universiteForm?.get('ministere')?.touched && universiteForm?.get('ministere')?.valid) ? true
+               : (universiteForm?.get('ministere')?.touched) && universiteForm?.get('ministere')?.invalid ? false : undefined"
+                cSelect>
+                
+                @for (ministere of ministereList; track $index) {
+                    
+                    <option [value]="ministere.id">{{ministere.nomMinistere}}</option>
+                }
+                
+            </select>
+            
+        </c-col>
+        
+
+
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                @if (id !=null) {
+                    
+
+                    <button (click)="annuler()"  class=" w-100" cButton color="secondary" type="reset">
+                        Annuler
+                    </button>
+                }@else {
+                    <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                        Vider
+                    </button>
+                }
+                
+            </div>
+            <div class=" w-50 ps-1">
+                <button cButton class=" w-100 text-white" [disabled]="!universiteForm?.valid"  color="primary" type="submit">
+                    Enregistrer
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>

@@ -35,6 +35,9 @@
 
 .dropdown {
     position: relative !important;
+    ul li{
+        cursor: pointer;
+    }
 }
 
 @media (max-width: 768px) {

@@ -1,1 +1,64 @@
-<p>create works!</p>
+<div class="">
+    @if (id !=null) {
+        <h3>Mise à jour</h3>
+    }@else {
+        <h3>Nouvelle mention</h3>
+    }
+    
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="mentionForm"
+
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom01">Libellé </label>
+            <input cFormControl id="validationCustom01" required type="text" value=""
+            [valid]="(mentionForm?.get('libelleMention')?.touched && mentionForm?.get('libelleMention')?.valid) ? true
+               : (mentionForm?.get('libelleMention')?.touched) && mentionForm?.get('libelleMention')?.invalid ? false : undefined"
+            formControlName="libelleMention"/>
+            <c-form-feedback>Libellé requis </c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Domaine </label>
+            <select cFormControl aria-label="Default select example" formControlName="domaine" cSelect>
+                
+                @for (domaine of domaineList; track $index) {
+                    <option [value]="domaine.id">{{domaine.libelleDomaine}}</option>
+                }
+                
+            </select>
+            
+        </c-col>
+        
+
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                @if (id !=null) {
+                    <button (click)="annuler()"  class=" w-100" cButton color="secondary" type="reset">
+                        Annuler
+                    </button>
+                }@else {
+                    <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                        Vider
+                    </button>
+                }
+                
+                
+                
+            </div>
+
+            <div class=" w-50 ps-1">
+                <button cButton class=" w-100 text-white" [disabled]="!mentionForm?.valid"  color="primary" type="submit">
+                    Enregistrer
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+

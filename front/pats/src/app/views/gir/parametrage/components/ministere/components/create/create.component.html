@@ -1,6 +1,10 @@
 
 <div class="">
-    <h3>Ajout Ministere</h3>
+    @if (id !=null) {
+        <h3>Mise à jour</h3>
+    }@else {
+        <h3>Ajout Ministère</h3>
+    }
     <form #customStylesForm="ngForm"
         (ngSubmit)="onSubmit1()"
 
@@ -15,7 +19,7 @@
             [valid]="(ministereForm?.get('nomMinistere')?.touched && ministereForm?.get('nomMinistere')?.valid) ? true
                : (ministereForm?.get('nomMinistere')?.touched) && ministereForm?.get('nomMinistere')?.invalid ? false : undefined"
             formControlName="nomMinistere"/>
-            <c-form-feedback>nom requis </c-form-feedback>
+            <c-form-feedback>Le nom est obligatoire </c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom02">Sigle </label>
@@ -23,29 +27,47 @@
               value="" formControlName="sigleMinistere" [autofocus]="true"
               [valid]="(ministereForm?.get('sigleMinistere')?.touched && ministereForm?.get('sigleMinistere')?.valid) ? true
                : (ministereForm?.get('sigleMinistere')?.touched) && ministereForm?.get('sigleMinistere')?.invalid ? false : undefined"/>
-            <c-form-feedback >sigle requis</c-form-feedback>
+            <c-form-feedback >Le sigle est obligatoire</c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom03">Date de création </label>
-            <c-date-picker cFormControl id="validationCustom03"
+            <c-date-picker closeOnSelect cFormControl id="validationCustom03"
               [valid]="(ministereForm?.get('dateDebut')?.touched && ministereForm?.get('dateDebut')?.valid) ? true : (ministereForm?.get('dateDebut')?.touched) && ministereForm?.get('dateDebut')?.invalid ? false : undefined"
               required  locale="fr-FR"   formControlName="dateDebut"/>
 
 
             @if ((ministereForm?.get('dateDebut')?.touched && ministereForm?.get('dateDebut')?.hasError('required'))) {
-              <span class="text-danger" > date requise</span>
+              <span class="text-danger" > La date de création est obligatoire</span>
             }
-
-
         </c-col>
+        @if (id !=null) {
+
+            <c-col md="12">
+                <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" formControlName="enCoursYN" id="enCoursYN">
+                      <label class="form-check-label" for="enCoursYN">En cours</label>
+                    </div>
+                </div>
+            </c-col>
+
+        }
+        
 
 
 
         <div class="col-12 d-flex justify-content-between ">
             <div class=" w-50 pe-1">
-                <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
-                    Vider
-                </button>
+                
+                @if (id !=null) {
+                    <button (click)="annuler()"  class=" w-100" cButton color="secondary" type="reset">
+                        Annuler
+                    </button>
+                }@else {
+                    <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                        Vider
+                    </button>
+                }
             </div>
             <div class=" w-50 ps-1">
                 <button cButton class=" w-100 text-white" [disabled]="!ministereForm?.valid"  color="primary" type="submit">
@@ -64,6 +86,5 @@
     </form>
 </div>
 
-<c-toaster class="p-3" position="fixed" [placement]="placement" />
 
 

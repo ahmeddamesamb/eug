@@ -34,7 +34,7 @@ export const navItems: INavData[] = [
         iconComponent: { name: 'cilClone' }
       },
       {
-        name: 'Gestion des etudiant',
+        name: 'Gestion des étudiants',
         url: '/gir/gestion-etudiant',
         iconComponent: { name: 'cilFolderOpen' }
       },

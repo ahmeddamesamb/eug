@@ -1,1 +1,81 @@
-<p>create works!</p>
+<div class="">
+    @if (id !=null) {
+        <h3>Mise à jour</h3>
+    }@else {
+        <h3>Nouveau Domaine</h3>
+    }
+    
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="domaineForm"
+
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom01">Libellé </label>
+            <input cFormControl id="validationCustom01" required type="text" value=""
+            [valid]="(domaineForm?.get('libelleDomaine')?.touched && domaineForm?.get('libelleDomaine')?.valid) ? true
+               : (domaineForm?.get('libelleDomaine')?.touched) && domaineForm?.get('libelleDomaine')?.invalid ? false : undefined"
+            formControlName="libelleDomaine"/>
+            <c-form-feedback>Libellé requis </c-form-feedback>
+        </c-col>
+
+
+
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Ufrs </label>
+
+            <c-multi-select multiple selectionType="text" formControlName="ufrs">
+                @for (ufr of ufrList; track $index) {
+                    <c-multi-select-option 
+                        [selected]="isUfrSelected(ufr.id)" 
+                        [value]="ufr.id">
+                        {{ ufr.libeleUfr }}
+                    </c-multi-select-option>
+                    
+                }
+                
+            </c-multi-select>
+              
+              
+
+            
+              
+
+              
+            
+        </c-col>
+        
+        
+        
+
+
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                @if (id !=null) {
+                    <button (click)="annuler()"  class=" w-100" cButton color="secondary" type="reset">
+                        Annuler
+                    </button>
+                }@else {
+                    <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                        Vider
+                    </button>
+                }
+                
+                
+                
+            </div>
+
+            <div class=" w-50 ps-1">
+                <button cButton class=" w-100 text-white" [disabled]="!domaineForm?.valid"  color="primary" type="submit">
+                    Enregistrer
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>
+

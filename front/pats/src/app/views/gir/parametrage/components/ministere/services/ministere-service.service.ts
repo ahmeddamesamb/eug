@@ -20,11 +20,11 @@ export class MinistereServiceService {
   }
 
   getMinistereList(): Observable<MinistereModel[]> {
-    return this.http.get<MinistereModel[]>(`${this.ministereUrl}`);
+    return this.http.get<MinistereModel[]>(`${this.ministereUrl}?sort=enCoursYN,desc`);
   }
 
 
-  createMinistere(ministere: any): Observable<MinistereModel> {
+  createMinistere(ministere: MinistereModel): Observable<MinistereModel> {
     return this.http.post<any>(`${this.ministereUrl}`, ministere);
   }
 
@@ -38,8 +38,8 @@ export class MinistereServiceService {
     return this.http.delete<void>(`${this.ministereUrl}/${id}`);
   }
 
-  updateMinistere(id: number, ministere: any): Observable<MinistereModel> {
+  updateMinistere(id: number, ministere: MinistereModel): Observable<MinistereModel> {
     return this.http.put<MinistereModel>(`${this.ministereUrl}/${id}`, ministere);
-}
+  }
 
 }

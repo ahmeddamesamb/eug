@@ -7,6 +7,7 @@ import {AlerteComponent} from 'src/app/shared/components/alerte/alerte/alerte.co
 
 
 
+
 import{
   BadgeComponent,
   ButtonDirective,
@@ -27,7 +28,9 @@ import{
   ColComponent,
   ToasterPlacement,
   ToasterComponent,
+  PopoverModule,
 } from '@coreui/angular-pro';
+import { delay } from 'rxjs';
 
 
 
@@ -38,7 +41,7 @@ import{
     styleUrl: './ministere-list.component.scss',
     imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
         ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
-        CardComponent, CardHeaderComponent, ColComponent,ToasterComponent,AlerteComponent
+        CardComponent, CardHeaderComponent,PopoverModule, ColComponent,ToasterComponent,AlerteComponent
         ]
 })
 export class MinistereListComponent {
@@ -50,6 +53,7 @@ export class MinistereListComponent {
   itemDelete!: MinistereModel;
   itemUpdate!: MinistereModel;
   public liveDemoVisible = false;
+  isloading = false;
 
 
   ngOnInit(): void {
@@ -58,22 +62,36 @@ export class MinistereListComponent {
   }
 
   getListe(){
-    this.ministereService.getMinistereList().subscribe((data)=>{
-      this.ministereList = data;
- 
-    })
+    this.isloading = true;
+    this.ministereService.getMinistereList().subscribe({
+      next: (data) => {
+        this.ministereList = data;
+        this.isloading = false;
+        
+        
+
+      },
+      error: (err) => {
+
+
+      }
+    });
   }
+
+  
 
   columns: IColumn[] = [
     {
-      key: 'nomMinistere'
+      key: 'nomMinistere',
+      label: 'Nom'
     },
     {
-      key: 'sigleMinistere'
+      key: 'sigleMinistere',
+      label: 'Sigle'
     },
     {
       key: 'dateDebut',
-      label: 'Date debut',
+      label: 'Date début',
       _props: { class: 'text-truncate' }
     },
     {
@@ -81,7 +99,7 @@ export class MinistereListComponent {
       label: 'Date Fin',
       _props: { class: 'text-truncate' }
     },
-    { key: 'enCoursYN', _style: { width: '15%' } },
+    { key: 'enCoursYN',label: 'Statut', _style: { width: '15%' } },
     {
       key: 'show',
       label: 'Action',
@@ -90,7 +108,7 @@ export class MinistereListComponent {
       sorter: false
     }
   ];
-  details_visible = Object.create({});
+/*   details_visible = Object.create({}); */
 
   getBadge(enCoursYN: number) {
     switch (enCoursYN) {
@@ -119,9 +137,6 @@ export class MinistereListComponent {
 
   update(item:number) {
     this.route.navigate(['/gir/parametrage/ministere/update',item])
-
-      
-
   }
   delete(){
     this.ministereService.deleteMinistere(this.itemDelete.id).subscribe({
@@ -137,15 +152,7 @@ export class MinistereListComponent {
       
     })
   }
-  deleter(){
-    this.ministereService.deleteMinistere(this.itemDelete.id).subscribe((data)=>{
-      console.log(data);
-      this.getListe();
-      this.liveDemoVisible = false;
-      this.addToast(true);
-      
-    })
-  }
+
 
   
 
@@ -166,7 +173,7 @@ export class MinistereListComponent {
   //Pour le toaster
 
   @ViewChild(ToasterComponent) toaster!: ToasterComponent;
-  placement = ToasterPlacement.BottomEnd;
+  placement = ToasterPlacement.TopEnd;
   
   addToast(value: boolean) {
     var options = {

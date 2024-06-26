@@ -17,6 +17,7 @@ import sn.ugb.gir.service.dto.FormationDTO;
 import sn.ugb.gir.service.dto.FormationPriveeDTO;
 import sn.ugb.gir.service.mapper.FormationMapper;
 import sn.ugb.gir.service.mapper.FormationPriveeMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.FormationPrivee}.
@@ -26,6 +27,9 @@ import sn.ugb.gir.service.mapper.FormationPriveeMapper;
 public class FormationPriveeServiceImpl implements FormationPriveeService {
 
     private final Logger log = LoggerFactory.getLogger(FormationPriveeServiceImpl.class);
+
+    private static final String ENTITY_NAME = "Formation";
+
 
     private final FormationPriveeRepository formationPriveeRepository;
 
@@ -49,40 +53,8 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
     public FormationPriveeDTO save(FormationPriveeDTO formationPriveeDTO) {
         log.debug("Request to save FormationPrivee : {}", formationPriveeDTO);
 
+        validateFormationPrivee(formationPriveeDTO);
         FormationDTO formationDTO = formationPriveeDTO.getFormation();
-
-        if (formationDTO.getNiveau() == null) {
-            throw new IllegalArgumentException("Le niveau de la formation ne doit pas être vide");
-        }
-        if (formationDTO.getSpecialite() == null) {
-            throw new IllegalArgumentException("La spécialité de la formation ne doit pas être vide");
-        }
-        Optional<Formation> existingFormation = formationRepository.findByNiveauIdAndSpecialiteId(formationDTO.getNiveau().getId(), formationDTO.getSpecialite().getId());
-
-        if (existingFormation.isPresent()) {
-            throw new IllegalArgumentException("Cette Formation existe déjà avec le même Niveau et la même Spécialité.");
-        }
-
-        if (formationDTO.getTypeFormation() == TypeFormation.PRIVEE) {
-            if (formationPriveeDTO.getNombreMensualites() == null) {
-                throw new IllegalArgumentException("Le champ 'nombreMensualites' ne doit pas être nul pour une formation privée.");
-            }
-            if (formationPriveeDTO.getPaiementPremierMoisYN() == null) {
-                throw new IllegalArgumentException("Le champ 'paiementPremierMoisYN' ne doit pas être nul pour une formation privée.");
-            }
-            if (formationPriveeDTO.getPaiementDernierMoisYN() == null) {
-                throw new IllegalArgumentException("Le champ 'paiementDernierMoisYN' ne doit pas être nul pour une formation privée.");
-            }
-            if (formationPriveeDTO.getFraisDossierYN() == null) {
-                throw new IllegalArgumentException("Le champ 'fraisDossierYN' ne doit pas être nul pour une formation privée.");
-            }
-            if (formationPriveeDTO.getCoutTotal() == null) {
-                throw new IllegalArgumentException("Le champ 'coutTotal' ne doit pas être nul pour une formation privée.");
-            }
-            if (formationPriveeDTO.getMensualite() == null) {
-                throw new IllegalArgumentException("Le champ 'mensualite' ne doit pas être nul pour une formation privée.");
-            }
-        }
 
         Formation formation = formationMapper.toEntity(formationDTO);
         formation = formationRepository.save(formation);
@@ -97,7 +69,7 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
             emptyFormationPriveeDTO.setId(0L);
             return emptyFormationPriveeDTO;
         } else {
-            throw new IllegalArgumentException("Type de formation inconnu : " + formationDTO.getTypeFormation());
+            throw new BadRequestAlertException("Type de formation inconnu : " + formationDTO.getTypeFormation(), ENTITY_NAME, "typeFormationInconnu");
         }
     }
 
@@ -107,11 +79,8 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
     public FormationPriveeDTO update(FormationPriveeDTO formationPriveeDTO) {
         log.debug("Request to update FormationPrivee : {}", formationPriveeDTO);
 
+        validateFormationPrivee(formationPriveeDTO);
         FormationDTO formationDTO = formationPriveeDTO.getFormation();
-
-        if (formationDTO.getNiveau() == null || formationDTO.getSpecialite() == null) {
-            throw new IllegalArgumentException("Le niveau et la spécialité ne doivent pas être null.");
-        }
 
         Optional<Formation> existingFormationOpt = formationRepository.findById(formationDTO.getId());
 
@@ -137,6 +106,8 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
     public Optional<FormationPriveeDTO> partialUpdate(FormationPriveeDTO formationPriveeDTO) {
         log.debug("Request to partially update FormationPrivee : {}", formationPriveeDTO);
 
+        validateFormationPrivee(formationPriveeDTO);
+
         return formationPriveeRepository
             .findById(formationPriveeDTO.getId())
             .map(existingFormationPrivee -> {
@@ -147,6 +118,43 @@ public class FormationPriveeServiceImpl implements FormationPriveeService {
             .map(formationPriveeRepository::save)
             .map(formationPriveeMapper::toDto);
     }
+
+    private void validateFormationPrivee(FormationPriveeDTO formationPriveeDTO) {
+        FormationDTO formationDTO = formationPriveeDTO.getFormation();
+
+        if (formationDTO.getNiveau() == null) {
+            throw new BadRequestAlertException("Le niveau de la formation ne doit pas être vide.", ENTITY_NAME, "niveauNotNull");
+        }
+        if (formationDTO.getSpecialite() == null) {
+            throw new BadRequestAlertException("La spécialité de la formation ne doit pas être vide.", ENTITY_NAME, "specialiteNotNull");
+        }
+        Optional<Formation> existingFormation = formationRepository.findByNiveauIdAndSpecialiteId(formationDTO.getNiveau().getId(), formationDTO.getSpecialite().getId());
+        if (existingFormation.isPresent() && !existingFormation.get().getId().equals(formationDTO.getId())) {
+            throw new BadRequestAlertException("Cette Formation existe déjà avec le même Niveau et la même Spécialité.", ENTITY_NAME, "formationExists");
+        }
+
+        if (formationDTO.getTypeFormation() == TypeFormation.PRIVEE) {
+            if (formationPriveeDTO.getNombreMensualites() == null) {
+                throw new BadRequestAlertException("Le champ 'nombreMensualites' ne doit pas être nul pour une formation privée.", ENTITY_NAME, "nombreMensualitesNotNull");
+            }
+            if (formationPriveeDTO.getPaiementPremierMoisYN() == null) {
+                throw new BadRequestAlertException("Le champ 'paiementPremierMoisYN' ne doit pas être nul pour une formation privée.", ENTITY_NAME, "paiementPremierMoisYNNotNull");
+            }
+            if (formationPriveeDTO.getPaiementDernierMoisYN() == null) {
+                throw new BadRequestAlertException("Le champ 'paiementDernierMoisYN' ne doit pas être nul pour une formation privée.", ENTITY_NAME, "paiementDernierMoisYNNotNull");
+            }
+            if (formationPriveeDTO.getFraisDossierYN() == null) {
+                throw new BadRequestAlertException("Le champ 'fraisDossierYN' ne doit pas être nul pour une formation privée.", ENTITY_NAME, "fraisDossierYNNotNull");
+            }
+            if (formationPriveeDTO.getCoutTotal() == null) {
+                throw new BadRequestAlertException("Le champ 'coutTotal' ne doit pas être nul pour une formation privée.", ENTITY_NAME, "coutTotalNotNull");
+            }
+            if (formationPriveeDTO.getMensualite() == null) {
+                throw new BadRequestAlertException("Le champ 'mensualite' ne doit pas être nul pour une formation privée.", ENTITY_NAME, "mensualiteNotNull");
+            }
+        }
+    }
+
 
     @Override
     @Transactional(readOnly = true)

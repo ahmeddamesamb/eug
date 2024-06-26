@@ -35,6 +35,6 @@ export class ParametrageComponent {
     { name: 'Domaine', id: 'tab-04', route: 'domaine' },
     { name: 'UFR', id: 'tab-05', route: 'ufr'},
     { name: 'Université', id: 'tab-06' , route: 'universite'},
-    { name: 'Ministere', id: 'tab-07' , route: 'ministere'},
+    { name: 'Ministère', id: 'tab-07' , route: 'ministere'},
   ];
 }
