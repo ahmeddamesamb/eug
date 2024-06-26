@@ -1,0 +1,26 @@
+{
+  "microserviceAideApp": {
+    "microserviceAideRessourceAide": {
+      "home": {
+        "title": "Ressource Aides",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Ressource Aide",
+        "createOrEditLabel": "Create or edit a Ressource Aide",
+        "search": "Search for Ressource Aide",
+        "notFound": "No Ressource Aides found"
+      },
+      "created": "A new Ressource Aide is created with identifier {{ param }}",
+      "updated": "A Ressource Aide is updated with identifier {{ param }}",
+      "deleted": "A Ressource Aide is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Ressource Aide {{ id }}?"
+      },
+      "detail": {
+        "title": "Ressource Aide"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "libelle": "Libelle"
+    }
+  }
+}

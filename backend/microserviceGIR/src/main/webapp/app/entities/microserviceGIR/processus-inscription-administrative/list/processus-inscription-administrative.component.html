@@ -1,0 +1,407 @@
+<div>
+  <h2 id="page-heading" data-cy="ProcessusInscriptionAdministrativeHeading">
+    <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.home.title"
+      >ProcessusInscriptionAdministratives</span
+    >
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.home.refreshListLabel"
+          >Actualiser la liste</span
+        >
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-processus-inscription-administrative"
+        [routerLink]="['/microservicegir/processus-inscription-administrative/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.home.createLabel"
+          >Créer un nouveau Processus Inscription Administrative</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label
+          class="visually-hidden"
+          for="currentSearch"
+          ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.home.search"
+          >Recherche pour Processus Inscription Administrative</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (processusInscriptionAdministratives?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.home.notFound"
+        >Aucun Processus Inscription Administrative trouvé</span
+      >
+    </div>
+  }
+
+  @if (processusInscriptionAdministratives && processusInscriptionAdministratives.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="inscriptionDemarreeYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscriptionDemarreeYN"
+                  >Inscription Demarree YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateDemarrageInscription">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateDemarrageInscription"
+                  >Date Demarrage Inscription</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="inscriptionAnnuleeYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscriptionAnnuleeYN"
+                  >Inscription Annulee YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateAnnulationInscription">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateAnnulationInscription"
+                  >Date Annulation Inscription</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="apteYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.apteYN">Apte YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateVisiteMedicale">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateVisiteMedicale"
+                  >Date Visite Medicale</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="beneficiaireCROUSYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.beneficiaireCROUSYN"
+                  >Beneficiaire CROUSYN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateRemiseQuitusCROUS">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseQuitusCROUS"
+                  >Date Remise Quitus CROUS</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="nouveauCodeBUYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.nouveauCodeBUYN"
+                  >Nouveau Code BUYN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="quitusBUYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.quitusBUYN">Quitus BUYN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateRemiseQuitusBU">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseQuitusBU"
+                  >Date Remise Quitus BU</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="exporterBUYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.exporterBUYN">Exporter BUYN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="fraisObligatoiresPayesYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.fraisObligatoiresPayesYN"
+                  >Frais Obligatoires Payes YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="datePaiementFraisObligatoires">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.datePaiementFraisObligatoires"
+                  >Date Paiement Frais Obligatoires</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="numeroQuitusCROUS">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.numeroQuitusCROUS"
+                  >Numero Quitus CROUS</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="carteEturemiseYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.carteEturemiseYN"
+                  >Carte Eturemise YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="carteDupremiseYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.carteDupremiseYN"
+                  >Carte Dupremise YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateRemiseCarteEtu">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseCarteEtu"
+                  >Date Remise Carte Etu</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateRemiseCarteDup">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseCarteDup"
+                  >Date Remise Carte Dup</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="inscritAdministrativementYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscritAdministrativementYN"
+                  >Inscrit Administrativement YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateInscriptionAdministrative">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateInscriptionAdministrative"
+                  >Date Inscription Administrative</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="derniereModification">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.derniereModification"
+                  >Derniere Modification</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="inscritOnlineYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscritOnlineYN"
+                  >Inscrit Online YN</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="emailUser">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.emailUser">Email User</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="inscriptionAdministrative.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscriptionAdministrative"
+                  >Inscription Administrative</span
+                >
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (processusInscriptionAdministrative of processusInscriptionAdministratives; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a
+                  [routerLink]="['/microservicegir/processus-inscription-administrative', processusInscriptionAdministrative.id, 'view']"
+                  >{{ processusInscriptionAdministrative.id }}</a
+                >
+              </td>
+              <td>{{ processusInscriptionAdministrative.inscriptionDemarreeYN }}</td>
+              <td>{{ processusInscriptionAdministrative.dateDemarrageInscription | formatMediumDatetime }}</td>
+              <td>{{ processusInscriptionAdministrative.inscriptionAnnuleeYN }}</td>
+              <td>{{ processusInscriptionAdministrative.dateAnnulationInscription | formatMediumDatetime }}</td>
+              <td>{{ processusInscriptionAdministrative.apteYN }}</td>
+              <td>{{ processusInscriptionAdministrative.dateVisiteMedicale | formatMediumDatetime }}</td>
+              <td>{{ processusInscriptionAdministrative.beneficiaireCROUSYN }}</td>
+              <td>{{ processusInscriptionAdministrative.dateRemiseQuitusCROUS | formatMediumDatetime }}</td>
+              <td>{{ processusInscriptionAdministrative.nouveauCodeBUYN }}</td>
+              <td>{{ processusInscriptionAdministrative.quitusBUYN }}</td>
+              <td>{{ processusInscriptionAdministrative.dateRemiseQuitusBU | formatMediumDatetime }}</td>
+              <td>{{ processusInscriptionAdministrative.exporterBUYN }}</td>
+              <td>{{ processusInscriptionAdministrative.fraisObligatoiresPayesYN }}</td>
+              <td>{{ processusInscriptionAdministrative.datePaiementFraisObligatoires | formatMediumDatetime }}</td>
+              <td>{{ processusInscriptionAdministrative.numeroQuitusCROUS }}</td>
+              <td>{{ processusInscriptionAdministrative.carteEturemiseYN }}</td>
+              <td>{{ processusInscriptionAdministrative.carteDupremiseYN }}</td>
+              <td>{{ processusInscriptionAdministrative.dateRemiseCarteEtu | formatMediumDatetime }}</td>
+              <td>{{ processusInscriptionAdministrative.dateRemiseCarteDup }}</td>
+              <td>{{ processusInscriptionAdministrative.inscritAdministrativementYN }}</td>
+              <td>{{ processusInscriptionAdministrative.dateInscriptionAdministrative | formatMediumDatetime }}</td>
+              <td>{{ processusInscriptionAdministrative.derniereModification | formatMediumDatetime }}</td>
+              <td>{{ processusInscriptionAdministrative.inscritOnlineYN }}</td>
+              <td>{{ processusInscriptionAdministrative.emailUser }}</td>
+              <td>
+                @if (processusInscriptionAdministrative.inscriptionAdministrative) {
+                  <div>
+                    <a
+                      [routerLink]="[
+                        '/microservicegir/inscription-administrative',
+                        processusInscriptionAdministrative.inscriptionAdministrative.id,
+                        'view'
+                      ]"
+                      >{{ processusInscriptionAdministrative.inscriptionAdministrative.id }}</a
+                    >
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/processus-inscription-administrative', processusInscriptionAdministrative.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/processus-inscription-administrative', processusInscriptionAdministrative.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button
+                    type="submit"
+                    (click)="delete(processusInscriptionAdministrative)"
+                    class="btn btn-danger btn-sm"
+                    data-cy="entityDeleteButton"
+                  >
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (processusInscriptionAdministratives && processusInscriptionAdministratives.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

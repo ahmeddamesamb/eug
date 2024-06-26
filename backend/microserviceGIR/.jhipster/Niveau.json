@@ -1,0 +1,50 @@
+{
+  "annotations": {
+    "changelogDate": "20240625212239"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "niveau",
+  "fields": [
+    {
+      "fieldName": "libelleNiveau",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "codeNiveau",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "anneeEtude",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Niveau",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "cycle",
+      "otherEntityRelationshipName": "niveaux",
+      "relationshipName": "typeCycle",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "formation",
+      "otherEntityRelationshipName": "niveau",
+      "relationshipName": "formations",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

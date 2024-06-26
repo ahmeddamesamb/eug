@@ -1,0 +1,3 @@
+org.springframework.test.context.ContextCustomizerFactory = sn.ugb.gateway.\
+    config.TestContainersSpringContextCustomizerFactory,sn.ugb.gateway.config.\
+    SqlTestContainersSpringContextCustomizerFactory

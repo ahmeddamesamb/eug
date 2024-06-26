@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: microservicegir-virtualservice
+  namespace: sn-ugb
+spec:
+  hosts:
+    - microservicegir
+  http:
+    - route:
+        - destination:
+            host: microservicegir
+            subset: "v1"
+          weight: 100
+      retries:
+        attempts: 3
+        perTryTimeout: 2s

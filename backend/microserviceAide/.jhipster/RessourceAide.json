@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205539"
+  },
+  "applications": ["microserviceAide"],
+  "clientRootFolder": "microserviceAide",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "ressource_aide",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "libelle",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceAide",
+  "name": "RessourceAide",
+  "pagination": "pagination",
+  "relationships": [],
+  "service": "serviceImpl"
+}

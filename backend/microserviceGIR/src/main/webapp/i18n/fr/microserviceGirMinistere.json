@@ -1,0 +1,31 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirMinistere": {
+      "home": {
+        "title": "Ministeres",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Ministere",
+        "createOrEditLabel": "Créer ou éditer un Ministere",
+        "search": "Recherche pour Ministere",
+        "notFound": "Aucun Ministere trouvé"
+      },
+      "created": "Un nouveau Ministere a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Ministere avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Ministere avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Ministere {{ id }} ?"
+      },
+      "detail": {
+        "title": "Ministere"
+      },
+      "id": "ID",
+      "nomMinistere": "Nom Ministere",
+      "sigleMinistere": "Sigle Ministere",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "enCoursYN": "En Cours YN",
+      "actifYN": "Actif YN",
+      "universites": "Universites"
+    }
+  }
+}

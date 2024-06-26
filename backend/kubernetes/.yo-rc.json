@@ -1,0 +1,45 @@
+{
+  "generator-jhipster": {
+    "appsFolders": [
+      "gateway",
+      "microserviceGIR",
+      "microserviceEnseignement",
+      "microserviceEDT",
+      "microserviceGRH",
+      "microserviceAUA",
+      "microserviceDeliberation",
+      "microserviceGD",
+      "microserviceACLC",
+      "microserviceAide",
+      "microserviceGED"
+    ],
+    "clusteredDbApps": [
+      "gateway",
+      "microserviceGIR",
+      "microserviceEnseignement",
+      "microserviceEDT",
+      "microserviceGRH",
+      "microserviceAUA",
+      "microserviceDeliberation",
+      "microserviceGD",
+      "microserviceACLC",
+      "microserviceAide",
+      "microserviceGED"
+    ],
+    "dbRandomPassword": "1f19251ec1f960ece5975a978bdef3fb9ca40351e2b42f1e6c62700a5f49",
+    "deploymentType": "kubernetes",
+    "directoryPath": "../",
+    "dockerPushCommand": "docker push",
+    "dockerRepositoryName": "eUGB",
+    "ingressDomain": "ugb.sn",
+    "istio": true,
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "NzVmYzg5ZjdlODllNmE2ZWE2YTE0MjhlNmVmZWFiZjAzOTc0NDI5ODJiYmY5ZGE3ZDcyZWY3MzZlM2RiYmFhZDZmOTMzZjVjM2Q0ZjlmMjk5OTM5M2RlMzI3MjM0NTRmYjJjYg==",
+    "kubernetesNamespace": "sn-ugb",
+    "kubernetesServiceType": "LoadBalancer",
+    "kubernetesStorageClassName": "standard",
+    "kubernetesUseDynamicStorage": true,
+    "monitoring": "prometheus",
+    "serviceDiscoveryType": "consul"
+  }
+}

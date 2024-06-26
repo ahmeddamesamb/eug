@@ -1,0 +1,93 @@
+{
+  "annotations": {
+    "changelogDate": "20240625212939"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "frais",
+  "fields": [
+    {
+      "fieldName": "valeurFrais",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descriptionFrais",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fraisPourAssimileYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "fraisPourExonererYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dia",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "dip",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "fraisPrivee",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "dateApplication",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "estEnApplicationYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Frais",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "typeFrais",
+      "otherEntityRelationshipName": "frais",
+      "relationshipName": "typeFrais",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "cycle",
+      "otherEntityRelationshipName": "frais",
+      "relationshipName": "typeCycle",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "universite",
+      "otherEntityRelationshipName": "frais",
+      "relationshipName": "universite",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "paiementFrais",
+      "otherEntityRelationshipName": "frais",
+      "relationshipName": "paiementFrais",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

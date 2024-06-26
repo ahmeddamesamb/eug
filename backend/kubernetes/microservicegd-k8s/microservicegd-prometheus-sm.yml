@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: microservicegd-app
+  namespace: sn-ugb
+  labels:
+    team: sn-ugb
+spec:
+  selector:
+    matchLabels:
+      app: microservicegd
+  endpoints:
+    - port: web
+      path: /prometheusMetrics

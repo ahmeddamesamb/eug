@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (operateur) {
+      <div>
+        <h2 data-cy="operateurDetailsHeading">
+          <span ugbTranslate="microserviceGirApp.microserviceGirOperateur.detail.title">Operateur</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ operateur.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirOperateur.libelleOperateur">Libelle Operateur</span></dt>
+          <dd>
+            <span>{{ operateur.libelleOperateur }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirOperateur.userLogin">User Login</span></dt>
+          <dd>
+            <span>{{ operateur.userLogin }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirOperateur.codeOperateur">Code Operateur</span></dt>
+          <dd>
+            <span>{{ operateur.codeOperateur }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirOperateur.actifYN">Actif YN</span></dt>
+          <dd>
+            <span>{{ operateur.actifYN }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/operateur', operateur.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

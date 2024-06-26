@@ -1,0 +1,69 @@
+{
+  "annotations": {
+    "changelogDate": "20240625210239"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "pays",
+  "fields": [
+    {
+      "fieldName": "libellePays",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "paysEnAnglais",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nationalite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codePays",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "uEMOAYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "cEDEAOYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "rIMYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "autreYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "estEtrangerYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Pays",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "zone",
+      "otherEntityRelationshipName": "pays",
+      "relationshipName": "zone",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "region",
+      "otherEntityRelationshipName": "pays",
+      "relationshipName": "regions",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

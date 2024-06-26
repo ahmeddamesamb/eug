@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20240625210939"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "discipline_sportive_etudiant",
+  "fields": [
+    {
+      "fieldName": "licenceSportiveYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "competitionUGBYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "DisciplineSportiveEtudiant",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "disciplineSportive",
+      "otherEntityRelationshipName": "disciplineSportiveEtudiants",
+      "relationshipName": "disciplineSportive",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "etudiant",
+      "otherEntityRelationshipName": "disciplineSportiveEtudiants",
+      "relationshipName": "etudiant",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

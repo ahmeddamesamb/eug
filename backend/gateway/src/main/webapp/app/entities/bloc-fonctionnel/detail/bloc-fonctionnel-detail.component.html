@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (blocFonctionnel) {
+      <div>
+        <h2 data-cy="blocFonctionnelDetailsHeading">
+          <span ugbTranslate="gatewayApp.blocFonctionnel.detail.title">Bloc Fonctionnel</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ blocFonctionnel.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.blocFonctionnel.libelleBloc">Libelle Bloc</span></dt>
+          <dd>
+            <span>{{ blocFonctionnel.libelleBloc }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.blocFonctionnel.dateAjoutBloc">Date Ajout Bloc</span></dt>
+          <dd>
+            <span>{{ blocFonctionnel.dateAjoutBloc | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.blocFonctionnel.actifYN">Actif YN</span></dt>
+          <dd>
+            <span>{{ blocFonctionnel.actifYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.blocFonctionnel.service">Service</span></dt>
+          <dd>
+            @if (blocFonctionnel.service) {
+              <div>
+                <a [routerLink]="['/service-user', blocFonctionnel.service.id, 'view']">{{ blocFonctionnel.service.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/bloc-fonctionnel', blocFonctionnel.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

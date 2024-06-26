@@ -1,0 +1,39 @@
+{
+  "annotations": {
+    "changelogDate": "20240625210639"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "serie",
+  "fields": [
+    {
+      "fieldName": "codeSerie",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "libelleSerie",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "sigleSerie",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Serie",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "baccalaureat",
+      "otherEntityRelationshipName": "serie",
+      "relationshipName": "baccalaureats",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

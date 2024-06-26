@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (ufr) {
+      <div>
+        <h2 data-cy="ufrDetailsHeading"><span ugbTranslate="microserviceGirApp.microserviceGirUfr.detail.title">Ufr</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ ufr.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirUfr.libelleUfr">Libelle Ufr</span></dt>
+          <dd>
+            <span>{{ ufr.libelleUfr }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirUfr.sigleUfr">Sigle Ufr</span></dt>
+          <dd>
+            <span>{{ ufr.sigleUfr }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirUfr.prefixe">Prefixe</span></dt>
+          <dd>
+            <span>{{ ufr.prefixe }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirUfr.actifYN">Actif YN</span></dt>
+          <dd>
+            <span>{{ ufr.actifYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirUfr.universite">Universite</span></dt>
+          <dd>
+            @if (ufr.universite) {
+              <div>
+                <a [routerLink]="['/universite', ufr.universite.id, 'view']">{{ ufr.universite.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/ufr', ufr.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

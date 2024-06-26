@@ -1,0 +1,54 @@
+{
+  "annotations": {
+    "changelogDate": "20240625213639"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "universite",
+  "fields": [
+    {
+      "fieldName": "nomUniversite",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "sigleUniversite",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Universite",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "ministere",
+      "otherEntityRelationshipName": "universites",
+      "relationshipName": "ministere",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "ufr",
+      "otherEntityRelationshipName": "universite",
+      "relationshipName": "ufrs",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "frais",
+      "otherEntityRelationshipName": "universite",
+      "relationshipName": "frais",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

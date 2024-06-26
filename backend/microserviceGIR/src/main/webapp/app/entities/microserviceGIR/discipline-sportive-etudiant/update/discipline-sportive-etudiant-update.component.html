@@ -1,0 +1,118 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-discipline-sportive-etudiant-heading"
+        data-cy="DisciplineSportiveEtudiantCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirDisciplineSportiveEtudiant.home.createOrEditLabel"
+      >
+        Créer ou éditer un Discipline Sportive Etudiant
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirDisciplineSportiveEtudiant.licenceSportiveYN"
+            for="field_licenceSportiveYN"
+            >Licence Sportive YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="licenceSportiveYN"
+            id="field_licenceSportiveYN"
+            data-cy="licenceSportiveYN"
+            formControlName="licenceSportiveYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirDisciplineSportiveEtudiant.competitionUGBYN"
+            for="field_competitionUGBYN"
+            >Competition UGBYN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="competitionUGBYN"
+            id="field_competitionUGBYN"
+            data-cy="competitionUGBYN"
+            formControlName="competitionUGBYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirDisciplineSportiveEtudiant.disciplineSportive"
+            for="field_disciplineSportive"
+            >Discipline Sportive</label
+          >
+          <select
+            class="form-control"
+            id="field_disciplineSportive"
+            data-cy="disciplineSportive"
+            name="disciplineSportive"
+            formControlName="disciplineSportive"
+            [compareWith]="compareDisciplineSportive"
+          >
+            <option [ngValue]="null"></option>
+            @for (disciplineSportiveOption of disciplineSportivesSharedCollection; track $index) {
+              <option [ngValue]="disciplineSportiveOption">{{ disciplineSportiveOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirDisciplineSportiveEtudiant.etudiant"
+            for="field_etudiant"
+            >Etudiant</label
+          >
+          <select
+            class="form-control"
+            id="field_etudiant"
+            data-cy="etudiant"
+            name="etudiant"
+            formControlName="etudiant"
+            [compareWith]="compareEtudiant"
+          >
+            <option [ngValue]="null"></option>
+            @for (etudiantOption of etudiantsSharedCollection; track $index) {
+              <option [ngValue]="etudiantOption">{{ etudiantOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

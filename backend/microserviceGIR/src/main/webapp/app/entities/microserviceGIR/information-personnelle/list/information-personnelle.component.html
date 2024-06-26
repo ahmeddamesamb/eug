@@ -1,0 +1,356 @@
+<div>
+  <h2 id="page-heading" data-cy="InformationPersonnelleHeading">
+    <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.home.title">InformationPersonnelles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-information-personnelle"
+        [routerLink]="['/microservicegir/information-personnelle/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.home.createLabel"
+          >Créer un nouveau Information Personnelle</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label
+          class="visually-hidden"
+          for="currentSearch"
+          ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.home.search"
+          >Recherche pour Information Personnelle</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGirApp.microserviceGirInformationPersonnelle.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (informationPersonnelles?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.home.notFound"
+        >Aucun Information Personnelle trouvé</span
+      >
+    </div>
+  }
+
+  @if (informationPersonnelles && informationPersonnelles.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="nomEtu">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.nomEtu">Nom Etu</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="nomJeuneFilleEtu">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.nomJeuneFilleEtu">Nom Jeune Fille Etu</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="prenomEtu">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.prenomEtu">Prenom Etu</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="statutMarital">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.statutMarital">Statut Marital</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="regime">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.regime">Regime</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="profession">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.profession">Profession</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="adresseEtu">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.adresseEtu">Adresse Etu</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="telEtu">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.telEtu">Tel Etu</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="emailEtu">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.emailEtu">Email Etu</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="adresseParent">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.adresseParent">Adresse Parent</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="telParent">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.telParent">Tel Parent</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="emailParent">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.emailParent">Email Parent</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="nomParent">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.nomParent">Nom Parent</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="prenomParent">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.prenomParent">Prenom Parent</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="handicapYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.handicapYN">Handicap YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="photo">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.photo">Photo</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="ordiPersoYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.ordiPersoYN">Ordi Perso YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="derniereModification">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.derniereModification"
+                  >Derniere Modification</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="emailUser">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.emailUser">Email User</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="etudiant.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.etudiant">Etudiant</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="typeHandicap.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.typeHandicap">Type Handicap</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="typeBourse.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInformationPersonnelle.typeBourse">Type Bourse</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (informationPersonnelle of informationPersonnelles; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/information-personnelle', informationPersonnelle.id, 'view']">{{
+                  informationPersonnelle.id
+                }}</a>
+              </td>
+              <td>{{ informationPersonnelle.nomEtu }}</td>
+              <td>{{ informationPersonnelle.nomJeuneFilleEtu }}</td>
+              <td>{{ informationPersonnelle.prenomEtu }}</td>
+              <td>{{ informationPersonnelle.statutMarital }}</td>
+              <td>{{ informationPersonnelle.regime }}</td>
+              <td>{{ informationPersonnelle.profession }}</td>
+              <td>{{ informationPersonnelle.adresseEtu }}</td>
+              <td>{{ informationPersonnelle.telEtu }}</td>
+              <td>{{ informationPersonnelle.emailEtu }}</td>
+              <td>{{ informationPersonnelle.adresseParent }}</td>
+              <td>{{ informationPersonnelle.telParent }}</td>
+              <td>{{ informationPersonnelle.emailParent }}</td>
+              <td>{{ informationPersonnelle.nomParent }}</td>
+              <td>{{ informationPersonnelle.prenomParent }}</td>
+              <td>{{ informationPersonnelle.handicapYN }}</td>
+              <td>{{ informationPersonnelle.photo }}</td>
+              <td>{{ informationPersonnelle.ordiPersoYN }}</td>
+              <td>{{ informationPersonnelle.derniereModification | formatMediumDate }}</td>
+              <td>{{ informationPersonnelle.emailUser }}</td>
+              <td>
+                @if (informationPersonnelle.etudiant) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/etudiant', informationPersonnelle.etudiant.id, 'view']">{{
+                      informationPersonnelle.etudiant.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (informationPersonnelle.typeHandicap) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/type-handicap', informationPersonnelle.typeHandicap.id, 'view']">{{
+                      informationPersonnelle.typeHandicap.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (informationPersonnelle.typeBourse) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/type-bourse', informationPersonnelle.typeBourse.id, 'view']">{{
+                      informationPersonnelle.typeBourse.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/information-personnelle', informationPersonnelle.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/information-personnelle', informationPersonnelle.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(informationPersonnelle)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (informationPersonnelles && informationPersonnelles.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

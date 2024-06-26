@@ -1,0 +1,30 @@
+{
+  "gatewayApp": {
+    "infosUser": {
+      "home": {
+        "title": "Infos Users",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Infos User",
+        "createOrEditLabel": "Create or edit a Infos User",
+        "search": "Search for Infos User",
+        "notFound": "No Infos Users found"
+      },
+      "created": "A new Infos User is created with identifier {{ param }}",
+      "updated": "A Infos User is updated with identifier {{ param }}",
+      "deleted": "A Infos User is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Infos User {{ id }}?"
+      },
+      "detail": {
+        "title": "Infos User"
+      },
+      "id": "ID",
+      "dateAjout": "Date Ajout",
+      "actifYN": "Actif YN",
+      "user": "User",
+      "historiqueConnexions": "Historique Connexions",
+      "userProfiles": "User Profiles",
+      "infoUserRessources": "Info User Ressources"
+    }
+  }
+}

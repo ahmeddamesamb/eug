@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-doctorat-heading"
+        data-cy="DoctoratCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirDoctorat.home.createOrEditLabel"
+      >
+        Créer ou éditer un Doctorat
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirDoctorat.sujet" for="field_sujet">Sujet</label>
+          <input type="text" class="form-control" name="sujet" id="field_sujet" data-cy="sujet" formControlName="sujet" />
+          @if (editForm.get('sujet')!.invalid && (editForm.get('sujet')!.dirty || editForm.get('sujet')!.touched)) {
+            <div>
+              @if (editForm.get('sujet')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirDoctorat.anneeInscriptionDoctorat"
+            for="field_anneeInscriptionDoctorat"
+            >Annee Inscription Doctorat</label
+          >
+          <div class="input-group">
+            <input
+              id="field_anneeInscriptionDoctorat"
+              data-cy="anneeInscriptionDoctorat"
+              type="text"
+              class="form-control"
+              name="anneeInscriptionDoctorat"
+              ngbDatepicker
+              #anneeInscriptionDoctoratDp="ngbDatepicker"
+              formControlName="anneeInscriptionDoctorat"
+            />
+            <button type="button" class="btn btn-secondary" (click)="anneeInscriptionDoctoratDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirDoctorat.encadreurId" for="field_encadreurId"
+            >Encadreur Id</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="encadreurId"
+            id="field_encadreurId"
+            data-cy="encadreurId"
+            formControlName="encadreurId"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirDoctorat.laboratoirId" for="field_laboratoirId"
+            >Laboratoir Id</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="laboratoirId"
+            id="field_laboratoirId"
+            data-cy="laboratoirId"
+            formControlName="laboratoirId"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

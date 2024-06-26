@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (disciplineSportiveEtudiant) {
+      <div>
+        <h2 data-cy="disciplineSportiveEtudiantDetailsHeading">
+          <span ugbTranslate="microserviceGirApp.microserviceGirDisciplineSportiveEtudiant.detail.title">Discipline Sportive Etudiant</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ disciplineSportiveEtudiant.id }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirDisciplineSportiveEtudiant.licenceSportiveYN">Licence Sportive YN</span>
+          </dt>
+          <dd>
+            <span>{{ disciplineSportiveEtudiant.licenceSportiveYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirDisciplineSportiveEtudiant.competitionUGBYN">Competition UGBYN</span>
+          </dt>
+          <dd>
+            <span>{{ disciplineSportiveEtudiant.competitionUGBYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirDisciplineSportiveEtudiant.disciplineSportive">Discipline Sportive</span>
+          </dt>
+          <dd>
+            @if (disciplineSportiveEtudiant.disciplineSportive) {
+              <div>
+                <a [routerLink]="['/discipline-sportive', disciplineSportiveEtudiant.disciplineSportive.id, 'view']">{{
+                  disciplineSportiveEtudiant.disciplineSportive.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirDisciplineSportiveEtudiant.etudiant">Etudiant</span></dt>
+          <dd>
+            @if (disciplineSportiveEtudiant.etudiant) {
+              <div>
+                <a [routerLink]="['/etudiant', disciplineSportiveEtudiant.etudiant.id, 'view']">{{
+                  disciplineSportiveEtudiant.etudiant.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/microservicegir/discipline-sportive-etudiant', disciplineSportiveEtudiant.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

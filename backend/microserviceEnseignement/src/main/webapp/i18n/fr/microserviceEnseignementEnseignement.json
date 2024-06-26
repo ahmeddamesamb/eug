@@ -1,0 +1,28 @@
+{
+  "microserviceEnseignementApp": {
+    "microserviceEnseignementEnseignement": {
+      "home": {
+        "title": "Enseignements",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Enseignement",
+        "createOrEditLabel": "Créer ou éditer un Enseignement",
+        "search": "Recherche pour Enseignement",
+        "notFound": "Aucun Enseignement trouvé"
+      },
+      "created": "Un nouveau Enseignement a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Enseignement avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Enseignement avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Enseignement {{ id }} ?"
+      },
+      "detail": {
+        "title": "Enseignement"
+      },
+      "id": "ID",
+      "libelleEnseignements": "Libelle Enseignements",
+      "volumeHoraire": "Volume Horaire",
+      "nombreInscrits": "Nombre Inscrits",
+      "groupeYN": "Groupe YN"
+    }
+  }
+}

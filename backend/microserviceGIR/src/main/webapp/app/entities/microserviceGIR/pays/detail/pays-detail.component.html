@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (pays) {
+      <div>
+        <h2 data-cy="paysDetailsHeading"><span ugbTranslate="microserviceGirApp.microserviceGirPays.detail.title">Pays</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ pays.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirPays.libellePays">Libelle Pays</span></dt>
+          <dd>
+            <span>{{ pays.libellePays }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirPays.paysEnAnglais">Pays En Anglais</span></dt>
+          <dd>
+            <span>{{ pays.paysEnAnglais }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirPays.nationalite">Nationalite</span></dt>
+          <dd>
+            <span>{{ pays.nationalite }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirPays.codePays">Code Pays</span></dt>
+          <dd>
+            <span>{{ pays.codePays }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirPays.uEMOAYN">U EMOAYN</span></dt>
+          <dd>
+            <span>{{ pays.uEMOAYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirPays.cEDEAOYN">C EDEAOYN</span></dt>
+          <dd>
+            <span>{{ pays.cEDEAOYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirPays.rIMYN">R IMYN</span></dt>
+          <dd>
+            <span>{{ pays.rIMYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirPays.autreYN">Autre YN</span></dt>
+          <dd>
+            <span>{{ pays.autreYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirPays.estEtrangerYN">Est Etranger YN</span></dt>
+          <dd>
+            <span>{{ pays.estEtrangerYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirPays.zone">Zone</span></dt>
+          <dd>
+            @for (zone of pays.zones; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/zone', zone.id, 'view']">{{ zone.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/pays', pays.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

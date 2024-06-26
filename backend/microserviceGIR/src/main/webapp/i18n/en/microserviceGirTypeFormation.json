@@ -1,0 +1,26 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirTypeFormation": {
+      "home": {
+        "title": "Type Formations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Type Formation",
+        "createOrEditLabel": "Create or edit a Type Formation",
+        "search": "Search for Type Formation",
+        "notFound": "No Type Formations found"
+      },
+      "created": "A new Type Formation is created with identifier {{ param }}",
+      "updated": "A Type Formation is updated with identifier {{ param }}",
+      "deleted": "A Type Formation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Type Formation {{ id }}?"
+      },
+      "detail": {
+        "title": "Type Formation"
+      },
+      "id": "ID",
+      "libelleTypeFormation": "Libelle Type Formation",
+      "formations": "Formations"
+    }
+  }
+}

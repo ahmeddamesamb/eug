@@ -1,0 +1,103 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-information-image-heading"
+        data-cy="InformationImageCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirInformationImage.home.createOrEditLabel"
+      >
+        Créer ou éditer un Information Image
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirInformationImage.description" for="field_description"
+            >Description</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirInformationImage.cheminPath" for="field_cheminPath"
+            >Chemin Path</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="cheminPath"
+            id="field_cheminPath"
+            data-cy="cheminPath"
+            formControlName="cheminPath"
+          />
+          @if (editForm.get('cheminPath')!.invalid && (editForm.get('cheminPath')!.dirty || editForm.get('cheminPath')!.touched)) {
+            <div>
+              @if (editForm.get('cheminPath')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirInformationImage.cheminFile" for="field_cheminFile"
+            >Chemin File</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="cheminFile"
+            id="field_cheminFile"
+            data-cy="cheminFile"
+            formControlName="cheminFile"
+          />
+          @if (editForm.get('cheminFile')!.invalid && (editForm.get('cheminFile')!.dirty || editForm.get('cheminFile')!.touched)) {
+            <div>
+              @if (editForm.get('cheminFile')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirInformationImage.enCoursYN" for="field_enCoursYN"
+            >En Cours YN</label
+          >
+          <input type="text" class="form-control" name="enCoursYN" id="field_enCoursYN" data-cy="enCoursYN" formControlName="enCoursYN" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

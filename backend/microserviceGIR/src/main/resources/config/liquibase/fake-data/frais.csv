@@ -1,0 +1,11 @@
+id;valeur_frais;description_frais;frais_pour_assimile_yn;frais_pour_exonerer_yn;dia;dip;frais_privee;date_application;date_fin;est_en_application_yn;actif_yn
+1;12036.07;mouiller équilibrer;false;false;12214.65;23643.05;22291.17;2024-06-25;2024-06-24;true;false
+2;12315.13;smack risquer;true;false;16285.58;3397.94;22175.56;2024-06-25;2024-06-25;true;true
+3;12482.3;au point que;true;true;7716.9;17479.11;23580.13;2024-06-25;2024-06-25;true;false
+4;9066.57;blablabla camarade photographier;false;false;17799.57;10575.81;5714.83;2024-06-24;2024-06-25;true;false
+5;20879.09;horrible ouin;true;true;11108.06;8644.24;12358.28;2024-06-25;2024-06-25;false;false
+6;29788.86;police;false;true;19292.85;7619.4;27635.3;2024-06-25;2024-06-25;false;true
+7;25560.02;blablabla;false;false;4024.39;9020.11;3003.51;2024-06-24;2024-06-25;false;true
+8;27770.91;divinement;false;false;11546.08;9752.11;19495.42;2024-06-25;2024-06-25;true;false
+9;23522.3;maigre tout;true;true;30269.47;14773.32;15066.9;2024-06-25;2024-06-25;true;false
+10;23217.13;simple écouter demain;false;true;27825.23;4704.4;22283.6;2024-06-25;2024-06-25;false;true

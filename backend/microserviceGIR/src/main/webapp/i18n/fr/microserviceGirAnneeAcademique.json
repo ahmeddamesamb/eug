@@ -1,0 +1,31 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirAnneeAcademique": {
+      "home": {
+        "title": "AnneeAcademiques",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Annee Academique",
+        "createOrEditLabel": "Créer ou éditer un Annee Academique",
+        "search": "Recherche pour Annee Academique",
+        "notFound": "Aucun Annee Academique trouvé"
+      },
+      "created": "Un nouveau Annee Academique a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Annee Academique avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Annee Academique avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Annee Academique {{ id }} ?"
+      },
+      "detail": {
+        "title": "Annee Academique"
+      },
+      "id": "ID",
+      "libelleAnneeAcademique": "Libelle Annee Academique",
+      "anneeAc": "Annee Ac",
+      "separateur": "Separateur",
+      "anneeCouranteYN": "Annee Courante YN",
+      "inscriptionAdministratives": "Inscription Administratives",
+      "formationInvalides": "Formation Invalides",
+      "programmationInscriptions": "Programmation Inscriptions"
+    }
+  }
+}

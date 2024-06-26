@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205539"
+  },
+  "applications": ["microserviceGD"],
+  "clientRootFolder": "microserviceGD",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "rapport",
+  "fields": [
+    {
+      "fieldName": "libelleRapport",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descriptionRapport",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "contenuRapport",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateRedaction",
+      "fieldType": "Instant"
+    }
+  ],
+  "microserviceName": "microserviceGD",
+  "name": "Rapport",
+  "pagination": "pagination",
+  "relationships": [],
+  "service": "serviceImpl"
+}

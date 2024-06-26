@@ -1,0 +1,101 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-enseignement-heading"
+        data-cy="EnseignementCreateUpdateHeading"
+        ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.home.createOrEditLabel"
+      >
+        Créer ou éditer un Enseignement
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.libelleEnseignements"
+            for="field_libelleEnseignements"
+            >Libelle Enseignements</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libelleEnseignements"
+            id="field_libelleEnseignements"
+            data-cy="libelleEnseignements"
+            formControlName="libelleEnseignements"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.volumeHoraire"
+            for="field_volumeHoraire"
+            >Volume Horaire</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="volumeHoraire"
+            id="field_volumeHoraire"
+            data-cy="volumeHoraire"
+            formControlName="volumeHoraire"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.nombreInscrits"
+            for="field_nombreInscrits"
+            >Nombre Inscrits</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="nombreInscrits"
+            id="field_nombreInscrits"
+            data-cy="nombreInscrits"
+            formControlName="nombreInscrits"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.groupeYN"
+            for="field_groupeYN"
+            >Groupe YN</label
+          >
+          <input type="checkbox" class="form-check" name="groupeYN" id="field_groupeYN" data-cy="groupeYN" formControlName="groupeYN" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

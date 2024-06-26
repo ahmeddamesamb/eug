@@ -1,0 +1,32 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirPaiementFormationPrivee": {
+      "home": {
+        "title": "PaiementFormationPrivees",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Paiement Formation Privee",
+        "createOrEditLabel": "Créer ou éditer un Paiement Formation Privee",
+        "search": "Recherche pour Paiement Formation Privee",
+        "notFound": "Aucun Paiement Formation Privee trouvé"
+      },
+      "created": "Un nouveau Paiement Formation Privee a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Paiement Formation Privee avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Paiement Formation Privee avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Paiement Formation Privee {{ id }} ?"
+      },
+      "detail": {
+        "title": "Paiement Formation Privee"
+      },
+      "id": "ID",
+      "datePaiement": "Date Paiement",
+      "moisPaiement": "Mois Paiement",
+      "anneePaiement": "Annee Paiement",
+      "payerMensualiteYN": "Payer Mensualite YN",
+      "payerDelaisYN": "Payer Delais YN",
+      "emailUser": "Email User",
+      "inscriptionAdministrativeFormation": "Inscription Administrative Formation",
+      "operateur": "Operateur"
+    }
+  }
+}

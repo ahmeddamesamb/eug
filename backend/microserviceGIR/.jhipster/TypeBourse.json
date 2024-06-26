@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20240625210039"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "type_bourse",
+  "fields": [
+    {
+      "fieldName": "libelleTypeBourse",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "TypeBourse",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "informationPersonnelle",
+      "otherEntityRelationshipName": "typeBourse",
+      "relationshipName": "informationPersonnelles",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

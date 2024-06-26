@@ -1,0 +1,31 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirMinistere": {
+      "home": {
+        "title": "Ministeres",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Ministere",
+        "createOrEditLabel": "Create or edit a Ministere",
+        "search": "Search for Ministere",
+        "notFound": "No Ministeres found"
+      },
+      "created": "A new Ministere is created with identifier {{ param }}",
+      "updated": "A Ministere is updated with identifier {{ param }}",
+      "deleted": "A Ministere is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Ministere {{ id }}?"
+      },
+      "detail": {
+        "title": "Ministere"
+      },
+      "id": "ID",
+      "nomMinistere": "Nom Ministere",
+      "sigleMinistere": "Sigle Ministere",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "enCoursYN": "En Cours YN",
+      "actifYN": "Actif YN",
+      "universites": "Universites"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "annotations": {
+    "changelogDate": "20240625213239"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "operateur",
+  "fields": [
+    {
+      "fieldName": "libelleOperateur",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "userLogin",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "codeOperateur",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Operateur",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "paiementFrais",
+      "otherEntityRelationshipName": "operateur",
+      "relationshipName": "paiementFrais",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "paiementFormationPrivee",
+      "otherEntityRelationshipName": "operateur",
+      "relationshipName": "paiementFormationPrivees",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

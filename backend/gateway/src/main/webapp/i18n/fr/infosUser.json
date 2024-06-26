@@ -1,0 +1,30 @@
+{
+  "gatewayApp": {
+    "infosUser": {
+      "home": {
+        "title": "InfosUsers",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Infos User",
+        "createOrEditLabel": "Créer ou éditer un Infos User",
+        "search": "Recherche pour Infos User",
+        "notFound": "Aucun Infos User trouvé"
+      },
+      "created": "Un nouveau Infos User a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Infos User avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Infos User avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Infos User {{ id }} ?"
+      },
+      "detail": {
+        "title": "Infos User"
+      },
+      "id": "ID",
+      "dateAjout": "Date Ajout",
+      "actifYN": "Actif YN",
+      "user": "User",
+      "historiqueConnexions": "Historique Connexions",
+      "userProfiles": "User Profiles",
+      "infoUserRessources": "Info User Ressources"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "gatewayApp": {
+    "blocFonctionnel": {
+      "home": {
+        "title": "Bloc Fonctionnels",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Bloc Fonctionnel",
+        "createOrEditLabel": "Create or edit a Bloc Fonctionnel",
+        "search": "Search for Bloc Fonctionnel",
+        "notFound": "No Bloc Fonctionnels found"
+      },
+      "created": "A new Bloc Fonctionnel is created with identifier {{ param }}",
+      "updated": "A Bloc Fonctionnel is updated with identifier {{ param }}",
+      "deleted": "A Bloc Fonctionnel is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Bloc Fonctionnel {{ id }}?"
+      },
+      "detail": {
+        "title": "Bloc Fonctionnel"
+      },
+      "id": "ID",
+      "libelleBloc": "Libelle Bloc",
+      "dateAjoutBloc": "Date Ajout Bloc",
+      "actifYN": "Actif YN",
+      "service": "Service",
+      "userProfileBlocFonctionnels": "User Profile Bloc Fonctionnels"
+    }
+  }
+}

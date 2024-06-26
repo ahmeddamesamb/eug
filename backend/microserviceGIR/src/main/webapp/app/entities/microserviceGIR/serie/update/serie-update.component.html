@@ -1,0 +1,89 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-serie-heading"
+        data-cy="SerieCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirSerie.home.createOrEditLabel"
+      >
+        Créer ou éditer un Serie
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirSerie.codeSerie" for="field_codeSerie"
+            >Code Serie</label
+          >
+          <input type="text" class="form-control" name="codeSerie" id="field_codeSerie" data-cy="codeSerie" formControlName="codeSerie" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirSerie.libelleSerie" for="field_libelleSerie"
+            >Libelle Serie</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libelleSerie"
+            id="field_libelleSerie"
+            data-cy="libelleSerie"
+            formControlName="libelleSerie"
+          />
+          @if (editForm.get('libelleSerie')!.invalid && (editForm.get('libelleSerie')!.dirty || editForm.get('libelleSerie')!.touched)) {
+            <div>
+              @if (editForm.get('libelleSerie')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirSerie.sigleSerie" for="field_sigleSerie"
+            >Sigle Serie</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="sigleSerie"
+            id="field_sigleSerie"
+            data-cy="sigleSerie"
+            formControlName="sigleSerie"
+          />
+          @if (editForm.get('sigleSerie')!.invalid && (editForm.get('sigleSerie')!.dirty || editForm.get('sigleSerie')!.touched)) {
+            <div>
+              @if (editForm.get('sigleSerie')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

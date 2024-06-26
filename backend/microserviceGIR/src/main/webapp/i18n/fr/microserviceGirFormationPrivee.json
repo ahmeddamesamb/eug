@@ -1,0 +1,32 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirFormationPrivee": {
+      "home": {
+        "title": "FormationPrivees",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Formation Privee",
+        "createOrEditLabel": "Créer ou éditer un Formation Privee",
+        "search": "Recherche pour Formation Privee",
+        "notFound": "Aucun Formation Privee trouvé"
+      },
+      "created": "Un nouveau Formation Privee a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Formation Privee avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Formation Privee avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Formation Privee {{ id }} ?"
+      },
+      "detail": {
+        "title": "Formation Privee"
+      },
+      "id": "ID",
+      "nombreMensualites": "Nombre Mensualites",
+      "paiementPremierMoisYN": "Paiement Premier Mois YN",
+      "paiementDernierMoisYN": "Paiement Dernier Mois YN",
+      "fraisDossierYN": "Frais Dossier YN",
+      "coutTotal": "Cout Total",
+      "mensualite": "Mensualite",
+      "actifYN": "Actif YN",
+      "formation": "Formation"
+    }
+  }
+}

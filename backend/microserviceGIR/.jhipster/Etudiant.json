@@ -1,0 +1,112 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205539"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "etudiant",
+  "fields": [
+    {
+      "fieldName": "codeEtu",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "ine",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codeBU",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "emailUGB",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateNaissEtu",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lieuNaissEtu",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sexe",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "numDocIdentite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "assimileYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Etudiant",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "region",
+      "otherEntityRelationshipName": "etudiants",
+      "relationshipName": "region",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "typeSelection",
+      "otherEntityRelationshipName": "etudiants",
+      "relationshipName": "typeSelection",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "lycee",
+      "otherEntityRelationshipName": "etudiants",
+      "relationshipName": "lycee",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "informationPersonnelle",
+      "otherEntityRelationshipName": "etudiant",
+      "relationshipName": "informationPersonnelle",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "baccalaureat",
+      "otherEntityRelationshipName": "etudiant",
+      "relationshipName": "baccalaureat",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "disciplineSportiveEtudiant",
+      "otherEntityRelationshipName": "etudiant",
+      "relationshipName": "disciplineSportiveEtudiants",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "inscriptionAdministrative",
+      "otherEntityRelationshipName": "etudiant",
+      "relationshipName": "inscriptionAdministratives",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

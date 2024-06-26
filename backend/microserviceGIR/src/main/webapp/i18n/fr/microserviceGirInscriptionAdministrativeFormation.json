@@ -1,0 +1,37 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirInscriptionAdministrativeFormation": {
+      "home": {
+        "title": "InscriptionAdministrativeFormations",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Inscription Administrative Formation",
+        "createOrEditLabel": "Créer ou éditer un Inscription Administrative Formation",
+        "search": "Recherche pour Inscription Administrative Formation",
+        "notFound": "Aucun Inscription Administrative Formation trouvé"
+      },
+      "created": "Un nouveau Inscription Administrative Formation a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Inscription Administrative Formation avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Inscription Administrative Formation avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Inscription Administrative Formation {{ id }} ?"
+      },
+      "detail": {
+        "title": "Inscription Administrative Formation"
+      },
+      "id": "ID",
+      "inscriptionPrincipaleYN": "Inscription Principale YN",
+      "inscriptionAnnuleeYN": "Inscription Annulee YN",
+      "exonereYN": "Exonere YN",
+      "paiementFraisOblYN": "Paiement Frais Obl YN",
+      "paiementFraisIntegergYN": "Paiement Frais Integerg YN",
+      "certificatDelivreYN": "Certificat Delivre YN",
+      "dateChoixFormation": "Date Choix Formation",
+      "dateValidationInscription": "Date Validation Inscription",
+      "inscriptionAdministrative": "Inscription Administrative",
+      "formation": "Formation",
+      "inscriptionDoctorats": "Inscription Doctorats",
+      "paiementFrais": "Paiement Frais",
+      "paiementFormationPrivees": "Paiement Formation Privees"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+apiVersion: skaffold/v1
+kind: Config
+build:
+  artifacts:
+    - image: eUGB/gateway
+      context: ../gateway
+      jib: {}
+    - image: eUGB/microservicegir
+      context: ../microserviceGIR
+      jib: {}
+    - image: eUGB/microserviceenseignement
+      context: ../microserviceEnseignement
+      jib: {}
+    - image: eUGB/microserviceedt
+      context: ../microserviceEDT
+      jib: {}
+    - image: eUGB/microservicegrh
+      context: ../microserviceGRH
+      jib: {}
+    - image: eUGB/microserviceaua
+      context: ../microserviceAUA
+      jib: {}
+    - image: eUGB/microservicedeliberation
+      context: ../microserviceDeliberation
+      jib: {}
+    - image: eUGB/microservicegd
+      context: ../microserviceGD
+      jib: {}
+    - image: eUGB/microserviceaclc
+      context: ../microserviceACLC
+      jib: {}
+    - image: eUGB/microserviceaide
+      context: ../microserviceAide
+      jib: {}
+    - image: eUGB/microserviceged
+      context: ../microserviceGED
+      jib: {}
+  tagPolicy:
+    envTemplate:
+      template: "{{.IMAGE_NAME}}:latest"
+deploy:
+  kustomize: {}

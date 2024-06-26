@@ -1,0 +1,28 @@
+{
+  "gatewayApp": {
+    "userProfileBlocFonctionnel": {
+      "home": {
+        "title": "User Profile Bloc Fonctionnels",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new User Profile Bloc Fonctionnel",
+        "createOrEditLabel": "Create or edit a User Profile Bloc Fonctionnel",
+        "search": "Search for User Profile Bloc Fonctionnel",
+        "notFound": "No User Profile Bloc Fonctionnels found"
+      },
+      "created": "A new User Profile Bloc Fonctionnel is created with identifier {{ param }}",
+      "updated": "A User Profile Bloc Fonctionnel is updated with identifier {{ param }}",
+      "deleted": "A User Profile Bloc Fonctionnel is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete User Profile Bloc Fonctionnel {{ id }}?"
+      },
+      "detail": {
+        "title": "User Profile Bloc Fonctionnel"
+      },
+      "id": "ID",
+      "date": "Date",
+      "enCoursYN": "En Cours YN",
+      "userProfil": "User Profil",
+      "blocFonctionnel": "Bloc Fonctionnel"
+    }
+  }
+}

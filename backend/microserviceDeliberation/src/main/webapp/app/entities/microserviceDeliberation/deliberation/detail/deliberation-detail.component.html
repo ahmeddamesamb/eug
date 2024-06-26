@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (deliberation) {
+      <div>
+        <h2 data-cy="deliberationDetailsHeading">
+          <span ugbTranslate="microserviceDeliberationApp.microserviceDeliberationDeliberation.detail.title">Deliberation</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ deliberation.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceDeliberationApp.microserviceDeliberationDeliberation.estValideeYN">Est Validee YN</span></dt>
+          <dd>
+            <span>{{ deliberation.estValideeYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceDeliberationApp.microserviceDeliberationDeliberation.pvDeliberation">Pv Deliberation</span>
+          </dt>
+          <dd>
+            @if (deliberation.pvDeliberation) {
+              <div>
+                <a (click)="openFile(deliberation.pvDeliberation, deliberation.pvDeliberationContentType)" ugbTranslate="entity.action.open"
+                  >Ouvrir</a
+                >
+                {{ deliberation.pvDeliberationContentType }}, {{ byteSize(deliberation.pvDeliberation) }}
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicedeliberation/deliberation', deliberation.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

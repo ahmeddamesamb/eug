@@ -1,0 +1,42 @@
+{
+  "annotations": {
+    "changelogDate": "20240625211739"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "operation",
+  "fields": [
+    {
+      "fieldName": "dateExecution",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "emailUser",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "detailOperation",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "infoSysteme",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Operation",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "typeOperation",
+      "otherEntityRelationshipName": "operations",
+      "relationshipName": "typeOperation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

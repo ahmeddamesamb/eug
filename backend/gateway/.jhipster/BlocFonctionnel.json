@@ -1,0 +1,45 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205739"
+  },
+  "applications": ["gateway"],
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "bloc_fonctionnel",
+  "fields": [
+    {
+      "fieldName": "libelleBloc",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "dateAjoutBloc",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "BlocFonctionnel",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "serviceUser",
+      "otherEntityRelationshipName": "blocFonctionnels",
+      "relationshipName": "service",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "userProfileBlocFonctionnel",
+      "otherEntityRelationshipName": "blocFonctionnel",
+      "relationshipName": "userProfileBlocFonctionnels",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

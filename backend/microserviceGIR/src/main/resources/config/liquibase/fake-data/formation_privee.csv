@@ -1,0 +1,11 @@
+id;nombre_mensualites;paiement_premier_mois_yn;paiement_dernier_mois_yn;frais_dossier_yn;cout_total;mensualite;actif_yn
+1;24411;true;true;false;25597.23;27461.57;false
+2;6669;false;true;false;28801.07;2367.95;true
+3;19568;true;true;false;8977.67;4044.6;true
+4;6046;true;false;false;24008.97;12431.82;true
+5;32441;false;true;false;21767.64;30653.13;false
+6;743;false;true;false;32036.66;31251.29;false
+7;11795;true;false;true;26325.94;28216.47;true
+8;1550;false;true;false;31861.03;32740.19;false
+9;8163;true;false;false;29387.08;31878.84;true
+10;22504;false;true;true;12977.68;6873.19;false

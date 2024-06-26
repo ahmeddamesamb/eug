@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (rapport) {
+      <div>
+        <h2 data-cy="rapportDetailsHeading"><span ugbTranslate="microserviceGdApp.microserviceGdRapport.detail.title">Rapport</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ rapport.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGdApp.microserviceGdRapport.libelleRapport">Libelle Rapport</span></dt>
+          <dd>
+            <span>{{ rapport.libelleRapport }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGdApp.microserviceGdRapport.descriptionRapport">Description Rapport</span></dt>
+          <dd>
+            <span>{{ rapport.descriptionRapport }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGdApp.microserviceGdRapport.contenuRapport">Contenu Rapport</span></dt>
+          <dd>
+            <span>{{ rapport.contenuRapport }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGdApp.microserviceGdRapport.dateRedaction">Date Redaction</span></dt>
+          <dd>
+            <span>{{ rapport.dateRedaction | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegd/rapport', rapport.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

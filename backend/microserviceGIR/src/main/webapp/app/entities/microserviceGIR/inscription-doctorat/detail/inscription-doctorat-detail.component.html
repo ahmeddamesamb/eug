@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (inscriptionDoctorat) {
+      <div>
+        <h2 data-cy="inscriptionDoctoratDetailsHeading">
+          <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionDoctorat.detail.title">Inscription Doctorat</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ inscriptionDoctorat.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirInscriptionDoctorat.sourceFinancement">Source Financement</span></dt>
+          <dd>
+            <span>{{ inscriptionDoctorat.sourceFinancement }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirInscriptionDoctorat.coEncadreurId">Co Encadreur Id</span></dt>
+          <dd>
+            <span>{{ inscriptionDoctorat.coEncadreurId }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirInscriptionDoctorat.nombreInscription">Nombre Inscription</span></dt>
+          <dd>
+            <span>{{ inscriptionDoctorat.nombreInscription }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirInscriptionDoctorat.doctorat">Doctorat</span></dt>
+          <dd>
+            @if (inscriptionDoctorat.doctorat) {
+              <div>
+                <a [routerLink]="['/doctorat', inscriptionDoctorat.doctorat.id, 'view']">{{ inscriptionDoctorat.doctorat.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionDoctorat.inscriptionAdministrativeFormation"
+              >Inscription Administrative Formation</span
+            >
+          </dt>
+          <dd>
+            @if (inscriptionDoctorat.inscriptionAdministrativeFormation) {
+              <div>
+                <a
+                  [routerLink]="[
+                    '/inscription-administrative-formation',
+                    inscriptionDoctorat.inscriptionAdministrativeFormation.id,
+                    'view'
+                  ]"
+                  >{{ inscriptionDoctorat.inscriptionAdministrativeFormation.id }}</a
+                >
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/microservicegir/inscription-doctorat', inscriptionDoctorat.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

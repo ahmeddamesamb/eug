@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "changelogDate": "20240625211939"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "cycle",
+  "fields": [
+    {
+      "fieldName": "libelleCycle",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Cycle",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "niveau",
+      "otherEntityRelationshipName": "typeCycle",
+      "relationshipName": "niveaux",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "frais",
+      "otherEntityRelationshipName": "typeCycle",
+      "relationshipName": "frais",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

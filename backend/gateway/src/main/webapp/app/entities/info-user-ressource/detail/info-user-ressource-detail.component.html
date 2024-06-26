@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (infoUserRessource) {
+      <div>
+        <h2 data-cy="infoUserRessourceDetailsHeading">
+          <span ugbTranslate="gatewayApp.infoUserRessource.detail.title">Info User Ressource</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ infoUserRessource.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.infoUserRessource.dateAjout">Date Ajout</span></dt>
+          <dd>
+            <span>{{ infoUserRessource.dateAjout | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.infoUserRessource.enCoursYN">En Cours YN</span></dt>
+          <dd>
+            <span>{{ infoUserRessource.enCoursYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.infoUserRessource.infosUser">Infos User</span></dt>
+          <dd>
+            @if (infoUserRessource.infosUser) {
+              <div>
+                <a [routerLink]="['/infos-user', infoUserRessource.infosUser.id, 'view']">{{ infoUserRessource.infosUser.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.infoUserRessource.ressource">Ressource</span></dt>
+          <dd>
+            @if (infoUserRessource.ressource) {
+              <div>
+                <a [routerLink]="['/ressource', infoUserRessource.ressource.id, 'view']">{{ infoUserRessource.ressource.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/info-user-ressource', infoUserRessource.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

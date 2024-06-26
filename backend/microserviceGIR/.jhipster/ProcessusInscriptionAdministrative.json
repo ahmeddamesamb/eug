@@ -1,0 +1,121 @@
+{
+  "annotations": {
+    "changelogDate": "20240625211639"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "processus_inscription_administrative",
+  "fields": [
+    {
+      "fieldName": "inscriptionDemarreeYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateDemarrageInscription",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "inscriptionAnnuleeYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateAnnulationInscription",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "apteYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateVisiteMedicale",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "beneficiaireCROUSYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateRemiseQuitusCROUS",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "nouveauCodeBUYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "quitusBUYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateRemiseQuitusBU",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "exporterBUYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "fraisObligatoiresPayesYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "datePaiementFraisObligatoires",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "numeroQuitusCROUS",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "carteEturemiseYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "carteDupremiseYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateRemiseCarteEtu",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dateRemiseCarteDup",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "inscritAdministrativementYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateInscriptionAdministrative",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "derniereModification",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "inscritOnlineYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "emailUser",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "ProcessusInscriptionAdministrative",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "inscriptionAdministrative",
+      "otherEntityRelationshipName": "processusDinscriptionAdministrative",
+      "relationshipName": "inscriptionAdministrative",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

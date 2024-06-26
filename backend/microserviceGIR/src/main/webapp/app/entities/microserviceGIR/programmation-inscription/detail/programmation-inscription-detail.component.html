@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (programmationInscription) {
+      <div>
+        <h2 data-cy="programmationInscriptionDetailsHeading">
+          <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.detail.title">Programmation Inscription</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ programmationInscription.id }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.libelleProgrammation"
+              >Libelle Programmation</span
+            >
+          </dt>
+          <dd>
+            <span>{{ programmationInscription.libelleProgrammation }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateDebutProgrammation"
+              >Date Debut Programmation</span
+            >
+          </dt>
+          <dd>
+            <span>{{ programmationInscription.dateDebutProgrammation | formatMediumDate }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateFinProgrammation"
+              >Date Fin Programmation</span
+            >
+          </dt>
+          <dd>
+            <span>{{ programmationInscription.dateFinProgrammation | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.ouvertYN">Ouvert YN</span></dt>
+          <dd>
+            <span>{{ programmationInscription.ouvertYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.emailUser">Email User</span></dt>
+          <dd>
+            <span>{{ programmationInscription.emailUser }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateForclosClasse">Date Forclos Classe</span>
+          </dt>
+          <dd>
+            <span>{{ programmationInscription.dateForclosClasse | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.forclosClasseYN">Forclos Classe YN</span></dt>
+          <dd>
+            <span>{{ programmationInscription.forclosClasseYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.actifYN">Actif YN</span></dt>
+          <dd>
+            <span>{{ programmationInscription.actifYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.anneeAcademique">Annee Academique</span></dt>
+          <dd>
+            @if (programmationInscription.anneeAcademique) {
+              <div>
+                <a [routerLink]="['/annee-academique', programmationInscription.anneeAcademique.id, 'view']">{{
+                  programmationInscription.anneeAcademique.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.formation">Formation</span></dt>
+          <dd>
+            @if (programmationInscription.formation) {
+              <div>
+                <a [routerLink]="['/formation', programmationInscription.formation.id, 'view']">{{
+                  programmationInscription.formation.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.campagne">Campagne</span></dt>
+          <dd>
+            @if (programmationInscription.campagne) {
+              <div>
+                <a [routerLink]="['/campagne', programmationInscription.campagne.id, 'view']">{{ programmationInscription.campagne.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/microservicegir/programmation-inscription', programmationInscription.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

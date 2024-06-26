@@ -1,0 +1,29 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirFormationAutorisee": {
+      "home": {
+        "title": "FormationAutorisees",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Formation Autorisee",
+        "createOrEditLabel": "Créer ou éditer un Formation Autorisee",
+        "search": "Recherche pour Formation Autorisee",
+        "notFound": "Aucun Formation Autorisee trouvé"
+      },
+      "created": "Un nouveau Formation Autorisee a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Formation Autorisee avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Formation Autorisee avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Formation Autorisee {{ id }} ?"
+      },
+      "detail": {
+        "title": "Formation Autorisee"
+      },
+      "id": "ID",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "enCoursYN": "En Cours YN",
+      "actifYN": "Actif YN",
+      "formation": "Formation"
+    }
+  }
+}

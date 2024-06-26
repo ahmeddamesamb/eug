@@ -1,0 +1,264 @@
+<div>
+  <h2 id="page-heading" data-cy="ProgrammationInscriptionHeading">
+    <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.home.title">ProgrammationInscriptions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-programmation-inscription"
+        [routerLink]="['/microservicegir/programmation-inscription/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.home.createLabel"
+          >Créer un nouveau Programmation Inscription</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label
+          class="visually-hidden"
+          for="currentSearch"
+          ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.home.search"
+          >Recherche pour Programmation Inscription</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGirApp.microserviceGirProgrammationInscription.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (programmationInscriptions?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.home.notFound"
+        >Aucun Programmation Inscription trouvé</span
+      >
+    </div>
+  }
+
+  @if (programmationInscriptions && programmationInscriptions.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="libelleProgrammation">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.libelleProgrammation"
+                  >Libelle Programmation</span
+                >
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateDebutProgrammation">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateDebutProgrammation"
+                  >Date Debut Programmation</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateFinProgrammation">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateFinProgrammation"
+                  >Date Fin Programmation</span
+                >
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="ouvertYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.ouvertYN">Ouvert YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="emailUser">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.emailUser">Email User</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateForclosClasse">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateForclosClasse">Date Forclos Classe</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="forclosClasseYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.forclosClasseYN">Forclos Classe YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="actifYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.actifYN">Actif YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="anneeAcademique.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.anneeAcademique">Annee Academique</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="formation.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.formation">Formation</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="campagne.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.campagne">Campagne</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (programmationInscription of programmationInscriptions; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/programmation-inscription', programmationInscription.id, 'view']">{{
+                  programmationInscription.id
+                }}</a>
+              </td>
+              <td>{{ programmationInscription.libelleProgrammation }}</td>
+              <td>{{ programmationInscription.dateDebutProgrammation | formatMediumDate }}</td>
+              <td>{{ programmationInscription.dateFinProgrammation | formatMediumDate }}</td>
+              <td>{{ programmationInscription.ouvertYN }}</td>
+              <td>{{ programmationInscription.emailUser }}</td>
+              <td>{{ programmationInscription.dateForclosClasse | formatMediumDate }}</td>
+              <td>{{ programmationInscription.forclosClasseYN }}</td>
+              <td>{{ programmationInscription.actifYN }}</td>
+              <td>
+                @if (programmationInscription.anneeAcademique) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/annee-academique', programmationInscription.anneeAcademique.id, 'view']">{{
+                      programmationInscription.anneeAcademique.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (programmationInscription.formation) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/formation', programmationInscription.formation.id, 'view']">{{
+                      programmationInscription.formation.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (programmationInscription.campagne) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/campagne', programmationInscription.campagne.id, 'view']">{{
+                      programmationInscription.campagne.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/programmation-inscription', programmationInscription.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/programmation-inscription', programmationInscription.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button
+                    type="submit"
+                    (click)="delete(programmationInscription)"
+                    class="btn btn-danger btn-sm"
+                    data-cy="entityDeleteButton"
+                  >
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (programmationInscriptions && programmationInscriptions.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,123 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (inscriptionAdministrativeFormation) {
+      <div>
+        <h2 data-cy="inscriptionAdministrativeFormationDetailsHeading">
+          <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.detail.title"
+            >Inscription Administrative Formation</span
+          >
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ inscriptionAdministrativeFormation.id }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.inscriptionPrincipaleYN"
+              >Inscription Principale YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ inscriptionAdministrativeFormation.inscriptionPrincipaleYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.inscriptionAnnuleeYN"
+              >Inscription Annulee YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ inscriptionAdministrativeFormation.inscriptionAnnuleeYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.exonereYN">Exonere YN</span></dt>
+          <dd>
+            <span>{{ inscriptionAdministrativeFormation.exonereYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.paiementFraisOblYN"
+              >Paiement Frais Obl YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ inscriptionAdministrativeFormation.paiementFraisOblYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.paiementFraisIntegergYN"
+              >Paiement Frais Integerg YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ inscriptionAdministrativeFormation.paiementFraisIntegergYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.certificatDelivreYN"
+              >Certificat Delivre YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ inscriptionAdministrativeFormation.certificatDelivreYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.dateChoixFormation"
+              >Date Choix Formation</span
+            >
+          </dt>
+          <dd>
+            <span>{{ inscriptionAdministrativeFormation.dateChoixFormation | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.dateValidationInscription"
+              >Date Validation Inscription</span
+            >
+          </dt>
+          <dd>
+            <span>{{ inscriptionAdministrativeFormation.dateValidationInscription | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.inscriptionAdministrative"
+              >Inscription Administrative</span
+            >
+          </dt>
+          <dd>
+            @if (inscriptionAdministrativeFormation.inscriptionAdministrative) {
+              <div>
+                <a
+                  [routerLink]="['/inscription-administrative', inscriptionAdministrativeFormation.inscriptionAdministrative.id, 'view']"
+                  >{{ inscriptionAdministrativeFormation.inscriptionAdministrative.id }}</a
+                >
+              </div>
+            }
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrativeFormation.formation">Formation</span></dt>
+          <dd>
+            @if (inscriptionAdministrativeFormation.formation) {
+              <div>
+                <a [routerLink]="['/formation', inscriptionAdministrativeFormation.formation.id, 'view']">{{
+                  inscriptionAdministrativeFormation.formation.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/microservicegir/inscription-administrative-formation', inscriptionAdministrativeFormation.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

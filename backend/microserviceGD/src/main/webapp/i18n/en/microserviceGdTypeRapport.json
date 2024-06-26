@@ -1,0 +1,25 @@
+{
+  "microserviceGdApp": {
+    "microserviceGdTypeRapport": {
+      "home": {
+        "title": "Type Rapports",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Type Rapport",
+        "createOrEditLabel": "Create or edit a Type Rapport",
+        "search": "Search for Type Rapport",
+        "notFound": "No Type Rapports found"
+      },
+      "created": "A new Type Rapport is created with identifier {{ param }}",
+      "updated": "A Type Rapport is updated with identifier {{ param }}",
+      "deleted": "A Type Rapport is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Type Rapport {{ id }}?"
+      },
+      "detail": {
+        "title": "Type Rapport"
+      },
+      "id": "ID",
+      "libelleTypeRapport": "Libelle Type Rapport"
+    }
+  }
+}

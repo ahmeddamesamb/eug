@@ -1,0 +1,28 @@
+{
+  "gatewayApp": {
+    "serviceUser": {
+      "home": {
+        "title": "Service Users",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Service User",
+        "createOrEditLabel": "Create or edit a Service User",
+        "search": "Search for Service User",
+        "notFound": "No Service Users found"
+      },
+      "created": "A new Service User is created with identifier {{ param }}",
+      "updated": "A Service User is updated with identifier {{ param }}",
+      "deleted": "A Service User is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Service User {{ id }}?"
+      },
+      "detail": {
+        "title": "Service User"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "dateAjout": "Date Ajout",
+      "actifYN": "Actif YN",
+      "blocFonctionnels": "Bloc Fonctionnels"
+    }
+  }
+}

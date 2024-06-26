@@ -1,0 +1,98 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="ugb-ufr-heading" data-cy="UfrCreateUpdateHeading" ugbTranslate="microserviceGirApp.microserviceGirUfr.home.createOrEditLabel">
+        Créer ou éditer un Ufr
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirUfr.libelleUfr" for="field_libelleUfr"
+            >Libelle Ufr</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libelleUfr"
+            id="field_libelleUfr"
+            data-cy="libelleUfr"
+            formControlName="libelleUfr"
+          />
+          @if (editForm.get('libelleUfr')!.invalid && (editForm.get('libelleUfr')!.dirty || editForm.get('libelleUfr')!.touched)) {
+            <div>
+              @if (editForm.get('libelleUfr')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirUfr.sigleUfr" for="field_sigleUfr">Sigle Ufr</label>
+          <input type="text" class="form-control" name="sigleUfr" id="field_sigleUfr" data-cy="sigleUfr" formControlName="sigleUfr" />
+          @if (editForm.get('sigleUfr')!.invalid && (editForm.get('sigleUfr')!.dirty || editForm.get('sigleUfr')!.touched)) {
+            <div>
+              @if (editForm.get('sigleUfr')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirUfr.prefixe" for="field_prefixe">Prefixe</label>
+          <input type="text" class="form-control" name="prefixe" id="field_prefixe" data-cy="prefixe" formControlName="prefixe" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirUfr.actifYN" for="field_actifYN">Actif YN</label>
+          <input type="checkbox" class="form-check" name="actifYN" id="field_actifYN" data-cy="actifYN" formControlName="actifYN" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirUfr.universite" for="field_universite"
+            >Universite</label
+          >
+          <select
+            class="form-control"
+            id="field_universite"
+            data-cy="universite"
+            name="universite"
+            formControlName="universite"
+            [compareWith]="compareUniversite"
+          >
+            <option [ngValue]="null"></option>
+            @for (universiteOption of universitesSharedCollection; track $index) {
+              <option [ngValue]="universiteOption">{{ universiteOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

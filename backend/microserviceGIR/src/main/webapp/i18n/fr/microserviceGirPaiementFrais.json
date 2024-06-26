@@ -1,0 +1,34 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirPaiementFrais": {
+      "home": {
+        "title": "PaiementFrais",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Paiement Frais",
+        "createOrEditLabel": "Créer ou éditer un Paiement Frais",
+        "search": "Recherche pour Paiement Frais",
+        "notFound": "Aucun Paiement Frais trouvé"
+      },
+      "created": "Un nouveau Paiement Frais a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Paiement Frais avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Paiement Frais avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Paiement Frais {{ id }} ?"
+      },
+      "detail": {
+        "title": "Paiement Frais"
+      },
+      "id": "ID",
+      "datePaiement": "Date Paiement",
+      "obligatoireYN": "Obligatoire YN",
+      "echeancePayeeYN": "Echeance Payee YN",
+      "emailUser": "Email User",
+      "dateForclos": "Date Forclos",
+      "forclosYN": "Forclos YN",
+      "paimentDelaiYN": "Paiment Delai YN",
+      "frais": "Frais",
+      "operateur": "Operateur",
+      "inscriptionAdministrativeFormation": "Inscription Administrative Formation"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205939"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "type_handicap",
+  "fields": [
+    {
+      "fieldName": "libelleTypeHandicap",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "TypeHandicap",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "informationPersonnelle",
+      "otherEntityRelationshipName": "typeHandicap",
+      "relationshipName": "informationPersonnelles",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

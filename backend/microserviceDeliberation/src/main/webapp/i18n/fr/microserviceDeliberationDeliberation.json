@@ -1,0 +1,26 @@
+{
+  "microserviceDeliberationApp": {
+    "microserviceDeliberationDeliberation": {
+      "home": {
+        "title": "Deliberations",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Deliberation",
+        "createOrEditLabel": "Créer ou éditer un Deliberation",
+        "search": "Recherche pour Deliberation",
+        "notFound": "Aucun Deliberation trouvé"
+      },
+      "created": "Un nouveau Deliberation a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Deliberation avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Deliberation avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Deliberation {{ id }} ?"
+      },
+      "detail": {
+        "title": "Deliberation"
+      },
+      "id": "ID",
+      "estValideeYN": "Est Validee YN",
+      "pvDeliberation": "Pv Deliberation"
+    }
+  }
+}

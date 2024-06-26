@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-deliberation-heading"
+        data-cy="DeliberationCreateUpdateHeading"
+        ugbTranslate="microserviceDeliberationApp.microserviceDeliberationDeliberation.home.createOrEditLabel"
+      >
+        Créer ou éditer un Deliberation
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceDeliberationApp.microserviceDeliberationDeliberation.estValideeYN"
+            for="field_estValideeYN"
+            >Est Validee YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="estValideeYN"
+            id="field_estValideeYN"
+            data-cy="estValideeYN"
+            formControlName="estValideeYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceDeliberationApp.microserviceDeliberationDeliberation.pvDeliberation"
+            for="field_pvDeliberation"
+            >Pv Deliberation</label
+          >
+          <div>
+            @if (editForm.get('pvDeliberation')!.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('pvDeliberation')!.value!, editForm.get('pvDeliberationContentType')!.value!)"
+                  ugbTranslate="entity.action.open"
+                  >Ouvrir</a
+                ><br />
+                <span class="pull-start"
+                  >{{ editForm.get('pvDeliberationContentType')!.value }}, {{ byteSize(editForm.get('pvDeliberation')!.value!) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ pvDeliberation: undefined, pvDeliberationContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_pvDeliberation"
+              data-cy="pvDeliberation"
+              (change)="setFileData($event, 'pvDeliberation', false)"
+              ugbTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="pvDeliberation"
+            id="field_pvDeliberation"
+            data-cy="pvDeliberation"
+            formControlName="pvDeliberation"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="pvDeliberationContentType"
+            id="field_pvDeliberationContentType"
+            formControlName="pvDeliberationContentType"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

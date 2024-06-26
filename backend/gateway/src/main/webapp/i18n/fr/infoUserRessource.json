@@ -1,0 +1,28 @@
+{
+  "gatewayApp": {
+    "infoUserRessource": {
+      "home": {
+        "title": "InfoUserRessources",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Info User Ressource",
+        "createOrEditLabel": "Créer ou éditer un Info User Ressource",
+        "search": "Recherche pour Info User Ressource",
+        "notFound": "Aucun Info User Ressource trouvé"
+      },
+      "created": "Un nouveau Info User Ressource a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Info User Ressource avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Info User Ressource avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Info User Ressource {{ id }} ?"
+      },
+      "detail": {
+        "title": "Info User Ressource"
+      },
+      "id": "ID",
+      "dateAjout": "Date Ajout",
+      "enCoursYN": "En Cours YN",
+      "infosUser": "Infos User",
+      "ressource": "Ressource"
+    }
+  }
+}

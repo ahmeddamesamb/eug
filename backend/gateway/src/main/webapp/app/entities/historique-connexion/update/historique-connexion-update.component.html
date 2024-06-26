@@ -1,0 +1,136 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-historique-connexion-heading"
+        data-cy="HistoriqueConnexionCreateUpdateHeading"
+        ugbTranslate="gatewayApp.historiqueConnexion.home.createOrEditLabel"
+      >
+        Créer ou éditer un Historique Connexion
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.historiqueConnexion.dateDebutConnexion" for="field_dateDebutConnexion"
+            >Date Debut Connexion</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateDebutConnexion"
+              data-cy="dateDebutConnexion"
+              type="text"
+              class="form-control"
+              name="dateDebutConnexion"
+              ngbDatepicker
+              #dateDebutConnexionDp="ngbDatepicker"
+              formControlName="dateDebutConnexion"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDebutConnexionDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          @if (
+            editForm.get('dateDebutConnexion')!.invalid &&
+            (editForm.get('dateDebutConnexion')!.dirty || editForm.get('dateDebutConnexion')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('dateDebutConnexion')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.historiqueConnexion.dateFinConnexion" for="field_dateFinConnexion"
+            >Date Fin Connexion</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateFinConnexion"
+              data-cy="dateFinConnexion"
+              type="text"
+              class="form-control"
+              name="dateFinConnexion"
+              ngbDatepicker
+              #dateFinConnexionDp="ngbDatepicker"
+              formControlName="dateFinConnexion"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateFinConnexionDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          @if (
+            editForm.get('dateFinConnexion')!.invalid &&
+            (editForm.get('dateFinConnexion')!.dirty || editForm.get('dateFinConnexion')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('dateFinConnexion')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.historiqueConnexion.adresseIp" for="field_adresseIp">Adresse Ip</label>
+          <input type="text" class="form-control" name="adresseIp" id="field_adresseIp" data-cy="adresseIp" formControlName="adresseIp" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.historiqueConnexion.actifYN" for="field_actifYN">Actif YN</label>
+          <input type="checkbox" class="form-check" name="actifYN" id="field_actifYN" data-cy="actifYN" formControlName="actifYN" />
+          @if (editForm.get('actifYN')!.invalid && (editForm.get('actifYN')!.dirty || editForm.get('actifYN')!.touched)) {
+            <div>
+              @if (editForm.get('actifYN')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.historiqueConnexion.infoUser" for="field_infoUser">Info User</label>
+          <select
+            class="form-control"
+            id="field_infoUser"
+            data-cy="infoUser"
+            name="infoUser"
+            formControlName="infoUser"
+            [compareWith]="compareInfosUser"
+          >
+            <option [ngValue]="null"></option>
+            @for (infosUserOption of infosUsersSharedCollection; track $index) {
+              <option [ngValue]="infosUserOption">{{ infosUserOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

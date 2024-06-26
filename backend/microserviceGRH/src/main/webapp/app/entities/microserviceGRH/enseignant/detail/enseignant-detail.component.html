@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (enseignant) {
+      <div>
+        <h2 data-cy="enseignantDetailsHeading">
+          <span ugbTranslate="microserviceGrhApp.microserviceGrhEnseignant.detail.title">Enseignant</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ enseignant.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGrhApp.microserviceGrhEnseignant.titreCoEncadreur">Titre Co Encadreur</span></dt>
+          <dd>
+            <span>{{ enseignant.titreCoEncadreur }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGrhApp.microserviceGrhEnseignant.nom">Nom</span></dt>
+          <dd>
+            <span>{{ enseignant.nom }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGrhApp.microserviceGrhEnseignant.prenom">Prenom</span></dt>
+          <dd>
+            <span>{{ enseignant.prenom }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGrhApp.microserviceGrhEnseignant.email">Email</span></dt>
+          <dd>
+            <span>{{ enseignant.email }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGrhApp.microserviceGrhEnseignant.telephone">Telephone</span></dt>
+          <dd>
+            <span>{{ enseignant.telephone }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGrhApp.microserviceGrhEnseignant.titresId">Titres Id</span></dt>
+          <dd>
+            <span>{{ enseignant.titresId }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGrhApp.microserviceGrhEnseignant.adresse">Adresse</span></dt>
+          <dd>
+            <span>{{ enseignant.adresse }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGrhApp.microserviceGrhEnseignant.numeroPoste">Numero Poste</span></dt>
+          <dd>
+            <span>{{ enseignant.numeroPoste }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGrhApp.microserviceGrhEnseignant.photo">Photo</span></dt>
+          <dd>
+            <span>{{ enseignant.photo }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegrh/enseignant', enseignant.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

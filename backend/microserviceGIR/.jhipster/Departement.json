@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "changelogDate": "20240625213839"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "departement",
+  "fields": [
+    {
+      "fieldName": "nomDepatement",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Departement",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "ufr",
+      "relationshipName": "ufr",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

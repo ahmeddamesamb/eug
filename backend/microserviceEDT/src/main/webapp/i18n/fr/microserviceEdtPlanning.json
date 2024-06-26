@@ -1,0 +1,26 @@
+{
+  "microserviceEdtApp": {
+    "microserviceEdtPlanning": {
+      "home": {
+        "title": "Plannings",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Planning",
+        "createOrEditLabel": "Créer ou éditer un Planning",
+        "search": "Recherche pour Planning",
+        "notFound": "Aucun Planning trouvé"
+      },
+      "created": "Un nouveau Planning a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Planning avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Planning avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Planning {{ id }} ?"
+      },
+      "detail": {
+        "title": "Planning"
+      },
+      "id": "ID",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin"
+    }
+  }
+}

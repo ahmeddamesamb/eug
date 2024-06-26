@@ -1,0 +1,270 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-frais-heading"
+        data-cy="FraisCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirFrais.home.createOrEditLabel"
+      >
+        Créer ou éditer un Frais
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.valeurFrais" for="field_valeurFrais"
+            >Valeur Frais</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="valeurFrais"
+            id="field_valeurFrais"
+            data-cy="valeurFrais"
+            formControlName="valeurFrais"
+          />
+          @if (editForm.get('valeurFrais')!.invalid && (editForm.get('valeurFrais')!.dirty || editForm.get('valeurFrais')!.touched)) {
+            <div>
+              @if (editForm.get('valeurFrais')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('valeurFrais')?.errors?.number"
+                ugbTranslate="entity.validation.number"
+                >Ce champ doit être un nombre.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.descriptionFrais" for="field_descriptionFrais"
+            >Description Frais</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="descriptionFrais"
+            id="field_descriptionFrais"
+            data-cy="descriptionFrais"
+            formControlName="descriptionFrais"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirFrais.fraisPourAssimileYN"
+            for="field_fraisPourAssimileYN"
+            >Frais Pour Assimile YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="fraisPourAssimileYN"
+            id="field_fraisPourAssimileYN"
+            data-cy="fraisPourAssimileYN"
+            formControlName="fraisPourAssimileYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirFrais.fraisPourExonererYN"
+            for="field_fraisPourExonererYN"
+            >Frais Pour Exonerer YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="fraisPourExonererYN"
+            id="field_fraisPourExonererYN"
+            data-cy="fraisPourExonererYN"
+            formControlName="fraisPourExonererYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.dia" for="field_dia">Dia</label>
+          <input type="number" class="form-control" name="dia" id="field_dia" data-cy="dia" formControlName="dia" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.dip" for="field_dip">Dip</label>
+          <input type="number" class="form-control" name="dip" id="field_dip" data-cy="dip" formControlName="dip" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.fraisPrivee" for="field_fraisPrivee"
+            >Frais Privee</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="fraisPrivee"
+            id="field_fraisPrivee"
+            data-cy="fraisPrivee"
+            formControlName="fraisPrivee"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.dateApplication" for="field_dateApplication"
+            >Date Application</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateApplication"
+              data-cy="dateApplication"
+              type="text"
+              class="form-control"
+              name="dateApplication"
+              ngbDatepicker
+              #dateApplicationDp="ngbDatepicker"
+              formControlName="dateApplication"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateApplicationDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          @if (
+            editForm.get('dateApplication')!.invalid && (editForm.get('dateApplication')!.dirty || editForm.get('dateApplication')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('dateApplication')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.dateFin" for="field_dateFin">Date Fin</label>
+          <div class="input-group">
+            <input
+              id="field_dateFin"
+              data-cy="dateFin"
+              type="text"
+              class="form-control"
+              name="dateFin"
+              ngbDatepicker
+              #dateFinDp="ngbDatepicker"
+              formControlName="dateFin"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateFinDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.estEnApplicationYN" for="field_estEnApplicationYN"
+            >Est En Application YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="estEnApplicationYN"
+            id="field_estEnApplicationYN"
+            data-cy="estEnApplicationYN"
+            formControlName="estEnApplicationYN"
+          />
+          @if (
+            editForm.get('estEnApplicationYN')!.invalid &&
+            (editForm.get('estEnApplicationYN')!.dirty || editForm.get('estEnApplicationYN')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('estEnApplicationYN')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.actifYN" for="field_actifYN">Actif YN</label>
+          <input type="checkbox" class="form-check" name="actifYN" id="field_actifYN" data-cy="actifYN" formControlName="actifYN" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.typeFrais" for="field_typeFrais"
+            >Type Frais</label
+          >
+          <select
+            class="form-control"
+            id="field_typeFrais"
+            data-cy="typeFrais"
+            name="typeFrais"
+            formControlName="typeFrais"
+            [compareWith]="compareTypeFrais"
+          >
+            <option [ngValue]="null"></option>
+            @for (typeFraisOption of typeFraisSharedCollection; track $index) {
+              <option [ngValue]="typeFraisOption">{{ typeFraisOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFrais.typeCycle" for="field_typeCycle"
+            >Type Cycle</label
+          >
+          <select
+            class="form-control"
+            id="field_typeCycle"
+            data-cy="typeCycle"
+            name="typeCycle"
+            formControlName="typeCycle"
+            [compareWith]="compareCycle"
+          >
+            <option [ngValue]="null"></option>
+            @for (cycleOption of cyclesSharedCollection; track $index) {
+              <option [ngValue]="cycleOption">{{ cycleOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label ugbTranslate="microserviceGirApp.microserviceGirFrais.universite" for="field_universites">Universite</label>
+          <select
+            class="form-control"
+            id="field_universites"
+            data-cy="universite"
+            multiple
+            name="universites"
+            formControlName="universites"
+            [compareWith]="compareUniversite"
+          >
+            @for (universiteOption of universitesSharedCollection; track $index) {
+              <option [ngValue]="universiteOption">{{ universiteOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

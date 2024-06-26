@@ -1,0 +1,31 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirLycee": {
+      "home": {
+        "title": "Lycees",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Lycee",
+        "createOrEditLabel": "Créer ou éditer un Lycee",
+        "search": "Recherche pour Lycee",
+        "notFound": "Aucun Lycee trouvé"
+      },
+      "created": "Un nouveau Lycee a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Lycee avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Lycee avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Lycee {{ id }} ?"
+      },
+      "detail": {
+        "title": "Lycee"
+      },
+      "id": "ID",
+      "nomLycee": "Nom Lycee",
+      "codeLycee": "Code Lycee",
+      "villeLycee": "Ville Lycee",
+      "academieLycee": "Academie Lycee",
+      "centreExamen": "Centre Examen",
+      "region": "Region",
+      "etudiants": "Etudiants"
+    }
+  }
+}

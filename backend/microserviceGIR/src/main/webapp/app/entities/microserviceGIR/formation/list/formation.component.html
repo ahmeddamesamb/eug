@@ -1,0 +1,247 @@
+<div>
+  <h2 id="page-heading" data-cy="FormationHeading">
+    <span ugbTranslate="microserviceGirApp.microserviceGirFormation.home.title">Formations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGirApp.microserviceGirFormation.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-formation"
+        [routerLink]="['/microservicegir/formation/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGirApp.microserviceGirFormation.home.createLabel"
+          >Créer un nouveau Formation</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" ugbTranslate="microserviceGirApp.microserviceGirFormation.home.search"
+          >Recherche pour Formation</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGirApp.microserviceGirFormation.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (formations?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGirApp.microserviceGirFormation.home.notFound">Aucun Formation trouvé</span>
+    </div>
+  }
+
+  @if (formations && formations.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="classeDiplomanteYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.classeDiplomanteYN">Classe Diplomante YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="libelleDiplome">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.libelleDiplome">Libelle Diplome</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="codeFormation">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.codeFormation">Code Formation</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="nbreCreditsMin">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.nbreCreditsMin">Nbre Credits Min</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="estParcoursYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.estParcoursYN">Est Parcours YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="lmdYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.lmdYN">Lmd YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="actifYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.actifYN">Actif YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="typeFormation.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.typeFormation">Type Formation</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="niveau.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.niveau">Niveau</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="specialite.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.specialite">Specialite</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="departement.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirFormation.departement">Departement</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (formation of formations; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/formation', formation.id, 'view']">{{ formation.id }}</a>
+              </td>
+              <td>{{ formation.classeDiplomanteYN }}</td>
+              <td>{{ formation.libelleDiplome }}</td>
+              <td>{{ formation.codeFormation }}</td>
+              <td>{{ formation.nbreCreditsMin }}</td>
+              <td>{{ formation.estParcoursYN }}</td>
+              <td>{{ formation.lmdYN }}</td>
+              <td>{{ formation.actifYN }}</td>
+              <td>
+                @if (formation.typeFormation) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/type-formation', formation.typeFormation.id, 'view']">{{
+                      formation.typeFormation.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (formation.niveau) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/niveau', formation.niveau.id, 'view']">{{ formation.niveau.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (formation.specialite) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/specialite', formation.specialite.id, 'view']">{{ formation.specialite.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (formation.departement) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/departement', formation.departement.id, 'view']">{{ formation.departement.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/formation', formation.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/formation', formation.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(formation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (formations && formations.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

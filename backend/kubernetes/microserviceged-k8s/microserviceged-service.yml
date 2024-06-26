@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: microserviceged
+  namespace: sn-ugb
+  labels:
+    app: microserviceged
+spec:
+  selector:
+    app: microserviceged
+  ports:
+    - name: http
+      port: 8092

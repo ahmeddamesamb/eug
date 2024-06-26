@@ -1,0 +1,46 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirInformationPersonnelle": {
+      "home": {
+        "title": "InformationPersonnelles",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Information Personnelle",
+        "createOrEditLabel": "Créer ou éditer un Information Personnelle",
+        "search": "Recherche pour Information Personnelle",
+        "notFound": "Aucun Information Personnelle trouvé"
+      },
+      "created": "Un nouveau Information Personnelle a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Information Personnelle avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Information Personnelle avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Information Personnelle {{ id }} ?"
+      },
+      "detail": {
+        "title": "Information Personnelle"
+      },
+      "id": "ID",
+      "nomEtu": "Nom Etu",
+      "nomJeuneFilleEtu": "Nom Jeune Fille Etu",
+      "prenomEtu": "Prenom Etu",
+      "statutMarital": "Statut Marital",
+      "regime": "Regime",
+      "profession": "Profession",
+      "adresseEtu": "Adresse Etu",
+      "telEtu": "Tel Etu",
+      "emailEtu": "Email Etu",
+      "adresseParent": "Adresse Parent",
+      "telParent": "Tel Parent",
+      "emailParent": "Email Parent",
+      "nomParent": "Nom Parent",
+      "prenomParent": "Prenom Parent",
+      "handicapYN": "Handicap YN",
+      "photo": "Photo",
+      "ordiPersoYN": "Ordi Perso YN",
+      "derniereModification": "Derniere Modification",
+      "emailUser": "Email User",
+      "etudiant": "Etudiant",
+      "typeHandicap": "Type Handicap",
+      "typeBourse": "Type Bourse"
+    }
+  }
+}

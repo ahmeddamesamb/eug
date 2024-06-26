@@ -1,0 +1,28 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirDisciplineSportiveEtudiant": {
+      "home": {
+        "title": "DisciplineSportiveEtudiants",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Discipline Sportive Etudiant",
+        "createOrEditLabel": "Créer ou éditer un Discipline Sportive Etudiant",
+        "search": "Recherche pour Discipline Sportive Etudiant",
+        "notFound": "Aucun Discipline Sportive Etudiant trouvé"
+      },
+      "created": "Un nouveau Discipline Sportive Etudiant a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Discipline Sportive Etudiant avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Discipline Sportive Etudiant avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Discipline Sportive Etudiant {{ id }} ?"
+      },
+      "detail": {
+        "title": "Discipline Sportive Etudiant"
+      },
+      "id": "ID",
+      "licenceSportiveYN": "Licence Sportive YN",
+      "competitionUGBYN": "Competition UGBYN",
+      "disciplineSportive": "Discipline Sportive",
+      "etudiant": "Etudiant"
+    }
+  }
+}

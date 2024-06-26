@@ -1,0 +1,11 @@
+id;est_validee_yn;pv_deliberation;pv_deliberation_content_type
+1;false;../fake-data/blob/hipster.png;image/png
+2;false;../fake-data/blob/hipster.png;image/png
+3;true;../fake-data/blob/hipster.png;image/png
+4;true;../fake-data/blob/hipster.png;image/png
+5;false;../fake-data/blob/hipster.png;image/png
+6;true;../fake-data/blob/hipster.png;image/png
+7;false;../fake-data/blob/hipster.png;image/png
+8;true;../fake-data/blob/hipster.png;image/png
+9;false;../fake-data/blob/hipster.png;image/png
+10;false;../fake-data/blob/hipster.png;image/png

@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "changelogDate": "20240625210339"
+  },
+  "applications": ["gateway"],
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "ressource",
+  "fields": [
+    {
+      "fieldName": "libelle",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Ressource",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "infoUserRessource",
+      "otherEntityRelationshipName": "ressource",
+      "relationshipName": "infoUserRessources",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

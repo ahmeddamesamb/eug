@@ -1,0 +1,30 @@
+@if (typeFormation) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(typeFormation.id!)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="typeFormationDeleteDialogHeading" ugbTranslate="entity.delete.title">Confirmation de suppression</h4>
+
+      <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <ugb-alert-error></ugb-alert-error>
+      <p
+        id="ugb-delete-typeFormation-heading"
+        ugbTranslate="microserviceGirApp.microserviceGirTypeFormation.delete.question"
+        [translateValues]="{ id: typeFormation.id }"
+      >
+        Êtes-vous certain de vouloir supprimer le Type Formation {{ typeFormation.id }} ?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+      </button>
+
+      <button id="ugb-confirm-delete-typeFormation" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times"></fa-icon>&nbsp;<span ugbTranslate="entity.action.delete">Supprimer</span>
+      </button>
+    </div>
+  </form>
+}

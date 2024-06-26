@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity ProcessusInscriptionAdministrative.
+    -->
+    <changeSet id="20240625211639-1" author="jhipster">
+        <createTable tableName="processus_inscription_administrative">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="inscription_demarree_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_demarrage_inscription" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="inscription_annulee_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_annulation_inscription" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="apte_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_visite_medicale" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="beneficiaire_crousyn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_remise_quitus_crous" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="nouveau_code_buyn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="quitus_buyn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_remise_quitus_bu" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="exporter_buyn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="frais_obligatoires_payes_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_paiement_frais_obligatoires" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="numero_quitus_crous" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="carte_eturemise_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="carte_dupremise_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_remise_carte_etu" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_remise_carte_dup" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="inscrit_administrativement_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_inscription_administrative" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="derniere_modification" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="inscrit_online_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="email_user" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="inscription_administrative_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_processus_inscription_adminis__inscription_administrative_58" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="processus_inscription_administrative" columnName="date_demarrage_inscription" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="processus_inscription_administrative" columnName="date_annulation_inscription" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="processus_inscription_administrative" columnName="date_visite_medicale" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="processus_inscription_administrative" columnName="date_remise_quitus_crous" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="processus_inscription_administrative" columnName="date_remise_quitus_bu" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="processus_inscription_administrative" columnName="date_paiement_frais_obligatoires" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="processus_inscription_administrative" columnName="date_remise_carte_etu" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="processus_inscription_administrative" columnName="date_inscription_administrative" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="processus_inscription_administrative" columnName="derniere_modification" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20240625211639-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/processus_inscription_administrative.csv"
+                  separator=";"
+                  tableName="processus_inscription_administrative"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="inscription_demarree_yn" type="boolean"/>
+            <column name="date_demarrage_inscription" type="date"/>
+            <column name="inscription_annulee_yn" type="boolean"/>
+            <column name="date_annulation_inscription" type="date"/>
+            <column name="apte_yn" type="boolean"/>
+            <column name="date_visite_medicale" type="date"/>
+            <column name="beneficiaire_crousyn" type="boolean"/>
+            <column name="date_remise_quitus_crous" type="date"/>
+            <column name="nouveau_code_buyn" type="boolean"/>
+            <column name="quitus_buyn" type="boolean"/>
+            <column name="date_remise_quitus_bu" type="date"/>
+            <column name="exporter_buyn" type="boolean"/>
+            <column name="frais_obligatoires_payes_yn" type="boolean"/>
+            <column name="date_paiement_frais_obligatoires" type="date"/>
+            <column name="numero_quitus_crous" type="numeric"/>
+            <column name="carte_eturemise_yn" type="boolean"/>
+            <column name="carte_dupremise_yn" type="boolean"/>
+            <column name="date_remise_carte_etu" type="date"/>
+            <column name="date_remise_carte_dup" type="numeric"/>
+            <column name="inscrit_administrativement_yn" type="boolean"/>
+            <column name="date_inscription_administrative" type="date"/>
+            <column name="derniere_modification" type="date"/>
+            <column name="inscrit_online_yn" type="boolean"/>
+            <column name="email_user" type="string"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,35 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirProgrammationInscription": {
+      "home": {
+        "title": "ProgrammationInscriptions",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Programmation Inscription",
+        "createOrEditLabel": "Créer ou éditer un Programmation Inscription",
+        "search": "Recherche pour Programmation Inscription",
+        "notFound": "Aucun Programmation Inscription trouvé"
+      },
+      "created": "Un nouveau Programmation Inscription a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Programmation Inscription avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Programmation Inscription avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Programmation Inscription {{ id }} ?"
+      },
+      "detail": {
+        "title": "Programmation Inscription"
+      },
+      "id": "ID",
+      "libelleProgrammation": "Libelle Programmation",
+      "dateDebutProgrammation": "Date Debut Programmation",
+      "dateFinProgrammation": "Date Fin Programmation",
+      "ouvertYN": "Ouvert YN",
+      "emailUser": "Email User",
+      "dateForclosClasse": "Date Forclos Classe",
+      "forclosClasseYN": "Forclos Classe YN",
+      "actifYN": "Actif YN",
+      "anneeAcademique": "Annee Academique",
+      "formation": "Formation",
+      "campagne": "Campagne"
+    }
+  }
+}

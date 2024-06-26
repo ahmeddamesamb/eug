@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (region) {
+      <div>
+        <h2 data-cy="regionDetailsHeading"><span ugbTranslate="microserviceGirApp.microserviceGirRegion.detail.title">Region</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ region.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirRegion.libelleRegion">Libelle Region</span></dt>
+          <dd>
+            <span>{{ region.libelleRegion }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirRegion.pays">Pays</span></dt>
+          <dd>
+            @if (region.pays) {
+              <div>
+                <a [routerLink]="['/pays', region.pays.id, 'view']">{{ region.pays.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/region', region.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

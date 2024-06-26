@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205539"
+  },
+  "applications": ["microserviceACLC"],
+  "clientRootFolder": "microserviceACLC",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "candidat",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prenom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateNaissance",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceACLC",
+  "name": "Candidat",
+  "pagination": "pagination",
+  "relationships": [],
+  "service": "serviceImpl"
+}

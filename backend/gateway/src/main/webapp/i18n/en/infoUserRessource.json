@@ -1,0 +1,28 @@
+{
+  "gatewayApp": {
+    "infoUserRessource": {
+      "home": {
+        "title": "Info User Ressources",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Info User Ressource",
+        "createOrEditLabel": "Create or edit a Info User Ressource",
+        "search": "Search for Info User Ressource",
+        "notFound": "No Info User Ressources found"
+      },
+      "created": "A new Info User Ressource is created with identifier {{ param }}",
+      "updated": "A Info User Ressource is updated with identifier {{ param }}",
+      "deleted": "A Info User Ressource is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Info User Ressource {{ id }}?"
+      },
+      "detail": {
+        "title": "Info User Ressource"
+      },
+      "id": "ID",
+      "dateAjout": "Date Ajout",
+      "enCoursYN": "En Cours YN",
+      "infosUser": "Infos User",
+      "ressource": "Ressource"
+    }
+  }
+}
