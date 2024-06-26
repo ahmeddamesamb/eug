@@ -7,7 +7,7 @@ export const routes: Routes = [
         redirectTo: 'gestion-etudiant',
         pathMatch: 'full'
     },
-    {      
+    /* {      
         path: 'create',
         loadComponent: () => import('./create/create.component').then(m => m.CreateComponent),
         
@@ -16,7 +16,7 @@ export const routes: Routes = [
         path: 'update/:id',
         loadComponent: () => import('./create/create.component').then(m => m.CreateComponent),
         
-    },
+    }, */
   ];
 
 

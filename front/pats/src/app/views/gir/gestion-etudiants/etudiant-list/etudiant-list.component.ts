@@ -4,6 +4,7 @@ import {EtudiantService} from '../services/etudiant.service';
 import {EtudiantModel} from '../models/etudiant-model';
 import { NumberToStringPipe } from '../../../../pipes/number-to-string.pipe'
 import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
+import {CreateEtudiantComponent} from '../create-etudiant/create-etudiant.component';
 import{
   BadgeComponent,
   ButtonDirective,
@@ -30,12 +31,13 @@ import{
   standalone: true,
   imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
     ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
-    CardComponent, CardHeaderComponent,PopoverModule, ColComponent
+    CardComponent, CardHeaderComponent,PopoverModule, ColComponent,CreateEtudiantComponent
   ],
   templateUrl: './etudiant-list.component.html',
   styleUrl: './etudiant-list.component.scss'
 })
 export class EtudiantListComponent {
+
   constructor (private route:Router,private etudiantService: EtudiantService,private alertService: AlertServiceService){
 
   }
@@ -44,6 +46,7 @@ export class EtudiantListComponent {
   itemDelete!: EtudiantModel;
   itemUpdate!: EtudiantModel;
   public liveDemoVisible = false;
+  public modalCreateUpdate = false;
   isloading = false;
 
   ngOnInit(): void {
@@ -99,10 +102,9 @@ export class EtudiantListComponent {
 
   }
 
-  create() {
-    
-    this.route.navigate(['/gir/gestion-etudiant/create'])
-
+  modalCreate() {
+    this.modalCreateUpdate = !this.modalCreateUpdate;
+    //this.route.navigate(['/gir/gestion-etudiant/create'])
   }
 
   update(item:number) {
@@ -136,6 +138,10 @@ export class EtudiantListComponent {
 
   handleLiveDemoChange(event: boolean) {
     this.liveDemoVisible = event;
+  }
+
+  handleLivemodalCreate(event: boolean) {
+    this.modalCreateUpdate = event;
   }
 
 
