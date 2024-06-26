@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (mention) {
+      <div>
+        <h2 data-cy="mentionDetailsHeading"><span ugbTranslate="microserviceGirApp.microserviceGirMention.detail.title">Mention</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ mention.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirMention.libelleMention">Libelle Mention</span></dt>
+          <dd>
+            <span>{{ mention.libelleMention }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirMention.actifYN">Actif YN</span></dt>
+          <dd>
+            <span>{{ mention.actifYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirMention.domaine">Domaine</span></dt>
+          <dd>
+            @if (mention.domaine) {
+              <div>
+                <a [routerLink]="['/domaine', mention.domaine.id, 'view']">{{ mention.domaine.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/mention', mention.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

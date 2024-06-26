@@ -1,0 +1,49 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirProcessusInscriptionAdministrative": {
+      "home": {
+        "title": "ProcessusInscriptionAdministratives",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Processus Inscription Administrative",
+        "createOrEditLabel": "Créer ou éditer un Processus Inscription Administrative",
+        "search": "Recherche pour Processus Inscription Administrative",
+        "notFound": "Aucun Processus Inscription Administrative trouvé"
+      },
+      "created": "Un nouveau Processus Inscription Administrative a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Processus Inscription Administrative avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Processus Inscription Administrative avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Processus Inscription Administrative {{ id }} ?"
+      },
+      "detail": {
+        "title": "Processus Inscription Administrative"
+      },
+      "id": "ID",
+      "inscriptionDemarreeYN": "Inscription Demarree YN",
+      "dateDemarrageInscription": "Date Demarrage Inscription",
+      "inscriptionAnnuleeYN": "Inscription Annulee YN",
+      "dateAnnulationInscription": "Date Annulation Inscription",
+      "apteYN": "Apte YN",
+      "dateVisiteMedicale": "Date Visite Medicale",
+      "beneficiaireCROUSYN": "Beneficiaire CROUSYN",
+      "dateRemiseQuitusCROUS": "Date Remise Quitus CROUS",
+      "nouveauCodeBUYN": "Nouveau Code BUYN",
+      "quitusBUYN": "Quitus BUYN",
+      "dateRemiseQuitusBU": "Date Remise Quitus BU",
+      "exporterBUYN": "Exporter BUYN",
+      "fraisObligatoiresPayesYN": "Frais Obligatoires Payes YN",
+      "datePaiementFraisObligatoires": "Date Paiement Frais Obligatoires",
+      "numeroQuitusCROUS": "Numero Quitus CROUS",
+      "carteEturemiseYN": "Carte Eturemise YN",
+      "carteDupremiseYN": "Carte Dupremise YN",
+      "dateRemiseCarteEtu": "Date Remise Carte Etu",
+      "dateRemiseCarteDup": "Date Remise Carte Dup",
+      "inscritAdministrativementYN": "Inscrit Administrativement YN",
+      "dateInscriptionAdministrative": "Date Inscription Administrative",
+      "derniereModification": "Derniere Modification",
+      "inscritOnlineYN": "Inscrit Online YN",
+      "emailUser": "Email User",
+      "inscriptionAdministrative": "Inscription Administrative"
+    }
+  }
+}

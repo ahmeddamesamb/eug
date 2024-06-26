@@ -1,0 +1,26 @@
+{
+  "microserviceAideApp": {
+    "microserviceAideRessourceAide": {
+      "home": {
+        "title": "RessourceAides",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Ressource Aide",
+        "createOrEditLabel": "Créer ou éditer un Ressource Aide",
+        "search": "Recherche pour Ressource Aide",
+        "notFound": "Aucun Ressource Aide trouvé"
+      },
+      "created": "Un nouveau Ressource Aide a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Ressource Aide avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Ressource Aide avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Ressource Aide {{ id }} ?"
+      },
+      "detail": {
+        "title": "Ressource Aide"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "libelle": "Libelle"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "annotations": {
+    "changelogDate": "20240625212539"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "formation_invalide",
+  "fields": [
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "FormationInvalide",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "formation",
+      "otherEntityRelationshipName": "formationInvalides",
+      "relationshipName": "formation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "anneeAcademique",
+      "otherEntityRelationshipName": "formationInvalides",
+      "relationshipName": "anneeAcademique",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

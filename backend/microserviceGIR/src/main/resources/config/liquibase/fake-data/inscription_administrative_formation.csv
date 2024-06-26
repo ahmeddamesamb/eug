@@ -1,0 +1,11 @@
+id;inscription_principale_yn;inscription_annulee_yn;exonere_yn;paiement_frais_obl_yn;paiement_frais_integerg_yn;certificat_delivre_yn;date_choix_formation;date_validation_inscription
+1;true;true;true;false;true;false;2024-06-25T10:52:53;2024-06-25T05:44:19
+2;true;true;true;true;true;false;2024-06-25T12:31:01;2024-06-25T18:45:34
+3;false;false;false;true;true;false;2024-06-25T09:38:59;2024-06-25T16:44:33
+4;false;true;false;true;false;true;2024-06-24T23:03:56;2024-06-25T01:37:30
+5;true;false;false;true;true;false;2024-06-25T18:20:52;2024-06-25T05:20:17
+6;true;true;true;false;true;true;2024-06-25T11:44:16;2024-06-25T11:47:53
+7;false;false;false;false;false;false;2024-06-25T10:07:18;2024-06-25T11:13:31
+8;true;false;true;false;true;true;2024-06-25T17:25:22;2024-06-25T14:05:11
+9;false;true;true;false;false;true;2024-06-25T13:10:48;2024-06-25T11:09:53
+10;false;true;true;false;false;false;2024-06-25T18:56:26;2024-06-25T05:12:27

@@ -1,0 +1,174 @@
+<div>
+  <h2 id="page-heading" data-cy="UniversiteHeading">
+    <span ugbTranslate="microserviceGirApp.microserviceGirUniversite.home.title">Universites</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGirApp.microserviceGirUniversite.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-universite"
+        [routerLink]="['/microservicegir/universite/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGirApp.microserviceGirUniversite.home.createLabel"
+          >Créer un nouveau Universite</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" ugbTranslate="microserviceGirApp.microserviceGirUniversite.home.search"
+          >Recherche pour Universite</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGirApp.microserviceGirUniversite.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (universites?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGirApp.microserviceGirUniversite.home.notFound">Aucun Universite trouvé</span>
+    </div>
+  }
+
+  @if (universites && universites.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="nomUniversite">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirUniversite.nomUniversite">Nom Universite</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="sigleUniversite">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirUniversite.sigleUniversite">Sigle Universite</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="actifYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirUniversite.actifYN">Actif YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="ministere.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirUniversite.ministere">Ministere</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (universite of universites; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/universite', universite.id, 'view']">{{ universite.id }}</a>
+              </td>
+              <td>{{ universite.nomUniversite }}</td>
+              <td>{{ universite.sigleUniversite }}</td>
+              <td>{{ universite.actifYN }}</td>
+              <td>
+                @if (universite.ministere) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/ministere', universite.ministere.id, 'view']">{{ universite.ministere.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/universite', universite.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/universite', universite.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(universite)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (universites && universites.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

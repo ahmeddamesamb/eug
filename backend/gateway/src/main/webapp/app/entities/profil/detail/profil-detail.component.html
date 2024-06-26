@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (profil) {
+      <div>
+        <h2 data-cy="profilDetailsHeading"><span ugbTranslate="gatewayApp.profil.detail.title">Profil</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ profil.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.profil.libelle">Libelle</span></dt>
+          <dd>
+            <span>{{ profil.libelle }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.profil.dateAjout">Date Ajout</span></dt>
+          <dd>
+            <span>{{ profil.dateAjout | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.profil.actifYN">Actif YN</span></dt>
+          <dd>
+            <span>{{ profil.actifYN }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/profil', profil.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

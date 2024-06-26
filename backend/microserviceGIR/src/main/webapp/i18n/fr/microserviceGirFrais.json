@@ -1,0 +1,39 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirFrais": {
+      "home": {
+        "title": "Frais",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Frais",
+        "createOrEditLabel": "Créer ou éditer un Frais",
+        "search": "Recherche pour Frais",
+        "notFound": "Aucun Frais trouvé"
+      },
+      "created": "Un nouveau Frais a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Frais avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Frais avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Frais {{ id }} ?"
+      },
+      "detail": {
+        "title": "Frais"
+      },
+      "id": "ID",
+      "valeurFrais": "Valeur Frais",
+      "descriptionFrais": "Description Frais",
+      "fraisPourAssimileYN": "Frais Pour Assimile YN",
+      "fraisPourExonererYN": "Frais Pour Exonerer YN",
+      "dia": "Dia",
+      "dip": "Dip",
+      "fraisPrivee": "Frais Privee",
+      "dateApplication": "Date Application",
+      "dateFin": "Date Fin",
+      "estEnApplicationYN": "Est En Application YN",
+      "actifYN": "Actif YN",
+      "typeFrais": "Type Frais",
+      "typeCycle": "Type Cycle",
+      "universite": "Universite",
+      "paiementFrais": "Paiement Frais"
+    }
+  }
+}

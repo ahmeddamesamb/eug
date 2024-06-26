@@ -1,0 +1,26 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirDisciplineSportive": {
+      "home": {
+        "title": "DisciplineSportives",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Discipline Sportive",
+        "createOrEditLabel": "Créer ou éditer un Discipline Sportive",
+        "search": "Recherche pour Discipline Sportive",
+        "notFound": "Aucun Discipline Sportive trouvé"
+      },
+      "created": "Un nouveau Discipline Sportive a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Discipline Sportive avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Discipline Sportive avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Discipline Sportive {{ id }} ?"
+      },
+      "detail": {
+        "title": "Discipline Sportive"
+      },
+      "id": "ID",
+      "libelleDisciplineSportive": "Libelle Discipline Sportive",
+      "disciplineSportiveEtudiants": "Discipline Sportive Etudiants"
+    }
+  }
+}

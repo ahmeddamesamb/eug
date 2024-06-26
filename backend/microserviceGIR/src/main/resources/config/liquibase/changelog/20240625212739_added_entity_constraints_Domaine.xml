@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Domaine.
+    -->
+    <changeSet id="20240625212739-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="domaine_id"
+                                 baseTableName="rel_domaine__ufr"
+                                 constraintName="fk_rel_domaine__ufr__domaine_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="domaine"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="ufr_id"
+                                 baseTableName="rel_domaine__ufr"
+                                 constraintName="fk_rel_domaine__ufr__ufr_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ufr"
+                                 />
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (serviceUser) {
+      <div>
+        <h2 data-cy="serviceUserDetailsHeading"><span ugbTranslate="gatewayApp.serviceUser.detail.title">Service User</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ serviceUser.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.serviceUser.nom">Nom</span></dt>
+          <dd>
+            <span>{{ serviceUser.nom }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.serviceUser.dateAjout">Date Ajout</span></dt>
+          <dd>
+            <span>{{ serviceUser.dateAjout | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.serviceUser.actifYN">Actif YN</span></dt>
+          <dd>
+            <span>{{ serviceUser.actifYN }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/service-user', serviceUser.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

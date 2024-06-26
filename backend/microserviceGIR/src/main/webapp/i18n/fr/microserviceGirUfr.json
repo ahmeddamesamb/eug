@@ -1,0 +1,30 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirUfr": {
+      "home": {
+        "title": "Ufrs",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Ufr",
+        "createOrEditLabel": "Créer ou éditer un Ufr",
+        "search": "Recherche pour Ufr",
+        "notFound": "Aucun Ufr trouvé"
+      },
+      "created": "Un nouveau Ufr a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Ufr avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Ufr avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Ufr {{ id }} ?"
+      },
+      "detail": {
+        "title": "Ufr"
+      },
+      "id": "ID",
+      "libelleUfr": "Libelle Ufr",
+      "sigleUfr": "Sigle Ufr",
+      "prefixe": "Prefixe",
+      "actifYN": "Actif YN",
+      "universite": "Universite",
+      "domaine": "Domaine"
+    }
+  }
+}

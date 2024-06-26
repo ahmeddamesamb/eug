@@ -1,0 +1,71 @@
+{
+  "annotations": {
+    "changelogDate": "20240625211239"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "programmation_inscription",
+  "fields": [
+    {
+      "fieldName": "libelleProgrammation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateDebutProgrammation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateFinProgrammation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "ouvertYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "emailUser",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateForclosClasse",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "forclosClasseYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "ProgrammationInscription",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "anneeAcademique",
+      "otherEntityRelationshipName": "programmationInscriptions",
+      "relationshipName": "anneeAcademique",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "formation",
+      "otherEntityRelationshipName": "programmationInscriptions",
+      "relationshipName": "formation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "campagne",
+      "otherEntityRelationshipName": "programmationInscriptions",
+      "relationshipName": "campagne",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

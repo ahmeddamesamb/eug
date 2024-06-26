@@ -1,0 +1,44 @@
+# This configuration uses 'http' and is not recommended for production use.
+# Refer https://istio.io/latest/docs/reference/config/networking/gateway/ for a more secure 'https' config
+# using certificates and prefer that for production use
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: gateway-gateway
+  namespace: sn-ugb
+  labels:
+    gateway: gateway-gateway
+    istio: ingressgateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - gateway.sn-ugb.ugb.sn
+    - port:
+        number: 80
+        name: http2
+        protocol: HTTP2
+      hosts:
+        - gateway.sn-ugb.ugb.sn
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: gateway-gw-virtualservice
+  namespace: sn-ugb
+  labels:
+    service: gateway-gw-virtualservice
+spec:
+  hosts:
+    - gateway.sn-ugb.ugb.sn
+  gateways:
+    - gateway-gateway
+  http:
+    - route:
+        - destination:
+            host: gateway

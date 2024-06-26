@@ -1,0 +1,30 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirOperateur": {
+      "home": {
+        "title": "Operateurs",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Operateur",
+        "createOrEditLabel": "Créer ou éditer un Operateur",
+        "search": "Recherche pour Operateur",
+        "notFound": "Aucun Operateur trouvé"
+      },
+      "created": "Un nouveau Operateur a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Operateur avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Operateur avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Operateur {{ id }} ?"
+      },
+      "detail": {
+        "title": "Operateur"
+      },
+      "id": "ID",
+      "libelleOperateur": "Libelle Operateur",
+      "userLogin": "User Login",
+      "codeOperateur": "Code Operateur",
+      "actifYN": "Actif YN",
+      "paiementFrais": "Paiement Frais",
+      "paiementFormationPrivees": "Paiement Formation Privees"
+    }
+  }
+}

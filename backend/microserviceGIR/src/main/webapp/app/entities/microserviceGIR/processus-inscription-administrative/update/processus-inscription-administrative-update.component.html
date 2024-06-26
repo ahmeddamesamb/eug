@@ -1,0 +1,483 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-processus-inscription-administrative-heading"
+        data-cy="ProcessusInscriptionAdministrativeCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.home.createOrEditLabel"
+      >
+        Créer ou éditer un Processus Inscription Administrative
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscriptionDemarreeYN"
+            for="field_inscriptionDemarreeYN"
+            >Inscription Demarree YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="inscriptionDemarreeYN"
+            id="field_inscriptionDemarreeYN"
+            data-cy="inscriptionDemarreeYN"
+            formControlName="inscriptionDemarreeYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateDemarrageInscription"
+            for="field_dateDemarrageInscription"
+            >Date Demarrage Inscription</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateDemarrageInscription"
+              data-cy="dateDemarrageInscription"
+              type="datetime-local"
+              class="form-control"
+              name="dateDemarrageInscription"
+              formControlName="dateDemarrageInscription"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscriptionAnnuleeYN"
+            for="field_inscriptionAnnuleeYN"
+            >Inscription Annulee YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="inscriptionAnnuleeYN"
+            id="field_inscriptionAnnuleeYN"
+            data-cy="inscriptionAnnuleeYN"
+            formControlName="inscriptionAnnuleeYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateAnnulationInscription"
+            for="field_dateAnnulationInscription"
+            >Date Annulation Inscription</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateAnnulationInscription"
+              data-cy="dateAnnulationInscription"
+              type="datetime-local"
+              class="form-control"
+              name="dateAnnulationInscription"
+              formControlName="dateAnnulationInscription"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.apteYN"
+            for="field_apteYN"
+            >Apte YN</label
+          >
+          <input type="checkbox" class="form-check" name="apteYN" id="field_apteYN" data-cy="apteYN" formControlName="apteYN" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateVisiteMedicale"
+            for="field_dateVisiteMedicale"
+            >Date Visite Medicale</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateVisiteMedicale"
+              data-cy="dateVisiteMedicale"
+              type="datetime-local"
+              class="form-control"
+              name="dateVisiteMedicale"
+              formControlName="dateVisiteMedicale"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.beneficiaireCROUSYN"
+            for="field_beneficiaireCROUSYN"
+            >Beneficiaire CROUSYN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="beneficiaireCROUSYN"
+            id="field_beneficiaireCROUSYN"
+            data-cy="beneficiaireCROUSYN"
+            formControlName="beneficiaireCROUSYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseQuitusCROUS"
+            for="field_dateRemiseQuitusCROUS"
+            >Date Remise Quitus CROUS</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateRemiseQuitusCROUS"
+              data-cy="dateRemiseQuitusCROUS"
+              type="datetime-local"
+              class="form-control"
+              name="dateRemiseQuitusCROUS"
+              formControlName="dateRemiseQuitusCROUS"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.nouveauCodeBUYN"
+            for="field_nouveauCodeBUYN"
+            >Nouveau Code BUYN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="nouveauCodeBUYN"
+            id="field_nouveauCodeBUYN"
+            data-cy="nouveauCodeBUYN"
+            formControlName="nouveauCodeBUYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.quitusBUYN"
+            for="field_quitusBUYN"
+            >Quitus BUYN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="quitusBUYN"
+            id="field_quitusBUYN"
+            data-cy="quitusBUYN"
+            formControlName="quitusBUYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseQuitusBU"
+            for="field_dateRemiseQuitusBU"
+            >Date Remise Quitus BU</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateRemiseQuitusBU"
+              data-cy="dateRemiseQuitusBU"
+              type="datetime-local"
+              class="form-control"
+              name="dateRemiseQuitusBU"
+              formControlName="dateRemiseQuitusBU"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.exporterBUYN"
+            for="field_exporterBUYN"
+            >Exporter BUYN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="exporterBUYN"
+            id="field_exporterBUYN"
+            data-cy="exporterBUYN"
+            formControlName="exporterBUYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.fraisObligatoiresPayesYN"
+            for="field_fraisObligatoiresPayesYN"
+            >Frais Obligatoires Payes YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="fraisObligatoiresPayesYN"
+            id="field_fraisObligatoiresPayesYN"
+            data-cy="fraisObligatoiresPayesYN"
+            formControlName="fraisObligatoiresPayesYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.datePaiementFraisObligatoires"
+            for="field_datePaiementFraisObligatoires"
+            >Date Paiement Frais Obligatoires</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_datePaiementFraisObligatoires"
+              data-cy="datePaiementFraisObligatoires"
+              type="datetime-local"
+              class="form-control"
+              name="datePaiementFraisObligatoires"
+              formControlName="datePaiementFraisObligatoires"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.numeroQuitusCROUS"
+            for="field_numeroQuitusCROUS"
+            >Numero Quitus CROUS</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="numeroQuitusCROUS"
+            id="field_numeroQuitusCROUS"
+            data-cy="numeroQuitusCROUS"
+            formControlName="numeroQuitusCROUS"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.carteEturemiseYN"
+            for="field_carteEturemiseYN"
+            >Carte Eturemise YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="carteEturemiseYN"
+            id="field_carteEturemiseYN"
+            data-cy="carteEturemiseYN"
+            formControlName="carteEturemiseYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.carteDupremiseYN"
+            for="field_carteDupremiseYN"
+            >Carte Dupremise YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="carteDupremiseYN"
+            id="field_carteDupremiseYN"
+            data-cy="carteDupremiseYN"
+            formControlName="carteDupremiseYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseCarteEtu"
+            for="field_dateRemiseCarteEtu"
+            >Date Remise Carte Etu</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateRemiseCarteEtu"
+              data-cy="dateRemiseCarteEtu"
+              type="datetime-local"
+              class="form-control"
+              name="dateRemiseCarteEtu"
+              formControlName="dateRemiseCarteEtu"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseCarteDup"
+            for="field_dateRemiseCarteDup"
+            >Date Remise Carte Dup</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="dateRemiseCarteDup"
+            id="field_dateRemiseCarteDup"
+            data-cy="dateRemiseCarteDup"
+            formControlName="dateRemiseCarteDup"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscritAdministrativementYN"
+            for="field_inscritAdministrativementYN"
+            >Inscrit Administrativement YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="inscritAdministrativementYN"
+            id="field_inscritAdministrativementYN"
+            data-cy="inscritAdministrativementYN"
+            formControlName="inscritAdministrativementYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateInscriptionAdministrative"
+            for="field_dateInscriptionAdministrative"
+            >Date Inscription Administrative</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateInscriptionAdministrative"
+              data-cy="dateInscriptionAdministrative"
+              type="datetime-local"
+              class="form-control"
+              name="dateInscriptionAdministrative"
+              formControlName="dateInscriptionAdministrative"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.derniereModification"
+            for="field_derniereModification"
+            >Derniere Modification</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_derniereModification"
+              data-cy="derniereModification"
+              type="datetime-local"
+              class="form-control"
+              name="derniereModification"
+              formControlName="derniereModification"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscritOnlineYN"
+            for="field_inscritOnlineYN"
+            >Inscrit Online YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="inscritOnlineYN"
+            id="field_inscritOnlineYN"
+            data-cy="inscritOnlineYN"
+            formControlName="inscritOnlineYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.emailUser"
+            for="field_emailUser"
+            >Email User</label
+          >
+          <input type="text" class="form-control" name="emailUser" id="field_emailUser" data-cy="emailUser" formControlName="emailUser" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscriptionAdministrative"
+            for="field_inscriptionAdministrative"
+            >Inscription Administrative</label
+          >
+          <select
+            class="form-control"
+            id="field_inscriptionAdministrative"
+            data-cy="inscriptionAdministrative"
+            name="inscriptionAdministrative"
+            formControlName="inscriptionAdministrative"
+            [compareWith]="compareInscriptionAdministrative"
+          >
+            <option [ngValue]="null"></option>
+            @for (inscriptionAdministrativeOption of inscriptionAdministrativesCollection; track $index) {
+              <option [ngValue]="inscriptionAdministrativeOption">{{ inscriptionAdministrativeOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

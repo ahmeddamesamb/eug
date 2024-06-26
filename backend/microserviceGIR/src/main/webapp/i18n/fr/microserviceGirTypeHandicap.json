@@ -1,0 +1,26 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirTypeHandicap": {
+      "home": {
+        "title": "TypeHandicaps",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Type Handicap",
+        "createOrEditLabel": "Créer ou éditer un Type Handicap",
+        "search": "Recherche pour Type Handicap",
+        "notFound": "Aucun Type Handicap trouvé"
+      },
+      "created": "Un nouveau Type Handicap a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Type Handicap avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Type Handicap avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Type Handicap {{ id }} ?"
+      },
+      "detail": {
+        "title": "Type Handicap"
+      },
+      "id": "ID",
+      "libelleTypeHandicap": "Libelle Type Handicap",
+      "informationPersonnelles": "Information Personnelles"
+    }
+  }
+}

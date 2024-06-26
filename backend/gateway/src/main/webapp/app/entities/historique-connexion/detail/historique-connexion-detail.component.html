@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (historiqueConnexion) {
+      <div>
+        <h2 data-cy="historiqueConnexionDetailsHeading">
+          <span ugbTranslate="gatewayApp.historiqueConnexion.detail.title">Historique Connexion</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ historiqueConnexion.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.historiqueConnexion.dateDebutConnexion">Date Debut Connexion</span></dt>
+          <dd>
+            <span>{{ historiqueConnexion.dateDebutConnexion | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.historiqueConnexion.dateFinConnexion">Date Fin Connexion</span></dt>
+          <dd>
+            <span>{{ historiqueConnexion.dateFinConnexion | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.historiqueConnexion.adresseIp">Adresse Ip</span></dt>
+          <dd>
+            <span>{{ historiqueConnexion.adresseIp }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.historiqueConnexion.actifYN">Actif YN</span></dt>
+          <dd>
+            <span>{{ historiqueConnexion.actifYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.historiqueConnexion.infoUser">Info User</span></dt>
+          <dd>
+            @if (historiqueConnexion.infoUser) {
+              <div>
+                <a [routerLink]="['/infos-user', historiqueConnexion.infoUser.id, 'view']">{{ historiqueConnexion.infoUser.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/historique-connexion', historiqueConnexion.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

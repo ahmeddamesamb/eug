@@ -1,0 +1,56 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205639"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "paiement_formation_privee",
+  "fields": [
+    {
+      "fieldName": "datePaiement",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "moisPaiement",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "anneePaiement",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "payerMensualiteYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "payerDelaisYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "emailUser",
+      "fieldType": "String"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "PaiementFormationPrivee",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "inscriptionAdministrativeFormation",
+      "otherEntityRelationshipName": "paiementFormationPrivees",
+      "relationshipName": "inscriptionAdministrativeFormation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "operateur",
+      "otherEntityRelationshipName": "paiementFormationPrivees",
+      "relationshipName": "operateur",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

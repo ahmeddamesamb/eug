@@ -1,0 +1,231 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (processusInscriptionAdministrative) {
+      <div>
+        <h2 data-cy="processusInscriptionAdministrativeDetailsHeading">
+          <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.detail.title"
+            >Processus Inscription Administrative</span
+          >
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.id }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscriptionDemarreeYN"
+              >Inscription Demarree YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.inscriptionDemarreeYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateDemarrageInscription"
+              >Date Demarrage Inscription</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.dateDemarrageInscription | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscriptionAnnuleeYN"
+              >Inscription Annulee YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.inscriptionAnnuleeYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateAnnulationInscription"
+              >Date Annulation Inscription</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.dateAnnulationInscription | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.apteYN">Apte YN</span></dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.apteYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateVisiteMedicale"
+              >Date Visite Medicale</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.dateVisiteMedicale | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.beneficiaireCROUSYN"
+              >Beneficiaire CROUSYN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.beneficiaireCROUSYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseQuitusCROUS"
+              >Date Remise Quitus CROUS</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.dateRemiseQuitusCROUS | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.nouveauCodeBUYN"
+              >Nouveau Code BUYN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.nouveauCodeBUYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.quitusBUYN">Quitus BUYN</span></dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.quitusBUYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseQuitusBU"
+              >Date Remise Quitus BU</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.dateRemiseQuitusBU | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.exporterBUYN">Exporter BUYN</span>
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.exporterBUYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.fraisObligatoiresPayesYN"
+              >Frais Obligatoires Payes YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.fraisObligatoiresPayesYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.datePaiementFraisObligatoires"
+              >Date Paiement Frais Obligatoires</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.datePaiementFraisObligatoires | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.numeroQuitusCROUS"
+              >Numero Quitus CROUS</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.numeroQuitusCROUS }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.carteEturemiseYN"
+              >Carte Eturemise YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.carteEturemiseYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.carteDupremiseYN"
+              >Carte Dupremise YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.carteDupremiseYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseCarteEtu"
+              >Date Remise Carte Etu</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.dateRemiseCarteEtu | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateRemiseCarteDup"
+              >Date Remise Carte Dup</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.dateRemiseCarteDup }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscritAdministrativementYN"
+              >Inscrit Administrativement YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.inscritAdministrativementYN }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.dateInscriptionAdministrative"
+              >Date Inscription Administrative</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.dateInscriptionAdministrative | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.derniereModification"
+              >Derniere Modification</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.derniereModification | formatMediumDatetime }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscritOnlineYN"
+              >Inscrit Online YN</span
+            >
+          </dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.inscritOnlineYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.emailUser">Email User</span></dt>
+          <dd>
+            <span>{{ processusInscriptionAdministrative.emailUser }}</span>
+          </dd>
+          <dt>
+            <span ugbTranslate="microserviceGirApp.microserviceGirProcessusInscriptionAdministrative.inscriptionAdministrative"
+              >Inscription Administrative</span
+            >
+          </dt>
+          <dd>
+            @if (processusInscriptionAdministrative.inscriptionAdministrative) {
+              <div>
+                <a
+                  [routerLink]="['/inscription-administrative', processusInscriptionAdministrative.inscriptionAdministrative.id, 'view']"
+                  >{{ processusInscriptionAdministrative.inscriptionAdministrative.id }}</a
+                >
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/microservicegir/processus-inscription-administrative', processusInscriptionAdministrative.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

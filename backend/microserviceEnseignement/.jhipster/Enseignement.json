@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205539"
+  },
+  "applications": ["microserviceEnseignement"],
+  "clientRootFolder": "microserviceEnseignement",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "enseignement",
+  "fields": [
+    {
+      "fieldName": "libelleEnseignements",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "volumeHoraire",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "nombreInscrits",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "groupeYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceEnseignement",
+  "name": "Enseignement",
+  "pagination": "pagination",
+  "relationships": [],
+  "service": "serviceImpl"
+}

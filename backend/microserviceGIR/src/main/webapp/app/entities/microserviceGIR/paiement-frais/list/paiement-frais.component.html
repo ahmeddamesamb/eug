@@ -1,0 +1,242 @@
+<div>
+  <h2 id="page-heading" data-cy="PaiementFraisHeading">
+    <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.home.title">PaiementFrais</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-paiement-frais"
+        [routerLink]="['/microservicegir/paiement-frais/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.home.createLabel"
+          >Créer un nouveau Paiement Frais</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.home.search"
+          >Recherche pour Paiement Frais</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGirApp.microserviceGirPaiementFrais.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (paiementFrais?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.home.notFound">Aucun Paiement Frais trouvé</span>
+    </div>
+  }
+
+  @if (paiementFrais && paiementFrais.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="datePaiement">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.datePaiement">Date Paiement</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="obligatoireYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.obligatoireYN">Obligatoire YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="echeancePayeeYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.echeancePayeeYN">Echeance Payee YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="emailUser">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.emailUser">Email User</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateForclos">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.dateForclos">Date Forclos</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="forclosYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.forclosYN">Forclos YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="paimentDelaiYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.paimentDelaiYN">Paiment Delai YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="frais.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.frais">Frais</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="operateur.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.operateur">Operateur</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="inscriptionAdministrativeFormation.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirPaiementFrais.inscriptionAdministrativeFormation"
+                  >Inscription Administrative Formation</span
+                >
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (paiementFrais of paiementFrais; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/paiement-frais', paiementFrais.id, 'view']">{{ paiementFrais.id }}</a>
+              </td>
+              <td>{{ paiementFrais.datePaiement | formatMediumDate }}</td>
+              <td>{{ paiementFrais.obligatoireYN }}</td>
+              <td>{{ paiementFrais.echeancePayeeYN }}</td>
+              <td>{{ paiementFrais.emailUser }}</td>
+              <td>{{ paiementFrais.dateForclos | formatMediumDate }}</td>
+              <td>{{ paiementFrais.forclosYN }}</td>
+              <td>{{ paiementFrais.paimentDelaiYN }}</td>
+              <td>
+                @if (paiementFrais.frais) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/frais', paiementFrais.frais.id, 'view']">{{ paiementFrais.frais.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (paiementFrais.operateur) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/operateur', paiementFrais.operateur.id, 'view']">{{
+                      paiementFrais.operateur.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (paiementFrais.inscriptionAdministrativeFormation) {
+                  <div>
+                    <a
+                      [routerLink]="[
+                        '/microservicegir/inscription-administrative-formation',
+                        paiementFrais.inscriptionAdministrativeFormation.id,
+                        'view'
+                      ]"
+                      >{{ paiementFrais.inscriptionAdministrativeFormation.id }}</a
+                    >
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/paiement-frais', paiementFrais.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/paiement-frais', paiementFrais.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(paiementFrais)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (paiementFrais && paiementFrais.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,168 @@
+<div>
+  <h2 id="page-heading" data-cy="RapportHeading">
+    <span ugbTranslate="microserviceGdApp.microserviceGdRapport.home.title">Rapports</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGdApp.microserviceGdRapport.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-rapport"
+        [routerLink]="['/microservicegd/rapport/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGdApp.microserviceGdRapport.home.createLabel">Créer un nouveau Rapport</span>
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" ugbTranslate="microserviceGdApp.microserviceGdRapport.home.search"
+          >Recherche pour Rapport</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGdApp.microserviceGdRapport.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (rapports?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGdApp.microserviceGdRapport.home.notFound">Aucun Rapport trouvé</span>
+    </div>
+  }
+
+  @if (rapports && rapports.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="libelleRapport">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGdApp.microserviceGdRapport.libelleRapport">Libelle Rapport</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="descriptionRapport">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGdApp.microserviceGdRapport.descriptionRapport">Description Rapport</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="contenuRapport">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGdApp.microserviceGdRapport.contenuRapport">Contenu Rapport</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateRedaction">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGdApp.microserviceGdRapport.dateRedaction">Date Redaction</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (rapport of rapports; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegd/rapport', rapport.id, 'view']">{{ rapport.id }}</a>
+              </td>
+              <td>{{ rapport.libelleRapport }}</td>
+              <td>{{ rapport.descriptionRapport }}</td>
+              <td>{{ rapport.contenuRapport }}</td>
+              <td>{{ rapport.dateRedaction | formatMediumDatetime }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegd/rapport', rapport.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegd/rapport', rapport.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(rapport)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (rapports && rapports.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

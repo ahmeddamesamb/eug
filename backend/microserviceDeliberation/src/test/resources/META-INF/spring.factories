@@ -1,0 +1,3 @@
+org.springframework.test.context.ContextCustomizerFactory = sn.ugb.deliberation.\
+    config.TestContainersSpringContextCustomizerFactory,sn.ugb.deliberation.\
+    config.SqlTestContainersSpringContextCustomizerFactory

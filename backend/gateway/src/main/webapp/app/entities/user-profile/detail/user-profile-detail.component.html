@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (userProfile) {
+      <div>
+        <h2 data-cy="userProfileDetailsHeading"><span ugbTranslate="gatewayApp.userProfile.detail.title">User Profile</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ userProfile.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.userProfile.dateDebut">Date Debut</span></dt>
+          <dd>
+            <span>{{ userProfile.dateDebut | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.userProfile.dateFin">Date Fin</span></dt>
+          <dd>
+            <span>{{ userProfile.dateFin | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.userProfile.enCoursYN">En Cours YN</span></dt>
+          <dd>
+            <span>{{ userProfile.enCoursYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.userProfile.profil">Profil</span></dt>
+          <dd>
+            @if (userProfile.profil) {
+              <div>
+                <a [routerLink]="['/profil', userProfile.profil.id, 'view']">{{ userProfile.profil.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.userProfile.infoUser">Info User</span></dt>
+          <dd>
+            @if (userProfile.infoUser) {
+              <div>
+                <a [routerLink]="['/infos-user', userProfile.infoUser.id, 'view']">{{ userProfile.infoUser.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

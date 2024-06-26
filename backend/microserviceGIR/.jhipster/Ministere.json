@@ -1,0 +1,53 @@
+{
+  "annotations": {
+    "changelogDate": "20240625213739"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "ministere",
+  "fields": [
+    {
+      "fieldName": "nomMinistere",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "sigleMinistere",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "enCoursYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Ministere",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "universite",
+      "otherEntityRelationshipName": "ministere",
+      "relationshipName": "universites",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

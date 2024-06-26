@@ -1,0 +1,28 @@
+{
+  "gatewayApp": {
+    "profil": {
+      "home": {
+        "title": "Profils",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Profil",
+        "createOrEditLabel": "Create or edit a Profil",
+        "search": "Search for Profil",
+        "notFound": "No Profils found"
+      },
+      "created": "A new Profil is created with identifier {{ param }}",
+      "updated": "A Profil is updated with identifier {{ param }}",
+      "deleted": "A Profil is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Profil {{ id }}?"
+      },
+      "detail": {
+        "title": "Profil"
+      },
+      "id": "ID",
+      "libelle": "Libelle",
+      "dateAjout": "Date Ajout",
+      "actifYN": "Actif YN",
+      "userProfiles": "User Profiles"
+    }
+  }
+}

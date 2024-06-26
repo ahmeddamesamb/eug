@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20240625211039"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "discipline_sportive",
+  "fields": [
+    {
+      "fieldName": "libelleDisciplineSportive",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "DisciplineSportive",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "disciplineSportiveEtudiant",
+      "otherEntityRelationshipName": "disciplineSportive",
+      "relationshipName": "disciplineSportiveEtudiants",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

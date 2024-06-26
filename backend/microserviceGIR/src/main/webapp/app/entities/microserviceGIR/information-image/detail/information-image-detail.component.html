@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (informationImage) {
+      <div>
+        <h2 data-cy="informationImageDetailsHeading">
+          <span ugbTranslate="microserviceGirApp.microserviceGirInformationImage.detail.title">Information Image</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ informationImage.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirInformationImage.description">Description</span></dt>
+          <dd>
+            <span>{{ informationImage.description }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirInformationImage.cheminPath">Chemin Path</span></dt>
+          <dd>
+            <span>{{ informationImage.cheminPath }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirInformationImage.cheminFile">Chemin File</span></dt>
+          <dd>
+            <span>{{ informationImage.cheminFile }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirInformationImage.enCoursYN">En Cours YN</span></dt>
+          <dd>
+            <span>{{ informationImage.enCoursYN }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/information-image', informationImage.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

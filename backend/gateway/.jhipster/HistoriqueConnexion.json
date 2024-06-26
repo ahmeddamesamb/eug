@@ -1,0 +1,42 @@
+{
+  "annotations": {
+    "changelogDate": "20240625210139"
+  },
+  "applications": ["gateway"],
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "historique_connexion",
+  "fields": [
+    {
+      "fieldName": "dateDebutConnexion",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateFinConnexion",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "adresseIp",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "HistoriqueConnexion",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "infosUser",
+      "otherEntityRelationshipName": "historiqueConnexions",
+      "relationshipName": "infoUser",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

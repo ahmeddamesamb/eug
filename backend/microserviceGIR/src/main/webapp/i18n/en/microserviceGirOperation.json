@@ -1,0 +1,29 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirOperation": {
+      "home": {
+        "title": "Operations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Operation",
+        "createOrEditLabel": "Create or edit a Operation",
+        "search": "Search for Operation",
+        "notFound": "No Operations found"
+      },
+      "created": "A new Operation is created with identifier {{ param }}",
+      "updated": "A Operation is updated with identifier {{ param }}",
+      "deleted": "A Operation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Operation {{ id }}?"
+      },
+      "detail": {
+        "title": "Operation"
+      },
+      "id": "ID",
+      "dateExecution": "Date Execution",
+      "emailUser": "Email User",
+      "detailOperation": "Detail Operation",
+      "infoSysteme": "Info Systeme",
+      "typeOperation": "Type Operation"
+    }
+  }
+}

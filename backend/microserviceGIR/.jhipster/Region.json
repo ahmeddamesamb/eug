@@ -1,0 +1,44 @@
+{
+  "annotations": {
+    "changelogDate": "20240625210139"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "region",
+  "fields": [
+    {
+      "fieldName": "libelleRegion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Region",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "pays",
+      "otherEntityRelationshipName": "regions",
+      "relationshipName": "pays",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "etudiant",
+      "otherEntityRelationshipName": "region",
+      "relationshipName": "etudiants",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "lycee",
+      "otherEntityRelationshipName": "region",
+      "relationshipName": "lycees",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

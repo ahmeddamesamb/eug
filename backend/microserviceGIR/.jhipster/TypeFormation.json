@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20240625212039"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "type_formation",
+  "fields": [
+    {
+      "fieldName": "libelleTypeFormation",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "TypeFormation",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "formation",
+      "otherEntityRelationshipName": "typeFormation",
+      "relationshipName": "formations",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

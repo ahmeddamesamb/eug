@@ -1,0 +1,26 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirTypeBourse": {
+      "home": {
+        "title": "TypeBourses",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Type Bourse",
+        "createOrEditLabel": "Créer ou éditer un Type Bourse",
+        "search": "Recherche pour Type Bourse",
+        "notFound": "Aucun Type Bourse trouvé"
+      },
+      "created": "Un nouveau Type Bourse a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Type Bourse avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Type Bourse avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Type Bourse {{ id }} ?"
+      },
+      "detail": {
+        "title": "Type Bourse"
+      },
+      "id": "ID",
+      "libelleTypeBourse": "Libelle Type Bourse",
+      "informationPersonnelles": "Information Personnelles"
+    }
+  }
+}

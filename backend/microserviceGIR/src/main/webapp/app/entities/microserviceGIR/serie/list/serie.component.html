@@ -1,0 +1,152 @@
+<div>
+  <h2 id="page-heading" data-cy="SerieHeading">
+    <span ugbTranslate="microserviceGirApp.microserviceGirSerie.home.title">Series</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGirApp.microserviceGirSerie.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-serie"
+        [routerLink]="['/microservicegir/serie/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGirApp.microserviceGirSerie.home.createLabel">Créer un nouveau Serie</span>
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" ugbTranslate="microserviceGirApp.microserviceGirSerie.home.search"
+          >Recherche pour Serie</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGirApp.microserviceGirSerie.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (series?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGirApp.microserviceGirSerie.home.notFound">Aucun Serie trouvé</span>
+    </div>
+  }
+
+  @if (series && series.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="codeSerie">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirSerie.codeSerie">Code Serie</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="libelleSerie">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirSerie.libelleSerie">Libelle Serie</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="sigleSerie">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirSerie.sigleSerie">Sigle Serie</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (serie of series; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/serie', serie.id, 'view']">{{ serie.id }}</a>
+              </td>
+              <td>{{ serie.codeSerie }}</td>
+              <td>{{ serie.libelleSerie }}</td>
+              <td>{{ serie.sigleSerie }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/microservicegir/serie', serie.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a [routerLink]="['/microservicegir/serie', serie.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(serie)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (series && series.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,28 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirInformationImage": {
+      "home": {
+        "title": "Information Images",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Information Image",
+        "createOrEditLabel": "Create or edit a Information Image",
+        "search": "Search for Information Image",
+        "notFound": "No Information Images found"
+      },
+      "created": "A new Information Image is created with identifier {{ param }}",
+      "updated": "A Information Image is updated with identifier {{ param }}",
+      "deleted": "A Information Image is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Information Image {{ id }}?"
+      },
+      "detail": {
+        "title": "Information Image"
+      },
+      "id": "ID",
+      "description": "Description",
+      "cheminPath": "Chemin Path",
+      "cheminFile": "Chemin File",
+      "enCoursYN": "En Cours YN"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirTypeAdmission": {
+      "home": {
+        "title": "TypeAdmissions",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Type Admission",
+        "createOrEditLabel": "Créer ou éditer un Type Admission",
+        "search": "Recherche pour Type Admission",
+        "notFound": "Aucun Type Admission trouvé"
+      },
+      "created": "Un nouveau Type Admission a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Type Admission avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Type Admission avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Type Admission {{ id }} ?"
+      },
+      "detail": {
+        "title": "Type Admission"
+      },
+      "id": "ID",
+      "libelleTypeAdmission": "Libelle Type Admission",
+      "inscriptionAdministratives": "Inscription Administratives"
+    }
+  }
+}

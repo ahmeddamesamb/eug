@@ -1,0 +1,28 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirMention": {
+      "home": {
+        "title": "Mentions",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Mention",
+        "createOrEditLabel": "Créer ou éditer un Mention",
+        "search": "Recherche pour Mention",
+        "notFound": "Aucun Mention trouvé"
+      },
+      "created": "Un nouveau Mention a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Mention avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Mention avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Mention {{ id }} ?"
+      },
+      "detail": {
+        "title": "Mention"
+      },
+      "id": "ID",
+      "libelleMention": "Libelle Mention",
+      "actifYN": "Actif YN",
+      "domaine": "Domaine",
+      "specialites": "Specialites"
+    }
+  }
+}

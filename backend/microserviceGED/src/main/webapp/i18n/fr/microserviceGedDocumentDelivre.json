@@ -1,0 +1,28 @@
+{
+  "microserviceGedApp": {
+    "microserviceGedDocumentDelivre": {
+      "home": {
+        "title": "DocumentDelivres",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Document Delivre",
+        "createOrEditLabel": "Créer ou éditer un Document Delivre",
+        "search": "Recherche pour Document Delivre",
+        "notFound": "Aucun Document Delivre trouvé"
+      },
+      "created": "Un nouveau Document Delivre a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Document Delivre avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Document Delivre avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Document Delivre {{ id }} ?"
+      },
+      "detail": {
+        "title": "Document Delivre"
+      },
+      "id": "ID",
+      "libelleDoc": "Libelle Doc",
+      "anneeDoc": "Annee Doc",
+      "dateEnregistrement": "Date Enregistrement",
+      "typeDocument": "Type Document"
+    }
+  }
+}

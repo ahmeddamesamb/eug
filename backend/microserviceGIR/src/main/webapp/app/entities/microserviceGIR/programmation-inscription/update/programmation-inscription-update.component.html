@@ -1,0 +1,233 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-programmation-inscription-heading"
+        data-cy="ProgrammationInscriptionCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.home.createOrEditLabel"
+      >
+        Créer ou éditer un Programmation Inscription
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.libelleProgrammation"
+            for="field_libelleProgrammation"
+            >Libelle Programmation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libelleProgrammation"
+            id="field_libelleProgrammation"
+            data-cy="libelleProgrammation"
+            formControlName="libelleProgrammation"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateDebutProgrammation"
+            for="field_dateDebutProgrammation"
+            >Date Debut Programmation</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateDebutProgrammation"
+              data-cy="dateDebutProgrammation"
+              type="text"
+              class="form-control"
+              name="dateDebutProgrammation"
+              ngbDatepicker
+              #dateDebutProgrammationDp="ngbDatepicker"
+              formControlName="dateDebutProgrammation"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDebutProgrammationDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateFinProgrammation"
+            for="field_dateFinProgrammation"
+            >Date Fin Programmation</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateFinProgrammation"
+              data-cy="dateFinProgrammation"
+              type="text"
+              class="form-control"
+              name="dateFinProgrammation"
+              ngbDatepicker
+              #dateFinProgrammationDp="ngbDatepicker"
+              formControlName="dateFinProgrammation"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateFinProgrammationDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.ouvertYN" for="field_ouvertYN"
+            >Ouvert YN</label
+          >
+          <input type="checkbox" class="form-check" name="ouvertYN" id="field_ouvertYN" data-cy="ouvertYN" formControlName="ouvertYN" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.emailUser"
+            for="field_emailUser"
+            >Email User</label
+          >
+          <input type="text" class="form-control" name="emailUser" id="field_emailUser" data-cy="emailUser" formControlName="emailUser" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.dateForclosClasse"
+            for="field_dateForclosClasse"
+            >Date Forclos Classe</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateForclosClasse"
+              data-cy="dateForclosClasse"
+              type="text"
+              class="form-control"
+              name="dateForclosClasse"
+              ngbDatepicker
+              #dateForclosClasseDp="ngbDatepicker"
+              formControlName="dateForclosClasse"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateForclosClasseDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.forclosClasseYN"
+            for="field_forclosClasseYN"
+            >Forclos Classe YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="forclosClasseYN"
+            id="field_forclosClasseYN"
+            data-cy="forclosClasseYN"
+            formControlName="forclosClasseYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.actifYN" for="field_actifYN"
+            >Actif YN</label
+          >
+          <input type="checkbox" class="form-check" name="actifYN" id="field_actifYN" data-cy="actifYN" formControlName="actifYN" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.anneeAcademique"
+            for="field_anneeAcademique"
+            >Annee Academique</label
+          >
+          <select
+            class="form-control"
+            id="field_anneeAcademique"
+            data-cy="anneeAcademique"
+            name="anneeAcademique"
+            formControlName="anneeAcademique"
+            [compareWith]="compareAnneeAcademique"
+          >
+            <option [ngValue]="null"></option>
+            @for (anneeAcademiqueOption of anneeAcademiquesSharedCollection; track $index) {
+              <option [ngValue]="anneeAcademiqueOption">{{ anneeAcademiqueOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.formation"
+            for="field_formation"
+            >Formation</label
+          >
+          <select
+            class="form-control"
+            id="field_formation"
+            data-cy="formation"
+            name="formation"
+            formControlName="formation"
+            [compareWith]="compareFormation"
+          >
+            <option [ngValue]="null"></option>
+            @for (formationOption of formationsSharedCollection; track $index) {
+              <option [ngValue]="formationOption">{{ formationOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirProgrammationInscription.campagne" for="field_campagne"
+            >Campagne</label
+          >
+          <select
+            class="form-control"
+            id="field_campagne"
+            data-cy="campagne"
+            name="campagne"
+            formControlName="campagne"
+            [compareWith]="compareCampagne"
+          >
+            <option [ngValue]="null"></option>
+            @for (campagneOption of campagnesSharedCollection; track $index) {
+              <option [ngValue]="campagneOption">{{ campagneOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

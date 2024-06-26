@@ -1,0 +1,175 @@
+<div>
+  <h2 id="page-heading" data-cy="UserProfileHeading">
+    <span ugbTranslate="gatewayApp.userProfile.home.title">UserProfiles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="gatewayApp.userProfile.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-user-profile"
+        [routerLink]="['/user-profile/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="gatewayApp.userProfile.home.createLabel">Créer un nouveau User Profile</span>
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" ugbTranslate="gatewayApp.userProfile.home.search"
+          >Recherche pour User Profile</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'gatewayApp.userProfile.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (userProfiles?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="gatewayApp.userProfile.home.notFound">Aucun User Profile trouvé</span>
+    </div>
+  }
+
+  @if (userProfiles && userProfiles.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateDebut">
+              <div class="d-flex">
+                <span ugbTranslate="gatewayApp.userProfile.dateDebut">Date Debut</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateFin">
+              <div class="d-flex">
+                <span ugbTranslate="gatewayApp.userProfile.dateFin">Date Fin</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="enCoursYN">
+              <div class="d-flex">
+                <span ugbTranslate="gatewayApp.userProfile.enCoursYN">En Cours YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="profil.id">
+              <div class="d-flex">
+                <span ugbTranslate="gatewayApp.userProfile.profil">Profil</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="infoUser.id">
+              <div class="d-flex">
+                <span ugbTranslate="gatewayApp.userProfile.infoUser">Info User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (userProfile of userProfiles; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/user-profile', userProfile.id, 'view']">{{ userProfile.id }}</a>
+              </td>
+              <td>{{ userProfile.dateDebut | formatMediumDate }}</td>
+              <td>{{ userProfile.dateFin | formatMediumDate }}</td>
+              <td>{{ userProfile.enCoursYN }}</td>
+              <td>
+                @if (userProfile.profil) {
+                  <div>
+                    <a [routerLink]="['/profil', userProfile.profil.id, 'view']">{{ userProfile.profil.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (userProfile.infoUser) {
+                  <div>
+                    <a [routerLink]="['/infos-user', userProfile.infoUser.id, 'view']">{{ userProfile.infoUser.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/user-profile', userProfile.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a [routerLink]="['/user-profile', userProfile.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(userProfile)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (userProfiles && userProfiles.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

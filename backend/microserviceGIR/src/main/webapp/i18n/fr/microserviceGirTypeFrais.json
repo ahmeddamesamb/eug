@@ -1,0 +1,26 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirTypeFrais": {
+      "home": {
+        "title": "TypeFrais",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Type Frais",
+        "createOrEditLabel": "Créer ou éditer un Type Frais",
+        "search": "Recherche pour Type Frais",
+        "notFound": "Aucun Type Frais trouvé"
+      },
+      "created": "Un nouveau Type Frais a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Type Frais avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Type Frais avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Type Frais {{ id }} ?"
+      },
+      "detail": {
+        "title": "Type Frais"
+      },
+      "id": "ID",
+      "libelleTypeFrais": "Libelle Type Frais",
+      "frais": "Frais"
+    }
+  }
+}

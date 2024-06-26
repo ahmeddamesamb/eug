@@ -1,0 +1,188 @@
+<div>
+  <h2 id="page-heading" data-cy="UserProfileBlocFonctionnelHeading">
+    <span ugbTranslate="gatewayApp.userProfileBlocFonctionnel.home.title">UserProfileBlocFonctionnels</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="gatewayApp.userProfileBlocFonctionnel.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-user-profile-bloc-fonctionnel"
+        [routerLink]="['/user-profile-bloc-fonctionnel/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="gatewayApp.userProfileBlocFonctionnel.home.createLabel"
+          >Créer un nouveau User Profile Bloc Fonctionnel</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" ugbTranslate="gatewayApp.userProfileBlocFonctionnel.home.search"
+          >Recherche pour User Profile Bloc Fonctionnel</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'gatewayApp.userProfileBlocFonctionnel.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (userProfileBlocFonctionnels?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="gatewayApp.userProfileBlocFonctionnel.home.notFound">Aucun User Profile Bloc Fonctionnel trouvé</span>
+    </div>
+  }
+
+  @if (userProfileBlocFonctionnels && userProfileBlocFonctionnels.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="date">
+              <div class="d-flex">
+                <span ugbTranslate="gatewayApp.userProfileBlocFonctionnel.date">Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="enCoursYN">
+              <div class="d-flex">
+                <span ugbTranslate="gatewayApp.userProfileBlocFonctionnel.enCoursYN">En Cours YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="userProfil.id">
+              <div class="d-flex">
+                <span ugbTranslate="gatewayApp.userProfileBlocFonctionnel.userProfil">User Profil</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="blocFonctionnel.id">
+              <div class="d-flex">
+                <span ugbTranslate="gatewayApp.userProfileBlocFonctionnel.blocFonctionnel">Bloc Fonctionnel</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (userProfileBlocFonctionnel of userProfileBlocFonctionnels; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/user-profile-bloc-fonctionnel', userProfileBlocFonctionnel.id, 'view']">{{
+                  userProfileBlocFonctionnel.id
+                }}</a>
+              </td>
+              <td>{{ userProfileBlocFonctionnel.date | formatMediumDate }}</td>
+              <td>{{ userProfileBlocFonctionnel.enCoursYN }}</td>
+              <td>
+                @if (userProfileBlocFonctionnel.userProfil) {
+                  <div>
+                    <a [routerLink]="['/user-profile', userProfileBlocFonctionnel.userProfil.id, 'view']">{{
+                      userProfileBlocFonctionnel.userProfil.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (userProfileBlocFonctionnel.blocFonctionnel) {
+                  <div>
+                    <a [routerLink]="['/bloc-fonctionnel', userProfileBlocFonctionnel.blocFonctionnel.id, 'view']">{{
+                      userProfileBlocFonctionnel.blocFonctionnel.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/user-profile-bloc-fonctionnel', userProfileBlocFonctionnel.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/user-profile-bloc-fonctionnel', userProfileBlocFonctionnel.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button
+                    type="submit"
+                    (click)="delete(userProfileBlocFonctionnel)"
+                    class="btn btn-danger btn-sm"
+                    data-cy="entityDeleteButton"
+                  >
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (userProfileBlocFonctionnels && userProfileBlocFonctionnels.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

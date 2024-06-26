@@ -1,0 +1,26 @@
+{
+  "generator-jhipster": {
+    "appsFolders": [
+      "gateway",
+      "microserviceGIR",
+      "microserviceEnseignement",
+      "microserviceEDT",
+      "microserviceGRH",
+      "microserviceAUA",
+      "microserviceDeliberation",
+      "microserviceGD",
+      "microserviceACLC",
+      "microserviceAide",
+      "microserviceGED"
+    ],
+    "clusteredDbApps": [],
+    "deploymentType": "docker-compose",
+    "directoryPath": "../",
+    "dockerRepositoryName": "eUGB",
+    "gatewayType": "SpringCloudGateway",
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "YzliZWZkZDY2ZDA5YmU5YWRmZGRlMzY3ZDczNGM0YWMwZWMwZDkzNmRiNjAwMWE5NzNhNzZhZmJhMGRkZDQ0M2I4MTg0ZTdlOTYyMjFkYWQxM2RhNDgzNzgwMDdkZTNiOTc5Ng==",
+    "monitoring": "prometheus",
+    "serviceDiscoveryType": "consul"
+  }
+}

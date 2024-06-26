@@ -1,0 +1,27 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirFormationInvalide": {
+      "home": {
+        "title": "FormationInvalides",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Formation Invalide",
+        "createOrEditLabel": "Créer ou éditer un Formation Invalide",
+        "search": "Recherche pour Formation Invalide",
+        "notFound": "Aucun Formation Invalide trouvé"
+      },
+      "created": "Un nouveau Formation Invalide a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Formation Invalide avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Formation Invalide avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Formation Invalide {{ id }} ?"
+      },
+      "detail": {
+        "title": "Formation Invalide"
+      },
+      "id": "ID",
+      "actifYN": "Actif YN",
+      "formation": "Formation",
+      "anneeAcademique": "Annee Academique"
+    }
+  }
+}

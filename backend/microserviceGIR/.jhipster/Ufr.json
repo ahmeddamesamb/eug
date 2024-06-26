@@ -1,0 +1,50 @@
+{
+  "annotations": {
+    "changelogDate": "20240625212839"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "ufr",
+  "fields": [
+    {
+      "fieldName": "libelleUfr",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "sigleUfr",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "prefixe",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Ufr",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "universite",
+      "otherEntityRelationshipName": "ufrs",
+      "relationshipName": "universite",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "domaine",
+      "otherEntityRelationshipName": "ufr",
+      "relationshipName": "domaine",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

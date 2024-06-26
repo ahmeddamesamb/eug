@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity InformationPersonnelle.
+    -->
+    <changeSet id="20240625205739-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="etudiant_id"
+                                 baseTableName="information_personnelle"
+                                 constraintName="fk_information_personnelle__etudiant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="etudiant"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="type_handicap_id"
+                                 baseTableName="information_personnelle"
+                                 constraintName="fk_information_personnelle__type_handicap_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="type_handicap"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="type_bourse_id"
+                                 baseTableName="information_personnelle"
+                                 constraintName="fk_information_personnelle__type_bourse_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="type_bourse"
+                                 />
+    </changeSet>
+</databaseChangeLog>

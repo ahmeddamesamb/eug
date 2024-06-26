@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205839"
+  },
+  "applications": ["gateway"],
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "info_user_ressource",
+  "fields": [
+    {
+      "fieldName": "dateAjout",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "enCoursYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "InfoUserRessource",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "infosUser",
+      "otherEntityRelationshipName": "infoUserRessources",
+      "relationshipName": "infosUser",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "ressource",
+      "otherEntityRelationshipName": "infoUserRessources",
+      "relationshipName": "ressource",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

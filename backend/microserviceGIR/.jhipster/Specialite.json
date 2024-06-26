@@ -1,0 +1,55 @@
+{
+  "annotations": {
+    "changelogDate": "20240625212139"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "specialite",
+  "fields": [
+    {
+      "fieldName": "nomSpecialites",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "sigleSpecialites",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "specialiteParticulierYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "specialitesPayanteYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Specialite",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "mention",
+      "otherEntityRelationshipName": "specialites",
+      "relationshipName": "mention",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "formation",
+      "otherEntityRelationshipName": "specialite",
+      "relationshipName": "formations",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

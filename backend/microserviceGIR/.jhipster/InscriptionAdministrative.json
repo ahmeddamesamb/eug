@@ -1,0 +1,69 @@
+{
+  "annotations": {
+    "changelogDate": "20240625211339"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "inscription_administrative",
+  "fields": [
+    {
+      "fieldName": "nouveauInscritYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "repriseYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "autoriseYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "ordreInscription",
+      "fieldType": "Integer"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "InscriptionAdministrative",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "typeAdmission",
+      "otherEntityRelationshipName": "inscriptionAdministratives",
+      "relationshipName": "typeAdmission",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "anneeAcademique",
+      "otherEntityRelationshipName": "inscriptionAdministratives",
+      "relationshipName": "anneeAcademique",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "etudiant",
+      "otherEntityRelationshipName": "inscriptionAdministratives",
+      "relationshipName": "etudiant",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "processusInscriptionAdministrative",
+      "otherEntityRelationshipName": "inscriptionAdministrative",
+      "relationshipName": "processusDinscriptionAdministrative",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "inscriptionAdministrativeFormation",
+      "otherEntityRelationshipName": "inscriptionAdministrative",
+      "relationshipName": "inscriptionAdministrativeFormations",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

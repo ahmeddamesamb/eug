@@ -1,0 +1,263 @@
+<div>
+  <h2 id="page-heading" data-cy="EtudiantHeading">
+    <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.home.title">Etudiants</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-etudiant"
+        [routerLink]="['/microservicegir/etudiant/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGirApp.microserviceGirEtudiant.home.createLabel"
+          >Créer un nouveau Etudiant</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" ugbTranslate="microserviceGirApp.microserviceGirEtudiant.home.search"
+          >Recherche pour Etudiant</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGirApp.microserviceGirEtudiant.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (etudiants?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.home.notFound">Aucun Etudiant trouvé</span>
+    </div>
+  }
+
+  @if (etudiants && etudiants.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="codeEtu">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.codeEtu">Code Etu</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="ine">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.ine">Ine</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="codeBU">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.codeBU">Code BU</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="emailUGB">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.emailUGB">Email UGB</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="dateNaissEtu">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.dateNaissEtu">Date Naiss Etu</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="lieuNaissEtu">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.lieuNaissEtu">Lieu Naiss Etu</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="sexe">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.sexe">Sexe</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="numDocIdentite">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.numDocIdentite">Num Doc Identite</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="assimileYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.assimileYN">Assimile YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="actifYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.actifYN">Actif YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="region.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.region">Region</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="typeSelection.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.typeSelection">Type Selection</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="lycee.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirEtudiant.lycee">Lycee</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (etudiant of etudiants; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/etudiant', etudiant.id, 'view']">{{ etudiant.id }}</a>
+              </td>
+              <td>{{ etudiant.codeEtu }}</td>
+              <td>{{ etudiant.ine }}</td>
+              <td>{{ etudiant.codeBU }}</td>
+              <td>{{ etudiant.emailUGB }}</td>
+              <td>{{ etudiant.dateNaissEtu | formatMediumDate }}</td>
+              <td>{{ etudiant.lieuNaissEtu }}</td>
+              <td>{{ etudiant.sexe }}</td>
+              <td>{{ etudiant.numDocIdentite }}</td>
+              <td>{{ etudiant.assimileYN }}</td>
+              <td>{{ etudiant.actifYN }}</td>
+              <td>
+                @if (etudiant.region) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/region', etudiant.region.id, 'view']">{{ etudiant.region.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (etudiant.typeSelection) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/type-selection', etudiant.typeSelection.id, 'view']">{{
+                      etudiant.typeSelection.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (etudiant.lycee) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/lycee', etudiant.lycee.id, 'view']">{{ etudiant.lycee.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/etudiant', etudiant.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/etudiant', etudiant.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(etudiant)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (etudiants && etudiants.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

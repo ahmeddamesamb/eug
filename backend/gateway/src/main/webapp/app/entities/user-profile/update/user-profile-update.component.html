@@ -1,0 +1,134 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-user-profile-heading"
+        data-cy="UserProfileCreateUpdateHeading"
+        ugbTranslate="gatewayApp.userProfile.home.createOrEditLabel"
+      >
+        Créer ou éditer un User Profile
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.userProfile.dateDebut" for="field_dateDebut">Date Debut</label>
+          <div class="input-group">
+            <input
+              id="field_dateDebut"
+              data-cy="dateDebut"
+              type="text"
+              class="form-control"
+              name="dateDebut"
+              ngbDatepicker
+              #dateDebutDp="ngbDatepicker"
+              formControlName="dateDebut"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDebutDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          @if (editForm.get('dateDebut')!.invalid && (editForm.get('dateDebut')!.dirty || editForm.get('dateDebut')!.touched)) {
+            <div>
+              @if (editForm.get('dateDebut')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.userProfile.dateFin" for="field_dateFin">Date Fin</label>
+          <div class="input-group">
+            <input
+              id="field_dateFin"
+              data-cy="dateFin"
+              type="text"
+              class="form-control"
+              name="dateFin"
+              ngbDatepicker
+              #dateFinDp="ngbDatepicker"
+              formControlName="dateFin"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateFinDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          @if (editForm.get('dateFin')!.invalid && (editForm.get('dateFin')!.dirty || editForm.get('dateFin')!.touched)) {
+            <div>
+              @if (editForm.get('dateFin')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.userProfile.enCoursYN" for="field_enCoursYN">En Cours YN</label>
+          <input type="checkbox" class="form-check" name="enCoursYN" id="field_enCoursYN" data-cy="enCoursYN" formControlName="enCoursYN" />
+          @if (editForm.get('enCoursYN')!.invalid && (editForm.get('enCoursYN')!.dirty || editForm.get('enCoursYN')!.touched)) {
+            <div>
+              @if (editForm.get('enCoursYN')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.userProfile.profil" for="field_profil">Profil</label>
+          <select
+            class="form-control"
+            id="field_profil"
+            data-cy="profil"
+            name="profil"
+            formControlName="profil"
+            [compareWith]="compareProfil"
+          >
+            <option [ngValue]="null"></option>
+            @for (profilOption of profilsSharedCollection; track $index) {
+              <option [ngValue]="profilOption">{{ profilOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.userProfile.infoUser" for="field_infoUser">Info User</label>
+          <select
+            class="form-control"
+            id="field_infoUser"
+            data-cy="infoUser"
+            name="infoUser"
+            formControlName="infoUser"
+            [compareWith]="compareInfosUser"
+          >
+            <option [ngValue]="null"></option>
+            @for (infosUserOption of infosUsersSharedCollection; track $index) {
+              <option [ngValue]="infosUserOption">{{ infosUserOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

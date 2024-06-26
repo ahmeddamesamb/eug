@@ -1,0 +1,197 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-formation-privee-heading"
+        data-cy="FormationPriveeCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirFormationPrivee.home.createOrEditLabel"
+      >
+        Créer ou éditer un Formation Privee
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirFormationPrivee.nombreMensualites"
+            for="field_nombreMensualites"
+            >Nombre Mensualites</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="nombreMensualites"
+            id="field_nombreMensualites"
+            data-cy="nombreMensualites"
+            formControlName="nombreMensualites"
+          />
+          @if (
+            editForm.get('nombreMensualites')!.invalid &&
+            (editForm.get('nombreMensualites')!.dirty || editForm.get('nombreMensualites')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('nombreMensualites')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('nombreMensualites')?.errors?.number"
+                ugbTranslate="entity.validation.number"
+                >Ce champ doit être un nombre.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirFormationPrivee.paiementPremierMoisYN"
+            for="field_paiementPremierMoisYN"
+            >Paiement Premier Mois YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="paiementPremierMoisYN"
+            id="field_paiementPremierMoisYN"
+            data-cy="paiementPremierMoisYN"
+            formControlName="paiementPremierMoisYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirFormationPrivee.paiementDernierMoisYN"
+            for="field_paiementDernierMoisYN"
+            >Paiement Dernier Mois YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="paiementDernierMoisYN"
+            id="field_paiementDernierMoisYN"
+            data-cy="paiementDernierMoisYN"
+            formControlName="paiementDernierMoisYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirFormationPrivee.fraisDossierYN"
+            for="field_fraisDossierYN"
+            >Frais Dossier YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="fraisDossierYN"
+            id="field_fraisDossierYN"
+            data-cy="fraisDossierYN"
+            formControlName="fraisDossierYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFormationPrivee.coutTotal" for="field_coutTotal"
+            >Cout Total</label
+          >
+          <input type="number" class="form-control" name="coutTotal" id="field_coutTotal" data-cy="coutTotal" formControlName="coutTotal" />
+          @if (editForm.get('coutTotal')!.invalid && (editForm.get('coutTotal')!.dirty || editForm.get('coutTotal')!.touched)) {
+            <div>
+              @if (editForm.get('coutTotal')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('coutTotal')?.errors?.number"
+                ugbTranslate="entity.validation.number"
+                >Ce champ doit être un nombre.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFormationPrivee.mensualite" for="field_mensualite"
+            >Mensualite</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="mensualite"
+            id="field_mensualite"
+            data-cy="mensualite"
+            formControlName="mensualite"
+          />
+          @if (editForm.get('mensualite')!.invalid && (editForm.get('mensualite')!.dirty || editForm.get('mensualite')!.touched)) {
+            <div>
+              @if (editForm.get('mensualite')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('mensualite')?.errors?.number"
+                ugbTranslate="entity.validation.number"
+                >Ce champ doit être un nombre.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFormationPrivee.actifYN" for="field_actifYN"
+            >Actif YN</label
+          >
+          <input type="checkbox" class="form-check" name="actifYN" id="field_actifYN" data-cy="actifYN" formControlName="actifYN" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirFormationPrivee.formation" for="field_formation"
+            >Formation</label
+          >
+          <select
+            class="form-control"
+            id="field_formation"
+            data-cy="formation"
+            name="formation"
+            formControlName="formation"
+            [compareWith]="compareFormation"
+          >
+            <option [ngValue]="null"></option>
+            @for (formationOption of formationsCollection; track $index) {
+              <option [ngValue]="formationOption">{{ formationOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,140 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-annee-academique-heading"
+        data-cy="AnneeAcademiqueCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirAnneeAcademique.home.createOrEditLabel"
+      >
+        Créer ou éditer un Annee Academique
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirAnneeAcademique.libelleAnneeAcademique"
+            for="field_libelleAnneeAcademique"
+            >Libelle Annee Academique</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="libelleAnneeAcademique"
+            id="field_libelleAnneeAcademique"
+            data-cy="libelleAnneeAcademique"
+            formControlName="libelleAnneeAcademique"
+          />
+          @if (
+            editForm.get('libelleAnneeAcademique')!.invalid &&
+            (editForm.get('libelleAnneeAcademique')!.dirty || editForm.get('libelleAnneeAcademique')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('libelleAnneeAcademique')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirAnneeAcademique.anneeAc" for="field_anneeAc"
+            >Annee Ac</label
+          >
+          <input type="number" class="form-control" name="anneeAc" id="field_anneeAc" data-cy="anneeAc" formControlName="anneeAc" />
+          @if (editForm.get('anneeAc')!.invalid && (editForm.get('anneeAc')!.dirty || editForm.get('anneeAc')!.touched)) {
+            <div>
+              @if (editForm.get('anneeAc')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              @if (editForm.get('anneeAc')?.errors?.min) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.min" [translateValues]="{ min: 1990 }"
+                  >Ce champ doit être supérieur à 1990.</small
+                >
+              }
+              @if (editForm.get('anneeAc')?.errors?.max) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.max" [translateValues]="{ max: 2060 }"
+                  >Ce champ doit être inférieur à 2060.</small
+                >
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('anneeAc')?.errors?.number"
+                ugbTranslate="entity.validation.number"
+                >Ce champ doit être un nombre.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirAnneeAcademique.separateur" for="field_separateur"
+            >Separateur</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="separateur"
+            id="field_separateur"
+            data-cy="separateur"
+            formControlName="separateur"
+          />
+          @if (editForm.get('separateur')!.invalid && (editForm.get('separateur')!.dirty || editForm.get('separateur')!.touched)) {
+            <div>
+              @if (editForm.get('separateur')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+              @if (editForm.get('separateur')?.errors?.maxlength) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.maxlength" [translateValues]="{ max: 1 }"
+                  >Ce champ doit faire moins de 1 caractères.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirAnneeAcademique.anneeCouranteYN"
+            for="field_anneeCouranteYN"
+            >Annee Courante YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="anneeCouranteYN"
+            id="field_anneeCouranteYN"
+            data-cy="anneeCouranteYN"
+            formControlName="anneeCouranteYN"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

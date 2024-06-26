@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity InscriptionAdministrativeFormation.
+    -->
+    <changeSet id="20240625211439-1" author="jhipster">
+        <createTable tableName="inscription_administrative_formation">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="inscription_principale_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="inscription_annulee_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="exonere_yn" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="paiement_frais_obl_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="paiement_frais_integerg_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="certificat_delivre_yn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_choix_formation" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_validation_inscription" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="inscription_administrative_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="formation_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="inscription_administrative_formation" columnName="date_choix_formation" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="inscription_administrative_formation" columnName="date_validation_inscription" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20240625211439-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/inscription_administrative_formation.csv"
+                  separator=";"
+                  tableName="inscription_administrative_formation"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="inscription_principale_yn" type="boolean"/>
+            <column name="inscription_annulee_yn" type="boolean"/>
+            <column name="exonere_yn" type="boolean"/>
+            <column name="paiement_frais_obl_yn" type="boolean"/>
+            <column name="paiement_frais_integerg_yn" type="boolean"/>
+            <column name="certificat_delivre_yn" type="boolean"/>
+            <column name="date_choix_formation" type="date"/>
+            <column name="date_validation_inscription" type="date"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

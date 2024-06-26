@@ -1,0 +1,41 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirEtudiant": {
+      "home": {
+        "title": "Etudiants",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Etudiant",
+        "createOrEditLabel": "Create or edit a Etudiant",
+        "search": "Search for Etudiant",
+        "notFound": "No Etudiants found"
+      },
+      "created": "A new Etudiant is created with identifier {{ param }}",
+      "updated": "A Etudiant is updated with identifier {{ param }}",
+      "deleted": "A Etudiant is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Etudiant {{ id }}?"
+      },
+      "detail": {
+        "title": "Etudiant"
+      },
+      "id": "ID",
+      "codeEtu": "Code Etu",
+      "ine": "Ine",
+      "codeBU": "Code BU",
+      "emailUGB": "Email UGB",
+      "dateNaissEtu": "Date Naiss Etu",
+      "lieuNaissEtu": "Lieu Naiss Etu",
+      "sexe": "Sexe",
+      "numDocIdentite": "Num Doc Identite",
+      "assimileYN": "Assimile YN",
+      "actifYN": "Actif YN",
+      "region": "Region",
+      "typeSelection": "Type Selection",
+      "lycee": "Lycee",
+      "informationPersonnelle": "Information Personnelle",
+      "baccalaureat": "Baccalaureat",
+      "disciplineSportiveEtudiants": "Discipline Sportive Etudiants",
+      "inscriptionAdministratives": "Inscription Administratives"
+    }
+  }
+}

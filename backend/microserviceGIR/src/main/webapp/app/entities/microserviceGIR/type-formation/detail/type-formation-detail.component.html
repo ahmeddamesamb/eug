@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (typeFormation) {
+      <div>
+        <h2 data-cy="typeFormationDetailsHeading">
+          <span ugbTranslate="microserviceGirApp.microserviceGirTypeFormation.detail.title">Type Formation</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ typeFormation.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirTypeFormation.libelleTypeFormation">Libelle Type Formation</span></dt>
+          <dd>
+            <span>{{ typeFormation.libelleTypeFormation }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/type-formation', typeFormation.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

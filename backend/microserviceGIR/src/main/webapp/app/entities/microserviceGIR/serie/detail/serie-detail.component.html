@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (serie) {
+      <div>
+        <h2 data-cy="serieDetailsHeading"><span ugbTranslate="microserviceGirApp.microserviceGirSerie.detail.title">Serie</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ serie.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirSerie.codeSerie">Code Serie</span></dt>
+          <dd>
+            <span>{{ serie.codeSerie }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirSerie.libelleSerie">Libelle Serie</span></dt>
+          <dd>
+            <span>{{ serie.libelleSerie }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirSerie.sigleSerie">Sigle Serie</span></dt>
+          <dd>
+            <span>{{ serie.sigleSerie }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/serie', serie.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

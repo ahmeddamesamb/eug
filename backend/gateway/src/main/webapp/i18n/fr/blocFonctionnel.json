@@ -1,0 +1,29 @@
+{
+  "gatewayApp": {
+    "blocFonctionnel": {
+      "home": {
+        "title": "BlocFonctionnels",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Bloc Fonctionnel",
+        "createOrEditLabel": "Créer ou éditer un Bloc Fonctionnel",
+        "search": "Recherche pour Bloc Fonctionnel",
+        "notFound": "Aucun Bloc Fonctionnel trouvé"
+      },
+      "created": "Un nouveau Bloc Fonctionnel a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Bloc Fonctionnel avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Bloc Fonctionnel avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Bloc Fonctionnel {{ id }} ?"
+      },
+      "detail": {
+        "title": "Bloc Fonctionnel"
+      },
+      "id": "ID",
+      "libelleBloc": "Libelle Bloc",
+      "dateAjoutBloc": "Date Ajout Bloc",
+      "actifYN": "Actif YN",
+      "service": "Service",
+      "userProfileBlocFonctionnels": "User Profile Bloc Fonctionnels"
+    }
+  }
+}

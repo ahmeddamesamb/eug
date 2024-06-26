@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "changelogDate": "20240625212739"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "domaine",
+  "fields": [
+    {
+      "fieldName": "libelleDomaine",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Domaine",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "ufr",
+      "otherEntityRelationshipName": "domaine",
+      "relationshipName": "ufr",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "mention",
+      "otherEntityRelationshipName": "domaine",
+      "relationshipName": "mentions",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,29 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirFormationAutorisee": {
+      "home": {
+        "title": "Formation Autorisees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Formation Autorisee",
+        "createOrEditLabel": "Create or edit a Formation Autorisee",
+        "search": "Search for Formation Autorisee",
+        "notFound": "No Formation Autorisees found"
+      },
+      "created": "A new Formation Autorisee is created with identifier {{ param }}",
+      "updated": "A Formation Autorisee is updated with identifier {{ param }}",
+      "deleted": "A Formation Autorisee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Formation Autorisee {{ id }}?"
+      },
+      "detail": {
+        "title": "Formation Autorisee"
+      },
+      "id": "ID",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "enCoursYN": "En Cours YN",
+      "actifYN": "Actif YN",
+      "formation": "Formation"
+    }
+  }
+}

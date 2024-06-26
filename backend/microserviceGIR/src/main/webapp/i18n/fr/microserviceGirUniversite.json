@@ -1,0 +1,30 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirUniversite": {
+      "home": {
+        "title": "Universites",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Universite",
+        "createOrEditLabel": "Créer ou éditer un Universite",
+        "search": "Recherche pour Universite",
+        "notFound": "Aucun Universite trouvé"
+      },
+      "created": "Un nouveau Universite a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Universite avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Universite avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Universite {{ id }} ?"
+      },
+      "detail": {
+        "title": "Universite"
+      },
+      "id": "ID",
+      "nomUniversite": "Nom Universite",
+      "sigleUniversite": "Sigle Universite",
+      "actifYN": "Actif YN",
+      "ministere": "Ministere",
+      "ufrs": "Ufrs",
+      "frais": "Frais"
+    }
+  }
+}

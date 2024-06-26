@@ -1,0 +1,30 @@
+{
+  "gatewayApp": {
+    "userProfile": {
+      "home": {
+        "title": "UserProfiles",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau User Profile",
+        "createOrEditLabel": "Créer ou éditer un User Profile",
+        "search": "Recherche pour User Profile",
+        "notFound": "Aucun User Profile trouvé"
+      },
+      "created": "Un nouveau User Profile a été créé avec l'identifiant {{ param }}",
+      "updated": "Le User Profile avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le User Profile avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le User Profile {{ id }} ?"
+      },
+      "detail": {
+        "title": "User Profile"
+      },
+      "id": "ID",
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "enCoursYN": "En Cours YN",
+      "profil": "Profil",
+      "infoUser": "Info User",
+      "userProfileBlocFonctionnels": "User Profile Bloc Fonctionnels"
+    }
+  }
+}

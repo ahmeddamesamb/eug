@@ -1,0 +1,45 @@
+{
+  "annotations": {
+    "changelogDate": "20240625213339"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "campagne",
+  "fields": [
+    {
+      "fieldName": "libelleCampagne",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "libelleAbrege",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Campagne",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "programmationInscription",
+      "otherEntityRelationshipName": "campagne",
+      "relationshipName": "programmationInscriptions",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

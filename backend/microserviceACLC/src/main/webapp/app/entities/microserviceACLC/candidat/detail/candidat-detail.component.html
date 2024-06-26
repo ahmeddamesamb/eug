@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (candidat) {
+      <div>
+        <h2 data-cy="candidatDetailsHeading">
+          <span ugbTranslate="microserviceAclcApp.microserviceAclcCandidat.detail.title">Candidat</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ candidat.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceAclcApp.microserviceAclcCandidat.nom">Nom</span></dt>
+          <dd>
+            <span>{{ candidat.nom }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceAclcApp.microserviceAclcCandidat.prenom">Prenom</span></dt>
+          <dd>
+            <span>{{ candidat.prenom }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceAclcApp.microserviceAclcCandidat.dateNaissance">Date Naissance</span></dt>
+          <dd>
+            <span>{{ candidat.dateNaissance | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceAclcApp.microserviceAclcCandidat.email">Email</span></dt>
+          <dd>
+            <span>{{ candidat.email }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microserviceaclc/candidat', candidat.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

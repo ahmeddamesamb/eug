@@ -1,0 +1,25 @@
+{
+  "microserviceGdApp": {
+    "microserviceGdTypeRapport": {
+      "home": {
+        "title": "TypeRapports",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Type Rapport",
+        "createOrEditLabel": "Créer ou éditer un Type Rapport",
+        "search": "Recherche pour Type Rapport",
+        "notFound": "Aucun Type Rapport trouvé"
+      },
+      "created": "Un nouveau Type Rapport a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Type Rapport avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Type Rapport avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Type Rapport {{ id }} ?"
+      },
+      "detail": {
+        "title": "Type Rapport"
+      },
+      "id": "ID",
+      "libelleTypeRapport": "Libelle Type Rapport"
+    }
+  }
+}

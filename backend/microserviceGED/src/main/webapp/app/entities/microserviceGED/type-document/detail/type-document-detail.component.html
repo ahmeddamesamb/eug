@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (typeDocument) {
+      <div>
+        <h2 data-cy="typeDocumentDetailsHeading">
+          <span ugbTranslate="microserviceGedApp.microserviceGedTypeDocument.detail.title">Type Document</span>
+        </h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ typeDocument.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGedApp.microserviceGedTypeDocument.libelleTypeDocument">Libelle Type Document</span></dt>
+          <dd>
+            <span>{{ typeDocument.libelleTypeDocument }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microserviceged/type-document', typeDocument.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

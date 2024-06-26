@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (infosUser) {
+      <div>
+        <h2 data-cy="infosUserDetailsHeading"><span ugbTranslate="gatewayApp.infosUser.detail.title">Infos User</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ infosUser.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.infosUser.dateAjout">Date Ajout</span></dt>
+          <dd>
+            <span>{{ infosUser.dateAjout | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.infosUser.actifYN">Actif YN</span></dt>
+          <dd>
+            <span>{{ infosUser.actifYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="gatewayApp.infosUser.user">User</span></dt>
+          <dd>
+            <span>{{ infosUser.user?.login }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/infos-user', infosUser.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

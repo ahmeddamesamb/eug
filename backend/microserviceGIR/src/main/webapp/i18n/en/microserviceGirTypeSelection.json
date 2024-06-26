@@ -1,0 +1,26 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirTypeSelection": {
+      "home": {
+        "title": "Type Selections",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Type Selection",
+        "createOrEditLabel": "Create or edit a Type Selection",
+        "search": "Search for Type Selection",
+        "notFound": "No Type Selections found"
+      },
+      "created": "A new Type Selection is created with identifier {{ param }}",
+      "updated": "A Type Selection is updated with identifier {{ param }}",
+      "deleted": "A Type Selection is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Type Selection {{ id }}?"
+      },
+      "detail": {
+        "title": "Type Selection"
+      },
+      "id": "ID",
+      "libelleTypeSelection": "Libelle Type Selection",
+      "etudiants": "Etudiants"
+    }
+  }
+}

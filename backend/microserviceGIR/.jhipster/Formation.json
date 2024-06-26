@@ -1,0 +1,108 @@
+{
+  "annotations": {
+    "changelogDate": "20240625212339"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "formation",
+  "fields": [
+    {
+      "fieldName": "classeDiplomanteYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "libelleDiplome",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codeFormation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nbreCreditsMin",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "estParcoursYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "lmdYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Formation",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "typeFormation",
+      "otherEntityRelationshipName": "formations",
+      "relationshipName": "typeFormation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "niveau",
+      "otherEntityRelationshipName": "formations",
+      "relationshipName": "niveau",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "specialite",
+      "otherEntityRelationshipName": "formations",
+      "relationshipName": "specialite",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "departement",
+      "relationshipName": "departement",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "formationPrivee",
+      "otherEntityRelationshipName": "formation",
+      "relationshipName": "formationPrivee",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "formationInvalide",
+      "otherEntityRelationshipName": "formation",
+      "relationshipName": "formationInvalides",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "inscriptionAdministrativeFormation",
+      "otherEntityRelationshipName": "formation",
+      "relationshipName": "inscriptionAdministrativeFormations",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "programmationInscription",
+      "otherEntityRelationshipName": "formation",
+      "relationshipName": "programmationInscriptions",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "formationAutorisee",
+      "otherEntityRelationshipName": "formation",
+      "relationshipName": "formationAutorisee",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

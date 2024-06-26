@@ -1,0 +1,33 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirInscriptionAdministrative": {
+      "home": {
+        "title": "InscriptionAdministratives",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Inscription Administrative",
+        "createOrEditLabel": "Créer ou éditer un Inscription Administrative",
+        "search": "Recherche pour Inscription Administrative",
+        "notFound": "Aucun Inscription Administrative trouvé"
+      },
+      "created": "Un nouveau Inscription Administrative a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Inscription Administrative avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Inscription Administrative avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Inscription Administrative {{ id }} ?"
+      },
+      "detail": {
+        "title": "Inscription Administrative"
+      },
+      "id": "ID",
+      "nouveauInscritYN": "Nouveau Inscrit YN",
+      "repriseYN": "Reprise YN",
+      "autoriseYN": "Autorise YN",
+      "ordreInscription": "Ordre Inscription",
+      "typeAdmission": "Type Admission",
+      "anneeAcademique": "Annee Academique",
+      "etudiant": "Etudiant",
+      "processusDinscriptionAdministrative": "Processus Dinscription Administrative",
+      "inscriptionAdministrativeFormations": "Inscription Administrative Formations"
+    }
+  }
+}

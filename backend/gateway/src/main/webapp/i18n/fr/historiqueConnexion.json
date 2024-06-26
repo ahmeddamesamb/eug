@@ -1,0 +1,29 @@
+{
+  "gatewayApp": {
+    "historiqueConnexion": {
+      "home": {
+        "title": "HistoriqueConnexions",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Historique Connexion",
+        "createOrEditLabel": "Créer ou éditer un Historique Connexion",
+        "search": "Recherche pour Historique Connexion",
+        "notFound": "Aucun Historique Connexion trouvé"
+      },
+      "created": "Un nouveau Historique Connexion a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Historique Connexion avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Historique Connexion avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Historique Connexion {{ id }} ?"
+      },
+      "detail": {
+        "title": "Historique Connexion"
+      },
+      "id": "ID",
+      "dateDebutConnexion": "Date Debut Connexion",
+      "dateFinConnexion": "Date Fin Connexion",
+      "adresseIp": "Adresse Ip",
+      "actifYN": "Actif YN",
+      "infoUser": "Info User"
+    }
+  }
+}

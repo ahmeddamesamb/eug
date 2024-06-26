@@ -1,0 +1,61 @@
+{
+  "annotations": {
+    "changelogDate": "20240625211139"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "annee_academique",
+  "fields": [
+    {
+      "fieldName": "libelleAnneeAcademique",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "anneeAc",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "unique", "min", "max"],
+      "fieldValidateRulesMax": "2060",
+      "fieldValidateRulesMin": "1990"
+    },
+    {
+      "fieldName": "separateur",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "1"
+    },
+    {
+      "fieldName": "anneeCouranteYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "AnneeAcademique",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "inscriptionAdministrative",
+      "otherEntityRelationshipName": "anneeAcademique",
+      "relationshipName": "inscriptionAdministratives",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "formationInvalide",
+      "otherEntityRelationshipName": "anneeAcademique",
+      "relationshipName": "formationInvalides",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "programmationInscription",
+      "otherEntityRelationshipName": "anneeAcademique",
+      "relationshipName": "programmationInscriptions",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

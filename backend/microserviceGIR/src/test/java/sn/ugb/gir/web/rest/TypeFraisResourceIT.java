@@ -1,0 +1,522 @@
+package sn.ugb.gir.web.rest;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import jakarta.persistence.EntityManager;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+import org.apache.commons.collections4.IterableUtils;
+import org.assertj.core.util.IterableUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
+import sn.ugb.gir.IntegrationTest;
+import sn.ugb.gir.domain.TypeFrais;
+import sn.ugb.gir.repository.TypeFraisRepository;
+import sn.ugb.gir.repository.search.TypeFraisSearchRepository;
+import sn.ugb.gir.service.dto.TypeFraisDTO;
+import sn.ugb.gir.service.mapper.TypeFraisMapper;
+
+/**
+ * Integration tests for the {@link TypeFraisResource} REST controller.
+ */
+@IntegrationTest
+@AutoConfigureMockMvc
+@WithMockUser
+class TypeFraisResourceIT {
+
+    private static final String DEFAULT_LIBELLE_TYPE_FRAIS = "AAAAAAAAAA";
+    private static final String UPDATED_LIBELLE_TYPE_FRAIS = "BBBBBBBBBB";
+
+    private static final String ENTITY_API_URL = "/api/type-frais";
+    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
+    private static final String ENTITY_SEARCH_API_URL = "/api/type-frais/_search";
+
+    private static Random random = new Random();
+    private static AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+
+    @Autowired
+    private TypeFraisRepository typeFraisRepository;
+
+    @Autowired
+    private TypeFraisMapper typeFraisMapper;
+
+    @Autowired
+    private TypeFraisSearchRepository typeFraisSearchRepository;
+
+    @Autowired
+    private EntityManager em;
+
+    @Autowired
+    private MockMvc restTypeFraisMockMvc;
+
+    private TypeFrais typeFrais;
+
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static TypeFrais createEntity(EntityManager em) {
+        TypeFrais typeFrais = new TypeFrais().libelleTypeFrais(DEFAULT_LIBELLE_TYPE_FRAIS);
+        return typeFrais;
+    }
+
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static TypeFrais createUpdatedEntity(EntityManager em) {
+        TypeFrais typeFrais = new TypeFrais().libelleTypeFrais(UPDATED_LIBELLE_TYPE_FRAIS);
+        return typeFrais;
+    }
+
+    @AfterEach
+    public void cleanupElasticSearchRepository() {
+        typeFraisSearchRepository.deleteAll();
+        assertThat(typeFraisSearchRepository.count()).isEqualTo(0);
+    }
+
+    @BeforeEach
+    public void initTest() {
+        typeFrais = createEntity(em);
+    }
+
+    @Test
+    @Transactional
+    void createTypeFrais() throws Exception {
+        int databaseSizeBeforeCreate = typeFraisRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        // Create the TypeFrais
+        TypeFraisDTO typeFraisDTO = typeFraisMapper.toDto(typeFrais);
+        restTypeFraisMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(typeFraisDTO))
+            )
+            .andExpect(status().isCreated());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeCreate + 1);
+        await()
+            .atMost(5, TimeUnit.SECONDS)
+            .untilAsserted(() -> {
+                int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+                assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore + 1);
+            });
+        TypeFrais testTypeFrais = typeFraisList.get(typeFraisList.size() - 1);
+        assertThat(testTypeFrais.getLibelleTypeFrais()).isEqualTo(DEFAULT_LIBELLE_TYPE_FRAIS);
+    }
+
+    @Test
+    @Transactional
+    void createTypeFraisWithExistingId() throws Exception {
+        // Create the TypeFrais with an existing ID
+        typeFrais.setId(1L);
+        TypeFraisDTO typeFraisDTO = typeFraisMapper.toDto(typeFrais);
+
+        int databaseSizeBeforeCreate = typeFraisRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restTypeFraisMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(typeFraisDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeCreate);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
+    void checkLibelleTypeFraisIsRequired() throws Exception {
+        int databaseSizeBeforeTest = typeFraisRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        // set the field null
+        typeFrais.setLibelleTypeFrais(null);
+
+        // Create the TypeFrais, which fails.
+        TypeFraisDTO typeFraisDTO = typeFraisMapper.toDto(typeFrais);
+
+        restTypeFraisMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(typeFraisDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeTest);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
+    void getAllTypeFrais() throws Exception {
+        // Initialize the database
+        typeFraisRepository.saveAndFlush(typeFrais);
+
+        // Get all the typeFraisList
+        restTypeFraisMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(typeFrais.getId().intValue())))
+            .andExpect(jsonPath("$.[*].libelleTypeFrais").value(hasItem(DEFAULT_LIBELLE_TYPE_FRAIS)));
+    }
+
+    @Test
+    @Transactional
+    void getTypeFrais() throws Exception {
+        // Initialize the database
+        typeFraisRepository.saveAndFlush(typeFrais);
+
+        // Get the typeFrais
+        restTypeFraisMockMvc
+            .perform(get(ENTITY_API_URL_ID, typeFrais.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.id").value(typeFrais.getId().intValue()))
+            .andExpect(jsonPath("$.libelleTypeFrais").value(DEFAULT_LIBELLE_TYPE_FRAIS));
+    }
+
+    @Test
+    @Transactional
+    void getNonExistingTypeFrais() throws Exception {
+        // Get the typeFrais
+        restTypeFraisMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    void putExistingTypeFrais() throws Exception {
+        // Initialize the database
+        typeFraisRepository.saveAndFlush(typeFrais);
+
+        int databaseSizeBeforeUpdate = typeFraisRepository.findAll().size();
+        typeFraisSearchRepository.save(typeFrais);
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+
+        // Update the typeFrais
+        TypeFrais updatedTypeFrais = typeFraisRepository.findById(typeFrais.getId()).orElseThrow();
+        // Disconnect from session so that the updates on updatedTypeFrais are not directly saved in db
+        em.detach(updatedTypeFrais);
+        updatedTypeFrais.libelleTypeFrais(UPDATED_LIBELLE_TYPE_FRAIS);
+        TypeFraisDTO typeFraisDTO = typeFraisMapper.toDto(updatedTypeFrais);
+
+        restTypeFraisMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, typeFraisDTO.getId())
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(typeFraisDTO))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeUpdate);
+        TypeFrais testTypeFrais = typeFraisList.get(typeFraisList.size() - 1);
+        assertThat(testTypeFrais.getLibelleTypeFrais()).isEqualTo(UPDATED_LIBELLE_TYPE_FRAIS);
+        await()
+            .atMost(5, TimeUnit.SECONDS)
+            .untilAsserted(() -> {
+                int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+                assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+                List<TypeFrais> typeFraisSearchList = IterableUtils.toList(typeFraisSearchRepository.findAll());
+                TypeFrais testTypeFraisSearch = typeFraisSearchList.get(searchDatabaseSizeAfter - 1);
+                assertThat(testTypeFraisSearch.getLibelleTypeFrais()).isEqualTo(UPDATED_LIBELLE_TYPE_FRAIS);
+            });
+    }
+
+    @Test
+    @Transactional
+    void putNonExistingTypeFrais() throws Exception {
+        int databaseSizeBeforeUpdate = typeFraisRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        typeFrais.setId(longCount.incrementAndGet());
+
+        // Create the TypeFrais
+        TypeFraisDTO typeFraisDTO = typeFraisMapper.toDto(typeFrais);
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restTypeFraisMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, typeFraisDTO.getId())
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(typeFraisDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeUpdate);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
+    void putWithIdMismatchTypeFrais() throws Exception {
+        int databaseSizeBeforeUpdate = typeFraisRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        typeFrais.setId(longCount.incrementAndGet());
+
+        // Create the TypeFrais
+        TypeFraisDTO typeFraisDTO = typeFraisMapper.toDto(typeFrais);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restTypeFraisMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, longCount.incrementAndGet())
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(typeFraisDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeUpdate);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
+    void putWithMissingIdPathParamTypeFrais() throws Exception {
+        int databaseSizeBeforeUpdate = typeFraisRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        typeFrais.setId(longCount.incrementAndGet());
+
+        // Create the TypeFrais
+        TypeFraisDTO typeFraisDTO = typeFraisMapper.toDto(typeFrais);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restTypeFraisMockMvc
+            .perform(
+                put(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(typeFraisDTO))
+            )
+            .andExpect(status().isMethodNotAllowed());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeUpdate);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
+    void partialUpdateTypeFraisWithPatch() throws Exception {
+        // Initialize the database
+        typeFraisRepository.saveAndFlush(typeFrais);
+
+        int databaseSizeBeforeUpdate = typeFraisRepository.findAll().size();
+
+        // Update the typeFrais using partial update
+        TypeFrais partialUpdatedTypeFrais = new TypeFrais();
+        partialUpdatedTypeFrais.setId(typeFrais.getId());
+
+        restTypeFraisMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedTypeFrais.getId())
+                    .with(csrf())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedTypeFrais))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeUpdate);
+        TypeFrais testTypeFrais = typeFraisList.get(typeFraisList.size() - 1);
+        assertThat(testTypeFrais.getLibelleTypeFrais()).isEqualTo(DEFAULT_LIBELLE_TYPE_FRAIS);
+    }
+
+    @Test
+    @Transactional
+    void fullUpdateTypeFraisWithPatch() throws Exception {
+        // Initialize the database
+        typeFraisRepository.saveAndFlush(typeFrais);
+
+        int databaseSizeBeforeUpdate = typeFraisRepository.findAll().size();
+
+        // Update the typeFrais using partial update
+        TypeFrais partialUpdatedTypeFrais = new TypeFrais();
+        partialUpdatedTypeFrais.setId(typeFrais.getId());
+
+        partialUpdatedTypeFrais.libelleTypeFrais(UPDATED_LIBELLE_TYPE_FRAIS);
+
+        restTypeFraisMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, partialUpdatedTypeFrais.getId())
+                    .with(csrf())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(partialUpdatedTypeFrais))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeUpdate);
+        TypeFrais testTypeFrais = typeFraisList.get(typeFraisList.size() - 1);
+        assertThat(testTypeFrais.getLibelleTypeFrais()).isEqualTo(UPDATED_LIBELLE_TYPE_FRAIS);
+    }
+
+    @Test
+    @Transactional
+    void patchNonExistingTypeFrais() throws Exception {
+        int databaseSizeBeforeUpdate = typeFraisRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        typeFrais.setId(longCount.incrementAndGet());
+
+        // Create the TypeFrais
+        TypeFraisDTO typeFraisDTO = typeFraisMapper.toDto(typeFrais);
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restTypeFraisMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, typeFraisDTO.getId())
+                    .with(csrf())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(typeFraisDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeUpdate);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
+    void patchWithIdMismatchTypeFrais() throws Exception {
+        int databaseSizeBeforeUpdate = typeFraisRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        typeFrais.setId(longCount.incrementAndGet());
+
+        // Create the TypeFrais
+        TypeFraisDTO typeFraisDTO = typeFraisMapper.toDto(typeFrais);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restTypeFraisMockMvc
+            .perform(
+                patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
+                    .with(csrf())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(typeFraisDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeUpdate);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
+    void patchWithMissingIdPathParamTypeFrais() throws Exception {
+        int databaseSizeBeforeUpdate = typeFraisRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        typeFrais.setId(longCount.incrementAndGet());
+
+        // Create the TypeFrais
+        TypeFraisDTO typeFraisDTO = typeFraisMapper.toDto(typeFrais);
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restTypeFraisMockMvc
+            .perform(
+                patch(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType("application/merge-patch+json")
+                    .content(TestUtil.convertObjectToJsonBytes(typeFraisDTO))
+            )
+            .andExpect(status().isMethodNotAllowed());
+
+        // Validate the TypeFrais in the database
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeUpdate);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
+    void deleteTypeFrais() throws Exception {
+        // Initialize the database
+        typeFraisRepository.saveAndFlush(typeFrais);
+        typeFraisRepository.save(typeFrais);
+        typeFraisSearchRepository.save(typeFrais);
+
+        int databaseSizeBeforeDelete = typeFraisRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        assertThat(searchDatabaseSizeBefore).isEqualTo(databaseSizeBeforeDelete);
+
+        // Delete the typeFrais
+        restTypeFraisMockMvc
+            .perform(delete(ENTITY_API_URL_ID, typeFrais.getId()).with(csrf()).accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent());
+
+        // Validate the database contains one less item
+        List<TypeFrais> typeFraisList = typeFraisRepository.findAll();
+        assertThat(typeFraisList).hasSize(databaseSizeBeforeDelete - 1);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(typeFraisSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore - 1);
+    }
+
+    @Test
+    @Transactional
+    void searchTypeFrais() throws Exception {
+        // Initialize the database
+        typeFrais = typeFraisRepository.saveAndFlush(typeFrais);
+        typeFraisSearchRepository.save(typeFrais);
+
+        // Search the typeFrais
+        restTypeFraisMockMvc
+            .perform(get(ENTITY_SEARCH_API_URL + "?query=id:" + typeFrais.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(typeFrais.getId().intValue())))
+            .andExpect(jsonPath("$.[*].libelleTypeFrais").value(hasItem(DEFAULT_LIBELLE_TYPE_FRAIS)));
+    }
+}

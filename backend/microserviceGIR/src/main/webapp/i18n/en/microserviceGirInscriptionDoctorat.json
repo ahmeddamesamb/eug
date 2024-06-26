@@ -1,0 +1,29 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirInscriptionDoctorat": {
+      "home": {
+        "title": "Inscription Doctorats",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Inscription Doctorat",
+        "createOrEditLabel": "Create or edit a Inscription Doctorat",
+        "search": "Search for Inscription Doctorat",
+        "notFound": "No Inscription Doctorats found"
+      },
+      "created": "A new Inscription Doctorat is created with identifier {{ param }}",
+      "updated": "A Inscription Doctorat is updated with identifier {{ param }}",
+      "deleted": "A Inscription Doctorat is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Inscription Doctorat {{ id }}?"
+      },
+      "detail": {
+        "title": "Inscription Doctorat"
+      },
+      "id": "ID",
+      "sourceFinancement": "Source Financement",
+      "coEncadreurId": "Co Encadreur Id",
+      "nombreInscription": "Nombre Inscription",
+      "doctorat": "Doctorat",
+      "inscriptionAdministrativeFormation": "Inscription Administrative Formation"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205939"
+  },
+  "applications": ["gateway"],
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "user_profile_bloc_fonctionnel",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "enCoursYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "UserProfileBlocFonctionnel",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "userProfile",
+      "otherEntityRelationshipName": "userProfileBlocFonctionnels",
+      "relationshipName": "userProfil",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "blocFonctionnel",
+      "otherEntityRelationshipName": "userProfileBlocFonctionnels",
+      "relationshipName": "blocFonctionnel",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

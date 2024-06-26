@@ -1,0 +1,99 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (frais) {
+      <div>
+        <h2 data-cy="fraisDetailsHeading"><span ugbTranslate="microserviceGirApp.microserviceGirFrais.detail.title">Frais</span></h2>
+
+        <hr />
+
+        <ugb-alert-error></ugb-alert-error>
+
+        <ugb-alert></ugb-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span ugbTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ frais.id }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.valeurFrais">Valeur Frais</span></dt>
+          <dd>
+            <span>{{ frais.valeurFrais }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.descriptionFrais">Description Frais</span></dt>
+          <dd>
+            <span>{{ frais.descriptionFrais }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.fraisPourAssimileYN">Frais Pour Assimile YN</span></dt>
+          <dd>
+            <span>{{ frais.fraisPourAssimileYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.fraisPourExonererYN">Frais Pour Exonerer YN</span></dt>
+          <dd>
+            <span>{{ frais.fraisPourExonererYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.dia">Dia</span></dt>
+          <dd>
+            <span>{{ frais.dia }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.dip">Dip</span></dt>
+          <dd>
+            <span>{{ frais.dip }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.fraisPrivee">Frais Privee</span></dt>
+          <dd>
+            <span>{{ frais.fraisPrivee }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.dateApplication">Date Application</span></dt>
+          <dd>
+            <span>{{ frais.dateApplication | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.dateFin">Date Fin</span></dt>
+          <dd>
+            <span>{{ frais.dateFin | formatMediumDate }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.estEnApplicationYN">Est En Application YN</span></dt>
+          <dd>
+            <span>{{ frais.estEnApplicationYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.actifYN">Actif YN</span></dt>
+          <dd>
+            <span>{{ frais.actifYN }}</span>
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.typeFrais">Type Frais</span></dt>
+          <dd>
+            @if (frais.typeFrais) {
+              <div>
+                <a [routerLink]="['/type-frais', frais.typeFrais.id, 'view']">{{ frais.typeFrais.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.typeCycle">Type Cycle</span></dt>
+          <dd>
+            @if (frais.typeCycle) {
+              <div>
+                <a [routerLink]="['/cycle', frais.typeCycle.id, 'view']">{{ frais.typeCycle.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span ugbTranslate="microserviceGirApp.microserviceGirFrais.universite">Universite</span></dt>
+          <dd>
+            @for (universite of frais.universites; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/universite', universite.id, 'view']">{{ universite.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span ugbTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/microservicegir/frais', frais.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span ugbTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

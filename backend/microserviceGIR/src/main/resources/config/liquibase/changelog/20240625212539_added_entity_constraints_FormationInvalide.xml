@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity FormationInvalide.
+    -->
+    <changeSet id="20240625212539-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="formation_id"
+                                 baseTableName="formation_invalide"
+                                 constraintName="fk_formation_invalide__formation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="formation"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="annee_academique_id"
+                                 baseTableName="formation_invalide"
+                                 constraintName="fk_formation_invalide__annee_academique_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="annee_academique"
+                                 />
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity InfoUserRessource.
+    -->
+    <changeSet id="20240625205839-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="infos_user_id"
+                                 baseTableName="info_user_ressource"
+                                 constraintName="fk_info_user_ressource__infos_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="infos_user"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="ressource_id"
+                                 baseTableName="info_user_ressource"
+                                 constraintName="fk_info_user_ressource__ressource_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ressource"
+                                 />
+    </changeSet>
+</databaseChangeLog>

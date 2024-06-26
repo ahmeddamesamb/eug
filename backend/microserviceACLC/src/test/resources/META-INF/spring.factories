@@ -1,0 +1,3 @@
+org.springframework.test.context.ContextCustomizerFactory = sn.ugb.aclc.config.\
+    TestContainersSpringContextCustomizerFactory,sn.ugb.aclc.config.\
+    SqlTestContainersSpringContextCustomizerFactory

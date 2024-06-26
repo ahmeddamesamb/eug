@@ -1,0 +1,30 @@
+@if (typeHandicap) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(typeHandicap.id!)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="typeHandicapDeleteDialogHeading" ugbTranslate="entity.delete.title">Confirmation de suppression</h4>
+
+      <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <ugb-alert-error></ugb-alert-error>
+      <p
+        id="ugb-delete-typeHandicap-heading"
+        ugbTranslate="microserviceGirApp.microserviceGirTypeHandicap.delete.question"
+        [translateValues]="{ id: typeHandicap.id }"
+      >
+        Êtes-vous certain de vouloir supprimer le Type Handicap {{ typeHandicap.id }} ?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+      </button>
+
+      <button id="ugb-confirm-delete-typeHandicap" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times"></fa-icon>&nbsp;<span ugbTranslate="entity.action.delete">Supprimer</span>
+      </button>
+    </div>
+  </form>
+}

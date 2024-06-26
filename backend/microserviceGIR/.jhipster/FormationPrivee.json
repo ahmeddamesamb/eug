@@ -1,0 +1,56 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205839"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "formation_privee",
+  "fields": [
+    {
+      "fieldName": "nombreMensualites",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "paiementPremierMoisYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "paiementDernierMoisYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "fraisDossierYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "coutTotal",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "mensualite",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "FormationPrivee",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "formation",
+      "otherEntityRelationshipName": "formationPrivee",
+      "relationshipName": "formation",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

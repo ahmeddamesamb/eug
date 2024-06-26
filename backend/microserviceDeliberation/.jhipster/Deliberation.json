@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "changelogDate": "20240625205539"
+  },
+  "applications": ["microserviceDeliberation"],
+  "clientRootFolder": "microserviceDeliberation",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "deliberation",
+  "fields": [
+    {
+      "fieldName": "estValideeYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "pvDeliberation",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    }
+  ],
+  "microserviceName": "microserviceDeliberation",
+  "name": "Deliberation",
+  "pagination": "pagination",
+  "relationships": [],
+  "service": "serviceImpl"
+}

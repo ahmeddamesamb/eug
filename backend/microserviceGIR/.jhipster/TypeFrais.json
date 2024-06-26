@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20240625213039"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "type_frais",
+  "fields": [
+    {
+      "fieldName": "libelleTypeFrais",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "TypeFrais",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "frais",
+      "otherEntityRelationshipName": "typeFrais",
+      "relationshipName": "frais",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

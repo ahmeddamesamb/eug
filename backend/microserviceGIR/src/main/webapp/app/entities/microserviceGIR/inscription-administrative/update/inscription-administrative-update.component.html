@@ -1,0 +1,164 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-inscription-administrative-heading"
+        data-cy="InscriptionAdministrativeCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.home.createOrEditLabel"
+      >
+        Créer ou éditer un Inscription Administrative
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.nouveauInscritYN"
+            for="field_nouveauInscritYN"
+            >Nouveau Inscrit YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="nouveauInscritYN"
+            id="field_nouveauInscritYN"
+            data-cy="nouveauInscritYN"
+            formControlName="nouveauInscritYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.repriseYN"
+            for="field_repriseYN"
+            >Reprise YN</label
+          >
+          <input type="checkbox" class="form-check" name="repriseYN" id="field_repriseYN" data-cy="repriseYN" formControlName="repriseYN" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.autoriseYN"
+            for="field_autoriseYN"
+            >Autorise YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="autoriseYN"
+            id="field_autoriseYN"
+            data-cy="autoriseYN"
+            formControlName="autoriseYN"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.ordreInscription"
+            for="field_ordreInscription"
+            >Ordre Inscription</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="ordreInscription"
+            id="field_ordreInscription"
+            data-cy="ordreInscription"
+            formControlName="ordreInscription"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.typeAdmission"
+            for="field_typeAdmission"
+            >Type Admission</label
+          >
+          <select
+            class="form-control"
+            id="field_typeAdmission"
+            data-cy="typeAdmission"
+            name="typeAdmission"
+            formControlName="typeAdmission"
+            [compareWith]="compareTypeAdmission"
+          >
+            <option [ngValue]="null"></option>
+            @for (typeAdmissionOption of typeAdmissionsSharedCollection; track $index) {
+              <option [ngValue]="typeAdmissionOption">{{ typeAdmissionOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.anneeAcademique"
+            for="field_anneeAcademique"
+            >Annee Academique</label
+          >
+          <select
+            class="form-control"
+            id="field_anneeAcademique"
+            data-cy="anneeAcademique"
+            name="anneeAcademique"
+            formControlName="anneeAcademique"
+            [compareWith]="compareAnneeAcademique"
+          >
+            <option [ngValue]="null"></option>
+            @for (anneeAcademiqueOption of anneeAcademiquesSharedCollection; track $index) {
+              <option [ngValue]="anneeAcademiqueOption">{{ anneeAcademiqueOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.etudiant" for="field_etudiant"
+            >Etudiant</label
+          >
+          <select
+            class="form-control"
+            id="field_etudiant"
+            data-cy="etudiant"
+            name="etudiant"
+            formControlName="etudiant"
+            [compareWith]="compareEtudiant"
+          >
+            <option [ngValue]="null"></option>
+            @for (etudiantOption of etudiantsSharedCollection; track $index) {
+              <option [ngValue]="etudiantOption">{{ etudiantOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

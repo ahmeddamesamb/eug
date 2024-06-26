@@ -1,0 +1,224 @@
+<div>
+  <h2 id="page-heading" data-cy="InscriptionAdministrativeHeading">
+    <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.home.title">InscriptionAdministratives</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-inscription-administrative"
+        [routerLink]="['/microservicegir/inscription-administrative/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.home.createLabel"
+          >Créer un nouveau Inscription Administrative</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label
+          class="visually-hidden"
+          for="currentSearch"
+          ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.home.search"
+          >Recherche pour Inscription Administrative</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGirApp.microserviceGirInscriptionAdministrative.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (inscriptionAdministratives?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.home.notFound"
+        >Aucun Inscription Administrative trouvé</span
+      >
+    </div>
+  }
+
+  @if (inscriptionAdministratives && inscriptionAdministratives.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="nouveauInscritYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.nouveauInscritYN">Nouveau Inscrit YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="repriseYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.repriseYN">Reprise YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="autoriseYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.autoriseYN">Autorise YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="ordreInscription">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.ordreInscription">Ordre Inscription</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="typeAdmission.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.typeAdmission">Type Admission</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="anneeAcademique.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.anneeAcademique">Annee Academique</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="etudiant.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirInscriptionAdministrative.etudiant">Etudiant</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (inscriptionAdministrative of inscriptionAdministratives; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/inscription-administrative', inscriptionAdministrative.id, 'view']">{{
+                  inscriptionAdministrative.id
+                }}</a>
+              </td>
+              <td>{{ inscriptionAdministrative.nouveauInscritYN }}</td>
+              <td>{{ inscriptionAdministrative.repriseYN }}</td>
+              <td>{{ inscriptionAdministrative.autoriseYN }}</td>
+              <td>{{ inscriptionAdministrative.ordreInscription }}</td>
+              <td>
+                @if (inscriptionAdministrative.typeAdmission) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/type-admission', inscriptionAdministrative.typeAdmission.id, 'view']">{{
+                      inscriptionAdministrative.typeAdmission.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inscriptionAdministrative.anneeAcademique) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/annee-academique', inscriptionAdministrative.anneeAcademique.id, 'view']">{{
+                      inscriptionAdministrative.anneeAcademique.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inscriptionAdministrative.etudiant) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/etudiant', inscriptionAdministrative.etudiant.id, 'view']">{{
+                      inscriptionAdministrative.etudiant.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/inscription-administrative', inscriptionAdministrative.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/inscription-administrative', inscriptionAdministrative.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button
+                    type="submit"
+                    (click)="delete(inscriptionAdministrative)"
+                    class="btn btn-danger btn-sm"
+                    data-cy="entityDeleteButton"
+                  >
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (inscriptionAdministratives && inscriptionAdministratives.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

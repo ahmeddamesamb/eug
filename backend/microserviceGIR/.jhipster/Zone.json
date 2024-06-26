@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20240625210339"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "zone",
+  "fields": [
+    {
+      "fieldName": "libelleZone",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Zone",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "pays",
+      "otherEntityRelationshipName": "zone",
+      "relationshipName": "pays",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

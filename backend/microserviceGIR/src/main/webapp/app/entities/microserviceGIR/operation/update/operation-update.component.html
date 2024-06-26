@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-operation-heading"
+        data-cy="OperationCreateUpdateHeading"
+        ugbTranslate="microserviceGirApp.microserviceGirOperation.home.createOrEditLabel"
+      >
+        Créer ou éditer un Operation
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirOperation.dateExecution" for="field_dateExecution"
+            >Date Execution</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dateExecution"
+              data-cy="dateExecution"
+              type="datetime-local"
+              class="form-control"
+              name="dateExecution"
+              formControlName="dateExecution"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirOperation.emailUser" for="field_emailUser"
+            >Email User</label
+          >
+          <input type="text" class="form-control" name="emailUser" id="field_emailUser" data-cy="emailUser" formControlName="emailUser" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirOperation.detailOperation" for="field_detailOperation"
+            >Detail Operation</label
+          >
+          <textarea
+            class="form-control"
+            name="detailOperation"
+            id="field_detailOperation"
+            data-cy="detailOperation"
+            formControlName="detailOperation"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirOperation.infoSysteme" for="field_infoSysteme"
+            >Info Systeme</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="infoSysteme"
+            id="field_infoSysteme"
+            data-cy="infoSysteme"
+            formControlName="infoSysteme"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceGirApp.microserviceGirOperation.typeOperation" for="field_typeOperation"
+            >Type Operation</label
+          >
+          <select
+            class="form-control"
+            id="field_typeOperation"
+            data-cy="typeOperation"
+            name="typeOperation"
+            formControlName="typeOperation"
+            [compareWith]="compareTypeOperation"
+          >
+            <option [ngValue]="null"></option>
+            @for (typeOperationOption of typeOperationsSharedCollection; track $index) {
+              <option [ngValue]="typeOperationOption">{{ typeOperationOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

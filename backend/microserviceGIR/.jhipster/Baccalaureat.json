@@ -1,0 +1,64 @@
+{
+  "annotations": {
+    "changelogDate": "20240625210539"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "baccalaureat",
+  "fields": [
+    {
+      "fieldName": "origineScolaire",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "anneeBac",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "numeroTable",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "natureBac",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mentionBac",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "moyenneSelectionBac",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "moyenneBac",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "actifYN",
+      "fieldType": "Boolean"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "Baccalaureat",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "etudiant",
+      "otherEntityRelationshipName": "baccalaureat",
+      "relationshipName": "etudiant",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "serie",
+      "otherEntityRelationshipName": "baccalaureats",
+      "relationshipName": "serie",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

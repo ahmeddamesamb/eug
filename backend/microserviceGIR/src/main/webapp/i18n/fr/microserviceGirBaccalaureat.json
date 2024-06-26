@@ -1,0 +1,34 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirBaccalaureat": {
+      "home": {
+        "title": "Baccalaureats",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Baccalaureat",
+        "createOrEditLabel": "Créer ou éditer un Baccalaureat",
+        "search": "Recherche pour Baccalaureat",
+        "notFound": "Aucun Baccalaureat trouvé"
+      },
+      "created": "Un nouveau Baccalaureat a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Baccalaureat avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Baccalaureat avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Baccalaureat {{ id }} ?"
+      },
+      "detail": {
+        "title": "Baccalaureat"
+      },
+      "id": "ID",
+      "origineScolaire": "Origine Scolaire",
+      "anneeBac": "Annee Bac",
+      "numeroTable": "Numero Table",
+      "natureBac": "Nature Bac",
+      "mentionBac": "Mention Bac",
+      "moyenneSelectionBac": "Moyenne Selection Bac",
+      "moyenneBac": "Moyenne Bac",
+      "actifYN": "Actif YN",
+      "etudiant": "Etudiant",
+      "serie": "Serie"
+    }
+  }
+}

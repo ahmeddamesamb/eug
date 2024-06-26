@@ -1,0 +1,228 @@
+<div>
+  <h2 id="page-heading" data-cy="BaccalaureatHeading">
+    <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.home.title">Baccalaureats</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-baccalaureat"
+        [routerLink]="['/microservicegir/baccalaureat/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.home.createLabel"
+          >Créer un nouveau Baccalaureat</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.home.search"
+          >Recherche pour Baccalaureat</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceGirApp.microserviceGirBaccalaureat.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (baccalaureats?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.home.notFound">Aucun Baccalaureat trouvé</span>
+    </div>
+  }
+
+  @if (baccalaureats && baccalaureats.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="origineScolaire">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.origineScolaire">Origine Scolaire</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="anneeBac">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.anneeBac">Annee Bac</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="numeroTable">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.numeroTable">Numero Table</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="natureBac">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.natureBac">Nature Bac</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="mentionBac">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.mentionBac">Mention Bac</span>
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="moyenneSelectionBac">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.moyenneSelectionBac">Moyenne Selection Bac</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="moyenneBac">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.moyenneBac">Moyenne Bac</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="actifYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.actifYN">Actif YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="etudiant.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.etudiant">Etudiant</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="serie.id">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceGirApp.microserviceGirBaccalaureat.serie">Serie</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (baccalaureat of baccalaureats; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microservicegir/baccalaureat', baccalaureat.id, 'view']">{{ baccalaureat.id }}</a>
+              </td>
+              <td>{{ baccalaureat.origineScolaire }}</td>
+              <td>{{ baccalaureat.anneeBac | formatMediumDate }}</td>
+              <td>{{ baccalaureat.numeroTable }}</td>
+              <td>{{ baccalaureat.natureBac }}</td>
+              <td>{{ baccalaureat.mentionBac }}</td>
+              <td>{{ baccalaureat.moyenneSelectionBac }}</td>
+              <td>{{ baccalaureat.moyenneBac }}</td>
+              <td>{{ baccalaureat.actifYN }}</td>
+              <td>
+                @if (baccalaureat.etudiant) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/etudiant', baccalaureat.etudiant.id, 'view']">{{ baccalaureat.etudiant.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (baccalaureat.serie) {
+                  <div>
+                    <a [routerLink]="['/microservicegir/serie', baccalaureat.serie.id, 'view']">{{ baccalaureat.serie.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microservicegir/baccalaureat', baccalaureat.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microservicegir/baccalaureat', baccalaureat.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(baccalaureat)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (baccalaureats && baccalaureats.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

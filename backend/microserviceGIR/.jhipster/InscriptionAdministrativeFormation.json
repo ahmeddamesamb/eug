@@ -1,0 +1,86 @@
+{
+  "annotations": {
+    "changelogDate": "20240625211439"
+  },
+  "applications": ["microserviceGIR"],
+  "clientRootFolder": "microserviceGIR",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "entityTableName": "inscription_administrative_formation",
+  "fields": [
+    {
+      "fieldName": "inscriptionPrincipaleYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "inscriptionAnnuleeYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "exonereYN",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "paiementFraisOblYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "paiementFraisIntegergYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "certificatDelivreYN",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateChoixFormation",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dateValidationInscription",
+      "fieldType": "Instant"
+    }
+  ],
+  "microserviceName": "microserviceGIR",
+  "name": "InscriptionAdministrativeFormation",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "inscriptionAdministrative",
+      "otherEntityRelationshipName": "inscriptionAdministrativeFormations",
+      "relationshipName": "inscriptionAdministrative",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "formation",
+      "otherEntityRelationshipName": "inscriptionAdministrativeFormations",
+      "relationshipName": "formation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "inscriptionDoctorat",
+      "otherEntityRelationshipName": "inscriptionAdministrativeFormation",
+      "relationshipName": "inscriptionDoctorats",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "paiementFrais",
+      "otherEntityRelationshipName": "inscriptionAdministrativeFormation",
+      "relationshipName": "paiementFrais",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "paiementFormationPrivee",
+      "otherEntityRelationshipName": "inscriptionAdministrativeFormation",
+      "relationshipName": "paiementFormationPrivees",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

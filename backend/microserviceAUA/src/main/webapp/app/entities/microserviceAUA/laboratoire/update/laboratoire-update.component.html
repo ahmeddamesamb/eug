@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-laboratoire-heading"
+        data-cy="LaboratoireCreateUpdateHeading"
+        ugbTranslate="microserviceAuaApp.microserviceAuaLaboratoire.home.createOrEditLabel"
+      >
+        Créer ou éditer un Laboratoire
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="microserviceAuaApp.microserviceAuaLaboratoire.nom" for="field_nom">Nom</label>
+          <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            ugbTranslate="microserviceAuaApp.microserviceAuaLaboratoire.laboratoireCotutelleYN"
+            for="field_laboratoireCotutelleYN"
+            >Laboratoire Cotutelle YN</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="laboratoireCotutelleYN"
+            id="field_laboratoireCotutelleYN"
+            data-cy="laboratoireCotutelleYN"
+            formControlName="laboratoireCotutelleYN"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

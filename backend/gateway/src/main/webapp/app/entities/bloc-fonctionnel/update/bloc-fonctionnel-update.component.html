@@ -1,0 +1,116 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="ugb-bloc-fonctionnel-heading"
+        data-cy="BlocFonctionnelCreateUpdateHeading"
+        ugbTranslate="gatewayApp.blocFonctionnel.home.createOrEditLabel"
+      >
+        Créer ou éditer un Bloc Fonctionnel
+      </h2>
+
+      <div>
+        <ugb-alert-error></ugb-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" ugbTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.blocFonctionnel.libelleBloc" for="field_libelleBloc">Libelle Bloc</label>
+          <input
+            type="text"
+            class="form-control"
+            name="libelleBloc"
+            id="field_libelleBloc"
+            data-cy="libelleBloc"
+            formControlName="libelleBloc"
+          />
+          @if (editForm.get('libelleBloc')!.invalid && (editForm.get('libelleBloc')!.dirty || editForm.get('libelleBloc')!.touched)) {
+            <div>
+              @if (editForm.get('libelleBloc')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.blocFonctionnel.dateAjoutBloc" for="field_dateAjoutBloc"
+            >Date Ajout Bloc</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dateAjoutBloc"
+              data-cy="dateAjoutBloc"
+              type="text"
+              class="form-control"
+              name="dateAjoutBloc"
+              ngbDatepicker
+              #dateAjoutBlocDp="ngbDatepicker"
+              formControlName="dateAjoutBloc"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateAjoutBlocDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          @if (editForm.get('dateAjoutBloc')!.invalid && (editForm.get('dateAjoutBloc')!.dirty || editForm.get('dateAjoutBloc')!.touched)) {
+            <div>
+              @if (editForm.get('dateAjoutBloc')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.blocFonctionnel.actifYN" for="field_actifYN">Actif YN</label>
+          <input type="checkbox" class="form-check" name="actifYN" id="field_actifYN" data-cy="actifYN" formControlName="actifYN" />
+          @if (editForm.get('actifYN')!.invalid && (editForm.get('actifYN')!.dirty || editForm.get('actifYN')!.touched)) {
+            <div>
+              @if (editForm.get('actifYN')?.errors?.required) {
+                <small class="form-text text-danger" ugbTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" ugbTranslate="gatewayApp.blocFonctionnel.service" for="field_service">Service</label>
+          <select
+            class="form-control"
+            id="field_service"
+            data-cy="service"
+            name="service"
+            formControlName="service"
+            [compareWith]="compareServiceUser"
+          >
+            <option [ngValue]="null"></option>
+            @for (serviceUserOption of serviceUsersSharedCollection; track $index) {
+              <option [ngValue]="serviceUserOption">{{ serviceUserOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span ugbTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span ugbTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

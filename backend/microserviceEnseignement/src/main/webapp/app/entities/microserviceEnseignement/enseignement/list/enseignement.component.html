@@ -1,0 +1,175 @@
+<div>
+  <h2 id="page-heading" data-cy="EnseignementHeading">
+    <span ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.home.title">Enseignements</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.home.refreshListLabel"
+          >Actualiser la liste</span
+        >
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-enseignement"
+        [routerLink]="['/microserviceenseignement/enseignement/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.home.createLabel"
+          >Créer un nouveau Enseignement</span
+        >
+      </button>
+    </div>
+  </h2>
+
+  <ugb-alert-error></ugb-alert-error>
+
+  <ugb-alert></ugb-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label
+          class="visually-hidden"
+          for="currentSearch"
+          ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.home.search"
+          >Recherche pour Enseignement</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'microserviceEnseignementApp.microserviceEnseignementEnseignement.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        @if (currentSearch) {
+          <button class="btn btn-danger" (click)="search('')">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+
+  @if (enseignements?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.home.notFound">Aucun Enseignement trouvé</span>
+    </div>
+  }
+
+  @if (enseignements && enseignements.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr ugbSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" ugbSortBy="id">
+              <div class="d-flex">
+                <span ugbTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="libelleEnseignements">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.libelleEnseignements"
+                  >Libelle Enseignements</span
+                >
+                @if (!currentSearch) {
+                  <fa-icon class="p-1" icon="sort"></fa-icon>
+                }
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="volumeHoraire">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.volumeHoraire">Volume Horaire</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="nombreInscrits">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.nombreInscrits">Nombre Inscrits</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" ugbSortBy="groupeYN">
+              <div class="d-flex">
+                <span ugbTranslate="microserviceEnseignementApp.microserviceEnseignementEnseignement.groupeYN">Groupe YN</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (enseignement of enseignements; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/microserviceenseignement/enseignement', enseignement.id, 'view']">{{ enseignement.id }}</a>
+              </td>
+              <td>{{ enseignement.libelleEnseignements }}</td>
+              <td>{{ enseignement.volumeHoraire }}</td>
+              <td>{{ enseignement.nombreInscrits }}</td>
+              <td>{{ enseignement.groupeYN }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/microserviceenseignement/enseignement', enseignement.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.view">Voir</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/microserviceenseignement/enseignement', enseignement.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.edit">Editer</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(enseignement)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" ugbTranslate="entity.action.delete">Supprimer</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (enseignements && enseignements.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <ugb-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></ugb-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

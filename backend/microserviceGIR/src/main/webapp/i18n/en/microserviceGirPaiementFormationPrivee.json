@@ -1,0 +1,32 @@
+{
+  "microserviceGirApp": {
+    "microserviceGirPaiementFormationPrivee": {
+      "home": {
+        "title": "Paiement Formation Privees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Paiement Formation Privee",
+        "createOrEditLabel": "Create or edit a Paiement Formation Privee",
+        "search": "Search for Paiement Formation Privee",
+        "notFound": "No Paiement Formation Privees found"
+      },
+      "created": "A new Paiement Formation Privee is created with identifier {{ param }}",
+      "updated": "A Paiement Formation Privee is updated with identifier {{ param }}",
+      "deleted": "A Paiement Formation Privee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Paiement Formation Privee {{ id }}?"
+      },
+      "detail": {
+        "title": "Paiement Formation Privee"
+      },
+      "id": "ID",
+      "datePaiement": "Date Paiement",
+      "moisPaiement": "Mois Paiement",
+      "anneePaiement": "Annee Paiement",
+      "payerMensualiteYN": "Payer Mensualite YN",
+      "payerDelaisYN": "Payer Delais YN",
+      "emailUser": "Email User",
+      "inscriptionAdministrativeFormation": "Inscription Administrative Formation",
+      "operateur": "Operateur"
+    }
+  }
+}
