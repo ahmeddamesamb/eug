@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {EtudiantListComponent} from './etudiant-list/etudiant-list.component';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 import {
   CardBodyComponent,
@@ -19,7 +21,9 @@ import {
 @Component({
   selector: 'app-gestion-etudiants',
   standalone: true,
-  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, NavComponent, NavItemComponent, NavLinkDirective, TabContentRefDirective, TabContentComponent, RoundedDirective, TabPaneComponent],
+  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent,
+     NavComponent, NavItemComponent, NavLinkDirective, TabContentRefDirective, TabContentComponent,
+      RoundedDirective, TabPaneComponent, EtudiantListComponent,RouterOutlet],
   templateUrl: './gestion-etudiants.component.html',
   styleUrl: './gestion-etudiants.component.scss'
 })
