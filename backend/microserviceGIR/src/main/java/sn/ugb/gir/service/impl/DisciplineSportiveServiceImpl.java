@@ -13,6 +13,7 @@ import sn.ugb.gir.repository.search.DisciplineSportiveSearchRepository;
 import sn.ugb.gir.service.DisciplineSportiveService;
 import sn.ugb.gir.service.dto.DisciplineSportiveDTO;
 import sn.ugb.gir.service.mapper.DisciplineSportiveMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.DisciplineSportive}.
@@ -29,6 +30,8 @@ public class DisciplineSportiveServiceImpl implements DisciplineSportiveService 
 
     private final DisciplineSportiveSearchRepository disciplineSportiveSearchRepository;
 
+    private static final String ENTITY_NAME = "microserviceGirDisciplineSportive";
+
     public DisciplineSportiveServiceImpl(
         DisciplineSportiveRepository disciplineSportiveRepository,
         DisciplineSportiveMapper disciplineSportiveMapper,
@@ -42,6 +45,7 @@ public class DisciplineSportiveServiceImpl implements DisciplineSportiveService 
     @Override
     public DisciplineSportiveDTO save(DisciplineSportiveDTO disciplineSportiveDTO) {
         log.debug("Request to save DisciplineSportive : {}", disciplineSportiveDTO);
+        validateData(disciplineSportiveDTO);
         DisciplineSportive disciplineSportive = disciplineSportiveMapper.toEntity(disciplineSportiveDTO);
         disciplineSportive = disciplineSportiveRepository.save(disciplineSportive);
         DisciplineSportiveDTO result = disciplineSportiveMapper.toDto(disciplineSportive);
@@ -52,6 +56,7 @@ public class DisciplineSportiveServiceImpl implements DisciplineSportiveService 
     @Override
     public DisciplineSportiveDTO update(DisciplineSportiveDTO disciplineSportiveDTO) {
         log.debug("Request to update DisciplineSportive : {}", disciplineSportiveDTO);
+        validateData(disciplineSportiveDTO);
         DisciplineSportive disciplineSportive = disciplineSportiveMapper.toEntity(disciplineSportiveDTO);
         disciplineSportive = disciplineSportiveRepository.save(disciplineSportive);
         DisciplineSportiveDTO result = disciplineSportiveMapper.toDto(disciplineSportive);
@@ -62,7 +67,7 @@ public class DisciplineSportiveServiceImpl implements DisciplineSportiveService 
     @Override
     public Optional<DisciplineSportiveDTO> partialUpdate(DisciplineSportiveDTO disciplineSportiveDTO) {
         log.debug("Request to partially update DisciplineSportive : {}", disciplineSportiveDTO);
-
+        validateData(disciplineSportiveDTO);
         return disciplineSportiveRepository
             .findById(disciplineSportiveDTO.getId())
             .map(existingDisciplineSportive -> {
@@ -104,5 +109,15 @@ public class DisciplineSportiveServiceImpl implements DisciplineSportiveService 
     public Page<DisciplineSportiveDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of DisciplineSportives for query {}", query);
         return disciplineSportiveSearchRepository.search(query, pageable).map(disciplineSportiveMapper::toDto);
+    }
+
+    private void validateData(DisciplineSportiveDTO disciplineSportiveDTO) {
+        if (disciplineSportiveDTO.getLibelleDisciplineSportive().isBlank()){
+            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleDisciplineSportiveNotNull");
+        }
+        Optional<DisciplineSportive> existingDisciplineSportive = disciplineSportiveRepository.findByLibelleDisciplineSportiveIgnoreCase(disciplineSportiveDTO.getLibelleDisciplineSportive());
+        if (existingDisciplineSportive.isPresent() && !existingDisciplineSportive.get().getId().equals(disciplineSportiveDTO.getId())) {
+            throw new BadRequestAlertException("Une discipline sportive avec le même libellé existe.", ENTITY_NAME, "libelleDisciplineSportiveExist");
+        }
     }
 }

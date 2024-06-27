@@ -13,6 +13,7 @@ import sn.ugb.gir.repository.search.ZoneSearchRepository;
 import sn.ugb.gir.service.ZoneService;
 import sn.ugb.gir.service.dto.ZoneDTO;
 import sn.ugb.gir.service.mapper.ZoneMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Zone}.
@@ -29,6 +30,8 @@ public class ZoneServiceImpl implements ZoneService {
 
     private final ZoneSearchRepository zoneSearchRepository;
 
+    private static final String ENTITY_NAME = "microserviceGirZone";
+
     public ZoneServiceImpl(ZoneRepository zoneRepository, ZoneMapper zoneMapper, ZoneSearchRepository zoneSearchRepository) {
         this.zoneRepository = zoneRepository;
         this.zoneMapper = zoneMapper;
@@ -38,6 +41,7 @@ public class ZoneServiceImpl implements ZoneService {
     @Override
     public ZoneDTO save(ZoneDTO zoneDTO) {
         log.debug("Request to save Zone : {}", zoneDTO);
+        validateData(zoneDTO);
         Zone zone = zoneMapper.toEntity(zoneDTO);
         zone = zoneRepository.save(zone);
         ZoneDTO result = zoneMapper.toDto(zone);
@@ -48,6 +52,7 @@ public class ZoneServiceImpl implements ZoneService {
     @Override
     public ZoneDTO update(ZoneDTO zoneDTO) {
         log.debug("Request to update Zone : {}", zoneDTO);
+        validateData(zoneDTO);
         Zone zone = zoneMapper.toEntity(zoneDTO);
         zone = zoneRepository.save(zone);
         ZoneDTO result = zoneMapper.toDto(zone);
@@ -58,7 +63,7 @@ public class ZoneServiceImpl implements ZoneService {
     @Override
     public Optional<ZoneDTO> partialUpdate(ZoneDTO zoneDTO) {
         log.debug("Request to partially update Zone : {}", zoneDTO);
-
+        validateData(zoneDTO);
         return zoneRepository
             .findById(zoneDTO.getId())
             .map(existingZone -> {
@@ -100,5 +105,15 @@ public class ZoneServiceImpl implements ZoneService {
     public Page<ZoneDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Zones for query {}", query);
         return zoneSearchRepository.search(query, pageable).map(zoneMapper::toDto);
+    }
+
+    private void validateData(ZoneDTO zoneDTO) {
+        if (zoneDTO.getLibelleZone().isBlank()){
+            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleZoneNotNull");
+        }
+        Optional<Zone> existingZone = zoneRepository.findByLibelleZoneIgnoreCase(zoneDTO.getLibelleZone());
+        if (existingZone.isPresent() && !existingZone.get().getId().equals(zoneDTO.getId())) {
+            throw new BadRequestAlertException("Une zone avec le même libellé existe.", ENTITY_NAME, "libelleZoneExist");
+        }
     }
 }

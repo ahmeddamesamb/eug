@@ -13,6 +13,7 @@ import sn.ugb.gir.repository.search.SerieSearchRepository;
 import sn.ugb.gir.service.SerieService;
 import sn.ugb.gir.service.dto.SerieDTO;
 import sn.ugb.gir.service.mapper.SerieMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Serie}.
@@ -29,6 +30,8 @@ public class SerieServiceImpl implements SerieService {
 
     private final SerieSearchRepository serieSearchRepository;
 
+    private static final String ENTITY_NAME = "microserviceGirSerie";
+
     public SerieServiceImpl(SerieRepository serieRepository, SerieMapper serieMapper, SerieSearchRepository serieSearchRepository) {
         this.serieRepository = serieRepository;
         this.serieMapper = serieMapper;
@@ -38,6 +41,7 @@ public class SerieServiceImpl implements SerieService {
     @Override
     public SerieDTO save(SerieDTO serieDTO) {
         log.debug("Request to save Serie : {}", serieDTO);
+        validateData(serieDTO);
         Serie serie = serieMapper.toEntity(serieDTO);
         serie = serieRepository.save(serie);
         SerieDTO result = serieMapper.toDto(serie);
@@ -48,6 +52,7 @@ public class SerieServiceImpl implements SerieService {
     @Override
     public SerieDTO update(SerieDTO serieDTO) {
         log.debug("Request to update Serie : {}", serieDTO);
+        validateData(serieDTO);
         Serie serie = serieMapper.toEntity(serieDTO);
         serie = serieRepository.save(serie);
         SerieDTO result = serieMapper.toDto(serie);
@@ -58,7 +63,7 @@ public class SerieServiceImpl implements SerieService {
     @Override
     public Optional<SerieDTO> partialUpdate(SerieDTO serieDTO) {
         log.debug("Request to partially update Serie : {}", serieDTO);
-
+        validateData(serieDTO);
         return serieRepository
             .findById(serieDTO.getId())
             .map(existingSerie -> {
@@ -100,5 +105,29 @@ public class SerieServiceImpl implements SerieService {
     public Page<SerieDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Series for query {}", query);
         return serieSearchRepository.search(query, pageable).map(serieMapper::toDto);
+    }
+
+    private void validateData(SerieDTO serieDTO) {
+        if (serieDTO.getLibelleSerie().isBlank()){
+            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleSerieNotNull");
+        }
+        if (serieDTO.getSigleSerie().isBlank()){
+            throw new BadRequestAlertException("La sigle ne peut pas être vide.", ENTITY_NAME, "SigleSerieNotNull");
+        }
+        if (serieDTO.getCodeSerie().isBlank()){
+            throw new BadRequestAlertException("Le code ne peut pas être vide.", ENTITY_NAME, "codeSerieNotNull");
+        }
+        Optional<Serie> existingSerie = serieRepository.findByLibelleSerieIgnoreCase(serieDTO.getLibelleSerie());
+        if (existingSerie.isPresent() && !existingSerie.get().getId().equals(serieDTO.getId())) {
+            throw new BadRequestAlertException("Une serie avec le même libellé existe.", ENTITY_NAME, "libelleSerieExist");
+        }
+        existingSerie = serieRepository.findBySigleSerieIgnoreCase(serieDTO.getSigleSerie());
+        if (existingSerie.isPresent() && !existingSerie.get().getId().equals(serieDTO.getId())) {
+            throw new BadRequestAlertException("Une serie avec la même sigle existe.", ENTITY_NAME, "sigleSerieExist");
+        }
+        existingSerie = serieRepository.findByCodeSerieIgnoreCase(serieDTO.getCodeSerie());
+        if (existingSerie.isPresent() && !existingSerie.get().getId().equals(serieDTO.getId())) {
+            throw new BadRequestAlertException("Une serie avec le même code existe.", ENTITY_NAME, "codeSerieExist");
+        }
     }
 }

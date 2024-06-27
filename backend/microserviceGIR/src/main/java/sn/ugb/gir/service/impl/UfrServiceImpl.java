@@ -13,6 +13,7 @@ import sn.ugb.gir.repository.search.UfrSearchRepository;
 import sn.ugb.gir.service.UfrService;
 import sn.ugb.gir.service.dto.UfrDTO;
 import sn.ugb.gir.service.mapper.UfrMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Ufr}.
@@ -29,6 +30,8 @@ public class UfrServiceImpl implements UfrService {
 
     private final UfrSearchRepository ufrSearchRepository;
 
+    private static final String ENTITY_NAME = "microserviceGirUfr";
+
     public UfrServiceImpl(UfrRepository ufrRepository, UfrMapper ufrMapper, UfrSearchRepository ufrSearchRepository) {
         this.ufrRepository = ufrRepository;
         this.ufrMapper = ufrMapper;
@@ -38,6 +41,7 @@ public class UfrServiceImpl implements UfrService {
     @Override
     public UfrDTO save(UfrDTO ufrDTO) {
         log.debug("Request to save Ufr : {}", ufrDTO);
+        validateData(ufrDTO);
         Ufr ufr = ufrMapper.toEntity(ufrDTO);
         ufr = ufrRepository.save(ufr);
         UfrDTO result = ufrMapper.toDto(ufr);
@@ -48,6 +52,7 @@ public class UfrServiceImpl implements UfrService {
     @Override
     public UfrDTO update(UfrDTO ufrDTO) {
         log.debug("Request to update Ufr : {}", ufrDTO);
+        validateData(ufrDTO);
         Ufr ufr = ufrMapper.toEntity(ufrDTO);
         ufr = ufrRepository.save(ufr);
         UfrDTO result = ufrMapper.toDto(ufr);
@@ -58,7 +63,7 @@ public class UfrServiceImpl implements UfrService {
     @Override
     public Optional<UfrDTO> partialUpdate(UfrDTO ufrDTO) {
         log.debug("Request to partially update Ufr : {}", ufrDTO);
-
+        validateData(ufrDTO);
         return ufrRepository
             .findById(ufrDTO.getId())
             .map(existingUfr -> {
@@ -100,5 +105,38 @@ public class UfrServiceImpl implements UfrService {
     public Page<UfrDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Ufrs for query {}", query);
         return ufrSearchRepository.search(query, pageable).map(ufrMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<UfrDTO> getAllUfrByUniversite(Long universiteId, Pageable pageable) {
+        log.debug("Request to get all UFRs by Universite ID : {}", universiteId);
+        return ufrRepository.findByUniversiteId(universiteId, pageable)
+            .map(ufrMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<UfrDTO> getAllUfrByMinistere(Long ministereId, Pageable pageable) {
+        log.debug("Request to get all UFRs by Ministere ID : {}", ministereId);
+        return ufrRepository.findByUniversiteMinistereId(ministereId, pageable)
+            .map(ufrMapper::toDto);
+    }
+
+    private void validateData(UfrDTO ufrDTO) {
+        if (ufrDTO.getLibelleUfr().isBlank()){
+            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleUfrNotNull");
+        }
+        if (ufrDTO.getSigleUfr().isBlank()){
+            throw new BadRequestAlertException("La sigle ne peut pas être vide.", ENTITY_NAME, "sigleUfrNotNull");
+        }
+        Optional<Ufr> existingUfr = ufrRepository.findByLibelleUfrIgnoreCase(ufrDTO.getLibelleUfr());
+        if (existingUfr.isPresent() && !existingUfr.get().getId().equals(ufrDTO.getId())) {
+            throw new BadRequestAlertException("Une ufr avec le même libellé existe.", ENTITY_NAME, "libelleUfrExist");
+        }
+        existingUfr = ufrRepository.findBySigleUfrIgnoreCase(ufrDTO.getSigleUfr());
+        if (existingUfr.isPresent() && !existingUfr.get().getId().equals(ufrDTO.getId())) {
+            throw new BadRequestAlertException("Une ufr avec la même sigle existe.", ENTITY_NAME, "sigleUfrExist");
+        }
     }
 }

@@ -13,6 +13,7 @@ import sn.ugb.gir.repository.search.TypeAdmissionSearchRepository;
 import sn.ugb.gir.service.TypeAdmissionService;
 import sn.ugb.gir.service.dto.TypeAdmissionDTO;
 import sn.ugb.gir.service.mapper.TypeAdmissionMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.TypeAdmission}.
@@ -29,6 +30,8 @@ public class TypeAdmissionServiceImpl implements TypeAdmissionService {
 
     private final TypeAdmissionSearchRepository typeAdmissionSearchRepository;
 
+    private static final String ENTITY_NAME = "microserviceGirTypeAdmission";
+
     public TypeAdmissionServiceImpl(
         TypeAdmissionRepository typeAdmissionRepository,
         TypeAdmissionMapper typeAdmissionMapper,
@@ -42,6 +45,7 @@ public class TypeAdmissionServiceImpl implements TypeAdmissionService {
     @Override
     public TypeAdmissionDTO save(TypeAdmissionDTO typeAdmissionDTO) {
         log.debug("Request to save TypeAdmission : {}", typeAdmissionDTO);
+        validateData(typeAdmissionDTO);
         TypeAdmission typeAdmission = typeAdmissionMapper.toEntity(typeAdmissionDTO);
         typeAdmission = typeAdmissionRepository.save(typeAdmission);
         TypeAdmissionDTO result = typeAdmissionMapper.toDto(typeAdmission);
@@ -52,6 +56,7 @@ public class TypeAdmissionServiceImpl implements TypeAdmissionService {
     @Override
     public TypeAdmissionDTO update(TypeAdmissionDTO typeAdmissionDTO) {
         log.debug("Request to update TypeAdmission : {}", typeAdmissionDTO);
+        validateData(typeAdmissionDTO);
         TypeAdmission typeAdmission = typeAdmissionMapper.toEntity(typeAdmissionDTO);
         typeAdmission = typeAdmissionRepository.save(typeAdmission);
         TypeAdmissionDTO result = typeAdmissionMapper.toDto(typeAdmission);
@@ -62,7 +67,7 @@ public class TypeAdmissionServiceImpl implements TypeAdmissionService {
     @Override
     public Optional<TypeAdmissionDTO> partialUpdate(TypeAdmissionDTO typeAdmissionDTO) {
         log.debug("Request to partially update TypeAdmission : {}", typeAdmissionDTO);
-
+        validateData(typeAdmissionDTO);
         return typeAdmissionRepository
             .findById(typeAdmissionDTO.getId())
             .map(existingTypeAdmission -> {
@@ -104,5 +109,15 @@ public class TypeAdmissionServiceImpl implements TypeAdmissionService {
     public Page<TypeAdmissionDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of TypeAdmissions for query {}", query);
         return typeAdmissionSearchRepository.search(query, pageable).map(typeAdmissionMapper::toDto);
+    }
+
+    private void validateData(TypeAdmissionDTO typeAdmissionDto) {
+        if (typeAdmissionDto.getLibelleTypeAdmission().isBlank()){
+            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleTypeAdmissionNotNull");
+        }
+        Optional<TypeAdmission> existingTypeAdmission = typeAdmissionRepository.findByLibelleTypeAdmissionIgnoreCase(typeAdmissionDto.getLibelleTypeAdmission());
+        if (existingTypeAdmission.isPresent() && !existingTypeAdmission.get().getId().equals(typeAdmissionDto.getId())) {
+            throw new BadRequestAlertException("Un type admission avec le même libellé existe.", ENTITY_NAME, "libelleTypeAdmissionExist");
+        }
     }
 }

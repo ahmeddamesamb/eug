@@ -203,4 +203,55 @@ public class SpecialiteResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+
+    @GetMapping("/mentions/{mentionId}")
+    public ResponseEntity<List<SpecialiteDTO>> getAllSpecialiteByMention(
+        @PathVariable Long mentionId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Specialites by Mention ID : {}", mentionId);
+        Page<SpecialiteDTO> page = specialiteService.getAllSpecialiteByMention(mentionId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/domaines/{domaineId}")
+    public ResponseEntity<List<SpecialiteDTO>> getAllSpecialiteByDomaine(
+        @PathVariable Long domaineId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Specialites by Domaine" +
+            " ID : {}", domaineId);
+        Page<SpecialiteDTO> page = specialiteService.getAllSpecialiteByDomaine(domaineId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/ufrs/{ufrId}")
+    public ResponseEntity<List<SpecialiteDTO>> getAllSpecialiteByUFR(
+        @PathVariable Long ufrId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Specialites by UFR ID : {}", ufrId);
+        Page<SpecialiteDTO> page = specialiteService.getAllSpecialiteByUfr(ufrId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/universites/{universiteId}")
+    public ResponseEntity<List<SpecialiteDTO>> getAllSpecialiteByUniversite(
+        @PathVariable Long universiteId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Specialites by Universite ID : {}", universiteId);
+        Page<SpecialiteDTO> page = specialiteService.getAllSpecialiteByUniversite(universiteId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/ministeres/{ministereId}")
+    public ResponseEntity<List<SpecialiteDTO>> getAllSpecialiteByMinistere(
+        @PathVariable Long ministereId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Specialites by Ministere ID : {}", ministereId);
+        Page<SpecialiteDTO> page = specialiteService.getAllSpecialiteByMinistere(ministereId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }
