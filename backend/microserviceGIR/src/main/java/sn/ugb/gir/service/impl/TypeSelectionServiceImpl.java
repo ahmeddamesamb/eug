@@ -13,6 +13,7 @@ import sn.ugb.gir.repository.search.TypeSelectionSearchRepository;
 import sn.ugb.gir.service.TypeSelectionService;
 import sn.ugb.gir.service.dto.TypeSelectionDTO;
 import sn.ugb.gir.service.mapper.TypeSelectionMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.TypeSelection}.
@@ -29,6 +30,8 @@ public class TypeSelectionServiceImpl implements TypeSelectionService {
 
     private final TypeSelectionSearchRepository typeSelectionSearchRepository;
 
+    private static final String ENTITY_NAME = "microserviceGirTypeSelection";
+
     public TypeSelectionServiceImpl(
         TypeSelectionRepository typeSelectionRepository,
         TypeSelectionMapper typeSelectionMapper,
@@ -42,6 +45,7 @@ public class TypeSelectionServiceImpl implements TypeSelectionService {
     @Override
     public TypeSelectionDTO save(TypeSelectionDTO typeSelectionDTO) {
         log.debug("Request to save TypeSelection : {}", typeSelectionDTO);
+        validateData(typeSelectionDTO);
         TypeSelection typeSelection = typeSelectionMapper.toEntity(typeSelectionDTO);
         typeSelection = typeSelectionRepository.save(typeSelection);
         TypeSelectionDTO result = typeSelectionMapper.toDto(typeSelection);
@@ -52,6 +56,7 @@ public class TypeSelectionServiceImpl implements TypeSelectionService {
     @Override
     public TypeSelectionDTO update(TypeSelectionDTO typeSelectionDTO) {
         log.debug("Request to update TypeSelection : {}", typeSelectionDTO);
+        validateData(typeSelectionDTO);
         TypeSelection typeSelection = typeSelectionMapper.toEntity(typeSelectionDTO);
         typeSelection = typeSelectionRepository.save(typeSelection);
         TypeSelectionDTO result = typeSelectionMapper.toDto(typeSelection);
@@ -62,7 +67,7 @@ public class TypeSelectionServiceImpl implements TypeSelectionService {
     @Override
     public Optional<TypeSelectionDTO> partialUpdate(TypeSelectionDTO typeSelectionDTO) {
         log.debug("Request to partially update TypeSelection : {}", typeSelectionDTO);
-
+        validateData(typeSelectionDTO);
         return typeSelectionRepository
             .findById(typeSelectionDTO.getId())
             .map(existingTypeSelection -> {
@@ -104,5 +109,15 @@ public class TypeSelectionServiceImpl implements TypeSelectionService {
     public Page<TypeSelectionDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of TypeSelections for query {}", query);
         return typeSelectionSearchRepository.search(query, pageable).map(typeSelectionMapper::toDto);
+    }
+
+    private void validateData(TypeSelectionDTO typeSelectionDTO) {
+        if (typeSelectionDTO.getLibelleTypeSelection().isBlank()){
+            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleTypeselectionNotNull");
+        }
+        Optional<TypeSelection> existingTypeSelection = typeSelectionRepository.findByLibelleTypeSelectionIgnoreCase(typeSelectionDTO.getLibelleTypeSelection());
+        if (existingTypeSelection.isPresent() && !existingTypeSelection.get().getId().equals(typeSelectionDTO.getId())) {
+            throw new BadRequestAlertException("Un type selection avec le même libellé existe.", ENTITY_NAME, "libelleTypeSelectionExist");
+        }
     }
 }

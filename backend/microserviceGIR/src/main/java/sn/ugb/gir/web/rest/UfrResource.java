@@ -201,4 +201,24 @@ public class UfrResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+
+    @GetMapping("/universites/{universiteId}")
+    public ResponseEntity<List<UfrDTO>> getAllUfrByUniversite(
+        @PathVariable Long universiteId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of UFRs by Universite ID : {}", universiteId);
+        Page<UfrDTO> page = ufrService.getAllUfrByUniversite(universiteId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/ministeres/{ministereId}")
+    public ResponseEntity<List<UfrDTO>> getAllUfrByMinistere(
+        @PathVariable Long ministereId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of UFRs by Ministere ID : {}", ministereId);
+        Page<UfrDTO> page = ufrService.getAllUfrByMinistere(ministereId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }

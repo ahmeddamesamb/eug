@@ -65,4 +65,14 @@ public interface SpecialiteService {
      * @return the list of entities.
      */
     Page<SpecialiteDTO> search(String query, Pageable pageable);
+
+    Page<SpecialiteDTO> getAllSpecialiteByMention(Long mentionId, Pageable pageable);
+
+    Page<SpecialiteDTO> getAllSpecialiteByDomaine(Long domaineId, Pageable pageable);
+
+    Page<SpecialiteDTO> getAllSpecialiteByUfr(Long ufrId, Pageable pageable);
+
+    Page<SpecialiteDTO> getAllSpecialiteByUniversite(Long universiteId, Pageable pageable);
+
+    Page<SpecialiteDTO> getAllSpecialiteByMinistere(Long ministereId, Pageable pageable);
 }

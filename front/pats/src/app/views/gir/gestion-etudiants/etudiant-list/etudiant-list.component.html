@@ -1,0 +1,174 @@
+<div class="d-flex">
+    <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder " (click)="modalCreate()" >
+        Ajouter Etudiant
+    </button>
+    <c-modal
+            [keyboard]="false"
+            [transition]="false"
+            backdrop="static"
+            id="modalStatic"
+            [visible]="modalCreateUpdate" 
+            (visibleChange)="handleLivemodalCreate($event)"
+            [scrollable]="true"
+            alignment="center"
+            size="lg"
+            
+          >
+            <c-modal-header>
+              <h3 cModalTitle>Nouveau Etudiant</h3>
+              <!-- <button cButtonClose></button> -->
+            </c-modal-header>
+            <c-modal-body>
+              <app-create-etudiant/>
+            </c-modal-body>
+            <c-modal-footer>
+              <button (click)="modalCreate()" cButton color="dark">Annuler</button>
+            </c-modal-footer>
+          </c-modal>
+
+    <!-- Modallllllllllllllllllllllllllllllllllllllllllllllllllllllll -->
+    <!-- <c-modal id="liveDemoModal1" [visible]="modalCreateUpdate" (visibleChange)="handleLivemodalCreate($event)">
+      
+      <c-modal-body class="d-flex flex-column align-items-center">
+        <svg width="79" height="78" viewBox="0 0 79 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_1783_6773)">
+          <path opacity="0.22" d="M39.5 0C47.2135 0 54.7537 2.28731 61.1672 6.57269C67.5808 10.8581 72.5795 16.949 75.5313 24.0753C78.4831 31.2017 79.2554 39.0433 77.7506 46.6085C76.2458 54.1738 72.5314 61.1229 67.0772 66.5772C61.6229 72.0314 54.6738 75.7458 47.1085 77.2506C39.5433 78.7554 31.7017 77.9831 24.5753 75.0313C17.449 72.0795 11.3581 67.0808 7.07269 60.6672C2.78731 54.2537 0.5 46.7135 0.5 39C0.5 28.6566 4.60892 18.7368 11.9228 11.4228C19.2368 4.10892 29.1566 0 39.5 0Z" fill="url(#paint0_linear_1783_6773)"/>
+          <path d="M56.968 47.5842L43.235 22.2892C42.8713 21.6214 42.3344 21.0639 41.6806 20.6755C41.0268 20.287 40.2804 20.082 39.52 20.082C38.7595 20.082 38.0132 20.287 37.3594 20.6755C36.7056 21.0639 36.1686 21.6214 35.805 22.2892L22.058 47.5842C21.6983 48.2301 21.5142 48.9589 21.5239 49.698C21.5337 50.4372 21.7369 51.1609 22.1135 51.797C22.49 52.4331 23.0267 52.9595 23.67 53.3236C24.3133 53.6877 25.0408 53.8769 25.78 53.8722H53.246C53.9792 53.8728 54.6999 53.6828 55.3375 53.3209C55.9751 52.9589 56.5077 52.4374 56.8831 51.8076C57.2584 51.1778 57.4635 50.4612 57.4784 49.7282C57.4933 48.9951 57.3174 48.2708 56.968 47.6262V47.5842ZM37.412 29.5362C37.412 28.9753 37.6348 28.4374 38.0315 28.0407C38.4281 27.6441 38.9661 27.4212 39.527 27.4212C40.0879 27.4212 40.6259 27.6441 41.0225 28.0407C41.4192 28.4374 41.642 28.9753 41.642 29.5362V39.2502C41.642 39.8112 41.4192 40.3491 41.0225 40.7458C40.6259 41.1424 40.0879 41.3652 39.527 41.3652C38.9661 41.3652 38.4281 41.1424 38.0315 40.7458C37.6348 40.3491 37.412 39.8112 37.412 39.2502V29.5362ZM39.583 48.5842C39.1034 48.5842 38.6345 48.442 38.2357 48.1756C37.8369 47.9091 37.5261 47.5304 37.3426 47.0872C37.159 46.6441 37.111 46.1566 37.2046 45.6861C37.2982 45.2157 37.5291 44.7836 37.8683 44.4445C38.2074 44.1054 38.6395 43.8744 39.1099 43.7808C39.5803 43.6873 40.0679 43.7353 40.511 43.9188C40.9541 44.1024 41.3328 44.4132 41.5993 44.812C41.8658 45.2108 42.008 45.6796 42.008 46.1592C42.008 46.8024 41.7525 47.4192 41.2977 47.874C40.843 48.3288 40.2261 48.5842 39.583 48.5842Z" fill="#FFC107"/>
+          </g>
+          <defs>
+          <linearGradient id="paint0_linear_1783_6773" x1="39.5" y1="0" x2="39.5" y2="78" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#E6D9B1"/>
+          <stop offset="1" stop-color="#FFC107"/>
+          </linearGradient>
+          <clipPath id="clip0_1783_6773">
+          <rect width="78" height="78" fill="white" transform="translate(0.5)"/>
+          </clipPath>
+          </defs>
+          </svg>
+        
+          
+          @if (liveDemoVisible) {
+            <span class="mt-2">
+              Voulez-vous supprimer l'élément {{ (itemDelete.libelleMention) }} 
+            </span>
+          }
+          
+          
+          
+        
+
+        <div class="d-flex mt-3">
+          <button (click)="modalCreate()" cButton  color="primary" class="me-2 text-white">
+            Annuler
+          </button>
+          <button cButton (click)="modalCreate()" color="danger" class="ms-2 text-white" >Supprimer</button>
+        </div>
+      </c-modal-body>
+
+    </c-modal> -->
+</div>
+
+
+<c-smart-table
+  [activePage]="1"
+  [columnSorter]="true"
+  [columns]="columns"
+  [columnFilter]="true"
+  [itemsPerPageSelect]="true"
+  [itemsPerPage]="5"
+  itemsPerPageLabel="Etudiant(s) par page"
+  [items]="etudiantList"
+  [sorterValue]="{ column: 'libeleUfr', state: 'asc' }"
+  [tableFilter]="false"
+  [tableProps]="{ hover: true, striped: true, responsive: true }"
+  [tableBodyProps]="{ align: 'middle' }"
+  clickableRows
+  footer
+  header
+  pagination
+  noItemsLabel="La liste est vide"
+  [loading]="isloading"
+
+  
+>
+  
+  <ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent" >
+  
+    
+    <td>
+      @switch (columnName) {
+        <!-- @case ('ufrs') {
+            @for (ufr of item[columnName]; track $index) {
+
+                {{ufr.sigleUfr }}
+                
+                <span>-</span>
+            }
+        } -->
+        @case ('show') {
+            <div class="d-flex gap-2">
+                <button (click)="view(item.id)"  cButton cPopover="Détail!" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >
+                    <i class="bi bi-eye-fill"></i>
+                </button>
+                <button  cButton cPopover="Mise à jour!" cPopoverPlacement="top" color="primary" size="sm" variant="outline" (click)="update(item.id)" >
+                    <i class="bi bi-pen-fill"></i>
+                </button>
+                <button (click)="toggleLiveDemo(item)"  cButton cPopover="Suppréssion!" cPopoverPlacement="right" color="danger" size="sm" variant="outline">
+                  <i class="bi bi-x-lg"></i>
+                </button>
+
+                <!-- Modallllllllllllllllllllllllllllllllllllllllllllllllllllllll -->
+                <c-modal id="liveDemoModal" [visible]="liveDemoVisible" (visibleChange)="handleLiveDemoChange($event)">
+                  
+                  <c-modal-body class="d-flex flex-column align-items-center">
+                    <svg width="79" height="78" viewBox="0 0 79 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_1783_6773)">
+                      <path opacity="0.22" d="M39.5 0C47.2135 0 54.7537 2.28731 61.1672 6.57269C67.5808 10.8581 72.5795 16.949 75.5313 24.0753C78.4831 31.2017 79.2554 39.0433 77.7506 46.6085C76.2458 54.1738 72.5314 61.1229 67.0772 66.5772C61.6229 72.0314 54.6738 75.7458 47.1085 77.2506C39.5433 78.7554 31.7017 77.9831 24.5753 75.0313C17.449 72.0795 11.3581 67.0808 7.07269 60.6672C2.78731 54.2537 0.5 46.7135 0.5 39C0.5 28.6566 4.60892 18.7368 11.9228 11.4228C19.2368 4.10892 29.1566 0 39.5 0Z" fill="url(#paint0_linear_1783_6773)"/>
+                      <path d="M56.968 47.5842L43.235 22.2892C42.8713 21.6214 42.3344 21.0639 41.6806 20.6755C41.0268 20.287 40.2804 20.082 39.52 20.082C38.7595 20.082 38.0132 20.287 37.3594 20.6755C36.7056 21.0639 36.1686 21.6214 35.805 22.2892L22.058 47.5842C21.6983 48.2301 21.5142 48.9589 21.5239 49.698C21.5337 50.4372 21.7369 51.1609 22.1135 51.797C22.49 52.4331 23.0267 52.9595 23.67 53.3236C24.3133 53.6877 25.0408 53.8769 25.78 53.8722H53.246C53.9792 53.8728 54.6999 53.6828 55.3375 53.3209C55.9751 52.9589 56.5077 52.4374 56.8831 51.8076C57.2584 51.1778 57.4635 50.4612 57.4784 49.7282C57.4933 48.9951 57.3174 48.2708 56.968 47.6262V47.5842ZM37.412 29.5362C37.412 28.9753 37.6348 28.4374 38.0315 28.0407C38.4281 27.6441 38.9661 27.4212 39.527 27.4212C40.0879 27.4212 40.6259 27.6441 41.0225 28.0407C41.4192 28.4374 41.642 28.9753 41.642 29.5362V39.2502C41.642 39.8112 41.4192 40.3491 41.0225 40.7458C40.6259 41.1424 40.0879 41.3652 39.527 41.3652C38.9661 41.3652 38.4281 41.1424 38.0315 40.7458C37.6348 40.3491 37.412 39.8112 37.412 39.2502V29.5362ZM39.583 48.5842C39.1034 48.5842 38.6345 48.442 38.2357 48.1756C37.8369 47.9091 37.5261 47.5304 37.3426 47.0872C37.159 46.6441 37.111 46.1566 37.2046 45.6861C37.2982 45.2157 37.5291 44.7836 37.8683 44.4445C38.2074 44.1054 38.6395 43.8744 39.1099 43.7808C39.5803 43.6873 40.0679 43.7353 40.511 43.9188C40.9541 44.1024 41.3328 44.4132 41.5993 44.812C41.8658 45.2108 42.008 45.6796 42.008 46.1592C42.008 46.8024 41.7525 47.4192 41.2977 47.874C40.843 48.3288 40.2261 48.5842 39.583 48.5842Z" fill="#FFC107"/>
+                      </g>
+                      <defs>
+                      <linearGradient id="paint0_linear_1783_6773" x1="39.5" y1="0" x2="39.5" y2="78" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#E6D9B1"/>
+                      <stop offset="1" stop-color="#FFC107"/>
+                      </linearGradient>
+                      <clipPath id="clip0_1783_6773">
+                      <rect width="78" height="78" fill="white" transform="translate(0.5)"/>
+                      </clipPath>
+                      </defs>
+                      </svg>
+                    
+                      
+                      @if (liveDemoVisible) {
+                        <span class="mt-2">
+                          Voulez-vous supprimer l'élément {{ (itemDelete.libelleDomaine) }} 
+                        </span>
+                      }
+                      
+                      
+                      
+                    
+
+                    <div class="d-flex mt-3">
+                      <button (click)="toggleLiveDemo(item)" cButton  color="primary" class="me-2 text-white">
+                        Annuler
+                      </button>
+                      <button cButton (click)="delete()" color="danger" class="ms-2 text-white" >Supprimer</button>
+                    </div>
+                  </c-modal-body>
+
+                </c-modal>
+
+            </div>
+          
+        }
+        @case ('edit') {
+            
+        }
+        
+        @default {
+          {{ tdContent }}
+        }
+      }
+    </td>
+  </ng-template>
+</c-smart-table>

@@ -65,4 +65,8 @@ public interface UfrService {
      * @return the list of entities.
      */
     Page<UfrDTO> search(String query, Pageable pageable);
+
+    Page<UfrDTO> getAllUfrByUniversite(Long universiteId, Pageable pageable);
+
+    Page<UfrDTO> getAllUfrByMinistere(Long ministereId, Pageable pageable);
 }
