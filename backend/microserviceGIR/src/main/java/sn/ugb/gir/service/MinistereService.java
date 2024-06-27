@@ -1,5 +1,6 @@
 package sn.ugb.gir.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -65,4 +66,11 @@ public interface MinistereService {
      * @return the list of entities.
      */
     Page<MinistereDTO> search(String query, Pageable pageable);
+
+    Optional<MinistereDTO> findCurrent();
+
+    Page<MinistereDTO> findByPeriode(LocalDate startDate, LocalDate endDate, Pageable pageable);
+
+    MinistereDTO activateOrDeactivate(Long id);
+
 }

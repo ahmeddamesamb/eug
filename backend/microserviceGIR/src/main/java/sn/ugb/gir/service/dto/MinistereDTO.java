@@ -23,10 +23,8 @@ public class MinistereDTO implements Serializable {
 
     private LocalDate dateFin;
 
-    @NotNull
     private Boolean enCoursYN;
 
-    @NotNull
     private Boolean actifYN;
 
     public Long getId() {

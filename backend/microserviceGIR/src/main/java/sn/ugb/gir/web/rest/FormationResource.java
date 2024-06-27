@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -146,7 +147,7 @@ public class FormationResource {
      */
     @GetMapping("")
     public ResponseEntity<List<FormationDTO>> getAllFormations(
-        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+       @ParameterObject Pageable pageable,
         @RequestParam(name = "filter", required = false) String filter
     ) {
         if ("formationprivee-is-null".equals(filter)) {
@@ -199,7 +200,7 @@ public class FormationResource {
     @GetMapping("/_search")
     public ResponseEntity<List<FormationDTO>> searchFormations(
         @RequestParam("query") String query,
-        @org.springdoc.core.annotations.ParameterObject Pageable pageable
+        @ParameterObject Pageable pageable
     ) {
         log.debug("REST request to search for a page of Formations for query {}", query);
         try {
@@ -209,5 +210,95 @@ public class FormationResource {
         } catch (RuntimeException e) {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
+    }
+
+    @GetMapping("/mentions/{mentionId}")
+    public ResponseEntity<List<FormationDTO>> getAllFormationByMention(
+        @PathVariable Long mentionId,
+        @ParameterObject Pageable pageable) {
+        log.debug("REST request to get all Formations by Mention : {}", mentionId);
+        Page<FormationDTO> page = formationService.findAllFormationByMention(mentionId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/domaines/{domaineId}")
+    public ResponseEntity<List<FormationDTO>> getAllFormationByDomaine(@PathVariable Long domaineId, @ParameterObject Pageable pageable) {
+        log.debug("REST request to get all Formations by Domaine : {}", domaineId);
+        Page<FormationDTO> page = formationService.findAllFormationByDomaine(domaineId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/ufrs/{ufrId}")
+    public ResponseEntity<List<FormationDTO>> getAllFormationByUfr(@PathVariable Long ufrId, @ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of  Formation by UFRs ID : {}", ufrId);
+        Page<FormationDTO> page = formationService.findAllFormationByUfr(ufrId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/cycles/{cycle}")
+    public ResponseEntity<List<FormationDTO>> getAllFormationByCycle(@PathVariable String cycle, @ParameterObject Pageable pageable) {
+        log.debug("REST request to get all Formations by Cycle : {}", cycle);
+        Page<FormationDTO> page = formationService.findAllFormationByCycle(cycle, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+
+    @GetMapping("/universites/{universiteId}")
+    public ResponseEntity<List<FormationDTO>> getAllFormationByUniversite(@PathVariable Long universiteId, @ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Formation by Universite ID : {}", universiteId);
+        Page<FormationDTO> page = formationService.findAllFormationByUniversite(universiteId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/ministeres/{ministereId}")
+    public ResponseEntity<List<FormationDTO>> getAllFormationByMinistere(@PathVariable Long ministereId, @ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Formation by Ministere ID : {}", ministereId);
+        Page<FormationDTO> page = formationService.findAllFormationByMinistere(ministereId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/universite_publics/{universiteId}")
+    public ResponseEntity<List<FormationDTO>> getAllFormationPubliqueByUniversite(@PathVariable Long universiteId, @ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Formation by Universite ID and typeFormation public : {}", universiteId);
+        Page<FormationDTO> page = formationService.findAllFormationPubliqueByUniversite(universiteId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/universite_privees/{universiteId}")
+    public ResponseEntity<List<FormationDTO>> getAllFormationPriveeByUniversite(@PathVariable Long universiteId, @ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Formation by Universite ID and typeFormation privee : {}", universiteId);
+        Page<FormationDTO> page = formationService.findAllFormationPriveeByUniversite(universiteId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/ministere_publics/{ministereId}")
+    public ResponseEntity<List<FormationDTO>> getAllFormationPubliqueByMinistere(@PathVariable Long ministereId, @ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Formation by Ministere ID and typeFormation public : {}", ministereId);
+        Page<FormationDTO> page = formationService.findAllFormationPubliqueByMinistere(ministereId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/ministere_privees/{ministereId}")
+    public ResponseEntity<List<FormationDTO>> getAllFormationPriveeByMinistere(@PathVariable Long ministereId, @ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Formation by Ministere ID and typeFormation privee : {}", ministereId);
+        Page<FormationDTO> page = formationService.findAllFormationPriveeByMinistere(ministereId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<FormationDTO> setActif(@PathVariable Long id) {
+        log.debug("REST request to activate/deactivate Formation : {}", id);
+        FormationDTO result = formationService.activateOrDeactivate(id);
+        return ResponseEntity.ok().body(result);
     }
 }

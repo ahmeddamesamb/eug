@@ -17,6 +17,7 @@ import sn.ugb.gir.repository.search.FormationSearchRepository;
 import sn.ugb.gir.service.FormationService;
 import sn.ugb.gir.service.dto.FormationDTO;
 import sn.ugb.gir.service.mapper.FormationMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Formation}.
@@ -26,6 +27,8 @@ import sn.ugb.gir.service.mapper.FormationMapper;
 public class FormationServiceImpl implements FormationService {
 
     private final Logger log = LoggerFactory.getLogger(FormationServiceImpl.class);
+
+    private static final String ENTITY_NAME = "Formation";
 
     private final FormationRepository formationRepository;
 
@@ -46,40 +49,53 @@ public class FormationServiceImpl implements FormationService {
     @Override
     public FormationDTO save(FormationDTO formationDTO) {
         log.debug("Request to save Formation : {}", formationDTO);
-        Formation formation = formationMapper.toEntity(formationDTO);
-        formation = formationRepository.save(formation);
-        FormationDTO result = formationMapper.toDto(formation);
-        formationSearchRepository.index(formation);
-        return result;
+        validateFormation(formationDTO);
+        if (formationDTO.getId() == null) {
+            formationDTO.setActifYN(true);
+        }
+        return storeFormation(formationDTO);
     }
+
 
     @Override
     public FormationDTO update(FormationDTO formationDTO) {
         log.debug("Request to update Formation : {}", formationDTO);
-        Formation formation = formationMapper.toEntity(formationDTO);
-        formation = formationRepository.save(formation);
-        FormationDTO result = formationMapper.toDto(formation);
-        formationSearchRepository.index(formation);
-        return result;
+        validateFormation(formationDTO);
+        return storeFormation(formationDTO);
     }
 
     @Override
     public Optional<FormationDTO> partialUpdate(FormationDTO formationDTO) {
         log.debug("Request to partially update Formation : {}", formationDTO);
-
+        validateFormation(formationDTO);
         return formationRepository
             .findById(formationDTO.getId())
             .map(existingFormation -> {
                 formationMapper.partialUpdate(existingFormation, formationDTO);
-
                 return existingFormation;
             })
             .map(formationRepository::save)
-            .map(savedFormation -> {
-                formationSearchRepository.index(savedFormation);
-                return savedFormation;
-            })
             .map(formationMapper::toDto);
+    }
+
+    private void validateFormation(FormationDTO formationDTO) {
+        Optional<Formation> existingFormation = formationRepository.findByNiveauIdAndSpecialiteId(formationDTO.getNiveau().getId(), formationDTO.getSpecialite().getId());
+
+        if(formationDTO.getNiveau()==null) {
+            throw new BadRequestAlertException("Le niveau du ministere ne dois pas etre null", ENTITY_NAME, "NiveauNotNull");
+        }
+        if(formationDTO.getSpecialite()==null) {
+            throw new BadRequestAlertException("La spécialité du ministere ne dois pas etre null", ENTITY_NAME, "SpecialiteNotNull");
+        }
+        if (existingFormation.isPresent()) {
+            throw new BadRequestAlertException("Cette Formation existe deja avec le meme Niveau et la meme Specialite", ENTITY_NAME, "FormationDuplicate");
+        }
+    }
+
+    private FormationDTO storeFormation(FormationDTO formationDTO) {
+        Formation formation = formationMapper.toEntity(formationDTO);
+        formation = formationRepository.save(formation);
+        return formationMapper.toDto(formation);
     }
 
     @Override
@@ -123,4 +139,79 @@ public class FormationServiceImpl implements FormationService {
         log.debug("Request to search for a page of Formations for query {}", query);
         return formationSearchRepository.search(query, pageable).map(formationMapper::toDto);
     }
+
+    @Override
+    public Page<FormationDTO> findAllFormationByMention(Long mentionId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionId(mentionId, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationByDomaine(Long domaineId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineId(domaineId, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationByUfr(Long ufrId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsId(ufrId, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationByCycle(String cycle, Pageable pageable) {
+        return formationRepository.findByNiveauTypeCycleLibelleCycleIgnoreCase(cycle, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationByUniversite(Long universiteId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteId(universiteId, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationByMinistere(Long ministereId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteMinistereId(ministereId, pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationPubliqueByUniversite(Long universiteId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteIdAndTypeFormationLibelleTypeFormation(universiteId, "PUBLIC", pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationPriveeByUniversite(Long universiteId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteIdAndTypeFormationLibelleTypeFormation(universiteId, "PRIVEE", pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationPubliqueByMinistere(Long ministereId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteMinistereIdAndTypeFormationLibelleTypeFormation(ministereId, "PUBLIC", pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public Page<FormationDTO> findAllFormationPriveeByMinistere(Long ministereId, Pageable pageable) {
+        return formationRepository.findBySpecialiteMentionDomaineUfrsUniversiteMinistereIdAndTypeFormationLibelleTypeFormation(ministereId, "PRIVEE", pageable)
+            .map(formationMapper::toDto);
+    }
+
+    @Override
+    public FormationDTO activateOrDeactivate(Long id) {
+        log.debug("Request to activate/deactivate Formation : {}", id);
+        Optional<Formation> optionalFormation = formationRepository.findById(id);
+        if (optionalFormation.isPresent()) {
+            Formation formation = optionalFormation.get();
+            formation.setActifYN(!formation.getActifYN());
+            Formation savedFormation = formationRepository.save(formation);
+            return formationMapper.toDto(savedFormation);
+        } else {
+            throw new BadRequestAlertException("Cette Formation n'est pas présente " + id, ENTITY_NAME, "formationIntrouvable");
+        }
+    }
+
 }

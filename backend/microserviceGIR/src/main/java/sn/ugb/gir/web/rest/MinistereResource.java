@@ -4,14 +4,17 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -145,7 +148,7 @@ public class MinistereResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of ministeres in body.
      */
     @GetMapping("")
-    public ResponseEntity<List<MinistereDTO>> getAllMinisteres(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<MinistereDTO>> getAllMinisteres(@ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Ministeres");
         Page<MinistereDTO> page = ministereService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -192,7 +195,7 @@ public class MinistereResource {
     @GetMapping("/_search")
     public ResponseEntity<List<MinistereDTO>> searchMinisteres(
         @RequestParam("query") String query,
-        @org.springdoc.core.annotations.ParameterObject Pageable pageable
+        @ParameterObject Pageable pageable
     ) {
         log.debug("REST request to search for a page of Ministeres for query {}", query);
         try {
@@ -203,4 +206,30 @@ public class MinistereResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+
+    @GetMapping("/current")
+    public ResponseEntity<MinistereDTO> getInfosCurrentMinistere() {
+        log.debug("REST request to get current Ministere");
+        Optional<MinistereDTO> ministereDTO = ministereService.findCurrent();
+        return ResponseUtil.wrapOrNotFound(ministereDTO);
+    }
+
+    @GetMapping("/periode")
+    public ResponseEntity<List<MinistereDTO>> getInfosMinistreByPeriode(
+        @RequestParam(value = "startDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+        @RequestParam(value = "endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+        @ParameterObject Pageable pageable) {
+        log.debug("REST request to get Ministere by period: {} - {}", startDate, endDate);
+        Page<MinistereDTO> page = ministereService.findByPeriode(startDate, endDate, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<MinistereDTO> setActif(@PathVariable Long id) {
+        log.debug("REST request to activate/deactivate Ministere : {}", id);
+        MinistereDTO result = ministereService.activateOrDeactivate(id);
+        return ResponseEntity.ok().body(result);
+    }
+
 }
