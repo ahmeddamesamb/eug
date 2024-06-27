@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import sn.ugb.gir.domain.Cycle;
 import sn.ugb.gir.service.dto.FormationDTO;
 
 /**
@@ -73,4 +74,27 @@ public interface FormationService {
      * @return the list of entities.
      */
     Page<FormationDTO> search(String query, Pageable pageable);
+
+    Page<FormationDTO> findAllFormationByMention(Long mentionId, Pageable pageable);
+
+    Page<FormationDTO> findAllFormationByDomaine(Long domaineId, Pageable pageable);
+
+    Page<FormationDTO> findAllFormationByUfr(Long ufrId, Pageable pageable);
+
+    Page<FormationDTO> findAllFormationByCycle(String cycle, Pageable pageable);
+
+    Page<FormationDTO> findAllFormationByUniversite(Long ufrId, Pageable pageable);
+
+    Page<FormationDTO> findAllFormationByMinistere(Long ministereId, Pageable pageable);
+
+    Page<FormationDTO> findAllFormationPubliqueByUniversite(Long universiteId, Pageable pageable);
+
+    Page<FormationDTO> findAllFormationPriveeByUniversite(Long universiteId, Pageable pageable);
+
+    Page<FormationDTO> findAllFormationPubliqueByMinistere(Long ministereId, Pageable pageable);
+
+    Page<FormationDTO> findAllFormationPriveeByMinistere(Long ministereId, Pageable pageable);
+
+    FormationDTO activateOrDeactivate(Long id);
+
 }

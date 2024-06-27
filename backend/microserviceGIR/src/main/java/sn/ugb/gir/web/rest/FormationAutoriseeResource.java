@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -149,7 +150,7 @@ public class FormationAutoriseeResource {
      */
     @GetMapping("")
     public ResponseEntity<List<FormationAutoriseeDTO>> getAllFormationAutorisees(
-        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        @ParameterObject Pageable pageable,
         @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
     ) {
         log.debug("REST request to get a page of FormationAutorisees");
@@ -203,7 +204,7 @@ public class FormationAutoriseeResource {
     @GetMapping("/_search")
     public ResponseEntity<List<FormationAutoriseeDTO>> searchFormationAutorisees(
         @RequestParam("query") String query,
-        @org.springdoc.core.annotations.ParameterObject Pageable pageable
+        @ParameterObject Pageable pageable
     ) {
         log.debug("REST request to search for a page of FormationAutorisees for query {}", query);
         try {
