@@ -24,7 +24,14 @@ export const routes: Routes = [
             loadComponent: () => import('./inscription-reinscription/inscription-reinscription.component').then(m => m.InscriptionReinscriptionComponent),
             data: {
                 title: 'Inscription et Réinscription'
-            }
+            },
+            children: [
+                {
+                  path: '',
+                  loadChildren: () => import('./inscription-reinscription/routes').then((m) => m.routes)
+                },
+                
+            ]
         },
         {
             path: 'paiement-en-ligne-ou-presentiel',

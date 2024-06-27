@@ -103,9 +103,20 @@
         padding: 20px;
         height: 80vh;
         overflow-y: scroll;
-        
-        
-        
+   
+    }
+	.gauche-haut{
+        padding: 20px;
+        height: 20vh;
+        overflow-x: scroll;
+   
+    }
+	.gauche-bas{
+        padding: 20px;
+        height: 60vh;
+        overflow-y: scroll;
+		margin-top: 20px;
+   
     }
     .droite{
         height: 80vh;

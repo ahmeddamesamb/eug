@@ -1,6 +1,6 @@
 import { NgStyle, NgTemplateOutlet } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import {
   AvatarComponent,
   BadgeComponent,
@@ -53,7 +53,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
   userLastName: string | undefined;
 
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService , private router:Router ) {
     super();
     this.#colorModeService.localStorageItemName.set('coreui-pro-angular-admin-template-theme-modern');
     this.#colorModeService.eventName.set('ColorSchemeChange');
@@ -87,6 +87,11 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   logout() {
     this.userService.logout();
+  }
+
+  dossierEtudiant(){
+    console.log('cvrgrtgkmlgtrk,tr');
+    this.router.navigate(['/gir/inscription-reinscription/view/2']);
   }
 
 

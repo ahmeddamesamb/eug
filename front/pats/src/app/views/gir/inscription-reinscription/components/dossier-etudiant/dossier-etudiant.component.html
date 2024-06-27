@@ -1,0 +1,42 @@
+<div class="row content ">
+    <div class="col-12 col-lg-8 p-2">
+        <div class="gauche-haut card">
+            <app-profil-etudiant ></app-profil-etudiant>
+        </div>
+        <div class="gauche-bas card">
+            <c-row>
+                <c-col xs="12">
+                    <c-nav variant="underline-border">
+                        @for (nav of panes; track nav; let i = $index, isLast = $last) {
+                          <c-nav-item>
+                            <a [cTabContent]="tabContent1"  [tabPaneIdx]="i" cNavLink [routerLink]="nav.route">
+                              {{ nav.name }}
+                            </a>
+                          </c-nav-item>
+                        }
+                    </c-nav>
+                    <c-tab-content #tabContent1="cTabContent" [activeTabPaneIdx]="0" cRounded="bottom">
+                        @for (pane of panes; track pane; let i = $index) {
+                          <c-tab-pane class="p-3 preview">
+                          </c-tab-pane>
+                        }
+                        <div class=" overflow-y-scroll overflow-x-hidden">
+                          <router-outlet />
+                        </div>
+    
+                    </c-tab-content>
+    
+    
+                </c-col>
+            </c-row>
+
+        </div>
+    </div>
+    <div class="col-12 col-lg-4 p-2">
+        <div class="droite card ">
+            <app-etape-inscription ></app-etape-inscription>
+            
+
+        </div>
+    </div>
+</div>
