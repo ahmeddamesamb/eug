@@ -203,4 +203,31 @@ public class NiveauResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+
+    /**
+     * {@code GET  /universite/:universiteId} : get all the universite.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of universite in body.
+     */
+    @GetMapping("/universite/{universiteId}")
+    public ResponseEntity<Page<NiveauDTO>> getAllNiveauByUniversiteId(@PathVariable Long universiteId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        Page<NiveauDTO> page = niveauService.getAllNiveauByUniversite(universiteId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page);
+    }
+
+    /**
+     * {@code GET  /ministere/:ministereId} : get all the ministere.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of ministere in body.
+     */
+    @GetMapping("/ministere/{ministereId}")
+    public ResponseEntity<Page<NiveauDTO>> getAllNiveauByMinistereId(@PathVariable Long ministereId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        Page<NiveauDTO> page = niveauService.getAllNiveauByMinistere(ministereId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page);
+    }
+
 }

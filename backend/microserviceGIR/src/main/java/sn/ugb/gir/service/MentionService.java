@@ -65,4 +65,10 @@ public interface MentionService {
      * @return the list of entities.
      */
     Page<MentionDTO> search(String query, Pageable pageable);
+
+    Page<MentionDTO> getAllMentionByUniversite(Long universiteId, Pageable pageable);
+
+    Page<MentionDTO> getAllMentionByMinistere(Long ministereId, Pageable pageable);
+
+    Page<MentionDTO> getAllMentionByUfr(Long ufrId, Pageable pageable);
 }

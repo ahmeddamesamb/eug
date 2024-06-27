@@ -18,4 +18,6 @@ public interface MentionMapper extends EntityMapper<MentionDTO, Mention> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     DomaineDTO toDtoDomaineId(Domaine domaine);
+
+    MentionDTO toDto(MentionDTO mentionDTO);
 }

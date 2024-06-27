@@ -206,4 +206,16 @@ public class AnneeAcademiqueResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+
+    /**
+     * {@code GET  /annee-academiques/current} : Get the "current" anneeAcademique.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the current anneeAcademiqueDTO in body.
+     */
+    @GetMapping("/current")
+    public ResponseEntity<AnneeAcademiqueDTO> getInfosCurrentAnneeAcademique() {
+        log.debug("REST request to get AnneeAcademique ");
+        Optional<AnneeAcademiqueDTO> anneeAcademiqueDTO = anneeAcademiqueService.getInfosCurrentAnneeAcademique();
+        return ResponseUtil.wrapOrNotFound(anneeAcademiqueDTO);
+    }
 }

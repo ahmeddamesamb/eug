@@ -13,9 +13,12 @@ import sn.ugb.gir.repository.search.TypeOperationSearchRepository;
 import sn.ugb.gir.service.TypeOperationService;
 import sn.ugb.gir.service.dto.TypeOperationDTO;
 import sn.ugb.gir.service.mapper.TypeOperationMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
- * Service Implementation for managing {@link sn.ugb.gir.domain.TypeOperation}.
+ * Implémentation du service pour la gestion des {@link sn.ugb.gir.domain.TypeOperation}.
  */
 @Service
 @Transactional
@@ -23,86 +26,103 @@ public class TypeOperationServiceImpl implements TypeOperationService {
 
     private final Logger log = LoggerFactory.getLogger(TypeOperationServiceImpl.class);
 
-    private final TypeOperationRepository typeOperationRepository;
+    private final TypeOperationRepository typeHandicapRepository;
 
-    private final TypeOperationMapper typeOperationMapper;
+    private final TypeOperationMapper typeHandicapMapper;
 
-    private final TypeOperationSearchRepository typeOperationSearchRepository;
+    private final TypeOperationSearchRepository typeHandicapSearchRepository;
 
     public TypeOperationServiceImpl(
-        TypeOperationRepository typeOperationRepository,
-        TypeOperationMapper typeOperationMapper,
-        TypeOperationSearchRepository typeOperationSearchRepository
+        TypeOperationRepository typeHandicapRepository,
+        TypeOperationMapper typeHandicapMapper,
+        TypeOperationSearchRepository typeHandicapSearchRepository
     ) {
-        this.typeOperationRepository = typeOperationRepository;
-        this.typeOperationMapper = typeOperationMapper;
-        this.typeOperationSearchRepository = typeOperationSearchRepository;
+        this.typeHandicapRepository = typeHandicapRepository;
+        this.typeHandicapMapper = typeHandicapMapper;
+        this.typeHandicapSearchRepository = typeHandicapSearchRepository;
     }
 
     @Override
-    public TypeOperationDTO save(TypeOperationDTO typeOperationDTO) {
-        log.debug("Request to save TypeOperation : {}", typeOperationDTO);
-        TypeOperation typeOperation = typeOperationMapper.toEntity(typeOperationDTO);
-        typeOperation = typeOperationRepository.save(typeOperation);
-        TypeOperationDTO result = typeOperationMapper.toDto(typeOperation);
-        typeOperationSearchRepository.index(typeOperation);
+    public TypeOperationDTO save(TypeOperationDTO typeHandicapDTO) {
+        log.debug("Requête pour enregistrer TypeOperation : {}", typeHandicapDTO);
+
+        validateData(typeHandicapDTO.getLibelleTypeOperation(), typeHandicapDTO.getId());
+
+        TypeOperation typeHandicap = typeHandicapMapper.toEntity(typeHandicapDTO);
+        typeHandicap = typeHandicapRepository.save(typeHandicap);
+        TypeOperationDTO result = typeHandicapMapper.toDto(typeHandicap);
+        typeHandicapSearchRepository.index(typeHandicap);
         return result;
     }
 
     @Override
-    public TypeOperationDTO update(TypeOperationDTO typeOperationDTO) {
-        log.debug("Request to update TypeOperation : {}", typeOperationDTO);
-        TypeOperation typeOperation = typeOperationMapper.toEntity(typeOperationDTO);
-        typeOperation = typeOperationRepository.save(typeOperation);
-        TypeOperationDTO result = typeOperationMapper.toDto(typeOperation);
-        typeOperationSearchRepository.index(typeOperation);
+    public TypeOperationDTO update(TypeOperationDTO typeHandicapDTO) {
+        log.debug("Requête pour mettre à jour TypeOperation : {}", typeHandicapDTO);
+
+        validateData(typeHandicapDTO.getLibelleTypeOperation(), typeHandicapDTO.getId());
+
+        TypeOperation typeHandicap = typeHandicapMapper.toEntity(typeHandicapDTO);
+        typeHandicap = typeHandicapRepository.save(typeHandicap);
+        TypeOperationDTO result = typeHandicapMapper.toDto(typeHandicap);
+        typeHandicapSearchRepository.index(typeHandicap);
         return result;
     }
 
     @Override
-    public Optional<TypeOperationDTO> partialUpdate(TypeOperationDTO typeOperationDTO) {
-        log.debug("Request to partially update TypeOperation : {}", typeOperationDTO);
+    public Optional<TypeOperationDTO> partialUpdate(TypeOperationDTO typeHandicapDTO) {
+        log.debug("Requête pour mettre à jour partiellement TypeOperation : {}", typeHandicapDTO);
 
-        return typeOperationRepository
-            .findById(typeOperationDTO.getId())
+        validateData(typeHandicapDTO.getLibelleTypeOperation(), typeHandicapDTO.getId());
+
+        return typeHandicapRepository
+            .findById(typeHandicapDTO.getId())
             .map(existingTypeOperation -> {
-                typeOperationMapper.partialUpdate(existingTypeOperation, typeOperationDTO);
-
+                typeHandicapMapper.partialUpdate(existingTypeOperation, typeHandicapDTO);
                 return existingTypeOperation;
             })
-            .map(typeOperationRepository::save)
+            .map(typeHandicapRepository::save)
             .map(savedTypeOperation -> {
-                typeOperationSearchRepository.index(savedTypeOperation);
-                return savedTypeOperation;
-            })
-            .map(typeOperationMapper::toDto);
+                typeHandicapSearchRepository.index(savedTypeOperation);
+                return typeHandicapMapper.toDto(savedTypeOperation);
+            });
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<TypeOperationDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all TypeOperations");
-        return typeOperationRepository.findAll(pageable).map(typeOperationMapper::toDto);
+        log.debug("Requête pour récupérer tous les TypeOperations");
+        return typeHandicapRepository.findAll(pageable).map(typeHandicapMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<TypeOperationDTO> findOne(Long id) {
-        log.debug("Request to get TypeOperation : {}", id);
-        return typeOperationRepository.findById(id).map(typeOperationMapper::toDto);
+        log.debug("Requête pour récupérer TypeOperation : {}", id);
+        return typeHandicapRepository.findById(id).map(typeHandicapMapper::toDto);
     }
 
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete TypeOperation : {}", id);
-        typeOperationRepository.deleteById(id);
-        typeOperationSearchRepository.deleteFromIndexById(id);
+        log.debug("Requête pour supprimer TypeOperation : {}", id);
+        typeHandicapRepository.deleteById(id);
+        typeHandicapSearchRepository.deleteFromIndexById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<TypeOperationDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of TypeOperations for query {}", query);
-        return typeOperationSearchRepository.search(query, pageable).map(typeOperationMapper::toDto);
+        log.debug("Requête pour rechercher une page de TypeOperations pour la requête {}", query);
+        return typeHandicapSearchRepository.search(query, pageable).map(typeHandicapMapper::toDto);
+    }
+
+    private void validateData(String libelleTypeOperation, Long id) {
+        if (libelleTypeOperation == null || libelleTypeOperation.trim().isBlank()) {
+            throw new BadRequestAlertException("Le libellé du TypeOperation ne peut pas être vide", ENTITY_NAME, "libelleTypeOperationVide");
+        }
+
+        Optional<TypeOperation> existingTypeOperation = typeHandicapRepository.findByLibelleTypeOperationIgnoreCase(libelleTypeOperation.trim());
+        if (existingTypeOperation.isPresent() && !existingTypeOperation.get().getId().equals(id)) {
+            throw new BadRequestAlertException("Un TypeOperation avec le même nom existe déjà", ENTITY_NAME, "typeHandicapExiste");
+        }
     }
 }

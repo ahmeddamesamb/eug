@@ -203,4 +203,70 @@ public class MentionResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+
+    /**
+     * {@code GET  /mentions} : get all the mentions by Ufr.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of mentions in body.
+     */
+    @GetMapping("/ufrs/{ufrId}")
+    public ResponseEntity<List<MentionDTO>> getAllMentionByUFR(
+        @PathVariable Long ufrId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+
+        log.debug("REST request to get a page of Mentions by UFR ID : {}", ufrId);
+
+        Page<MentionDTO> page = mentionService.getAllMentionByUfr(ufrId, pageable);
+
+        HttpHeaders headers = PaginationUtil
+            .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity
+            .ok()
+            .headers(headers)
+            .body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /mentions} : get all the mentions by Universite.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of mentions in body.
+     */
+    @GetMapping("/universites/{universiteId}")
+    public ResponseEntity<List<MentionDTO>> getAllMentionByUniversite(
+        @PathVariable Long universiteId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Mentions by Universite ID : {}", universiteId);
+        Page<MentionDTO> page = mentionService.getAllMentionByUniversite(universiteId, pageable);
+        HttpHeaders headers = PaginationUtil
+            .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity
+            .ok()
+            .headers(headers)
+            .body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /mentions} : get all the mentions by Ministere.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of mentions in body.
+     */
+    @GetMapping("/ministeres/{ministereId}")
+    public ResponseEntity<List<MentionDTO>> getAllMentionByMinistere(
+        @PathVariable Long ministereId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+
+        log.debug("REST request to get a page of Mentions by Ministere ID : {}", ministereId);
+
+        Page<MentionDTO> page = mentionService.getAllMentionByMinistere(ministereId, pageable);
+
+        HttpHeaders headers = PaginationUtil
+            .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity
+            .ok()
+            .headers(headers)
+            .body(page.getContent());
+    }
 }

@@ -65,4 +65,6 @@ public interface AnneeAcademiqueService {
      * @return the list of entities.
      */
     Page<AnneeAcademiqueDTO> search(String query, Pageable pageable);
+
+    Optional<AnneeAcademiqueDTO> getInfosCurrentAnneeAcademique();
 }

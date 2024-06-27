@@ -65,4 +65,8 @@ public interface NiveauService {
      * @return the list of entities.
      */
     Page<NiveauDTO> search(String query, Pageable pageable);
+
+    Page<NiveauDTO> getAllNiveauByUniversite(Long universiteId, Pageable pageable);
+
+    Page<NiveauDTO> getAllNiveauByMinistere(Long ministereId, Pageable pageable);
 }

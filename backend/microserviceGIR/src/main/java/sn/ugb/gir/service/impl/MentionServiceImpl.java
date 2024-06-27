@@ -13,6 +13,9 @@ import sn.ugb.gir.repository.search.MentionSearchRepository;
 import sn.ugb.gir.service.MentionService;
 import sn.ugb.gir.service.dto.MentionDTO;
 import sn.ugb.gir.service.mapper.MentionMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Mention}.
@@ -42,6 +45,9 @@ public class MentionServiceImpl implements MentionService {
     @Override
     public MentionDTO save(MentionDTO mentionDTO) {
         log.debug("Request to save Mention : {}", mentionDTO);
+
+        validateData(mentionDTO);
+
         Mention mention = mentionMapper.toEntity(mentionDTO);
         mention = mentionRepository.save(mention);
         MentionDTO result = mentionMapper.toDto(mention);
@@ -52,6 +58,9 @@ public class MentionServiceImpl implements MentionService {
     @Override
     public MentionDTO update(MentionDTO mentionDTO) {
         log.debug("Request to update Mention : {}", mentionDTO);
+
+        validateData(mentionDTO);
+
         Mention mention = mentionMapper.toEntity(mentionDTO);
         mention = mentionRepository.save(mention);
         MentionDTO result = mentionMapper.toDto(mention);
@@ -62,6 +71,8 @@ public class MentionServiceImpl implements MentionService {
     @Override
     public Optional<MentionDTO> partialUpdate(MentionDTO mentionDTO) {
         log.debug("Request to partially update Mention : {}", mentionDTO);
+
+        validateData(mentionDTO);
 
         return mentionRepository
             .findById(mentionDTO.getId())
@@ -104,5 +115,36 @@ public class MentionServiceImpl implements MentionService {
     public Page<MentionDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Mentions for query {}", query);
         return mentionSearchRepository.search(query, pageable).map(mentionMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<MentionDTO> getAllMentionByUfr(Long ufrId, Pageable pageable) {
+        log.debug("Request to get all Mentions by UFR ID : {}", ufrId);
+        return mentionRepository.findByDomaineUfrsId(ufrId, pageable).map(mentionMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<MentionDTO> getAllMentionByUniversite(Long universiteId, Pageable pageable) {
+        log.debug("Request to get all Mentions by Universite ID : {}", universiteId);
+        return mentionRepository.findByDomaineUfrsUniversiteId(universiteId, pageable).map(mentionMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<MentionDTO> getAllMentionByMinistere(Long ministereId, Pageable pageable) {
+        log.debug("Request to get all Mentions by Ministere ID : {}", ministereId);
+        return mentionRepository.findByDomaineUfrsUniversiteMinistereId(ministereId, pageable).map(mentionMapper::toDto);
+    }
+    private void validateData(MentionDTO mentionDTO) {
+        if (mentionDTO.getLibelleMention().isBlank()){
+            throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "LibelleMentionNotNull");
+        }
+
+        Optional<Mention> existingMention = mentionRepository.findByLibelleMentionIgnoreCase(mentionDTO.getLibelleMention());
+        if (existingMention.isPresent() && !existingMention.get().getId().equals(mentionDTO.getId())) {
+            throw new BadRequestAlertException("Une ufr avec le même libellé existe.", ENTITY_NAME, "LibelleMentionExist");
+        }
     }
 }
