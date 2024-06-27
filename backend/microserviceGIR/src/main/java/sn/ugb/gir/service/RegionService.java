@@ -65,4 +65,7 @@ public interface RegionService {
      * @return the list of entities.
      */
     Page<RegionDTO> search(String query, Pageable pageable);
+
+    Page<RegionDTO> findAllRegionByPays(Long paysId, Pageable pageable);
+
 }

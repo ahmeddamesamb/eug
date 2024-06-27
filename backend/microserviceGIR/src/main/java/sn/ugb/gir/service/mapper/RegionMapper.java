@@ -17,5 +17,14 @@ public interface RegionMapper extends EntityMapper<RegionDTO, Region> {
     @Named("paysId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libellePays", source = "libellePays")
+    @Mapping(target = "paysEnAnglais", source = "paysEnAnglais")
+    @Mapping(target = "nationalite", source = "nationalite")
+    @Mapping(target = "codePays", source = "codePays")
+    @Mapping(target = "uEMOAYN", source = "uEMOAYN")
+    @Mapping(target = "cEDEAOYN", source = "cEDEAOYN")
+    @Mapping(target = "rIMYN", source = "rIMYN")
+    @Mapping(target = "autreYN", source = "autreYN")
+    @Mapping(target = "estEtrangerYN", source = "autreYN")
     PaysDTO toDtoPaysId(Pays pays);
 }

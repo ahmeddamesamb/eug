@@ -73,4 +73,5 @@ public interface PaysService {
      * @return the list of entities.
      */
     Page<PaysDTO> search(String query, Pageable pageable);
+    Page<PaysDTO> findAllPaysByZone(Long zoneId, Pageable pageable);
 }

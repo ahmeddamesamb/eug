@@ -203,4 +203,11 @@ public class RegionResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+    @GetMapping("/pays/{paysId}")
+    public ResponseEntity<List<RegionDTO>> getAllRegionByPays(@PathVariable Long paysId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Regions by Pays ID : {}", paysId);
+        Page<RegionDTO> page = regionService.findAllRegionByPays(paysId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }
