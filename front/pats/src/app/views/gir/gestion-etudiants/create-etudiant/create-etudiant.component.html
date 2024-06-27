@@ -1,1 +1,142 @@
-<p>create-etudiant works!</p>
+<div class="">
+
+    
+    
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="etudiantForm">
+        
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom01">Nom </label>
+            <input cFormControl id="validationCustom01" required type="text"
+                   [valid]="(etudiantForm?.get('nomEtu')?.touched && etudiantForm?.get('nomEtu')?.valid) ? true
+                        : (etudiantForm?.get('nomEtu')?.touched) && etudiantForm?.get('nomEtu')?.invalid ? false : undefined"
+                   formControlName="nomEtu"/>
+            <c-form-feedback>Nom </c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom02">Prénom </label>
+            <input cFormControl id="validationCustom02" required type="text" formControlName="prenomEtu"/>
+            <c-form-feedback>Prénom</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom03">Nom de jeune fille </label>
+            <input cFormControl id="validationCustom03" required type="text" formControlName="nomJeuneFilleEtu"/>
+            <c-form-feedback>Nom de jeune fille</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom04">INE </label>
+            <input cFormControl id="validationCustom04" required type="text" formControlName="ine"/>
+            <c-form-feedback>INE</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom05">Date de naissance </label>
+            <input cFormControl id="validationCustom05" required type="date" formControlName="dateNaissEtu"/>
+            <c-form-feedback>Date de naissance</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom06">Lieu de naissance </label>
+            <input cFormControl id="validationCustom06" required type="text" formControlName="lieuNaissEtu"/>
+            <c-form-feedback>Lieu de naissance</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom07">Sexe </label>
+            <input cFormControl id="validationCustom07" required type="text" formControlName="sexe"/>
+            <c-form-feedback>Sexe</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom08">Statut marital </label>
+            <input cFormControl id="validationCustom08" required type="text" formControlName="statutMarital"/>
+            <c-form-feedback>Statut marital</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom09">Profession </label>
+            <input cFormControl id="validationCustom09" required type="text" formControlName="profession"/>
+            <c-form-feedback>Profession</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom10">Adresse de l'étudiant </label>
+            <input cFormControl id="validationCustom10" required type="text" formControlName="adresseEtu"/>
+            <c-form-feedback>Adresse de l'étudiant</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom11">Téléphone de l'étudiant </label>
+            <input cFormControl id="validationCustom11" required type="text" formControlName="telEtu"/>
+            <c-form-feedback>Téléphone de l'étudiant</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom12">Email de l'étudiant </label>
+            <input cFormControl id="validationCustom12" required type="email" formControlName="emailEtu"/>
+            <c-form-feedback>Email de l'étudiant</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom13">Adresse des parents </label>
+            <input cFormControl id="validationCustom13" required type="text" formControlName="adresseParent"/>
+            <c-form-feedback>Adresse des parents</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom14">Téléphone des parents </label>
+            <input cFormControl id="validationCustom14" required type="text" formControlName="telParent"/>
+            <c-form-feedback>Téléphone des parents</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom15">Email des parents </label>
+            <input cFormControl id="validationCustom15" required type="email" formControlName="emailParent"/>
+            <c-form-feedback>Email des parents</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom16">Nom des parents </label>
+            <input cFormControl id="validationCustom16" required type="text" formControlName="nomParent"/>
+            <c-form-feedback>Nom des parents</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom17">Prénom des parents </label>
+            <input cFormControl id="validationCustom17" required type="text" formControlName="prenomParent"/>
+            <c-form-feedback>Prénom des parents</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom18">Dernière modification </label>
+            <input cFormControl id="validationCustom18" required type="text" formControlName="derniereModification"/>
+            <c-form-feedback>Dernière modification</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="validationCustom19">Email utilisateur </label>
+            <input cFormControl id="validationCustom19" required type="email" formControlName="emailUser"/>
+            <c-form-feedback>Email utilisateur</c-form-feedback>
+        </c-col>
+
+        <div class="col-12 d-flex justify-content-between">
+            <div class="w-50 pe-1">
+                <button (click)="onReset1()" class="w-100" cButton color="secondary" type="reset">
+                    Vider
+                </button>
+            </div>
+
+            <div class="w-50 ps-1">
+                <button cButton class="w-100 text-white" [disabled]="!etudiantForm?.valid" color="primary" type="submit">
+                    Enregistrer
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

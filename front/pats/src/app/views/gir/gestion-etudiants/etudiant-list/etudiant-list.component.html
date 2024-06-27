@@ -9,17 +9,20 @@
             id="modalStatic"
             [visible]="modalCreateUpdate" 
             (visibleChange)="handleLivemodalCreate($event)"
+            [scrollable]="true"
+            alignment="center"
+            size="lg"
+            
           >
             <c-modal-header>
-              <h5 cModalTitle>Ajout Etudiant</h5>
+              <h3 cModalTitle>Nouveau Etudiant</h3>
               <!-- <button cButtonClose></button> -->
             </c-modal-header>
             <c-modal-body>
               <app-create-etudiant/>
             </c-modal-body>
             <c-modal-footer>
-              <button (click)="modalCreate()" cButton color="secondary">Close</button>
-              <button (click)="modalCreate()" cButton color="primary">Save changes</button>
+              <button (click)="modalCreate()" cButton color="dark">Annuler</button>
             </c-modal-footer>
           </c-modal>
 

@@ -1,5 +1,5 @@
 export interface EtudiantModel {
-    id: number;
+    id?: number;
     codeEtu?: string | null;
     ine?: string | null;
     codeBU?: number | null;
