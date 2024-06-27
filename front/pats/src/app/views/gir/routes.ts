@@ -45,7 +45,14 @@ export const routes: Routes = [
             loadComponent: () => import('./gestion-etudiants/gestion-etudiants.component').then(m => m.GestionEtudiantsComponent),
             data: {
                 title: 'Gestion des étudiants'
-            }
+            },
+            children: [
+                {
+                  path: '',
+                  loadChildren: () => import('./gestion-etudiants/routes').then((m) => m.routes)
+                },
+                
+            ]
         },
         {
             path: 'parametrage',

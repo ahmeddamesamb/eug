@@ -1,5 +1,5 @@
 export interface EtudiantModel {
-    id: number;
+    id?: number;
     codeEtu?: string | null;
     ine?: string | null;
     codeBU?: number | null;
@@ -15,4 +15,28 @@ export interface EtudiantModel {
     lycee?: Pick<ILycee, 'id'> | null;
     informationPersonnelle?: Pick<IInformationPersonnelle, 'id'> | null;
     baccalaureat?: Pick<IBaccalaureat, 'id'> | null; */
+
+    //les données sur la table information
+
+    nomEtu?: string | null;
+    nomJeuneFilleEtu?: string | null;
+    prenomEtu?: string | null;
+    statutMarital?: string | null;
+    regime?: number | null;
+    profession?: string | null;
+    adresseEtu?: string | null;
+    telEtu?: string | null;
+    emailEtu?: string | null;
+    adresseParent?: string | null;
+    telParent?: string | null;
+    emailParent?: string | null;
+    nomParent?: string | null;
+    prenomParent?: string | null;
+    handicapYN?: number | null;
+    photo?: string | null;
+    ordiPersoYN?: number | null;
+    derniereModification?: string | null;
+    emailUser?: string | null;
+    /* typeHandique?: Pick<ITypeHandicap, 'id'> | null;
+    typeBourse?: Pick<ITypeBourse, 'id'> | null; */
 }
