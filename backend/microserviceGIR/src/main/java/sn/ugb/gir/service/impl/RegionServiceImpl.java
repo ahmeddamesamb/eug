@@ -13,6 +13,9 @@ import sn.ugb.gir.repository.search.RegionSearchRepository;
 import sn.ugb.gir.service.RegionService;
 import sn.ugb.gir.service.dto.RegionDTO;
 import sn.ugb.gir.service.mapper.RegionMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Region}.
@@ -35,70 +38,81 @@ public class RegionServiceImpl implements RegionService {
         this.regionSearchRepository = regionSearchRepository;
     }
 
-    @Override
-    public RegionDTO save(RegionDTO regionDTO) {
-        log.debug("Request to save Region : {}", regionDTO);
-        Region region = regionMapper.toEntity(regionDTO);
-        region = regionRepository.save(region);
-        RegionDTO result = regionMapper.toDto(region);
-        regionSearchRepository.index(region);
-        return result;
+@Override
+public RegionDTO save(RegionDTO regionDTO) {
+    log.debug("Request to save Region : {}", regionDTO);
+    validateData(regionDTO);
+    Region region = regionMapper.toEntity(regionDTO);
+    region = regionRepository.save(region);
+    return regionMapper.toDto(region);
+}
+
+@Override
+public RegionDTO update(RegionDTO regionDTO) {
+    log.debug("Request to update Region : {}", regionDTO);
+    validateData(regionDTO);
+    Region region = regionMapper.toEntity(regionDTO);
+    region = regionRepository.save(region);
+    return regionMapper.toDto(region);
+}
+
+@Override
+public Optional<RegionDTO> partialUpdate(RegionDTO regionDTO) {
+    log.debug("Request to partially update Region : {}", regionDTO);
+    validateData(regionDTO);
+    return regionRepository
+               .findById(regionDTO.getId())
+               .map(existingRegion -> {
+                   regionRepository.findByLibelleRegionIgnoreCase(regionDTO.getLibelleRegion()).ifPresent(existing -> {
+                       if (!existing.getId().equals(existingRegion.getId())) {
+                           throw new BadRequestAlertException("Une Region avec ce libellé existe déjà", "region", "libelleRegionExists");
+                       }
+                   });
+
+                   regionMapper.partialUpdate(existingRegion, regionDTO);
+                   return existingRegion;
+               })
+               .map(regionRepository::save)
+               .map(regionMapper::toDto);
+}
+
+@Override
+@Transactional(readOnly = true)
+public Page<RegionDTO> findAll(Pageable pageable) {
+    log.debug("Request to get all Regions");
+    return regionRepository.findAll(pageable).map(regionMapper::toDto);
+}
+
+@Override
+@Transactional(readOnly = true)
+public Optional<RegionDTO> findOne(Long id) {
+    log.debug("Request to get Region : {}", id);
+    return regionRepository.findById(id).map(regionMapper::toDto);
+}
+
+@Override
+public void delete(Long id) {
+    log.debug("Request to delete Region : {}", id);
+    regionRepository.deleteById(id);
+}
+
+@Override
+public Page<RegionDTO> search(String query, Pageable pageable) {
+    return null;
+}
+
+@Override
+public Page<RegionDTO> findAllRegionByPays(Long paysId, Pageable pageable) {
+    return regionRepository.findByPaysId(paysId, pageable).map(regionMapper::toDto);
+}
+
+private void validateData(RegionDTO  regionDTO) {
+    if (regionDTO.getLibelleRegion().isEmpty() || regionDTO.getLibelleRegion().isBlank()){
+        throw new BadRequestAlertException("Le Region ne peut pas être vide.", ENTITY_NAME, "getLibelleRegionNotNull");
     }
-
-    @Override
-    public RegionDTO update(RegionDTO regionDTO) {
-        log.debug("Request to update Region : {}", regionDTO);
-        Region region = regionMapper.toEntity(regionDTO);
-        region = regionRepository.save(region);
-        RegionDTO result = regionMapper.toDto(region);
-        regionSearchRepository.index(region);
-        return result;
+    Optional<Region> existingRegion = regionRepository.findByLibelleRegionIgnoreCase(regionDTO.getLibelleRegion());
+    if (existingRegion.isPresent() && !existingRegion.get().getId().equals(regionDTO.getId())) {
+        throw new BadRequestAlertException("Un Region avec le même libellé existe.", ENTITY_NAME, "getLibelleRegionExist");
     }
-
-    @Override
-    public Optional<RegionDTO> partialUpdate(RegionDTO regionDTO) {
-        log.debug("Request to partially update Region : {}", regionDTO);
-
-        return regionRepository
-            .findById(regionDTO.getId())
-            .map(existingRegion -> {
-                regionMapper.partialUpdate(existingRegion, regionDTO);
-
-                return existingRegion;
-            })
-            .map(regionRepository::save)
-            .map(savedRegion -> {
-                regionSearchRepository.index(savedRegion);
-                return savedRegion;
-            })
-            .map(regionMapper::toDto);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Page<RegionDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all Regions");
-        return regionRepository.findAll(pageable).map(regionMapper::toDto);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<RegionDTO> findOne(Long id) {
-        log.debug("Request to get Region : {}", id);
-        return regionRepository.findById(id).map(regionMapper::toDto);
-    }
-
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Region : {}", id);
-        regionRepository.deleteById(id);
-        regionSearchRepository.deleteFromIndexById(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Page<RegionDTO> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of Regions for query {}", query);
-        return regionSearchRepository.search(query, pageable).map(regionMapper::toDto);
-    }
+}
 }

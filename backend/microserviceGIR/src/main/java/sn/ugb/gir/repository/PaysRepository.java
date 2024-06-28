@@ -27,4 +27,6 @@ public interface PaysRepository extends PaysRepositoryWithBagRelationships, JpaR
     default Page<Pays> findAllWithEagerRelationships(Pageable pageable) {
         return this.fetchBagRelationships(this.findAll(pageable));
     }
+    Page<Pays> findByZonesId(Long zoneId, Pageable pageable);
+    Optional<Pays> findByLibellePaysIgnoreCase(String libellePays);
 }

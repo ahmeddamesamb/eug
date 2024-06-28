@@ -22,6 +22,7 @@ public interface DomaineMapper extends EntityMapper<DomaineDTO, Domaine> {
     @Named("ufrId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "sigleUfr", source = "sigleUfr")
     UfrDTO toDtoUfrId(Ufr ufr);
 
     @Named("ufrIdSet")

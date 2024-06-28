@@ -212,4 +212,11 @@ public class PaysResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+    @GetMapping("/zones/{zoneId}")
+    public ResponseEntity<List<PaysDTO>> getAllDomaineByUfr(@PathVariable Long zoneId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Domaine by Ufr ID : {}", zoneId);
+        Page<PaysDTO> page = paysService.findAllPaysByZone(zoneId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }
