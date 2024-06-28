@@ -1,0 +1,12 @@
+@if(etat == true){
+    <div class="p-3 border border-success d-flex flex-row rounded-3 divSuccess">
+        <i class="bi bi-check-circle-fill text-success pe-3 fs-4"></i>
+        <span class="text-success fs-4 fw-bolder">{{label}}</span>
+    </div>
+}@else{
+    <div class="p-3 border border-warning d-flex flex-row rounded-3 divWarning">
+        <i class="bi bi-x-circle-fill text-warning pe-3 fs-4 "></i>
+        <span class=" text-warning fs-4 fw-bolder">{{label}}</span>
+    </div>
+}
+

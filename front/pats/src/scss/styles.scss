@@ -107,15 +107,14 @@
     }
 	.gauche-haut{
         padding: 20px;
-        height: 20vh;
         overflow-x: scroll;
    
     }
 	.gauche-bas{
         padding: 20px;
-        height: 60vh;
         overflow-y: scroll;
 		margin-top: 20px;
+		flex:auto;
    
     }
     .droite{
