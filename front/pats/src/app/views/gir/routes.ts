@@ -41,6 +41,21 @@ export const routes: Routes = [
             }
         },
         {
+            path: 'gestion-campagne',
+            loadComponent: () => import('./gestion-campagne/gestion-campagne.component').then(m => m.GestionCampagneComponent),
+            data: {
+                title: 'Gestion des Campagnes'
+            },
+            children: [
+                {
+                  path: '',
+                  loadChildren: () => import('./gestion-campagne/routes').then((m) => m.routes)
+                },
+                
+            ]
+        },
+
+        {
             path: 'gestion-formation',
             loadComponent: () => import('./gestion-formations/gestion-formations.component').then(m => m.GestionFormationsComponent),
             data: {

@@ -38,8 +38,14 @@ export const navItems: INavData[] = [
         url: '/gir/gestion-etudiant',
         iconComponent: { name: 'cilFolderOpen' }
       },
+      
+      {
+        name: 'Gestion des campagnes',
+        url: '/gir/gestion-campagne',
+        iconComponent: { name: 'cilPrint' }
+      },
       /* {
-        name: 'Impression',
+        name: 'Impression', gestion-campagne
         url: '/impression/accordion',
         iconComponent: { name: 'cilPrint' }
       }, */
