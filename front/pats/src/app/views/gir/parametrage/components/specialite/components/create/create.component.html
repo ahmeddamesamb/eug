@@ -19,7 +19,7 @@
             [valid]="(specialiteForm?.get('nomSpecialites')?.touched && specialiteForm?.get('nomSpecialites')?.valid) ? true
                : (specialiteForm?.get('nomSpecialites')?.touched) && specialiteForm?.get('nomSpecialites')?.invalid ? false : undefined"
             formControlName="nomSpecialites"/>
-            <c-form-feedback>Libellé requis </c-form-feedback>
+            <c-form-feedback>Le Libellé est obligatoire </c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom02">Sigle </label>
@@ -27,7 +27,7 @@
               value="" formControlName="sigleSpecialites" [autofocus]="true"
               [valid]="(specialiteForm?.get('sigleSpecialites')?.touched && specialiteForm?.get('sigleSpecialites')?.valid) ? true
                : (specialiteForm?.get('sigleSpecialites')?.touched) && specialiteForm?.get('sigleSpecialites')?.invalid ? false : undefined"/>
-            <c-form-feedback >Sigle requis</c-form-feedback>
+            <c-form-feedback >Le sigle est obligatoire</c-form-feedback>
         </c-col>
 
         <c-col md="12">
@@ -52,7 +52,7 @@
                     formControlName="specialiteParticulierYN" 
                     [autofocus]="true"
                     id="validationCustom02" />
-                  <label class="form-check-label ms-2" for="validationCustom02">Particulier</label>
+                  <label class="form-check-label ms-2" for="validationCustom02">Particuliere</label>
                 </div>
             </div>
         </c-col>

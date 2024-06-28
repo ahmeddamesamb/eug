@@ -2,17 +2,17 @@
 
     <!-- give label and data ( required) , if possible his color (not required) -->
   
-    <h3>Détail</h3>
+    <h3>Détails</h3>
   
     @if (!loadState) {
         <div class="d-flex flex-column gap-2">
   
             <!-- display item data, label data and data -->
     
-            <app-data-display label="nom" [data]="universite?.nomUniversite"  ></app-data-display>
+            <app-data-display label="Nom" [data]="universite?.nomUniversite"  ></app-data-display>
     
-            <app-data-display label="sigle" [data]="universite?.sigleUniversite"  ></app-data-display>
-            <app-data-display label="ministere" [data]="universite?.ministere?.nomMinistere"  ></app-data-display>
+            <app-data-display label="Sigle" [data]="universite?.sigleUniversite"  ></app-data-display>
+            <app-data-display label="Ministère" [data]="universite?.ministere?.nomMinistere"  ></app-data-display>
         </div>
     }
   

@@ -19,7 +19,7 @@
             [valid]="(universiteForm?.get('nomUniversite')?.touched && universiteForm?.get('nomUniversite')?.valid) ? true
                : (universiteForm?.get('nomUniversite')?.touched) && universiteForm?.get('nomUniversite')?.invalid ? false : undefined"
             formControlName="nomUniversite"/>
-            <c-form-feedback>nom requis </c-form-feedback>
+            <c-form-feedback>Le nom est obligatoire</c-form-feedback>
         </c-col>
         <c-col md="12">
             <label cLabel for="validationCustom02">Sigle </label>
@@ -27,10 +27,10 @@
               value="" formControlName="sigleUniversite" [autofocus]="true"
               [valid]="(universiteForm?.get('sigleUniversite')?.touched && universiteForm?.get('sigleUniversite')?.valid) ? true
                : (universiteForm?.get('sigleUniversite')?.touched) && universiteForm?.get('sigleUniversite')?.invalid ? false : undefined"/>
-            <c-form-feedback >sigle requis</c-form-feedback>
+            <c-form-feedback >Le sigle est obligatoire</c-form-feedback>
         </c-col>
         <c-col md="12">
-            <label cLabel for="validationCustom03">Ministere </label>
+            <label cLabel for="validationCustom03">Ministère </label>
             <select 
                 cFormControl 
                 aria-label="Default select example" 

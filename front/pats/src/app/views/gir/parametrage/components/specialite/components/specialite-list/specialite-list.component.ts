@@ -79,7 +79,7 @@ export class SpecialiteListComponent {
       key: 'mention',
       label: 'Mention'
     },
-    { key: 'specialiteParticulierYN', label: 'Particulier', _style: { width: '15%' } },
+    { key: 'specialiteParticulierYN', label: 'Particuliere', _style: { width: '15%' } },
     { key: 'specialitesPayanteYN', label: 'Payante', _style: { width: '15%' } },
     
     {

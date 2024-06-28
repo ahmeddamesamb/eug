@@ -2,15 +2,15 @@
 
     <!-- give label and data ( required) , if possible his color (not required) -->
   
-    <h3>Détail</h3>
+    <h3>Détails</h3>
   
     @if (!loadState) {
         <div class="d-flex flex-column gap-2">
   
             <!-- display item data, label data and data -->
     
-            <app-data-display label="libellé" [data]="mention?.libelleMention"  ></app-data-display>
-            <app-data-display label="domaine" [data]="mention?.domaine?.libelleDomaine"  ></app-data-display>
+            <app-data-display label="Libellé" [data]="mention?.libelleMention"  ></app-data-display>
+            <app-data-display label="Domaine" [data]="mention?.domaine?.libelleDomaine"  ></app-data-display>
 
         </div>
     }

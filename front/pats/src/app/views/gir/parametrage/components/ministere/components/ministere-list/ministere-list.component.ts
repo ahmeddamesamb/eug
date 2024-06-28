@@ -99,7 +99,7 @@ export class MinistereListComponent {
       label: 'Date Fin',
       _props: { class: 'text-truncate' }
     },
-    { key: 'enCoursYN',label: 'Statut', _style: { width: '15%' } },
+    { key: 'enCoursYN',label: 'En cours', _style: { width: '15%' } },
     {
       key: 'show',
       label: 'Action',

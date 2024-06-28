@@ -1,6 +1,6 @@
 <div class="d-flex">
     <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder " (click)="create()" >
-        Ajouter domaine
+        Ajouter un domaine
     </button>
 </div>
 
@@ -43,13 +43,13 @@
         }
         @case ('show') {
             <div class="d-flex gap-2">
-                <button (click)="view(item.id)"  cButton cPopover="Détail!" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >
+                <button (click)="view(item.id)"  cButton cPopover="Détails" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >
                     <i class="bi bi-eye-fill"></i>
                 </button>
-                <button  cButton cPopover="Mise à jour!" cPopoverPlacement="top" color="primary" size="sm" variant="outline" (click)="update(item.id)" >
+                <button  cButton cPopover="Mise à jour" cPopoverPlacement="top" color="primary" size="sm" variant="outline" (click)="update(item.id)" >
                     <i class="bi bi-pen-fill"></i>
                 </button>
-                <button (click)="toggleLiveDemo(item)"  cButton cPopover="Suppréssion!" cPopoverPlacement="right" color="danger" size="sm" variant="outline">
+                <button (click)="toggleLiveDemo(item)"  cButton cPopover="Suppression" cPopoverPlacement="right" color="danger" size="sm" variant="outline">
                   <i class="bi bi-x-lg"></i>
                 </button>
 

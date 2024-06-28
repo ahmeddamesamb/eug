@@ -2,7 +2,7 @@
     @if (id !=null) {
         <h3>Mise à jour</h3>
     }@else {
-        <h3>Nouvelle Ufr</h3>
+        <h3>Nouvelle UFR</h3>
     }
     
     <form #customStylesForm="ngForm"
@@ -14,20 +14,20 @@
 
     >
         <c-col md="12">
-            <label cLabel for="validationCustom01">Libellé Ufr </label>
+            <label cLabel for="validationCustom01">Libellé UFR </label>
             <input cFormControl id="validationCustom01" required type="text" value=""
             [valid]="(ufrForm?.get('libeleUfr')?.touched && ufrForm?.get('libeleUfr')?.valid) ? true
                : (ufrForm?.get('libeleUfr')?.touched) && ufrForm?.get('libeleUfr')?.invalid ? false : undefined"
             formControlName="libeleUfr"/>
-            <c-form-feedback>Libellé requis </c-form-feedback>
+            <c-form-feedback>Le Libellé est obligatoire </c-form-feedback>
         </c-col>
         <c-col md="12">
-            <label cLabel for="validationCustom02">Sigle Ufr </label>
+            <label cLabel for="validationCustom02">Sigle UFR </label>
             <input cFormControl id="validationCustom02" required type="text"
               value="" formControlName="sigleUfr" [autofocus]="true"
               [valid]="(ufrForm?.get('sigleUfr')?.touched && ufrForm?.get('sigleUfr')?.valid) ? true
                : (ufrForm?.get('sigleUfr')?.touched) && ufrForm?.get('sigleUfr')?.invalid ? false : undefined"/>
-            <c-form-feedback >Sigle requis</c-form-feedback>
+            <c-form-feedback >Le Sigle est obligatoire</c-form-feedback>
         </c-col>
 
         <c-col md="12">
