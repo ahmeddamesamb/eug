@@ -6,9 +6,9 @@
             <!-- display item data, label data and data -->
             <app-data-display label="Nom" [data]="specialite?.nomSpecialites"  ></app-data-display>
     
-            <app-data-display label="sigle" [data]="specialite?.sigleSpecialites"  ></app-data-display>
-            <app-data-display label="mention" [data]="specialite?.mention?.libelleMention"  ></app-data-display>
-            <app-data-display label="Particulier" [data]="specialite?.specialiteParticulierYN | numberToString"  ></app-data-display>
+            <app-data-display label="Sigle" [data]="specialite?.sigleSpecialites"  ></app-data-display>
+            <app-data-display label="Mention" [data]="specialite?.mention?.libelleMention"  ></app-data-display>
+            <app-data-display label="Particuliere" [data]="specialite?.specialiteParticulierYN | numberToString"  ></app-data-display>
             <app-data-display label="Payante" [data]="specialite?.specialitesPayanteYN | numberToString"  ></app-data-display>
         </div>
     }

@@ -72,7 +72,7 @@ export class DomaineListComponent {
     },
     {
       key: 'ufrs',
-      label: 'ufrs'
+      label: 'UFR(s)'
     },
     {
       key: 'show',
