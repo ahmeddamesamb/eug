@@ -73,4 +73,9 @@ public interface DomaineService {
      * @return the list of entities.
      */
     Page<DomaineDTO> search(String query, Pageable pageable);
+    Page<DomaineDTO> findAllDomaineByUfr(Long ufrId, Pageable pageable);
+
+    Page<DomaineDTO> findAllDomaineByUniversite(Long universiteId, Pageable pageable);
+
+    Page<DomaineDTO> findAllDomaineByMinistere(Long ministereId, Pageable pageable);
 }
