@@ -13,6 +13,9 @@ import sn.ugb.gir.repository.search.DomaineSearchRepository;
 import sn.ugb.gir.service.DomaineService;
 import sn.ugb.gir.service.dto.DomaineDTO;
 import sn.ugb.gir.service.mapper.DomaineMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Domaine}.
@@ -108,5 +111,29 @@ public class DomaineServiceImpl implements DomaineService {
     public Page<DomaineDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Domaines for query {}", query);
         return domaineSearchRepository.search(query, pageable).map(domaineMapper::toDto);
+    }
+    @Override
+    public Page<DomaineDTO> findAllDomaineByUfr(Long ufrId, Pageable pageable) {
+        return domaineRepository.findByUfrsId(ufrId, pageable).map(domaineMapper::toDto);
+    }
+
+    @Override
+    public Page<DomaineDTO> findAllDomaineByUniversite(Long universiteId, Pageable pageable) {
+        return domaineRepository.findByUfrsUniversiteId(universiteId, pageable).map(domaineMapper::toDto);
+    }
+
+    @Override
+    public Page<DomaineDTO> findAllDomaineByMinistere(Long ministereId, Pageable pageable) {
+        return domaineRepository.findByUfrsUniversiteMinistereId(ministereId, pageable).map(domaineMapper::toDto);
+    }
+
+    private void validateData(DomaineDTO domaineDto) {
+        if (domaineDto.getLibelleDomaine().isEmpty() || domaineDto.getLibelleDomaine().isBlank()){
+            throw new BadRequestAlertException("Le Domaine ne peut pas être vide.", ENTITY_NAME, "getLibelleDomaineNotNull");
+        }
+        Optional<Domaine> existingDomaine = domaineRepository.findByLibelleDomaineIgnoreCase(domaineDto.getLibelleDomaine());
+        if (existingDomaine.isPresent() && !existingDomaine.get().getId().equals(domaineDto.getId())) {
+            throw new BadRequestAlertException("Un Domaine avec le même libellé existe.", ENTITY_NAME, "getLibelleDomaineExist");
+        }
     }
 }
