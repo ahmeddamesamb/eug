@@ -65,4 +65,8 @@ public interface DisciplineSportiveEtudiantService {
      * @return the list of entities.
      */
     Page<DisciplineSportiveEtudiantDTO> search(String query, Pageable pageable);
+
+    Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantCodeEtu(Pageable pageable, String codeEtu);
+    Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantId(Pageable pageable,Long id);
+    Page<DisciplineSportiveEtudiantDTO> findAllByDisciplineSportiveId(Pageable pageable,Long id);
 }
