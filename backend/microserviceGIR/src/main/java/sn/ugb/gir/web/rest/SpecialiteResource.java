@@ -254,4 +254,10 @@ public class SpecialiteResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
+    @PutMapping("/specialites/actifYN/{id}")
+    public ResponseEntity<SpecialiteDTO> setActifYNSpecialite(@PathVariable Long id, @RequestBody Boolean actifYN) {
+        SpecialiteDTO updatedSpecialite = specialiteService.setActifYNSpecialite(id, actifYN);
+        return ResponseEntity.ok(updatedSpecialite);
+    }
 }

@@ -69,4 +69,6 @@ public interface UfrService {
     Page<UfrDTO> getAllUfrByUniversite(Long universiteId, Pageable pageable);
 
     Page<UfrDTO> getAllUfrByMinistere(Long ministereId, Pageable pageable);
+
+    UfrDTO setActifYNUfr(Long id, Boolean actifYN);
 }

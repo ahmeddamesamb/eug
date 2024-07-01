@@ -123,6 +123,15 @@ public class UfrServiceImpl implements UfrService {
             .map(ufrMapper::toDto);
     }
 
+    @Override
+    public UfrDTO setActifYNUfr(Long id, Boolean actifYN) {
+        Ufr ufr = ufrRepository.findById(id)
+            .orElseThrow(() -> new BadRequestAlertException("Ufr not found.", ENTITY_NAME, "UfrNotFound"));
+        ufr.setActifYN(actifYN);
+        ufr = ufrRepository.save(ufr);
+        return ufrMapper.toDto(ufr);
+    }
+
     private void validateData(UfrDTO ufrDTO) {
         if (ufrDTO.getLibelleUfr().isBlank()){
             throw new BadRequestAlertException("Le libellé ne peut pas être vide.", ENTITY_NAME, "libelleUfrNotNull");

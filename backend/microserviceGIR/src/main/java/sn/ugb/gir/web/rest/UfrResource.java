@@ -221,4 +221,10 @@ public class UfrResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
+    @PutMapping("/ufrs/actifYN/{id}")
+    public ResponseEntity<UfrDTO> setActifYNUfr(@PathVariable Long id, @RequestBody Boolean actifYN) {
+        UfrDTO updatedUfr = ufrService.setActifYNUfr(id, actifYN);
+        return ResponseEntity.ok(updatedUfr);
+    }
 }
