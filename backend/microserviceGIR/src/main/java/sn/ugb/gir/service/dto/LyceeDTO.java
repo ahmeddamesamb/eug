@@ -1,6 +1,8 @@
 package sn.ugb.gir.service.dto;
 
 import jakarta.validation.constraints.*;
+import org.checkerframework.common.aliasing.qual.Unique;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,8 +15,10 @@ public class LyceeDTO implements Serializable {
     private Long id;
 
     @NotNull
+    @Unique
     private String nomLycee;
 
+    @NotNull //Ajoute
     private String codeLycee;
 
     private String villeLycee;

@@ -65,4 +65,14 @@ public interface LyceeService {
      * @return the list of entities.
      */
     Page<LyceeDTO> search(String query, Pageable pageable);
+
+    /**
+     * Get all the lycees by a given Region.
+     *
+     * @param pageable the pagination information.
+     * @param id the id of pagination
+     *
+     * @return the list of entities.
+     */
+    Page<LyceeDTO> findAllByRegionId(Pageable pageable, Long id);
 }

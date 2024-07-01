@@ -111,7 +111,6 @@ public class UniversiteResource {
         log.debug("REST request to partial update Universite partially : {}, {}", id, universiteDTO);
 
         validateDataUpdate(universiteDTO,id);
-
         Optional<UniversiteDTO> result = universiteService.partialUpdate(universiteDTO,id);
         return ResponseUtil.wrapOrNotFound(
             result,

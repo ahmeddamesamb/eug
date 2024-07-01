@@ -84,17 +84,8 @@ public class OperateurResource {
         @Valid @RequestBody OperateurDTO operateurDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Operateur : {}, {}", id, operateurDTO);
-        if (operateurDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, operateurDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!operateurRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(operateurDTO,id);
         OperateurDTO result = operateurService.update(operateurDTO);
         return ResponseEntity
             .ok()
@@ -119,17 +110,8 @@ public class OperateurResource {
         @NotNull @RequestBody OperateurDTO operateurDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Operateur partially : {}, {}", id, operateurDTO);
-        if (operateurDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, operateurDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!operateurRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(operateurDTO,id);
         Optional<OperateurDTO> result = operateurService.partialUpdate(operateurDTO);
 
         return ResponseUtil.wrapOrNotFound(
@@ -201,6 +183,18 @@ public class OperateurResource {
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         } catch (RuntimeException e) {
             throw ElasticsearchExceptionMapper.mapException(e);
+        }
+    }
+
+    public void validateDataUpdate(OperateurDTO operateurDTO, Long id){
+        if (operateurDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, operateurDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+        if (!operateurRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
     }
 }
