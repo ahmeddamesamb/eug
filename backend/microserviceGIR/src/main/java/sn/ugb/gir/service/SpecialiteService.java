@@ -75,4 +75,6 @@ public interface SpecialiteService {
     Page<SpecialiteDTO> getAllSpecialiteByUniversite(Long universiteId, Pageable pageable);
 
     Page<SpecialiteDTO> getAllSpecialiteByMinistere(Long ministereId, Pageable pageable);
+
+    SpecialiteDTO setActifYNSpecialite(Long id, Boolean actifYN);
 }

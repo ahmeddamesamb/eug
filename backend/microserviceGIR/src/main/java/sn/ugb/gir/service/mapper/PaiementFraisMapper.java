@@ -13,14 +13,13 @@ import sn.ugb.gir.service.dto.PaiementFraisDTO;
 /**
  * Mapper for the entity {@link PaiementFrais} and its DTO {@link PaiementFraisDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring" , uses ={FraisMapper.class, OperateurMapper.class, InscriptionAdministrativeFormationMapper.class})
 public interface PaiementFraisMapper extends EntityMapper<PaiementFraisDTO, PaiementFrais> {
-    @Mapping(target = "frais", source = "frais", qualifiedByName = "fraisId")
-    @Mapping(target = "operateur", source = "operateur", qualifiedByName = "operateurId")
+    @Mapping(target = "frais", source = "frais")
+    @Mapping(target = "operateur", source = "operateur")
     @Mapping(
         target = "inscriptionAdministrativeFormation",
-        source = "inscriptionAdministrativeFormation",
-        qualifiedByName = "inscriptionAdministrativeFormationId"
+        source = "inscriptionAdministrativeFormation"
     )
     PaiementFraisDTO toDto(PaiementFrais s);
 

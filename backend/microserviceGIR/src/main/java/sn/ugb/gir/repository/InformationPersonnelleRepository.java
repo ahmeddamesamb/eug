@@ -9,4 +9,6 @@ import sn.ugb.gir.domain.InformationPersonnelle;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface InformationPersonnelleRepository extends JpaRepository<InformationPersonnelle, Long> {}
+public interface InformationPersonnelleRepository extends JpaRepository<InformationPersonnelle, Long> {
+    InformationPersonnelle findByEtudiantCodeEtu(String codeEtudiant);
+}

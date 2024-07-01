@@ -65,4 +65,6 @@ public interface FormationInvalideService {
      * @return the list of entities.
      */
     Page<FormationInvalideDTO> search(String query, Pageable pageable);
+
+    FormationInvalideDTO invaliderFormation(Long formationId, Long anneeAcademiqueId);
 }

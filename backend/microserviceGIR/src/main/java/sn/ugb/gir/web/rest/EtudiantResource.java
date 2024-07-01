@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sn.ugb.gir.repository.EtudiantRepository;
 import sn.ugb.gir.service.EtudiantService;
+import sn.ugb.gir.service.dto.DossierEtudiantDTO;
 import sn.ugb.gir.service.dto.EtudiantDTO;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 import sn.ugb.gir.web.rest.errors.ElasticsearchExceptionMapper;
@@ -216,5 +217,11 @@ public class EtudiantResource {
         } catch (RuntimeException e) {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
+    }
+
+    @GetMapping("/details/{codeEtudiant}")
+    public ResponseEntity<DossierEtudiantDTO> getEtudiantDetails(@PathVariable String codeEtudiant) {
+        DossierEtudiantDTO etudiantDetails = etudiantService.getEtudiantDetailsByCodeEtu(codeEtudiant);
+        return ResponseEntity.ok().body(etudiantDetails);
     }
 }
