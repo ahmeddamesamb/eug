@@ -3,16 +3,22 @@ package sn.ugb.gir.service.impl;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sn.ugb.gir.domain.AnneeAcademique;
+import sn.ugb.gir.domain.Formation;
 import sn.ugb.gir.domain.FormationInvalide;
+import sn.ugb.gir.repository.AnneeAcademiqueRepository;
 import sn.ugb.gir.repository.FormationInvalideRepository;
+import sn.ugb.gir.repository.FormationRepository;
 import sn.ugb.gir.repository.search.FormationInvalideSearchRepository;
 import sn.ugb.gir.service.FormationInvalideService;
 import sn.ugb.gir.service.dto.FormationInvalideDTO;
 import sn.ugb.gir.service.mapper.FormationInvalideMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.FormationInvalide}.
@@ -23,11 +29,20 @@ public class FormationInvalideServiceImpl implements FormationInvalideService {
 
     private final Logger log = LoggerFactory.getLogger(FormationInvalideServiceImpl.class);
 
+    private static final String ENTITY_NAME = "FormationInvalide";
+
+
     private final FormationInvalideRepository formationInvalideRepository;
 
     private final FormationInvalideMapper formationInvalideMapper;
 
     private final FormationInvalideSearchRepository formationInvalideSearchRepository;
+
+    @Autowired
+    private FormationRepository formationRepository;
+
+    @Autowired
+    private AnneeAcademiqueRepository anneeAcademiqueRepository;
 
     public FormationInvalideServiceImpl(
         FormationInvalideRepository formationInvalideRepository,
@@ -105,4 +120,27 @@ public class FormationInvalideServiceImpl implements FormationInvalideService {
         log.debug("Request to search for a page of FormationInvalides for query {}", query);
         return formationInvalideSearchRepository.search(query, pageable).map(formationInvalideMapper::toDto);
     }
+
+    public FormationInvalideDTO invaliderFormation(Long formationId, Long anneeAcademiqueId) {
+        FormationInvalide formationInvalide = new FormationInvalide();
+        Optional<Formation> formationOpt = formationRepository.findById(formationId);
+        Optional<AnneeAcademique> anneeAcademiqueOpt = anneeAcademiqueRepository.findById(anneeAcademiqueId);
+
+        if (!formationOpt.isPresent()) {
+            throw new BadRequestAlertException("Cette Formation n'est pas présente", ENTITY_NAME, "formationIntrouvable");
+        }
+
+        if (!anneeAcademiqueOpt.isPresent()) {
+            throw new BadRequestAlertException("Cette Année Académique n'est pas présente", ENTITY_NAME, "anneeAcademiqueIntrouvable");
+        }
+
+        formationInvalide.setFormation(formationOpt.get());
+        formationInvalide.setAnneeAcademique(anneeAcademiqueOpt.get());
+        formationInvalide.setActifYN(false);
+
+        formationInvalide = formationInvalideRepository.save(formationInvalide);
+        return formationInvalideMapper.toDto(formationInvalide);
+    }
+
+
 }
