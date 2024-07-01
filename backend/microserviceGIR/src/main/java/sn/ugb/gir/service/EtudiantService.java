@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import sn.ugb.gir.service.dto.DossierEtudiantDTO;
 import sn.ugb.gir.service.dto.EtudiantDTO;
 
 /**
@@ -79,4 +80,6 @@ public interface EtudiantService {
      * @return the list of entities.
      */
     Page<EtudiantDTO> search(String query, Pageable pageable);
+
+    DossierEtudiantDTO getEtudiantDetailsByCodeEtu(String codeEtudiant);
 }

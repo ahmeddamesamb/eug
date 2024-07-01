@@ -7,16 +7,22 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sn.ugb.gir.domain.Etudiant;
+import sn.ugb.gir.domain.*;
 import sn.ugb.gir.repository.EtudiantRepository;
+import sn.ugb.gir.repository.InformationPersonnelleRepository;
+import sn.ugb.gir.repository.PaiementFraisRepository;
 import sn.ugb.gir.repository.search.EtudiantSearchRepository;
 import sn.ugb.gir.service.EtudiantService;
-import sn.ugb.gir.service.dto.EtudiantDTO;
+import sn.ugb.gir.service.dto.*;
 import sn.ugb.gir.service.mapper.EtudiantMapper;
+import sn.ugb.gir.service.mapper.FormationPriveeMapper;
+import sn.ugb.gir.service.mapper.InformationPersonnelleMapper;
+import sn.ugb.gir.service.mapper.PaiementFraisMapper;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Etudiant}.
@@ -32,6 +38,22 @@ public class EtudiantServiceImpl implements EtudiantService {
     private final EtudiantMapper etudiantMapper;
 
     private final EtudiantSearchRepository etudiantSearchRepository;
+
+    @Autowired
+    private PaiementFraisRepository paiementFraisRepository;
+
+    @Autowired
+    private PaiementFraisMapper paiementFraisMapper;
+
+    @Autowired
+    private InformationPersonnelleMapper informationPersonnelleMapper;
+
+    @Autowired
+    private InformationPersonnelleRepository informationPersonnelleRepository;
+
+    @Autowired
+    FormationPriveeMapper formationPriveeMapper;
+
 
     public EtudiantServiceImpl(
         EtudiantRepository etudiantRepository,
@@ -136,5 +158,40 @@ public class EtudiantServiceImpl implements EtudiantService {
     public Page<EtudiantDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Etudiants for query {}", query);
         return etudiantSearchRepository.search(query, pageable).map(etudiantMapper::toDto);
+    }
+
+    @Override
+    public DossierEtudiantDTO getEtudiantDetailsByCodeEtu(String codeEtudiant) {
+
+        List<PaiementFrais> paiementFraisEntities = paiementFraisRepository.findByInscriptionAdministrativeFormationInscriptionAdministrativeEtudiantCodeEtu(codeEtudiant);
+
+        List<PaiementFraisDTO> paiementFrais = paiementFraisEntities.stream()
+            .map(paiementFraisMapper::toDto)
+            .collect(Collectors.toList());
+
+        Formation formation = paiementFraisEntities.stream()
+            .map(pf -> pf.getInscriptionAdministrativeFormation().getFormation())
+            .findFirst()
+            .orElse(null);
+
+        FormationPriveeDTO formationPriveeDTO = null;
+        if (formation != null) {
+            FormationPrivee formationPrivee = formation.getFormationPrivee();
+            if (formationPrivee != null) {
+                formationPriveeDTO = formationPriveeMapper.toDto(formationPrivee);
+            }
+        }
+
+        InformationPersonnelle informationPersonnelle = informationPersonnelleRepository.findByEtudiantCodeEtu(codeEtudiant);
+        InformationPersonnelleDTO informationPersonnelleDTO = informationPersonnelleMapper.toDto(informationPersonnelle);
+
+        informationPersonnelleDTO.setEtudiant(null);
+
+        DossierEtudiantDTO dossierEtudiantDTO = new DossierEtudiantDTO();
+        dossierEtudiantDTO.setInformationPersonnelle(informationPersonnelleDTO);
+        dossierEtudiantDTO.setPaiementFrais(paiementFrais);
+        dossierEtudiantDTO.setFormationPrivee(formationPriveeDTO);
+
+        return dossierEtudiantDTO;
     }
 }

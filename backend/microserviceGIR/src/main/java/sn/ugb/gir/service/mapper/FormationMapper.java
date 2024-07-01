@@ -15,7 +15,7 @@ import sn.ugb.gir.service.dto.TypeFormationDTO;
 /**
  * Mapper for the entity {@link Formation} and its DTO {@link FormationDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring" , uses = {TypeFormationMapper.class, NiveauMapper.class, SpecialiteMapper.class, DepartementMapper.class})
 public interface FormationMapper extends EntityMapper<FormationDTO, Formation> {
     @Mapping(target = "typeFormation", source = "typeFormation", qualifiedByName = "typeFormationId")
     @Mapping(target = "niveau", source = "niveau", qualifiedByName = "niveauId")
@@ -26,20 +26,32 @@ public interface FormationMapper extends EntityMapper<FormationDTO, Formation> {
     @Named("typeFormationId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleTypeFormation", source = "libelleTypeFormation")
     TypeFormationDTO toDtoTypeFormationId(TypeFormation typeFormation);
 
     @Named("niveauId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleNiveau", source = "libelleNiveau")
+    @Mapping(target = "codeNiveau", source = "codeNiveau")
+    @Mapping(target = "anneeEtude", source = "anneeEtude")
+    @Mapping(target = "actifYN", source = "actifYN")
     NiveauDTO toDtoNiveauId(Niveau niveau);
 
     @Named("specialiteId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nomSpecialites", source = "nomSpecialites")
+    @Mapping(target = "sigleSpecialites", source = "sigleSpecialites")
+    @Mapping(target = "specialiteParticulierYN", source = "specialiteParticulierYN")
+    @Mapping(target = "specialitesPayanteYN", source = "specialitesPayanteYN")
+    @Mapping(target = "actifYN", source = "actifYN")
     SpecialiteDTO toDtoSpecialiteId(Specialite specialite);
 
     @Named("departementId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nomDepatement", source = "nomDepatement")
+    @Mapping(target = "actifYN", source = "actifYN")
     DepartementDTO toDtoDepartementId(Departement departement);
 }
