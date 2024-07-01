@@ -90,6 +90,20 @@ export const routes: Routes = [
         }
       ]
   },
+
+  {
+    path: 'cycle',
+    data: {
+      title: 'cycle'
+  },
+    children: [
+      // Default component
+      {
+        path:"",
+        loadChildren: () => import('./components/cycle/routes').then((m) => m.routes)
+      }
+    ]
+},
     // {
     // path: 'action',
     //     loadComponent: () => import('./components/action/action.component').then(m => m.ActionComponent),

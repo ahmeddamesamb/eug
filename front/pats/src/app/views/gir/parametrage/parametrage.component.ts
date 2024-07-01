@@ -36,8 +36,8 @@ export class ParametrageComponent {
     { name: 'UFR', id: 'tab-05', route: 'ufr'},
     { name: 'Université', id: 'tab-06' , route: 'universite'},
     { name: 'Ministère', id: 'tab-07' , route: 'ministere'},
-    /*{ name: 'Région', id: 'tab-08' , route: 'region'},
-    { name: 'Pays', id: 'tab-09' , route: 'pays'},
+    { name: 'Cycle', id: 'tab-08' , route: 'cycle'},
+   /* { name: 'Pays', id: 'tab-09' , route: 'pays'},
     { name: 'Zone', id: 'tab-10' , route: 'zone'},*/
   ];
 }
