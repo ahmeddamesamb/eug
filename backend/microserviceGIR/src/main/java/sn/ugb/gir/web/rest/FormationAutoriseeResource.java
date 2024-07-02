@@ -2,9 +2,12 @@ package sn.ugb.gir.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springdoc.core.annotations.ParameterObject;
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sn.ugb.gir.repository.FormationAutoriseeRepository;
 import sn.ugb.gir.service.FormationAutoriseeService;
 import sn.ugb.gir.service.dto.FormationAutoriseeDTO;
+import sn.ugb.gir.service.dto.FormationDTO;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 import sn.ugb.gir.web.rest.errors.ElasticsearchExceptionMapper;
 import tech.jhipster.web.util.HeaderUtil;
@@ -215,4 +219,16 @@ public class FormationAutoriseeResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+
+    @PostMapping("/definir-formations-autorisees")
+    public ResponseEntity<FormationAutoriseeDTO> definirFormationsAutorisees(
+        @RequestParam Long formationId,
+        @RequestParam List<Long> formationsNiveauNPlus1Ids,
+        @RequestParam LocalDate dateDebut
+    ) {
+        log.debug("REST request to define authorized N+1 level formations for Formation ID: {}", formationId);
+        FormationAutoriseeDTO result = formationAutoriseeService.definirFormationsAutorisees(formationId, formationsNiveauNPlus1Ids, dateDebut);
+        return ResponseEntity.ok().body(result);
+    }
+
 }
