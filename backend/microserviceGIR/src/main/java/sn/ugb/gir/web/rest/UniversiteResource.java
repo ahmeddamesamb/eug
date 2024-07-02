@@ -84,17 +84,8 @@ public class UniversiteResource {
         @Valid @RequestBody UniversiteDTO universiteDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Universite : {}, {}", id, universiteDTO);
-        if (universiteDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, universiteDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!universiteRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(universiteDTO,id);
         UniversiteDTO result = universiteService.update(universiteDTO);
         return ResponseEntity
             .ok()
@@ -119,19 +110,9 @@ public class UniversiteResource {
         @NotNull @RequestBody UniversiteDTO universiteDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Universite partially : {}, {}", id, universiteDTO);
-        if (universiteDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, universiteDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!universiteRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(universiteDTO,id);
         Optional<UniversiteDTO> result = universiteService.partialUpdate(universiteDTO);
-
         return ResponseUtil.wrapOrNotFound(
             result,
             HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, universiteDTO.getId().toString())
@@ -201,6 +182,18 @@ public class UniversiteResource {
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         } catch (RuntimeException e) {
             throw ElasticsearchExceptionMapper.mapException(e);
+        }
+    }
+
+    public void validateDataUpdate(UniversiteDTO universiteDTO, Long id){
+        if (universiteDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, universiteDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+        if (!universiteRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
     }
 }

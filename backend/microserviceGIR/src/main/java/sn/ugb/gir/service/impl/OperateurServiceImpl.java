@@ -13,6 +13,9 @@ import sn.ugb.gir.repository.search.OperateurSearchRepository;
 import sn.ugb.gir.service.OperateurService;
 import sn.ugb.gir.service.dto.OperateurDTO;
 import sn.ugb.gir.service.mapper.OperateurMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Operateur}.
@@ -42,6 +45,8 @@ public class OperateurServiceImpl implements OperateurService {
     @Override
     public OperateurDTO save(OperateurDTO operateurDTO) {
         log.debug("Request to save Operateur : {}", operateurDTO);
+
+        validateData(operateurDTO);
         Operateur operateur = operateurMapper.toEntity(operateurDTO);
         operateur = operateurRepository.save(operateur);
         OperateurDTO result = operateurMapper.toDto(operateur);
@@ -52,6 +57,8 @@ public class OperateurServiceImpl implements OperateurService {
     @Override
     public OperateurDTO update(OperateurDTO operateurDTO) {
         log.debug("Request to update Operateur : {}", operateurDTO);
+
+        validateData(operateurDTO);
         Operateur operateur = operateurMapper.toEntity(operateurDTO);
         operateur = operateurRepository.save(operateur);
         OperateurDTO result = operateurMapper.toDto(operateur);
@@ -63,6 +70,7 @@ public class OperateurServiceImpl implements OperateurService {
     public Optional<OperateurDTO> partialUpdate(OperateurDTO operateurDTO) {
         log.debug("Request to partially update Operateur : {}", operateurDTO);
 
+        validateData(operateurDTO);
         return operateurRepository
             .findById(operateurDTO.getId())
             .map(existingOperateur -> {
@@ -104,5 +112,25 @@ public class OperateurServiceImpl implements OperateurService {
     public Page<OperateurDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Operateurs for query {}", query);
         return operateurSearchRepository.search(query, pageable).map(operateurMapper::toDto);
+    }
+
+    public void validateData(OperateurDTO operateurDTO){
+        if (operateurDTO.getCodeOperateur().isEmpty() || operateurDTO.getCodeOperateur().isBlank() ) {
+            throw new BadRequestAlertException("Veuillez renseigner le champs code operateur ", ENTITY_NAME, "codeOperateurobligatoire");
+        }
+        if ( operateurDTO.getUserLogin().isEmpty() || operateurDTO.getUserLogin().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner le champs userLogin  ", ENTITY_NAME, "userLoginobligatoire");
+        }
+        if ( operateurDTO.getLibelleOperateur().isEmpty() || operateurDTO.getLibelleOperateur().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner le champs libelle operateur  ", ENTITY_NAME, "libelleOperateurobligatoire");
+        }
+        Optional<Operateur> existingOperateur = operateurRepository.findByLibelleOperateurIgnoreCase( operateurDTO.getLibelleOperateur());
+        if (existingOperateur.isPresent() && !existingOperateur.get().getId().equals(operateurDTO.getId())){
+            throw new BadRequestAlertException("Un autre operateur porte deja ce libelle ", ENTITY_NAME, "libelleOperateurExistedeja");
+        }
+        existingOperateur = operateurRepository.findByCodeOperateurIgnoreCase(operateurDTO.getCodeOperateur());
+        if (existingOperateur.isPresent() && !existingOperateur.get().getId().equals(operateurDTO.getId())){
+            throw new BadRequestAlertException("Un autre operateur porte deja ce code ", ENTITY_NAME, "codeOperateurExistedeja");
+        }
     }
 }

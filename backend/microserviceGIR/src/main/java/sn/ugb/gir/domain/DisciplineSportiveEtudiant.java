@@ -3,6 +3,8 @@ package sn.ugb.gir.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
+
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,18 +26,22 @@ public class DisciplineSportiveEtudiant implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "licence_sportive_yn")
+    @NotNull //Ajoutee
+    @Column(name = "licence_sportive_yn", nullable = false)
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Boolean)
     private Boolean licenceSportiveYN;
 
-    @Column(name = "competition_ugbyn")
+    @NotNull //Ajoutee
+    @Column(name = "competition_ugbyn", nullable = false)
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Boolean)
     private Boolean competitionUGBYN;
 
+    @NotNull //Ajoutee
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "disciplineSportiveEtudiants" }, allowSetters = true)
     private DisciplineSportive disciplineSportive;
 
+    @NotNull //Ajoutee
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
         value = {

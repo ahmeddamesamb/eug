@@ -17,5 +17,4 @@ public interface LyceeRepository extends JpaRepository<Lycee, Long> {
     boolean existsLyceeByNomLycee(String nonLycee);
     Page<Lycee> findAllByRegionId(Pageable pageable, Long id);
     Optional <Lycee> findByNomLyceeIgnoreCase(String nomLycee);
-
 }
