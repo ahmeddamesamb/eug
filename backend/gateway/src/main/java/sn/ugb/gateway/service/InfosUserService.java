@@ -87,4 +87,8 @@ public interface InfosUserService {
      * @return the list of entities.
      */
     Flux<InfosUserDTO> search(String query, Pageable pageable);
+
+
+    <T> Mono<T> archiveInfosUser(Long id);
+
 }

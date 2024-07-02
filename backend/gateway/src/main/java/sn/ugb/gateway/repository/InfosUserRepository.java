@@ -1,5 +1,6 @@
 package sn.ugb.gateway.repository;
 
+import io.micrometer.observation.ObservationFilter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -42,6 +43,7 @@ public interface InfosUserRepository extends ReactiveCrudRepository<InfosUser, L
 
     @Override
     Mono<Void> deleteById(Long id);
+
 }
 
 interface InfosUserRepositoryInternal {
