@@ -17,9 +17,9 @@ public class FraisDTO implements Serializable {
 
     @NotNull
     private Double valeurFrais;
-
+    @NotNull
     private String descriptionFrais;
-
+    @NotNull
     private Boolean fraisPourAssimileYN;
 
     private Boolean fraisPourExonererYN;
@@ -39,9 +39,9 @@ public class FraisDTO implements Serializable {
     private Boolean estEnApplicationYN;
 
     private Boolean actifYN;
-
+    @NotNull
     private TypeFraisDTO typeFrais;
-
+    @NotNull
     private CycleDTO typeCycle;
 
     private Set<UniversiteDTO> universites = new HashSet<>();

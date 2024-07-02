@@ -29,13 +29,15 @@ public class Frais implements Serializable {
     private Long id;
 
     @NotNull
+    @Min(500) //Ajouter
     @Column(name = "valeur_frais", nullable = false)
     private Double valeurFrais;
 
+    @NotNull //Ajouter
     @Column(name = "description_frais")
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Text)
     private String descriptionFrais;
-
+    @NotNull //Ajouter
     @Column(name = "frais_pour_assimile_yn")
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Boolean)
     private Boolean fraisPourAssimileYN;
@@ -69,10 +71,12 @@ public class Frais implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Boolean)
     private Boolean actifYN;
 
+    @NotNull //Ajouter
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "frais" }, allowSetters = true)
     private TypeFrais typeFrais;
 
+    @NotNull //Ajouter
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "niveaux", "frais" }, allowSetters = true)
     private Cycle typeCycle;

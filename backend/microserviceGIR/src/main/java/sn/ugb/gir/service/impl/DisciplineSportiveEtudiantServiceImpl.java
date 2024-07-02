@@ -1,5 +1,6 @@
 package sn.ugb.gir.service.impl;
 
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -135,17 +136,19 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
     }
 
     private void validateData(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO){
-        if (disciplineSportiveEtudiantDTO.getLicenceSportiveYN().describeConstable().isEmpty()) {
+        if (Objects.equals(disciplineSportiveEtudiantDTO.getLicenceSportiveYN(), null)) {
             throw new BadRequestAlertException("Veuillez renseigner si l'etudiant à une licence sportive (Oui/Non)", ENTITY_NAME, "licenceSportiveNull");
         }
-        if (disciplineSportiveEtudiantDTO.getCompetitionUGBYN().describeConstable().isEmpty()) {
+        if (Objects.equals(disciplineSportiveEtudiantDTO.getCompetitionUGBYN(), null)) {
             throw new BadRequestAlertException("Veuillez renseigner si l'etudiant à fait une competition à l'UGB sportive (Oui/Non)", ENTITY_NAME, "competitionSportiveNull");
         }
-        if (disciplineSportiveEtudiantDTO.getEtudiant().getId().describeConstable().isEmpty()) {
-            throw new BadRequestAlertException("Veuillez renseigner l'id de l'etudiant", ENTITY_NAME, "etudiantNull");
+        if(Objects.equals(disciplineSportiveEtudiantDTO.getEtudiant(), null))
+        {
+            throw new BadRequestAlertException("Veuillez renseigner l'id de l'etudiant", ENTITY_NAME, "etudiantIsNull");
         }
-        if (disciplineSportiveEtudiantDTO.getDisciplineSportive().getId().describeConstable().isEmpty()) {
-            throw new BadRequestAlertException("Veuillez renseigner l'id du discipline sportive", ENTITY_NAME, "disciplineSportiveEtudiantNull");
+        if(Objects.equals(disciplineSportiveEtudiantDTO.getDisciplineSportive(), null))
+        {
+            throw new BadRequestAlertException("Veuillez renseigner l'id du discipline sportive", ENTITY_NAME, "disciplineSportiveEtudiantIsNull");
         }
 
         Long disciplineSportive = disciplineSportiveEtudiantDTO.getDisciplineSportive().getId();
