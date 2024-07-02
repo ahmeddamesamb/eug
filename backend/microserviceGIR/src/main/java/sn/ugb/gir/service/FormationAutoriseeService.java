@@ -1,9 +1,14 @@
 package sn.ugb.gir.service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import sn.ugb.gir.service.dto.FormationAutoriseeDTO;
+import sn.ugb.gir.service.dto.FormationDTO;
 
 /**
  * Service Interface for managing {@link sn.ugb.gir.domain.FormationAutorisee}.
@@ -73,4 +78,7 @@ public interface FormationAutoriseeService {
      * @return the list of entities.
      */
     Page<FormationAutoriseeDTO> search(String query, Pageable pageable);
+
+    FormationAutoriseeDTO definirFormationsAutorisees(Long formationId, List<Long> formationsNiveauNPlus1Ids, LocalDate dateDebut);
+
 }
