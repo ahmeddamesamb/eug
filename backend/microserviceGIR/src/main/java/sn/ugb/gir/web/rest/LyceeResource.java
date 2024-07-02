@@ -84,17 +84,8 @@ public class LyceeResource {
         @Valid @RequestBody LyceeDTO lyceeDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Lycee : {}, {}", id, lyceeDTO);
-        if (lyceeDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, lyceeDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!lyceeRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(lyceeDTO,id);
         LyceeDTO result = lyceeService.update(lyceeDTO);
         return ResponseEntity
             .ok()
@@ -119,17 +110,8 @@ public class LyceeResource {
         @NotNull @RequestBody LyceeDTO lyceeDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Lycee partially : {}, {}", id, lyceeDTO);
-        if (lyceeDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, lyceeDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!lyceeRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(lyceeDTO,id);
         Optional<LyceeDTO> result = lyceeService.partialUpdate(lyceeDTO);
 
         return ResponseUtil.wrapOrNotFound(
@@ -201,6 +183,35 @@ public class LyceeResource {
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         } catch (RuntimeException e) {
             throw ElasticsearchExceptionMapper.mapException(e);
+        }
+    }
+
+    /**
+     * {@code GET  /lycees} : get all the lycees.
+     *
+     * @param pageable the pagination information.
+     *
+     * @param id the id of region
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of lycees in body.
+     */
+    @GetMapping("/Regions/{id}")
+    public ResponseEntity<List<LyceeDTO>> getAllLyceesByRegion(@org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("id") Long id) {
+        log.debug("REST request to get a page of Lycees having an id of region");
+        Page<LyceeDTO> page = lyceeService.findAllByRegionId(pageable,id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    public void validateDataUpdate(LyceeDTO lyceeDTO, Long id){
+        if (lyceeDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, lyceeDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!lyceeRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
     }
 }

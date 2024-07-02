@@ -43,12 +43,12 @@ public class OperateurServiceImpl implements OperateurService {
         if (operateurDTO.getId() != null) {
             throw new BadRequestAlertException("A new operateur cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if (  operateurRepository.existsOperateurByCodeOperateur(operateurDTO.getCodeOperateur())) {
-            throw new BadRequestAlertException("Ce codeOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme code. ", ENTITY_NAME, "codeoperateurexists");
-        }
-        if (  operateurRepository.existsOperateurByLibelleOperateur(operateurDTO.getLibelleOperateur())) {
-            throw new BadRequestAlertException("Ce libelleOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme libelle. ", ENTITY_NAME, "libelleoperateurexists");
-        }
+//        if (  operateurRepository.existsOperateurByCodeOperateur(operateurDTO.getCodeOperateur())) {
+//            throw new BadRequestAlertException("Ce codeOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme code. ", ENTITY_NAME, "codeoperateurexists");
+//        }
+//        if (  operateurRepository.existsOperateurByLibelleOperateur(operateurDTO.getLibelleOperateur())) {
+//            throw new BadRequestAlertException("Ce libelleOperateur existe deja. Deux operateurs differents ne peuvent avoir le meme libelle. ", ENTITY_NAME, "libelleoperateurexists");
+//        }
         validateData(operateurDTO);
         Operateur operateur = operateurMapper.toEntity(operateurDTO);
         operateur = operateurRepository.save(operateur);

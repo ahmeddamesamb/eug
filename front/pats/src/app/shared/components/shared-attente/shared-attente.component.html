@@ -8,22 +8,8 @@
   <div class="d-flex flex-start mt-4 ">
 
     <div class="row ">
-
-
-
-      <!-- update description -->
-      <div class="d-flex mb-3">
-        <span class=" p-2 ">
-          <i class="bi bi-pen-fill  border border-primary  text-primary rounded cp" ></i>
-        </span>
-        <span>
-          <span class="fw-bold">Mise à jour</span> <br/>
-        consectetur. Cursus enim accumsan ut rhoncus cursus sed odio. Lobortis venenatis morbi feugiat sit. Amet velit aenean felis
-        </span>
-      </div>
-
-
-      <!-- view description -->
+      @if(view){
+        <!-- view description -->
       <div class="d-flex mb-3">
         <span class=" p-2 ">
           <i class="bi bi-eye-fill  border border-light  text-light rounded cp" ></i>
@@ -34,17 +20,57 @@
         </span>
       </div>
 
-      <!-- delete description -->
+      }
+
+      @if(update){
+        <!-- update description -->
+      <div class="d-flex mb-3">
+        <span class=" p-2 ">
+          <i class="bi bi-pen-fill  border border-primary  text-primary rounded cp" ></i>
+        </span>
+        <span>
+          <span class="fw-bold">Mise à jour</span> <br/>
+        consectetur. Cursus enim accumsan ut rhoncus cursus sed odio. Lobortis venenatis morbi feugiat sit. Amet velit aenean felis
+        </span>
+      </div>
+      }
+
+      @if(delete){
+        <!-- delete description -->
       <div class="d-flex mb-3">
         <span class=" p-2 ">
           <i class="bi bi-x-lg  border border-danger  text-danger rounded cp"></i>
         </span>
         <span>
-          <span class="fw-bold">Suprimer un element</span> <br/>
+          <span class="fw-bold">Supprimer un element</span> <br/>
         consectetur. Cursus enim accumsan ut rhoncus cursus sed odio. Lobortis venenatis morbi feugiat sit. Amet velit aenean felis
         </span>
       </div>
-
+      }
+      @if(formationAutorise){
+        <!-- Attente gestion des formations autorisées n+1 -->
+      <div class="d-flex mb-3">
+        <span class=" p-2 ">
+          <i class="bi bi-bag-check  border border-success  text-success rounded cp"></i>
+        </span>
+        <span>
+          <span class="fw-bold">Formations autorisées n+1</span> <br/>
+        consectetur. Cursus enim accumsan ut rhoncus cursus sed odio. Lobortis venenatis morbi feugiat sit. Amet velit aenean felis
+        </span>
+      </div>
+      }
+      @if(invalideFormation){
+        <!-- Attente gestion des formations invalides -->
+      <div class="d-flex mb-3">
+        <span class=" p-2 ">
+          <i class="bi bi-ban  border border-danger  text-danger rounded cp"></i>
+        </span>
+        <span>
+          <span class="fw-bold">Formations invalides</span> <br/>
+        consectetur. Cursus enim accumsan ut rhoncus cursus sed odio. Lobortis venenatis morbi feugiat sit. Amet velit aenean felis
+        </span>
+      </div>
+      }
     </div>
 
 

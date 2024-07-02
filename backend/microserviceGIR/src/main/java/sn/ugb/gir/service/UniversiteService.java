@@ -65,4 +65,13 @@ public interface UniversiteService {
      * @return the list of entities.
      */
     Page<UniversiteDTO> search(String query, Pageable pageable);
+
+    /**
+     * Get all the universites having ministere id .
+     *
+     * @param pageable the pagination information.
+     * @param id
+     * @return the list of entities.
+     */
+    Page<UniversiteDTO> findAllByMinistereId(Pageable pageable,Long id);
 }

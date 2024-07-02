@@ -17,5 +17,7 @@ public interface LyceeMapper extends EntityMapper<LyceeDTO, Lycee> {
     @Named("regionId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleRegion", source = "libelleRegion")
+    @Mapping(target = "pays", source = "pays")
     RegionDTO toDtoRegionId(Region region);
 }

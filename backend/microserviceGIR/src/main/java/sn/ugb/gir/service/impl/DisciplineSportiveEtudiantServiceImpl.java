@@ -13,6 +13,9 @@ import sn.ugb.gir.repository.search.DisciplineSportiveEtudiantSearchRepository;
 import sn.ugb.gir.service.DisciplineSportiveEtudiantService;
 import sn.ugb.gir.service.dto.DisciplineSportiveEtudiantDTO;
 import sn.ugb.gir.service.mapper.DisciplineSportiveEtudiantMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.DisciplineSportiveEtudiant}.
@@ -42,6 +45,8 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
     @Override
     public DisciplineSportiveEtudiantDTO save(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO) {
         log.debug("Request to save DisciplineSportiveEtudiant : {}", disciplineSportiveEtudiantDTO);
+
+        validateData(disciplineSportiveEtudiantDTO);
         DisciplineSportiveEtudiant disciplineSportiveEtudiant = disciplineSportiveEtudiantMapper.toEntity(disciplineSportiveEtudiantDTO);
         disciplineSportiveEtudiant = disciplineSportiveEtudiantRepository.save(disciplineSportiveEtudiant);
         DisciplineSportiveEtudiantDTO result = disciplineSportiveEtudiantMapper.toDto(disciplineSportiveEtudiant);
@@ -52,6 +57,8 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
     @Override
     public DisciplineSportiveEtudiantDTO update(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO) {
         log.debug("Request to update DisciplineSportiveEtudiant : {}", disciplineSportiveEtudiantDTO);
+
+        validateData(disciplineSportiveEtudiantDTO);
         DisciplineSportiveEtudiant disciplineSportiveEtudiant = disciplineSportiveEtudiantMapper.toEntity(disciplineSportiveEtudiantDTO);
         disciplineSportiveEtudiant = disciplineSportiveEtudiantRepository.save(disciplineSportiveEtudiant);
         DisciplineSportiveEtudiantDTO result = disciplineSportiveEtudiantMapper.toDto(disciplineSportiveEtudiant);
@@ -63,6 +70,7 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
     public Optional<DisciplineSportiveEtudiantDTO> partialUpdate(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO) {
         log.debug("Request to partially update DisciplineSportiveEtudiant : {}", disciplineSportiveEtudiantDTO);
 
+        validateData(disciplineSportiveEtudiantDTO);
         return disciplineSportiveEtudiantRepository
             .findById(disciplineSportiveEtudiantDTO.getId())
             .map(existingDisciplineSportiveEtudiant -> {
@@ -104,5 +112,48 @@ public class DisciplineSportiveEtudiantServiceImpl implements DisciplineSportive
     public Page<DisciplineSportiveEtudiantDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of DisciplineSportiveEtudiants for query {}", query);
         return disciplineSportiveEtudiantSearchRepository.search(query, pageable).map(disciplineSportiveEtudiantMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantCodeEtu(Pageable pageable, String codeEtu){
+        log.debug("Request to get all DisciplineSportiveEtudiants for an entity etudiant");
+        return disciplineSportiveEtudiantRepository.findAllByEtudiantCodeEtu(pageable,codeEtu).map(disciplineSportiveEtudiantMapper::toDto);
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public Page<DisciplineSportiveEtudiantDTO> findAllByEtudiantId(Pageable pageable, Long id){
+        log.debug("Request to get all DisciplineSportiveEtudiants by an id of etudiant");
+        return disciplineSportiveEtudiantRepository.findAllByEtudiantId(pageable,id).map(disciplineSportiveEtudiantMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<DisciplineSportiveEtudiantDTO> findAllByDisciplineSportiveId(Pageable pageable, Long id) {
+        log.debug("Request to get all DisciplineSportiveEtudiants for an id of a DisciplineSportive");
+        return disciplineSportiveEtudiantRepository.findAllByDisciplineSportiveId(pageable,id).map(disciplineSportiveEtudiantMapper::toDto);
+    }
+
+    private void validateData(DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO){
+        if (disciplineSportiveEtudiantDTO.getLicenceSportiveYN().describeConstable().isEmpty()) {
+            throw new BadRequestAlertException("Veuillez renseigner si l'etudiant à une licence sportive (Oui/Non)", ENTITY_NAME, "licenceSportiveNull");
+        }
+        if (disciplineSportiveEtudiantDTO.getCompetitionUGBYN().describeConstable().isEmpty()) {
+            throw new BadRequestAlertException("Veuillez renseigner si l'etudiant à fait une competition à l'UGB sportive (Oui/Non)", ENTITY_NAME, "competitionSportiveNull");
+        }
+        if (disciplineSportiveEtudiantDTO.getEtudiant().getId().describeConstable().isEmpty()) {
+            throw new BadRequestAlertException("Veuillez renseigner l'id de l'etudiant", ENTITY_NAME, "etudiantNull");
+        }
+        if (disciplineSportiveEtudiantDTO.getDisciplineSportive().getId().describeConstable().isEmpty()) {
+            throw new BadRequestAlertException("Veuillez renseigner l'id du discipline sportive", ENTITY_NAME, "disciplineSportiveEtudiantNull");
+        }
+
+        Long disciplineSportive = disciplineSportiveEtudiantDTO.getDisciplineSportive().getId();
+        Long etudiant = disciplineSportiveEtudiantDTO.getEtudiant().getId();
+
+        Optional <DisciplineSportiveEtudiant> existingDisciplineSportiveEtudiant =  disciplineSportiveEtudiantRepository.findByDisciplineSportiveIdAndEtudiantId(disciplineSportive,etudiant);
+        if (existingDisciplineSportiveEtudiant.isPresent() && !existingDisciplineSportiveEtudiant.get().getId().equals(disciplineSportiveEtudiantDTO.getId())  ){
+            throw new BadRequestAlertException("Cet etudiant est deja relier a ce discipline sportive", ENTITY_NAME, "disciplineSportiveEtudiantExiste");
+        }
     }
 }

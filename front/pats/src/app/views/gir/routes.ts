@@ -60,7 +60,14 @@ export const routes: Routes = [
             loadComponent: () => import('./gestion-formations/gestion-formations.component').then(m => m.GestionFormationsComponent),
             data: {
                 title: 'Gestion des formations'
-            }
+            },
+            children: [
+                {
+                  path: '',
+                  loadChildren: () => import('./gestion-formations/routes').then((m) => m.routes)
+                },
+                
+            ]
         },
         {
             path: 'gestion-etudiant',

@@ -1,5 +1,7 @@
 package sn.ugb.gir.service.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,12 +13,13 @@ public class DisciplineSportiveEtudiantDTO implements Serializable {
 
     private Long id;
 
+    @NotNull //Ajoutee
     private Boolean licenceSportiveYN;
-
+    @NotNull //Ajoutee
     private Boolean competitionUGBYN;
-
+    @NotNull //Ajoutee
     private DisciplineSportiveDTO disciplineSportive;
-
+    @NotNull //Ajoutee
     private EtudiantDTO etudiant;
 
     public Long getId() {
