@@ -37,4 +37,8 @@ public interface FraisRepository extends FraisRepositoryWithBagRelationships, Jp
     @Query("UPDATE Frais f SET f.estEnApplicationYN = false WHERE f.estEnApplicationYN = true and f.typeCycle= :cycle and f.fraisPourAssimileYN = :fraisPourAssimileYN")
     void updateIfEstEnApplicationIsOneAndCycleAndFraisPourAssimileYNLike(Cycle cycle, Boolean fraisPourAssimileYN );
 
+    Page <Frais> findAllByUniversitesId(Pageable pageable, Long universiteId);
+    Page <Frais> findAllByUniversitesMinistereId(Pageable pageable, Long ministereId);
+
+
 }

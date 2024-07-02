@@ -1,5 +1,7 @@
 package sn.ugb.gir.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import sn.ugb.gir.domain.Operateur;
@@ -16,5 +18,6 @@ public interface OperateurRepository extends JpaRepository<Operateur, Long> {
     boolean existsOperateurByLibelleOperateur(String libelleOperateur);
     Optional<Operateur> findByCodeOperateurIgnoreCase(String codeOperateur);
     Optional <Operateur> findByLibelleOperateurIgnoreCase(String libelleOperateur);
+    Page <Operateur> findAllByActifYN(Pageable pageable,Boolean actifYN);
 }
 

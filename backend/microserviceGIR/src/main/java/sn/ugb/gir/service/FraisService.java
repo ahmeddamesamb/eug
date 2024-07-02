@@ -84,4 +84,24 @@ public interface FraisService {
      * @return the list of entities.
      */
     Page<FraisDTO> findAllFraisByCycleId(Pageable pageable, Long cycleID);
+
+    /**
+     * Get all the frais by an id of universite .
+     *
+     * @param pageable the pagination information.
+     * @param universiteId
+     * @return the list of entities.
+     */
+    Page<FraisDTO> findAllFraisByUniversiteId(Pageable pageable, Long universiteId);
+
+    /**
+     * Get all the frais by an id of ministere .
+     *
+     * @param pageable the pagination information.
+     * @param ministereId
+     * @return the list of entities.
+     */
+    Page<FraisDTO> findAllFraisByMinistereId(Pageable pageable, Long ministereId);
+
+
 }

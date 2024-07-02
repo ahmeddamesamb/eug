@@ -137,6 +137,16 @@ public class FraisServiceImpl implements FraisService {
         return fraisRepository.findByTypeCycleId(pageable,cycleID).map(fraisMapper::toDto);
     }
 
+    public Page<FraisDTO> findAllFraisByUniversiteId(Pageable pageable, Long universiteId){
+        log.debug("Request to get all Frais for an universite");
+        return fraisRepository.findAllByUniversitesId(pageable,universiteId).map(fraisMapper::toDto);
+    }
+
+    public Page<FraisDTO> findAllFraisByMinistereId(Pageable pageable, Long ministereId){
+        log.debug("Request to get all Frais for an universite");
+        return fraisRepository.findAllByUniversitesMinistereId(pageable,ministereId).map(fraisMapper::toDto);
+    }
+
     private void validateData (FraisDTO fraisDTO) {
 
         //        DOIT ON RENSEIGNER LE CHAMP ESTENAPPLICATION LORS DE LA CREATION ??????????????????????????????????????????????????????????????????????????????????

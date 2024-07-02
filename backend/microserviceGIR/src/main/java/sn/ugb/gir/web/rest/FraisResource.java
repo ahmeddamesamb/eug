@@ -144,6 +144,7 @@ public class FraisResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+
     /**
      * {@code GET  /frais/:id} : get the "id" frais.
      *
@@ -209,6 +210,43 @@ public class FraisResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
+    /**
+     * {@code GET  /frais} : get all the frais.
+     *
+     * @param pageable the pagination information.
+     * @param universiteId an id of universite
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of frais in body.
+     */
+    @GetMapping("/universiteId/{universiteId}")
+    public ResponseEntity<List<FraisDTO>> getAllFraisByUniversite(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("universiteId") Long universiteId
+    ) {
+        log.debug("REST request to get a page of Frais for an universite");
+        Page<FraisDTO> page;
+        page = fraisService.findAllFraisByUniversiteId(pageable,universiteId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /frais} : get all the frais.
+     *
+     * @param pageable the pagination information.
+     * @param ministereId an id of ministere
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of frais in body.
+     */
+    @GetMapping("/ministereId/{ministereId}")
+    public ResponseEntity<List<FraisDTO>> getAllFraisByMinistere(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("ministereId") Long ministereId
+    ) {
+        log.debug("REST request to get a page of Frais for an ministere");
+        Page<FraisDTO> page;
+        page = fraisService.findAllFraisByMinistereId(pageable,ministereId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     private void validateDataUpdate(FraisDTO fraisDTO,Long id){
         if (fraisDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
