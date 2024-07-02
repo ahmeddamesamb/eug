@@ -1,28 +1,59 @@
-<h3>Formations autorisées</h3>
+<h3>Formations autorisées n+1</h3>
 <small>Lorem Ipsum is simply dummy text of the printing</small>
+
+<form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="formationForm"
+
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Formations  </label>
+
+            <c-multi-select multiple selectionType="text" formControlName="formations">
+                @for (formation of formationList; track $index) {
+                    <c-multi-select-option 
+                        [selected]="isFormationSelected(formation.id)" 
+                        [value]="formation.id">
+                        {{ formation.libelleFormation }}
+                    </c-multi-select-option>
+                    
+                }
+                
+            </c-multi-select>
+        </c-col>
+        
+        
+        
+
+
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                @if (id !=null) {
+                    <button (click)="annuler()"  class=" w-100" cButton color="secondary" type="reset">
+                        Annuler
+                    </button>
+                }@else {
+                    <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                        Vider
+                    </button>
+                }
+                
+                
+                
+            </div>
+
+            <div class=" w-50 ps-1">
+                <button cButton class=" w-100 text-white" [disabled]="!formationForm?.valid"  color="primary" type="submit">
+                    Enregistrer
+                </button>
+
+            </div>
+        </div>
+    </form>
 
 <div></div>
 
-<c-card-body>
-    <c-multi-select multiple>
-        @for (option of frontend; track option.value) {
-          <c-multi-select-option
-            [value]="option.value"
-            [selected]="option.selected ?? false"
-            [disabled]="option.disabled"
-          >
-            {{ option.value }}
-          </c-multi-select-option>
-        }
-        <c-multi-select-optgroup label="Backend">
-          @for (option of backend; track option.value) {
-            <c-multi-select-option
-              [value]="option.value"
-              [selected]="option.selected ?? false"
-            >
-              {{ option.label }}
-            </c-multi-select-option>
-          }
-        </c-multi-select-optgroup>
-      </c-multi-select>
-</c-card-body>

@@ -1,1 +1,35 @@
-<p>infos-etudiant works!</p>
+<div>
+    <c-accordion [flush]="true">
+        <c-accordion-item visible class="border border-2 rounded-2 mb-2">
+          <ng-template cTemplateId="accordionHeader">
+            Civilité
+          </ng-template>
+          <ng-template cTemplateId="accordionBody">
+            <div>
+                <span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, consequatur non quod deserunt provident similique assumenda, ipsa expedita sint tempore alias, iste beatae impedit. Quod perspiciatis iste inventore quia doloribus!</span>
+            </div>
+            
+          </ng-template>
+        </c-accordion-item>
+        <c-accordion-item [visible]="false" class="border border-2 rounded-2 mb-2">
+          <ng-template cTemplateId="accordionHeader">
+            Accordion item #1
+          </ng-template>
+          <ng-template cTemplateId="accordionBody">
+            <div>
+                <span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, consequatur non quod deserunt provident similique assumenda, ipsa expedita sint tempore alias, iste beatae impedit. Quod perspiciatis iste inventore quia doloribus!</span>
+            </div>
+          </ng-template>
+        </c-accordion-item>
+        <c-accordion-item [visible]="false" class="border border-2 rounded-2 mb-2">
+          <ng-template cTemplateId="accordionHeader">
+            Accordion item #2
+          </ng-template>
+          <ng-template cTemplateId="accordionBody">
+            <div>
+                <span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, consequatur non quod deserunt provident similique assumenda, ipsa expedita sint tempore alias, iste beatae impedit. Quod perspiciatis iste inventore quia doloribus!</span>
+            </div>
+          </ng-template>
+        </c-accordion-item>
+      </c-accordion>
+</div>

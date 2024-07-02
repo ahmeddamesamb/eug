@@ -15,7 +15,6 @@ export class ProfilEtudiantComponent {
     nomEtu: 'Soukhouna',
     dateNaissEtu: new Date ('8/11/1996'),
     ine: 'N00C8A522544'
-
   }
 
 }

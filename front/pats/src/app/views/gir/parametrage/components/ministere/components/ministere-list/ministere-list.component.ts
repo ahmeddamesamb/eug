@@ -67,13 +67,8 @@ export class MinistereListComponent {
       next: (data) => {
         this.ministereList = data;
         this.isloading = false;
-        
-        
-
       },
       error: (err) => {
-
-
       }
     });
   }

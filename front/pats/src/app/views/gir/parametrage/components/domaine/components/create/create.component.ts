@@ -15,7 +15,13 @@ import { UfrServiceService } from '../../../ufr/services/ufr-service.service';
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective,DatePipe,DatePickerComponent_1,ToasterComponent, MultiSelectComponent_1, MultiSelectOptionComponent, MultiSelectOptgroupComponent],
+  imports: [RowComponent, ColComponent, TextColorDirective,
+    CardComponent, CardHeaderComponent, CardBodyComponent,
+    DocsExampleComponent, ReactiveFormsModule,
+    FormsModule, FormDirective, FormLabelDirective,
+    FormControlDirective, FormFeedbackComponent,
+    InputGroupComponent, InputGroupTextDirective,
+    FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective,DatePipe,DatePickerComponent_1,ToasterComponent, MultiSelectComponent_1, MultiSelectOptionComponent, MultiSelectOptgroupComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
