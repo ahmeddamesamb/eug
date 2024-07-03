@@ -260,4 +260,36 @@ public class InfoUserRessourceResource {
             )
             .map(headers -> ResponseEntity.ok().headers(headers).body(infoUserRessourceService.search(query, pageable)));
     }
+
+    @GetMapping("/by-infos-user/{infosUserId}")
+    public Flux<InfoUserRessourceDTO> getAllInfosUserRessourceByInfosUserId(@PathVariable Long infosUserId) {
+        log.debug("REST request to get all InfoUserRessource by InfosUserId : {}", infosUserId);
+        return infoUserRessourceService.findAllByInfosUserId(infosUserId);
+    }
+
+    @GetMapping("/by-ressource/{ressourceId}")
+    public Flux<InfoUserRessourceDTO> getAllInfosUserRessourceByRessourceId(@PathVariable Long ressourceId) {
+        log.debug("REST request to get all InfoUserRessource by RessourceId : {}", ressourceId);
+        return infoUserRessourceService.findAllByRessourceId(ressourceId);
+    }
+
+    @GetMapping("/by-actif/{actifYN}")
+    public Flux<InfoUserRessourceDTO> getAllInfosUserRessourceByActifYN(@PathVariable Boolean actifYN) {
+        log.debug("REST request to get all InfoUserRessource by ActifYN : {}", actifYN);
+        return infoUserRessourceService.findAllByActifYN(actifYN);
+    }
+
+    @PutMapping("/info-user-ressources/{id}/archive")
+    public Mono<ResponseEntity<Void>> archiveInfoUserRessource(@PathVariable Long id) {
+        return infoUserRessourceService.archive(id)
+            .then(Mono.just(ResponseEntity.noContent().build()));
+    }
+
+    @PutMapping("/info-user-ressources/{id}/unarchive")
+    public Mono<ResponseEntity<Void>> unarchiveInfoUserRessource(@PathVariable Long id) {
+        return infoUserRessourceService.unarchive(id)
+            .then(Mono.just(ResponseEntity.noContent().build()));
+    }
+
+
 }

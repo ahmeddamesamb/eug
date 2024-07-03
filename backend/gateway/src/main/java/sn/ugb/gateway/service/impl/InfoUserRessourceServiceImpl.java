@@ -109,4 +109,37 @@ public class InfoUserRessourceServiceImpl implements InfoUserRessourceService {
         log.debug("Request to search for a page of InfoUserRessources for query {}", query);
         return infoUserRessourceSearchRepository.search(query, pageable).map(infoUserRessourceMapper::toDto);
     }
+
+    @Override
+    public Flux<InfoUserRessourceDTO> findAllByInfosUserId(Long infosUserId) {
+        log.debug("Request to get all InfoUserRessources by InfosUserId : {}", infosUserId);
+        return infoUserRessourceRepository.findAllByInfosUserId(infosUserId).map(infoUserRessourceMapper::toDto);
+    }
+
+    @Override
+    public Flux<InfoUserRessourceDTO> findAllByRessourceId(Long ressourceId) {
+        log.debug("Request to get all InfoUserRessources by RessourceId : {}", ressourceId);
+        return infoUserRessourceRepository.findAllByRessourceId(ressourceId).map(infoUserRessourceMapper::toDto);
+    }
+
+    @Override
+    public Flux<InfoUserRessourceDTO> findAllByActifYN(Boolean actifYN) {
+        log.debug("Request to get all InfoUserRessources by ActifYN : {}", actifYN);
+        return infoUserRessourceRepository.findAllByActifYN(actifYN).map(infoUserRessourceMapper::toDto);
+    }
+
+
+    @Transactional
+    @Override
+    public Mono<Void> archive(Long id) {
+        log.debug("Request to archive InfoUserRessource : {}", id);
+        return infoUserRessourceRepository.archiveById(id);
+    }
+
+    @Transactional
+    @Override
+    public Mono<Void> unarchive(Long id) {
+        log.debug("Request to unarchive InfoUserRessource : {}", id);
+        return infoUserRessourceRepository.unarchiveById(id);
+    }
 }

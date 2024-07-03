@@ -314,12 +314,13 @@ public class EtudiantServiceImpl implements EtudiantService {
             }
         }
 
-       //Optional <InformationPersonnelleDTO> informationPersonnelleDTO = informationPersonnelleRepository.findByEtudiantCodeEtu(codeEtudiant);
-
+        Optional<InformationPersonnelle> informationPersonnelleOptional = informationPersonnelleRepository.findByEtudiantCodeEtu(codeEtudiant);
+        InformationPersonnelleDTO informationPersonnelleDTO = informationPersonnelleOptional
+            .map(informationPersonnelleMapper::toDto)
+            .orElse(null);
 
         DossierEtudiantDTO dossierEtudiantDTO = new DossierEtudiantDTO();
-
-
+        dossierEtudiantDTO.setInformationPersonnelle(informationPersonnelleDTO);
         dossierEtudiantDTO.setPaiementFrais(paiementFrais);
         dossierEtudiantDTO.setFormationPrivee(formationPriveeDTO);
 
