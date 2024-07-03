@@ -265,5 +265,11 @@ public class InfosUserResource {
             .onErrorResume(error -> Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to archive InfosUser", error)));
     }
 
+    @GetMapping("/by-actif")
+    public ResponseEntity<Flux<InfosUserDTO>> getAllInfosUserByActifYN(@RequestParam Boolean actifYN) {
+        Flux<InfosUserDTO> result = infosUserService.findAllByActifYN(actifYN);
+        return ResponseEntity.ok().body(result);
+    }
+
 
 }

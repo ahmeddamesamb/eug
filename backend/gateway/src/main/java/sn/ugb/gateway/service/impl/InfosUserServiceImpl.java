@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sn.ugb.gateway.domain.InfosUser;
 import sn.ugb.gateway.domain.User;
 import sn.ugb.gateway.repository.InfosUserRepository;
 import sn.ugb.gateway.repository.UserRepository;
@@ -181,10 +182,16 @@ public class InfosUserServiceImpl implements InfosUserService {
         return infosUserRepository.findById(id)
             .flatMap(infosUser -> {
                 infosUser.setActifYN(false);
+                infosUser.getUser().setActivated(false);
                 return infosUserRepository.save(infosUser);
             })
             .then();
     }
 
 
+    @Override
+    public Flux<InfosUserDTO> findAllByActifYN(Boolean actifYN) {
+        Flux<InfosUser> infosUsers = (Flux<InfosUser>) infosUserRepository.findAllByActifYN(actifYN);
+        return infosUsers.map(infosUserMapper::toDto);
+    }
 }

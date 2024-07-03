@@ -91,4 +91,5 @@ public interface InfosUserService {
 
     <T> Mono<T> archiveInfosUser(Long id);
 
+    Flux<InfosUserDTO> findAllByActifYN(Boolean actifYN);
 }
