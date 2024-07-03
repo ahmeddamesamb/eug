@@ -9,4 +9,9 @@ import {EtatValidationComponent} from 'src/app/shared/components/etat-validation
 })
 export class EtapeInscriptionComponent {
 
+  panes = [
+    { name: 'Déclencher' , etat: true},
+    { name: 'Paiement' , etat: false},
+  ]
+
 }

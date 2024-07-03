@@ -13,7 +13,9 @@ import sn.ugb.gir.repository.search.LyceeSearchRepository;
 import sn.ugb.gir.service.LyceeService;
 import sn.ugb.gir.service.dto.LyceeDTO;
 import sn.ugb.gir.service.mapper.LyceeMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Lycee}.
  */
@@ -38,6 +40,11 @@ public class LyceeServiceImpl implements LyceeService {
     @Override
     public LyceeDTO save(LyceeDTO lyceeDTO) {
         log.debug("Request to save Lycee : {}", lyceeDTO);
+
+        if (lyceeDTO.getId() != null) {
+            throw new BadRequestAlertException("A new lycee cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        validateData(lyceeDTO);
         Lycee lycee = lyceeMapper.toEntity(lyceeDTO);
         lycee = lyceeRepository.save(lycee);
         LyceeDTO result = lyceeMapper.toDto(lycee);
@@ -48,6 +55,8 @@ public class LyceeServiceImpl implements LyceeService {
     @Override
     public LyceeDTO update(LyceeDTO lyceeDTO) {
         log.debug("Request to update Lycee : {}", lyceeDTO);
+
+        validateData(lyceeDTO);
         Lycee lycee = lyceeMapper.toEntity(lyceeDTO);
         lycee = lyceeRepository.save(lycee);
         LyceeDTO result = lyceeMapper.toDto(lycee);
@@ -59,6 +68,7 @@ public class LyceeServiceImpl implements LyceeService {
     public Optional<LyceeDTO> partialUpdate(LyceeDTO lyceeDTO) {
         log.debug("Request to partially update Lycee : {}", lyceeDTO);
 
+        validateData(lyceeDTO);
         return lyceeRepository
             .findById(lyceeDTO.getId())
             .map(existingLycee -> {
@@ -100,5 +110,25 @@ public class LyceeServiceImpl implements LyceeService {
     public Page<LyceeDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Lycees for query {}", query);
         return lyceeSearchRepository.search(query, pageable).map(lyceeMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<LyceeDTO> findAllByRegionId(Pageable pageable, Long id) {
+        log.debug("Request to get all Lycees having an id region");
+        return lyceeRepository.findAllByRegionId(pageable,id).map(lyceeMapper::toDto);
+    }
+
+    public void validateData(LyceeDTO lyceeDTO){
+        if (lyceeDTO.getCodeLycee().isEmpty() || lyceeDTO.getCodeLycee().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner le code du lycee", ENTITY_NAME, "codeLyceevide");
+        }
+        if (lyceeDTO.getNomLycee().isEmpty() || lyceeDTO.getNomLycee().isBlank()) {
+            throw new BadRequestAlertException("Veuillez renseigner le nom du lycee ", ENTITY_NAME, "nomLyceevide");
+        }
+        Optional<Lycee> existingNomLycee = lyceeRepository.findByNomLyceeIgnoreCase( lyceeDTO.getNomLycee());
+        if ( existingNomLycee.isPresent() && !existingNomLycee.get().getId().equals(lyceeDTO.getId())){
+            throw new BadRequestAlertException("Ce Lycee existe. Deux Lycees ne peuvent pas avoir le même nom", ENTITY_NAME, "nomlyceeexists");
+        }
     }
 }

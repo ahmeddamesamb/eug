@@ -257,4 +257,19 @@ public class InfosUserResource {
             )
             .map(headers -> ResponseEntity.ok().headers(headers).body(infosUserService.search(query, pageable)));
     }
+
+    @PutMapping("/archive-infos-user/{id}")
+    public Mono<ResponseEntity<Object>> archiveInfosUser(@PathVariable Long id) {
+        return infosUserService.archiveInfosUser(id)
+            .thenReturn(ResponseEntity.noContent().build())
+            .onErrorResume(error -> Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to archive InfosUser", error)));
+    }
+
+    @GetMapping("/by-actif")
+    public ResponseEntity<Flux<InfosUserDTO>> getAllInfosUserByActifYN(@RequestParam Boolean actifYN) {
+        Flux<InfosUserDTO> result = infosUserService.findAllByActifYN(actifYN);
+        return ResponseEntity.ok().body(result);
+    }
+
+
 }

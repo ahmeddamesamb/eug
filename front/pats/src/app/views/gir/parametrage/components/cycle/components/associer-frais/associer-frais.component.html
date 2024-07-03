@@ -1,0 +1,77 @@
+<!-- <div class="">
+    @if (id !=null) {
+        <h3>Mise à jour</h3>
+    }@else {
+        <h3>Nouvelle UFR</h3>
+    }
+    
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="ufrForm"
+
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom01">Libellé UFR </label>
+            <input cFormControl id="validationCustom01" required type="text" value=""
+            [valid]="(ufrForm?.get('libeleUfr')?.touched && ufrForm?.get('libeleUfr')?.valid) ? true
+               : (ufrForm?.get('libeleUfr')?.touched) && ufrForm?.get('libeleUfr')?.invalid ? false : undefined"
+            formControlName="libeleUfr"/>
+            <c-form-feedback>Le Libellé est obligatoire </c-form-feedback>
+        </c-col>
+        <c-col md="12">
+            <label cLabel for="validationCustom02">Sigle UFR </label>
+            <input cFormControl id="validationCustom02" required type="text"
+              value="" formControlName="sigleUfr" [autofocus]="true"
+              [valid]="(ufrForm?.get('sigleUfr')?.touched && ufrForm?.get('sigleUfr')?.valid) ? true
+               : (ufrForm?.get('sigleUfr')?.touched) && ufrForm?.get('sigleUfr')?.invalid ? false : undefined"/>
+            <c-form-feedback >Le Sigle est obligatoire</c-form-feedback>
+        </c-col>
+
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Université </label>
+            <select cFormControl aria-label="Default select example" formControlName="universite" cSelect>
+                
+                @for (universite of universiteList; track $index) {
+                    <option [value]="universite.id">{{universite.nomUniversite}}</option>
+                }
+                
+            </select>
+            
+        </c-col>
+        
+        
+        
+
+
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                @if (id !=null) {
+                    <button (click)="annuler()"  class=" w-100" cButton color="secondary" type="reset">
+                        Annuler
+                    </button>
+                }@else {
+                    <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                        Vider
+                    </button>
+                }
+                
+                
+                
+            </div>
+
+            <div class=" w-50 ps-1">
+                <button cButton class=" w-100 text-white" [disabled]="!ufrForm?.valid"  color="primary" type="submit">
+                    Enregistrer
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
+ -->

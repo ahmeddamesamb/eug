@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sn.ugb.gir.repository.FraisRepository;
 import sn.ugb.gir.service.FraisService;
+import sn.ugb.gir.service.dto.CycleDTO;
 import sn.ugb.gir.service.dto.FraisDTO;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 import sn.ugb.gir.web.rest.errors.ElasticsearchExceptionMapper;
@@ -84,17 +85,8 @@ public class FraisResource {
         @Valid @RequestBody FraisDTO fraisDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Frais : {}, {}", id, fraisDTO);
-        if (fraisDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, fraisDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!fraisRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(fraisDTO,id);
         FraisDTO result = fraisService.update(fraisDTO);
         return ResponseEntity
             .ok()
@@ -119,17 +111,8 @@ public class FraisResource {
         @NotNull @RequestBody FraisDTO fraisDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Frais partially : {}, {}", id, fraisDTO);
-        if (fraisDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, fraisDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!fraisRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(fraisDTO,id);
         Optional<FraisDTO> result = fraisService.partialUpdate(fraisDTO);
 
         return ResponseUtil.wrapOrNotFound(
@@ -160,6 +143,7 @@ public class FraisResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
 
     /**
      * {@code GET  /frais/:id} : get the "id" frais.
@@ -212,4 +196,71 @@ public class FraisResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+
+    /**
+     * {@code GET  /frais} : get all the frais.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of frais in body.
+     */
+    @GetMapping("/cycleID/{cycleID}")
+    public ResponseEntity<List<FraisDTO>> getFraisByCycleId(@org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("cycleID") Long cycleID) {
+        log.debug("REST request to get a page of Frais for a given cycle");
+        Page<FraisDTO> page = fraisService.findAllFraisByCycleId(pageable,cycleID);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /frais} : get all the frais.
+     *
+     * @param pageable the pagination information.
+     * @param universiteId an id of universite
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of frais in body.
+     */
+    @GetMapping("/universiteId/{universiteId}")
+    public ResponseEntity<List<FraisDTO>> getAllFraisByUniversite(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("universiteId") Long universiteId
+    ) {
+        log.debug("REST request to get a page of Frais for an universite");
+        Page<FraisDTO> page;
+        page = fraisService.findAllFraisByUniversiteId(pageable,universiteId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /frais} : get all the frais.
+     *
+     * @param pageable the pagination information.
+     * @param ministereId an id of ministere
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of frais in body.
+     */
+    @GetMapping("/ministereId/{ministereId}")
+    public ResponseEntity<List<FraisDTO>> getAllFraisByMinistere(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("ministereId") Long ministereId
+    ) {
+        log.debug("REST request to get a page of Frais for an ministere");
+        Page<FraisDTO> page;
+        page = fraisService.findAllFraisByMinistereId(pageable,ministereId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    private void validateDataUpdate(FraisDTO fraisDTO,Long id){
+        if (fraisDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, fraisDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!fraisRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+        if (fraisDTO.getEstEnApplicationYN()) {
+            fraisDTO.setDateFin(null);
+        }
+    }
+
 }

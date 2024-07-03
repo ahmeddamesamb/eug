@@ -32,6 +32,7 @@ public class Lycee implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Text)
     private String nomLycee;
 
+    @NotNull //Ajoute
     @Column(name = "code_lycee")
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Text)
     private String codeLycee;

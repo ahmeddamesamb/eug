@@ -21,6 +21,9 @@ logging:
     sn.ugb.gir: DEBUG
 
 management:
+  health:
+    elasticsearch:
+      enabled: false
   zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
@@ -56,15 +59,17 @@ spring:
       port: 8500
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/microserviceGIR
+    url: jdbc:postgresql://localhost:5432/microserviceGIRUGB
     username: postgres
     password: postgres
     hikari:
       poolName: Hikari
       auto-commit: false
+  elasticsearch:
+    uris: http://localhost:9200
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev
+    contexts: dev, faker
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:

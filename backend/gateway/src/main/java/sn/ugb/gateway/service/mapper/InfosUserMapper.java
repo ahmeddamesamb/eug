@@ -9,7 +9,7 @@ import sn.ugb.gateway.service.dto.UserDTO;
 /**
  * Mapper for the entity {@link InfosUser} and its DTO {@link InfosUserDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface InfosUserMapper extends EntityMapper<InfosUserDTO, InfosUser> {
     @Mapping(target = "user", source = "user", qualifiedByName = "userLogin")
     InfosUserDTO toDto(InfosUser s);

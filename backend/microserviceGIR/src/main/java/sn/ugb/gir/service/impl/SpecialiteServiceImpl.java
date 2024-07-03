@@ -20,7 +20,7 @@ import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
  */
 @Service
 @Transactional
-public class SpecialiteServiceImpl implements SpecialiteService {
+public class  SpecialiteServiceImpl implements SpecialiteService {
 
     private final Logger log = LoggerFactory.getLogger(SpecialiteServiceImpl.class);
 
@@ -144,6 +144,15 @@ public class SpecialiteServiceImpl implements SpecialiteService {
     public Page<SpecialiteDTO> getAllSpecialiteByMinistere(Long ministereId, Pageable pageable) {
         log.debug("Request to get all Specialites by Ministere ID : {}", ministereId);
         return specialiteRepository.findByMentionDomaineUfrsUniversiteMinistereId(ministereId, pageable).map(specialiteMapper::toDto);
+    }
+
+    @Override
+    public SpecialiteDTO setActifYNSpecialite(Long id, Boolean actifYN) {
+        Specialite specialite = specialiteRepository.findById(id)
+            .orElseThrow(() -> new BadRequestAlertException("Specialite not found.", ENTITY_NAME, "SpecialiteNotFound"));
+        specialite.setActifYN(actifYN);
+        specialite = specialiteRepository.save(specialite);
+        return specialiteMapper.toDto(specialite);
     }
 
     private void validateData(SpecialiteDTO specialiteDTO) {

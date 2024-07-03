@@ -14,13 +14,23 @@ import {
   DropdownItemDirective,
   DropdownMenuDirective,
   DropdownToggleDirective,
+  FormCheckComponent,
+  FormCheckInputDirective,
+  FormCheckLabelDirective,
   FormControlDirective,
   FormDirective,
+  FormFeedbackComponent,
+  FormLabelDirective,
+  FormSelectDirective,
   HeaderComponent,
   HeaderNavComponent,
   HeaderTogglerDirective,
   InputGroupComponent,
   InputGroupTextDirective,
+  ListGroupDirective,
+  ListGroupItemDirective,
+  MultiSelectOptgroupComponent,
+  MultiSelectOptionComponent,
   NavItemComponent,
   NavLinkDirective,
   ProgressBarDirective,
@@ -34,6 +44,7 @@ import { IconDirective } from '@coreui/icons-angular';
 import { DefaultBreadcrumbComponent } from '.././';
 import { UserService } from '../../../services/user.service';
 import { KeycloakService } from 'keycloak-angular';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-default-header',
@@ -41,7 +52,19 @@ import { KeycloakService } from 'keycloak-angular';
   styleUrls: ['./default-header.component.scss'],
   standalone: true,
   providers: [UserService, KeycloakService],
-  imports: [ContainerComponent, HeaderTogglerDirective, SidebarToggleDirective, IconDirective, HeaderNavComponent, NavItemComponent, NavLinkDirective, RouterLink, RouterLinkActive, NgTemplateOutlet, BreadcrumbRouterComponent, ThemeDirective, DropdownComponent, DropdownToggleDirective, TextColorDirective, AvatarComponent, DropdownMenuDirective, DropdownHeaderDirective, DropdownItemDirective, BadgeComponent, DropdownDividerDirective, ProgressBarDirective, ProgressComponent, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, NgStyle, FormDirective,DefaultBreadcrumbComponent]
+  imports: [ContainerComponent, HeaderTogglerDirective, SidebarToggleDirective,
+    IconDirective, HeaderNavComponent, NavItemComponent, NavLinkDirective,
+    RouterLink, RouterLinkActive, NgTemplateOutlet, BreadcrumbRouterComponent,
+    ThemeDirective, DropdownComponent, DropdownToggleDirective, TextColorDirective,
+    AvatarComponent, DropdownMenuDirective, DropdownHeaderDirective,
+    DropdownItemDirective, BadgeComponent, DropdownDividerDirective,
+    ProgressBarDirective, ProgressComponent, InputGroupComponent,
+    InputGroupTextDirective, FormControlDirective, ButtonDirective,
+    NgStyle, FormDirective,DefaultBreadcrumbComponent, ReactiveFormsModule,
+    FormsModule, FormDirective, FormLabelDirective,
+    FormControlDirective, FormFeedbackComponent,
+    InputGroupComponent, InputGroupTextDirective,
+    FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective, MultiSelectOptionComponent, MultiSelectOptgroupComponent]
 })
 export class DefaultHeaderComponent extends HeaderComponent {
 
@@ -51,12 +74,18 @@ export class DefaultHeaderComponent extends HeaderComponent {
   
   userFirstName: string | undefined;
   userLastName: string | undefined;
+  rechercheForm: FormGroup;
 
 
   constructor(private userService: UserService , private router:Router ) {
     super();
     this.#colorModeService.localStorageItemName.set('coreui-pro-angular-admin-template-theme-modern');
     this.#colorModeService.eventName.set('ColorSchemeChange');
+
+    this.rechercheForm = new FormGroup({
+      code: new FormControl('', Validators.required),
+
+    });
   }
 
   @Input() sidebarId: string = 'sidebar1';
@@ -91,7 +120,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   dossierEtudiant(){
     console.log('cvrgrtgkmlgtrk,tr');
-    this.router.navigate(['/gir/inscription-reinscription/view/2']);
+    this.router.navigate(['/gir/inscription-reinscription/view/',2]);
   }
 
 

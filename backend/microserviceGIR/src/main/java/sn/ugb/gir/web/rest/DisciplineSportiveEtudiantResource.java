@@ -87,17 +87,8 @@ public class DisciplineSportiveEtudiantResource {
         @RequestBody DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO
     ) throws URISyntaxException {
         log.debug("REST request to update DisciplineSportiveEtudiant : {}, {}", id, disciplineSportiveEtudiantDTO);
-        if (disciplineSportiveEtudiantDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, disciplineSportiveEtudiantDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!disciplineSportiveEtudiantRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(disciplineSportiveEtudiantDTO,id);
         DisciplineSportiveEtudiantDTO result = disciplineSportiveEtudiantService.update(disciplineSportiveEtudiantDTO);
         return ResponseEntity
             .ok()
@@ -124,17 +115,8 @@ public class DisciplineSportiveEtudiantResource {
         @RequestBody DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update DisciplineSportiveEtudiant partially : {}, {}", id, disciplineSportiveEtudiantDTO);
-        if (disciplineSportiveEtudiantDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, disciplineSportiveEtudiantDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!disciplineSportiveEtudiantRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(disciplineSportiveEtudiantDTO,id);
         Optional<DisciplineSportiveEtudiantDTO> result = disciplineSportiveEtudiantService.partialUpdate(disciplineSportiveEtudiantDTO);
 
         return ResponseUtil.wrapOrNotFound(
@@ -208,6 +190,19 @@ public class DisciplineSportiveEtudiantResource {
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         } catch (RuntimeException e) {
             throw ElasticsearchExceptionMapper.mapException(e);
+        }
+    }
+
+    private void validateDataUpdate (DisciplineSportiveEtudiantDTO disciplineSportiveEtudiantDTO, Long id){
+        if (disciplineSportiveEtudiantDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, disciplineSportiveEtudiantDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!disciplineSportiveEtudiantRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
     }
 }

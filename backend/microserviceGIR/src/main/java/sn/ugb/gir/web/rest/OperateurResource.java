@@ -84,17 +84,8 @@ public class OperateurResource {
         @Valid @RequestBody OperateurDTO operateurDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Operateur : {}, {}", id, operateurDTO);
-        if (operateurDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, operateurDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!operateurRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(operateurDTO,id);
         OperateurDTO result = operateurService.update(operateurDTO);
         return ResponseEntity
             .ok()
@@ -119,17 +110,8 @@ public class OperateurResource {
         @NotNull @RequestBody OperateurDTO operateurDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Operateur partially : {}, {}", id, operateurDTO);
-        if (operateurDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, operateurDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!operateurRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(operateurDTO,id);
         Optional<OperateurDTO> result = operateurService.partialUpdate(operateurDTO);
 
         return ResponseUtil.wrapOrNotFound(
@@ -201,6 +183,32 @@ public class OperateurResource {
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         } catch (RuntimeException e) {
             throw ElasticsearchExceptionMapper.mapException(e);
+        }
+    }
+
+    /**
+     * {@code GET  /operateurs} : get all the operateurs.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of operateurs in body.
+     */
+    @GetMapping("/actifYN/{actifYN}")
+    public ResponseEntity<List<OperateurDTO>> getAllOperateursByActifYN(@org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("actifYN") Boolean actifYN) {
+        log.debug("REST request to get a page of Operateurs which is active/inactive");
+        Page<OperateurDTO> page = operateurService.findAllOperateurByActifYN(pageable,actifYN);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    public void validateDataUpdate(OperateurDTO operateurDTO, Long id){
+        if (operateurDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, operateurDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+        if (!operateurRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
     }
 }
