@@ -11,6 +11,7 @@ import sn.ugb.gir.domain.Operateur;
 import sn.ugb.gir.repository.OperateurRepository;
 import sn.ugb.gir.repository.search.OperateurSearchRepository;
 import sn.ugb.gir.service.OperateurService;
+import sn.ugb.gir.service.dto.FraisDTO;
 import sn.ugb.gir.service.dto.OperateurDTO;
 import sn.ugb.gir.service.mapper.OperateurMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
@@ -112,6 +113,13 @@ public class OperateurServiceImpl implements OperateurService {
     public Page<OperateurDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Operateurs for query {}", query);
         return operateurSearchRepository.search(query, pageable).map(operateurMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<OperateurDTO> findAllOperateurByActifYN(Pageable pageable, Boolean actifYN){
+        log.debug("Request to get all Operateurs");
+        return operateurRepository.findAllByActifYN(pageable,actifYN).map(operateurMapper::toDto);
     }
 
     public void validateData(OperateurDTO operateurDTO){

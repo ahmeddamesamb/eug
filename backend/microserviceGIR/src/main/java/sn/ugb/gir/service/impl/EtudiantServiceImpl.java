@@ -1,5 +1,6 @@
 package sn.ugb.gir.service.impl;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -18,11 +19,17 @@ import sn.ugb.gir.repository.InformationPersonnelleRepository;
 import sn.ugb.gir.repository.PaiementFraisRepository;
 import sn.ugb.gir.repository.search.EtudiantSearchRepository;
 import sn.ugb.gir.service.EtudiantService;
+import sn.ugb.gir.service.InformationPersonnelleService;
+import sn.ugb.gir.service.LyceeService;
+import sn.ugb.gir.service.RegionService;
 import sn.ugb.gir.service.dto.*;
 import sn.ugb.gir.service.mapper.EtudiantMapper;
 import sn.ugb.gir.service.mapper.FormationPriveeMapper;
 import sn.ugb.gir.service.mapper.InformationPersonnelleMapper;
 import sn.ugb.gir.service.mapper.PaiementFraisMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Etudiant}.
@@ -31,6 +38,7 @@ import sn.ugb.gir.service.mapper.PaiementFraisMapper;
 @Transactional
 public class EtudiantServiceImpl implements EtudiantService {
 
+
     private final Logger log = LoggerFactory.getLogger(EtudiantServiceImpl.class);
 
     private final EtudiantRepository etudiantRepository;
@@ -38,6 +46,16 @@ public class EtudiantServiceImpl implements EtudiantService {
     private final EtudiantMapper etudiantMapper;
 
     private final EtudiantSearchRepository etudiantSearchRepository;
+
+    @Autowired
+    private LyceeService lyceeService;
+
+    @Autowired
+    private  RegionService regionService;
+
+    @Autowired
+    private InformationPersonnelleService informationPersonnelleService;
+
 
     @Autowired
     private PaiementFraisRepository paiementFraisRepository;
@@ -54,6 +72,8 @@ public class EtudiantServiceImpl implements EtudiantService {
     @Autowired
     FormationPriveeMapper formationPriveeMapper;
 
+    private static final String CURRENT_YEAR = String.valueOf(LocalDate.now().getYear());
+
 
     public EtudiantServiceImpl(
         EtudiantRepository etudiantRepository,
@@ -68,6 +88,25 @@ public class EtudiantServiceImpl implements EtudiantService {
     @Override
     public EtudiantDTO save(EtudiantDTO etudiantDTO) {
         log.debug("Request to save Etudiant : {}", etudiantDTO);
+
+        validateData(etudiantDTO);
+
+        if (etudiantDTO.getLycee() != null && etudiantDTO.getLycee().getId() == null) {
+            // Save the Lycee entity first using LyceeService
+            LyceeDTO lyceeDTO = etudiantDTO.getLycee();
+            lyceeDTO = lyceeService.save(lyceeDTO);
+            etudiantDTO.setLycee(lyceeDTO);
+        }
+
+        if (etudiantDTO.getRegion() != null && etudiantDTO.getRegion().getId() == null) {
+            // Save the Region entity first using RegionService
+            RegionDTO regionDTO = etudiantDTO.getRegion();
+            regionDTO = regionService.save(regionDTO);
+            etudiantDTO.setRegion(regionDTO);
+        }
+
+        generateTemporaryCode(etudiantDTO);
+
         Etudiant etudiant = etudiantMapper.toEntity(etudiantDTO);
         etudiant = etudiantRepository.save(etudiant);
         EtudiantDTO result = etudiantMapper.toDto(etudiant);
@@ -78,6 +117,23 @@ public class EtudiantServiceImpl implements EtudiantService {
     @Override
     public EtudiantDTO update(EtudiantDTO etudiantDTO) {
         log.debug("Request to update Etudiant : {}", etudiantDTO);
+
+        validateData(etudiantDTO);
+
+        if (etudiantDTO.getLycee() != null && etudiantDTO.getLycee().getId() != null) {
+            // Save the Lycee entity first using LyceeService
+            LyceeDTO lyceeDTO = etudiantDTO.getLycee();
+            lyceeDTO = lyceeService.update(lyceeDTO);
+            etudiantDTO.setLycee(lyceeDTO);
+        }
+
+        if (etudiantDTO.getRegion() != null && etudiantDTO.getRegion().getId() != null) {
+            // Save the Region entity first using RegionService
+            RegionDTO regionDTO = etudiantDTO.getRegion();
+            regionDTO = regionService.update(regionDTO);
+            etudiantDTO.setRegion(regionDTO);
+        }
+
         Etudiant etudiant = etudiantMapper.toEntity(etudiantDTO);
         etudiant = etudiantRepository.save(etudiant);
         EtudiantDTO result = etudiantMapper.toDto(etudiant);
@@ -88,6 +144,8 @@ public class EtudiantServiceImpl implements EtudiantService {
     @Override
     public Optional<EtudiantDTO> partialUpdate(EtudiantDTO etudiantDTO) {
         log.debug("Request to partially update Etudiant : {}", etudiantDTO);
+
+        validateData(etudiantDTO);
 
         return etudiantRepository
             .findById(etudiantDTO.getId())
@@ -160,6 +218,84 @@ public class EtudiantServiceImpl implements EtudiantService {
         return etudiantSearchRepository.search(query, pageable).map(etudiantMapper::toDto);
     }
 
+    private void validateData(EtudiantDTO etudiantDTO) {
+        if (etudiantDTO == null) {
+            throw new BadRequestAlertException("Etudiant cannot be null", ENTITY_NAME, "nullEtudiant");
+        }
+
+        String codeEtu = etudiantDTO.getCodeEtu();
+        String emailUGB = etudiantDTO.getEmailUGB();
+        String numDocIdentite = etudiantDTO.getNumDocIdentite();
+        String lieuNaissEtu = etudiantDTO.getLieuNaissEtu();
+        String sexe = etudiantDTO.getSexe();
+        LocalDate dateNaissEtu = etudiantDTO.getDateNaissEtu();
+
+        if (dateNaissEtu == null || dateNaissEtu.isAfter(LocalDate.now())) {
+            throw new BadRequestAlertException("La date de naissance ne doit pas être postérieure à la date du jour", ENTITY_NAME, "dateNaissanceInvalide");
+        }
+
+        if (isEmptyOrBlank(lieuNaissEtu)) {
+            throw new BadRequestAlertException("Le lieu de naissance est obligatoire", ENTITY_NAME, "lieuNaissanceObligatoire");
+        }
+
+        if (isEmptyOrBlank(sexe)) {
+            throw new BadRequestAlertException("Le sexe est obligatoire", ENTITY_NAME, "sexeObligatoire");
+        }
+
+        if (isEmptyOrBlank(numDocIdentite)) {
+            throw new BadRequestAlertException("Le numero d'identite est déjà obligatoire", ENTITY_NAME, "numDocObligatoire");
+        }
+
+
+        Long id = etudiantDTO.getId();
+        if (id == null) {
+            // Save operation
+            if (etudiantRepository.existsByCodeEtuIgnoreCase(codeEtu)) {
+                throw new BadRequestAlertException("Cet identifiant est déjà utilisé", ENTITY_NAME, "codeEtuExistant");
+            }
+
+            if (etudiantRepository.existsByEmailUGBIgnoreCase(emailUGB)) {
+                throw new BadRequestAlertException("Cet email est déjà utilisé", ENTITY_NAME, "emailUGBExistant");
+            }
+
+            if (etudiantRepository.existsByNumDocIdentiteIgnoreCase(numDocIdentite)) {
+                throw new BadRequestAlertException("Ce numero d'identite est déjà utilisé", ENTITY_NAME, "numDocIdentiteExistant");
+            }
+        } else {
+            // Update or PartialUpdate operation
+            if (isEmptyOrBlank(codeEtu)) {
+                throw new BadRequestAlertException("Le code étudiant est obligatoire", ENTITY_NAME, "codeEtuObligatoire");
+            }
+
+            if (isEmptyOrBlank(emailUGB)) {
+                throw new BadRequestAlertException("L'email UGB est obligatoire", ENTITY_NAME, "emailUGBObligatoire");
+            }
+            Optional<Etudiant> existingEtudiant = etudiantRepository.findById(id);
+            if (existingEtudiant.isEmpty()) {
+                throw new BadRequestAlertException("Etudiant avec id " + id + " non trouvé", ENTITY_NAME, "etudiantNotFound");
+            }
+
+            Etudiant etudiant = existingEtudiant.get();
+            if (!etudiant.getCodeEtu().equalsIgnoreCase(codeEtu) && etudiantRepository.existsByCodeEtuIgnoreCase(codeEtu)) {
+                throw new BadRequestAlertException("Cet identifiant est déjà utilisé", ENTITY_NAME, "codeEtuExistant");
+            }
+
+            if (!etudiant.getNumDocIdentite().equalsIgnoreCase(numDocIdentite) && etudiantRepository.existsByNumDocIdentiteIgnoreCase(numDocIdentite)) {
+                throw new BadRequestAlertException("Ce numero d'identite est déjà utilisé", ENTITY_NAME, "numDocIdentiteExistant");
+            }
+        }
+    }
+
+    private boolean isEmptyOrBlank(String value) {
+        return value == null || value.trim().isEmpty();
+    }
+
+    private void generateTemporaryCode(EtudiantDTO etudiantDTO) {
+        long rang = etudiantRepository.count() + 1;
+        String codeTemporaire = (LocalDate.now().getYear() - 1) + "E" + rang;
+        etudiantDTO.setCodeEtu(codeTemporaire);
+    }
+
     @Override
     public DossierEtudiantDTO getEtudiantDetailsByCodeEtu(String codeEtudiant) {
 
@@ -182,13 +318,11 @@ public class EtudiantServiceImpl implements EtudiantService {
             }
         }
 
-        InformationPersonnelle informationPersonnelle = informationPersonnelleRepository.findByEtudiantCodeEtu(codeEtudiant);
-        InformationPersonnelleDTO informationPersonnelleDTO = informationPersonnelleMapper.toDto(informationPersonnelle);
+        Optional <InformationPersonnelleDTO> informationPersonnelle = informationPersonnelleService.findOneByCodeEtudiant(codeEtudiant);
 
-        informationPersonnelleDTO.setEtudiant(null);
 
         DossierEtudiantDTO dossierEtudiantDTO = new DossierEtudiantDTO();
-        dossierEtudiantDTO.setInformationPersonnelle(informationPersonnelleDTO);
+      //  dossierEtudiantDTO.setInformationPersonnelle(informationPersonnelleDTO);
         dossierEtudiantDTO.setPaiementFrais(paiementFrais);
         dossierEtudiantDTO.setFormationPrivee(formationPriveeDTO);
 

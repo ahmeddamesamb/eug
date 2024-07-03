@@ -186,6 +186,20 @@ public class OperateurResource {
         }
     }
 
+    /**
+     * {@code GET  /operateurs} : get all the operateurs.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of operateurs in body.
+     */
+    @GetMapping("/actifYN/{actifYN}")
+    public ResponseEntity<List<OperateurDTO>> getAllOperateursByActifYN(@org.springdoc.core.annotations.ParameterObject Pageable pageable, @PathVariable("actifYN") Boolean actifYN) {
+        log.debug("REST request to get a page of Operateurs which is active/inactive");
+        Page<OperateurDTO> page = operateurService.findAllOperateurByActifYN(pageable,actifYN);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     public void validateDataUpdate(OperateurDTO operateurDTO, Long id){
         if (operateurDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

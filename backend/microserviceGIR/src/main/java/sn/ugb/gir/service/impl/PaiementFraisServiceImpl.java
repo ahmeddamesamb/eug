@@ -50,7 +50,7 @@ public class PaiementFraisServiceImpl implements PaiementFraisService {
     }
 
     @Override
-    public PaiementFraisDTO update(PaiementFraisDTO paiementFraisDTO) {
+    public PaiementFraisDTO  update(PaiementFraisDTO paiementFraisDTO) {
         log.debug("Request to update PaiementFrais : {}", paiementFraisDTO);
         PaiementFrais paiementFrais = paiementFraisMapper.toEntity(paiementFraisDTO);
         paiementFrais = paiementFraisRepository.save(paiementFrais);

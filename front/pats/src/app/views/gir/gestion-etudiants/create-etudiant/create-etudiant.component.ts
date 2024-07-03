@@ -8,6 +8,7 @@ import { EtudiantModel } from '../models/etudiant-model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import {AlertServiceService} from 'src/app/shared/services/alert/alert-service.service'
+import { InformationPersonellesModel } from '../models/information-personelles-model';
 
 @Component({
   selector: 'app-create-etudiant',
@@ -21,13 +22,7 @@ import {AlertServiceService} from 'src/app/shared/services/alert/alert-service.s
   styleUrl: './create-etudiant.component.scss'
 })
 export class CreateEtudiantComponent {
-  etudiant :EtudiantModel = {
-    ine: '',
-    dateNaissEtu: null,
-    lieuNaissEtu: '',
-    sexe: '',
-
-    //----------------------------------//
+  informationPersonelle : InformationPersonellesModel= {
     nomEtu: '',
     nomJeuneFilleEtu: '',
     prenomEtu: '',
@@ -46,7 +41,27 @@ export class CreateEtudiantComponent {
     ordiPersoYN: 0,
     derniereModification:'',
     emailUser: '',
-  }; 
+    typeHandique: {id:0},
+    typeBourse: {id:0},
+    etudiant : {
+      ine: '',
+      dateNaissEtu: null,
+      lieuNaissEtu: '',
+      sexe: '',
+      codeEtu: '',
+      codeBU: 0,
+      emailUGB: '',
+      numDocIdentite: '',
+      assimileYN: false,
+      exonereYN: false,
+      region: {id:0},
+      typeSelection: {id:0},
+      lycee: {id:0},
+      baccalaureat: {id:0},
+    },
+    
+  }
+
 
   etudiantForm: FormGroup;
   customStylesValidated = false;
@@ -56,14 +71,11 @@ export class CreateEtudiantComponent {
   constructor(private etudiantService: EtudiantService, private route: ActivatedRoute, private router: Router,private alertService:AlertServiceService) {
 
     this.etudiantForm = new FormGroup({
-      ine: new FormControl('', Validators.required),
-      lieuNaissEtu: new FormControl('', Validators.required),
-      nomSpecialites: new FormControl('', Validators.required),
-      sexe: new FormControl('', Validators.required),
       nomEtu: new FormControl('', Validators.required),
       nomJeuneFilleEtu: new FormControl('', Validators.required),
       prenomEtu: new FormControl('', Validators.required),
       statutMarital: new FormControl('', Validators.required),
+      regime:new FormControl(0, Validators.required),
       profession: new FormControl('', Validators.required),
       adresseEtu: new FormControl('', Validators.required),
       telEtu: new FormControl('', Validators.required),
@@ -73,12 +85,24 @@ export class CreateEtudiantComponent {
       emailParent: new FormControl('', Validators.required),
       nomParent: new FormControl('', Validators.required),
       prenomParent: new FormControl('', Validators.required),
-      derniereModification: new FormControl('', Validators.required),
+      derniereModification:new FormControl('', Validators.required),
       emailUser: new FormControl('', Validators.required),
+      typeHandique: new FormControl('', Validators.required),
+      typeBourse: new FormControl('', Validators.required),
+      /*------------------------------------------------------------*/
+      /*------------------------------------------------------------*/
+      ine: new FormControl('', Validators.required),
       dateNaissEtu: new FormControl(null, Validators.required),
-      regime: new FormControl(0),
-      handicapYN: new FormControl(0),
-      ordiPersoYN: new FormControl(0),
+      lieuNaissEtu: new FormControl('', Validators.required),
+      sexe: new FormControl('', Validators.required),
+      codeEtu: new FormControl('', Validators.required),
+      codeBU: new FormControl(0, Validators.required),
+      emailUGB: new FormControl('', Validators.required),
+      numDocIdentite: new FormControl('', Validators.required),
+      region: new FormControl('', Validators.required),
+      typeSelection: new FormControl('', Validators.required),
+      lycee: new FormControl('', Validators.required),
+      baccalaureat: new FormControl('', Validators.required),
 
     });
   }
@@ -115,7 +139,7 @@ export class CreateEtudiantComponent {
       
       
       //Si c'est une creation
-      this.etudiantService.createEtudiant(this.etudiant!).subscribe({ 
+      /* this.etudiantService.createEtudiant(this.etudiant!).subscribe({ 
         next: (data) => {
           console.log(data);
           this.alertService.showToast("Création","Création de l'étudiant avec succes","success");
@@ -124,7 +148,7 @@ export class CreateEtudiantComponent {
         error: (err) => {
           this.alertService.showToast("Création","Echec de creation de l'étudiant","danger");
         }
-      });
+      }); */
 
       
       

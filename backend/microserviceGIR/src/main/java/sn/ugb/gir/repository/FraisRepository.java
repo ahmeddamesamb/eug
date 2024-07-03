@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import sn.ugb.gir.domain.Frais;
+import sn.ugb.gir.domain.Cycle;
 
 /**
  * Spring Data JPA repository for the Frais entity.
@@ -27,4 +29,16 @@ public interface FraisRepository extends FraisRepositoryWithBagRelationships, Jp
     default Page<Frais> findAllWithEagerRelationships(Pageable pageable) {
         return this.fetchBagRelationships(this.findAll(pageable));
     }
+    Page<Frais> findByTypeCycleId(Pageable pageable, Long cycleID);
+    boolean existsByTypeCycleAndTypeFraisLibelleTypeFrais(Cycle cycle,String libelleTypeFrais);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Frais f SET f.estEnApplicationYN = false WHERE f.estEnApplicationYN = true and f.typeCycle= :cycle and f.fraisPourAssimileYN = :fraisPourAssimileYN")
+    void updateIfEstEnApplicationIsOneAndCycleAndFraisPourAssimileYNLike(Cycle cycle, Boolean fraisPourAssimileYN );
+
+    Page <Frais> findAllByUniversitesId(Pageable pageable, Long universiteId);
+    Page <Frais> findAllByUniversitesMinistereId(Pageable pageable, Long ministereId);
+
+
 }

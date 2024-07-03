@@ -173,6 +173,19 @@ public class InformationPersonnelleResource {
     }
 
     /**
+     * {@code GET  /information-personnelles/:codeEtudiant} : get the "codeEtudiant" informationPersonnelle.
+     *
+     * @param codeEtudiant the codeEtudiant of the informationPersonnelleDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the informationPersonnelleDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("codeEtudiant/{codeEtudiant}")
+    public ResponseEntity<InformationPersonnelleDTO> getInformationPersonnelle(@PathVariable("codeEtudiant") String codeEtudiant) {
+        log.debug("REST request to get InformationPersonnelle : {}", codeEtudiant);
+        Optional<InformationPersonnelleDTO> informationPersonnelleDTO = informationPersonnelleService.findOneByCodeEtudiant(codeEtudiant);
+        return ResponseUtil.wrapOrNotFound(informationPersonnelleDTO);
+    }
+
+    /**
      * {@code DELETE  /information-personnelles/:id} : delete the "id" informationPersonnelle.
      *
      * @param id the id of the informationPersonnelleDTO to delete.

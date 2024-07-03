@@ -28,16 +28,20 @@ public interface FraisMapper extends EntityMapper<FraisDTO, Frais> {
     @Named("typeFraisId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleTypeFrais", source = "libelleTypeFrais")
     TypeFraisDTO toDtoTypeFraisId(TypeFrais typeFrais);
 
     @Named("cycleId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleCycle", source = "libelleCycle")
     CycleDTO toDtoCycleId(Cycle cycle);
 
     @Named("universiteId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nomUniversite", source = "nomUniversite")
+    @Mapping(target = "sigleUniversite", source = "sigleUniversite")
     UniversiteDTO toDtoUniversiteId(Universite universite);
 
     @Named("universiteIdSet")

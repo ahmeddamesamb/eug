@@ -1,3 +1,8 @@
+import {RegionModel} from 'src/app/views/gir/parametrage/components/region/models/region-model'
+import {TypeselectionModel} from 'src/app/views/gir/parametrage/components/typeselection/models/typeselection-model'
+import {LyceeModel} from 'src/app/views/gir/parametrage/components/lycee/models/lycee-model'
+import {BaccalaureatModel} from 'src/app/views/gir/parametrage/components/baccalaureat/models/baccalaureat-model'
+
 export interface EtudiantModel {
     id?: number;
     codeEtu?: string | null;
@@ -8,35 +13,10 @@ export interface EtudiantModel {
     lieuNaissEtu?: string | null;
     sexe?: string | null;
     numDocIdentite?: string | null;
-    assimileYN?: number | null;
-    exonereYN?: number | null;
-    /* region?: Pick<IRegion, 'id'> | null;
-    typeSelection?: Pick<ITypeSelection, 'id'> | null;
-    lycee?: Pick<ILycee, 'id'> | null;
-    informationPersonnelle?: Pick<IInformationPersonnelle, 'id'> | null;
-    baccalaureat?: Pick<IBaccalaureat, 'id'> | null; */
-
-    //les données sur la table information
-
-    nomEtu?: string | null;
-    nomJeuneFilleEtu?: string | null;
-    prenomEtu?: string | null;
-    statutMarital?: string | null;
-    regime?: number | null;
-    profession?: string | null;
-    adresseEtu?: string | null;
-    telEtu?: string | null;
-    emailEtu?: string | null;
-    adresseParent?: string | null;
-    telParent?: string | null;
-    emailParent?: string | null;
-    nomParent?: string | null;
-    prenomParent?: string | null;
-    handicapYN?: number | null;
-    photo?: string | null;
-    ordiPersoYN?: number | null;
-    derniereModification?: string | null;
-    emailUser?: string | null;
-    /* typeHandique?: Pick<ITypeHandicap, 'id'> | null;
-    typeBourse?: Pick<ITypeBourse, 'id'> | null; */
+    assimileYN?: boolean | null;
+    exonereYN?: boolean | null;
+    region?: RegionModel | null;
+    typeSelection?: TypeselectionModel | null;
+    lycee?: LyceeModel | null;
+    baccalaureat?: BaccalaureatModel | null; 
 }

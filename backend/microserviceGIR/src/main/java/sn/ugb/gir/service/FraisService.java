@@ -3,7 +3,9 @@ package sn.ugb.gir.service;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import sn.ugb.gir.service.dto.CycleDTO;
 import sn.ugb.gir.service.dto.FraisDTO;
+import sn.ugb.gir.domain.Cycle;
 
 /**
  * Service Interface for managing {@link sn.ugb.gir.domain.Frais}.
@@ -73,4 +75,33 @@ public interface FraisService {
      * @return the list of entities.
      */
     Page<FraisDTO> search(String query, Pageable pageable);
+
+    /**
+     * Get all the frais by cycle .
+     *
+     * @param pageable the pagination information.
+     * @param cycleID
+     * @return the list of entities.
+     */
+    Page<FraisDTO> findAllFraisByCycleId(Pageable pageable, Long cycleID);
+
+    /**
+     * Get all the frais by an id of universite .
+     *
+     * @param pageable the pagination information.
+     * @param universiteId
+     * @return the list of entities.
+     */
+    Page<FraisDTO> findAllFraisByUniversiteId(Pageable pageable, Long universiteId);
+
+    /**
+     * Get all the frais by an id of ministere .
+     *
+     * @param pageable the pagination information.
+     * @param ministereId
+     * @return the list of entities.
+     */
+    Page<FraisDTO> findAllFraisByMinistereId(Pageable pageable, Long ministereId);
+
+
 }

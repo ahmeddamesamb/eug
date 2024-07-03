@@ -1,8 +1,6 @@
 <h4 class="text-primary fw-bolder mb-4">ETAPES INSCRIPTION</h4>
 <div class="d-flex flex-column">
-    <app-etat-validation class="mb-3" etat=1 label="Déclencher"></app-etat-validation>
-    <app-etat-validation etat=0 label="Paiement"></app-etat-validation>
-
-    
-
+    @for (pane of panes; track pane; let i = $index, isLast = $last) {
+        <app-etat-validation class="mb-3" [etat]=pane.etat [label]="pane.name"></app-etat-validation>
+    }
 </div>

@@ -3,6 +3,8 @@ package sn.ugb.gir.service;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
+import sn.ugb.gir.service.dto.FraisDTO;
 import sn.ugb.gir.service.dto.OperateurDTO;
 
 /**
@@ -65,4 +67,13 @@ public interface OperateurService {
      * @return the list of entities.
      */
     Page<OperateurDTO> search(String query, Pageable pageable);
+
+    /**
+     * Get all the frais by an id of ministere .
+     *
+     * @param pageable the pagination information.
+     * @param actifYN boolean
+     * @return the list of entities.
+     */
+    Page<OperateurDTO> findAllOperateurByActifYN(Pageable pageable, Boolean actifYN);
 }

@@ -42,7 +42,6 @@ public class FraisServiceImpl implements FraisService {
         log.debug("Request to save Frais : {}", fraisDTO);
         LocalDate currentDate = LocalDate.now();
 
-
         if (fraisDTO.getDateApplication().isBefore(currentDate)) {
             throw new BadRequestAlertException("La date d'appliaction d'un nouveau frais ne peut pas etre dans le passe", ENTITY_NAME, "dateDapplicationInvalide");
         }
@@ -60,7 +59,6 @@ public class FraisServiceImpl implements FraisService {
         log.debug("Request to update Frais : {}", fraisDTO);
 
         validateData(fraisDTO);
-
         Frais frais = fraisMapper.toEntity(fraisDTO);
         frais = fraisRepository.save(frais);
         return fraisMapper.toDto(frais);
@@ -71,7 +69,6 @@ public class FraisServiceImpl implements FraisService {
         log.debug("Request to partially update Frais : {}", fraisDTO);
 
         validateData(fraisDTO);
-
         return fraisRepository
             .findById(fraisDTO.getId())
             .map(existingFrais -> {
