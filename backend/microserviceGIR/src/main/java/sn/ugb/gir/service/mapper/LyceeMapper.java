@@ -9,13 +9,14 @@ import sn.ugb.gir.service.dto.RegionDTO;
 /**
  * Mapper for the entity {@link Lycee} and its DTO {@link LyceeDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring" ,uses = {RegionMapper.class})
 public interface LyceeMapper extends EntityMapper<LyceeDTO, Lycee> {
-    @Mapping(target = "region", source = "region", qualifiedByName = "regionId")
+    @Mapping(target = "region", source = "region")
     LyceeDTO toDto(Lycee s);
 
     @Named("regionId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelleRegion", source = "libelleRegion")
     RegionDTO toDtoRegionId(Region region);
 }

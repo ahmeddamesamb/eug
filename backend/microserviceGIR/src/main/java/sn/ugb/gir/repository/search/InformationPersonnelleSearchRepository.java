@@ -31,6 +31,8 @@ interface InformationPersonnelleSearchRepositoryInternal {
 
     @Async
     void deleteFromIndexById(Long id);
+
+
 }
 
 class InformationPersonnelleSearchRepositoryInternalImpl implements InformationPersonnelleSearchRepositoryInternal {

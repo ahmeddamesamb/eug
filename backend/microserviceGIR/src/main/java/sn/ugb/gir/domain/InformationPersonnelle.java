@@ -5,8 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Optional;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import sn.ugb.gir.service.dto.InformationPersonnelleDTO;
 
 /**
  * A InformationPersonnelle.
@@ -475,4 +478,6 @@ public class InformationPersonnelle implements Serializable {
             ", emailUser='" + getEmailUser() + "'" +
             "}";
     }
+
+
 }
