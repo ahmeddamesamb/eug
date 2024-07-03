@@ -21,6 +21,9 @@ logging:
     sn.ugb.gateway: DEBUG
 
 management:
+  health:
+    elasticsearch:
+      enabled: false
   zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
@@ -41,7 +44,7 @@ spring:
   cloud:
     consul:
       config:
-        fail-fast: false # if not in "prod" profile, do not force to use Spring Cloud Config dddd
+        fail-fast: false # if not in "prod" profile, do not force to use Spring Cloud Config
         format: yaml
         profile-separator: '-'
       discovery:
@@ -54,16 +57,18 @@ spring:
           - git-branch=${git.branch:}
       host: localhost
       port: 8500
+  elasticsearch:
+    uris: http://localhost:9200
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-    url: jdbc:postgresql://localhost:5432/gateway
+    url: jdbc:postgresql://localhost:5432/GatewayUGB
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/gateway
+    url: r2dbc:postgresql://localhost:5432/GatewayUGB
     username: postgres
-    password: root
+    password: postgres
   thymeleaf:
     cache: false
 
