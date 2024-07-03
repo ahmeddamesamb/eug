@@ -54,10 +54,6 @@ public class EtudiantServiceImpl implements EtudiantService {
     private  RegionService regionService;
 
     @Autowired
-    private InformationPersonnelleService informationPersonnelleService;
-
-
-    @Autowired
     private PaiementFraisRepository paiementFraisRepository;
 
     @Autowired
@@ -318,11 +314,12 @@ public class EtudiantServiceImpl implements EtudiantService {
             }
         }
 
-        Optional <InformationPersonnelleDTO> informationPersonnelle = informationPersonnelleService.findOneByCodeEtudiant(codeEtudiant);
+       //Optional <InformationPersonnelleDTO> informationPersonnelleDTO = informationPersonnelleRepository.findByEtudiantCodeEtu(codeEtudiant);
 
 
         DossierEtudiantDTO dossierEtudiantDTO = new DossierEtudiantDTO();
-      //  dossierEtudiantDTO.setInformationPersonnelle(informationPersonnelleDTO);
+
+
         dossierEtudiantDTO.setPaiementFrais(paiementFrais);
         dossierEtudiantDTO.setFormationPrivee(formationPriveeDTO);
 

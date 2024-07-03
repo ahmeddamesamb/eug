@@ -178,7 +178,7 @@ public class InformationPersonnelleResource {
      * @param codeEtudiant the codeEtudiant of the informationPersonnelleDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the informationPersonnelleDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("codeEtudiant/{codeEtudiant}")
+    @GetMapping("etudiant/{codeEtudiant}")
     public ResponseEntity<InformationPersonnelleDTO> getInformationPersonnelle(@PathVariable("codeEtudiant") String codeEtudiant) {
         log.debug("REST request to get InformationPersonnelle : {}", codeEtudiant);
         Optional<InformationPersonnelleDTO> informationPersonnelleDTO = informationPersonnelleService.findOneByCodeEtudiant(codeEtudiant);
