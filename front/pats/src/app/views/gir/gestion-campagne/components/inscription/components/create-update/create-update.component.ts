@@ -9,6 +9,8 @@ import {InscriptionService} from '../../../../services/inscription.service';
 import { CampagneListComponent } from '../../../campagnes/components/campagne-list/campagne-list.component';
 import { Observable, map } from 'rxjs';
 import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
+import { CampagneService } from '../../../campagnes/services/campagne.service';
+import { CampagneModel } from '../../../campagnes/models/campagne-model';
 @Component({
   selector: 'app-create-update',
   standalone: true,
@@ -31,11 +33,12 @@ export class CreateUpdateComponent {
   customStylesValidated = false;
   id: number | undefined;
   inscriptionForm: FormGroup;
-  campagnes: any[] = []; 
-  formations: any[] = []; 
+  campagnes: CampagneModel[] = []; 
+  formations: any[] = [];
 
 
-  constructor( private inscriptionService: InscriptionService, private route: ActivatedRoute, private router:Router , private alertService:AlertServiceService){
+
+  constructor( private inscriptionService: InscriptionService, private campagneService: CampagneService, private route: ActivatedRoute, private router:Router , private alertService:AlertServiceService){
     this.inscriptionForm = new FormGroup({
       libelle: new FormControl(null, Validators.required),
       dateDebut: new FormControl(null, Validators.required),
@@ -82,11 +85,14 @@ initializeForm(inscription: InscriptionModel) {
 }
 
 loadCampagnes() {
-  this.campagnes = [
-    { id: 1, nom: 'Campagne 1' },
-    { id: 2, nom: 'Campagne 2' },
-  ];
-}
+  console.log("GET CAMPAGNES");
+  this.campagneService.getCampagneList().subscribe({
+    next: (data) => {
+      this.campagnes = data;
+    },
+    error: (err) => {
+    }
+  });}
 
 loadFormations() {
   this.formations = [
