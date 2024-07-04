@@ -19,12 +19,12 @@ export class InscriptionService {
   }
 
   getInscriptionList(): Observable<InscriptionModel[]> {
-    return this.http.get<InscriptionModel[]>(`${this.inscriptionUrl}?sort=enCoursYN,desc`);
+    return this.http.get<InscriptionModel[]>(`${this.inscriptionUrl}`);
   }
 
 
   createInscription(inscription: InscriptionModel): Observable<InscriptionModel> {
-    return this.http.post<any>(`${this.inscriptionUrl}`, inscription);
+    return this.http.post<any>(`${this.inscriptionUrl}`,inscription);
   }
 
   getInscriptionById(id:number):Observable<InscriptionModel>{

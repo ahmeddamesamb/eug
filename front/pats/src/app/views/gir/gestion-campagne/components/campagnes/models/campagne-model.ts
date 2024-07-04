@@ -1,6 +1,6 @@
 export interface CampagneModel {
     id: number,
-    libelle: string,
+    libelleCampagne: string,
     dateDebut: Date | string,
     dateFin: Date | string, 
 }

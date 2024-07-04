@@ -89,10 +89,22 @@ loadCampagnes() {
   this.campagneService.getCampagneList().subscribe({
     next: (data) => {
       this.campagnes = data;
+      console.log("CAMPAGNES:", this.campagnes.length);
+      
+      if (this.campagnes && this.campagnes.length > 0) {
+        console.log("Libellés des campagnes:");
+        this.campagnes.forEach(campagne => {
+          console.log(campagne.libelleCampagne); 
+        });
+      } else {
+        console.log("Aucune campagne trouvée");
+      }
     },
     error: (err) => {
+      console.error("Erreur lors du chargement des campagnes:", err);
     }
-  });}
+  });
+}
 
 loadFormations() {
   this.formations = [
