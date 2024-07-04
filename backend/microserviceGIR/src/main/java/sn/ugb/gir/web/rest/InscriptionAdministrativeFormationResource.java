@@ -95,17 +95,8 @@ public class InscriptionAdministrativeFormationResource {
         @Valid @RequestBody InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormationDTO
     ) throws URISyntaxException {
         log.debug("REST request to update InscriptionAdministrativeFormation : {}, {}", id, inscriptionAdministrativeFormationDTO);
-        if (inscriptionAdministrativeFormationDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, inscriptionAdministrativeFormationDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!inscriptionAdministrativeFormationRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(inscriptionAdministrativeFormationDTO, id);
         InscriptionAdministrativeFormationDTO result = inscriptionAdministrativeFormationService.update(
             inscriptionAdministrativeFormationDTO
         );
@@ -143,17 +134,8 @@ public class InscriptionAdministrativeFormationResource {
             id,
             inscriptionAdministrativeFormationDTO
         );
-        if (inscriptionAdministrativeFormationDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, inscriptionAdministrativeFormationDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!inscriptionAdministrativeFormationRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
+        validateDataUpdate(inscriptionAdministrativeFormationDTO, id);
         Optional<InscriptionAdministrativeFormationDTO> result = inscriptionAdministrativeFormationService.partialUpdate(
             inscriptionAdministrativeFormationDTO
         );
@@ -230,6 +212,19 @@ public class InscriptionAdministrativeFormationResource {
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         } catch (RuntimeException e) {
             throw ElasticsearchExceptionMapper.mapException(e);
+        }
+    }
+
+    public void validateDataUpdate(InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormationDTO, Long id){
+        if (inscriptionAdministrativeFormationDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, inscriptionAdministrativeFormationDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!inscriptionAdministrativeFormationRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
     }
 }
