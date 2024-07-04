@@ -1,6 +1,6 @@
 import {SerieModel} from 'src/app/views/gir/parametrage/components/serie/models/serie-model'
 export interface BaccalaureatModel {
-    id: number;
+    id?: number;
     origineScolaire?: string | null;
     anneeBac?: Date | null;
     numeroTable?: number | null;
