@@ -255,4 +255,25 @@ public class RessourceResource {
             )
             .map(headers -> ResponseEntity.ok().headers(headers).body(ressourceService.search(query, pageable)));
     }
+@GetMapping("/blocfonctionnels/{blocfonctionnelId}")
+public ResponseEntity<List<RessourceDTO>> getAllRessourceByBlocfonctionnelId(@PathVariable Long blocfonctionnelId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+    log.debug("REST request to get a page of Blocfonctionnel by Blocfonctionnel ID : {}", blocfonctionnelId);
+    Page<RessourceDTO> page = ressourceService.findAllRessourceByBlocfonctionnel(blocfonctionnelId, pageable);
+    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+    return ResponseEntity.ok().headers(headers).body(page.getContent());
+}
+@GetMapping("/services/{serviceId}")
+public ResponseEntity<List<RessourceDTO>> getAllRessourceByServiceId(@PathVariable Long serviceId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+    log.debug("REST request to get a page of Service by Service ID : {}", serviceId);
+    Page<RessourceDTO> page = ressourceService.findAllRessourceByService(serviceId, pageable);
+    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+    return ResponseEntity.ok().headers(headers).body(page.getContent());
+}
+@GetMapping("/actifYN/{actifYN}")
+public ResponseEntity<List<RessourceDTO>> getAllRessourceByActifYN(@PathVariable Boolean actifYN, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+    log.debug("REST request to get a page of ActifYN by Service ID : {}", actifYN);
+    Page<RessourceDTO> page = ressourceService.findAllRessourceByActifYN(actifYN, pageable);
+    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+    return ResponseEntity.ok().headers(headers).body(page.getContent());
+}
 }

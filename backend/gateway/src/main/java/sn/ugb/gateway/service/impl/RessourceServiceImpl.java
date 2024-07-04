@@ -109,4 +109,44 @@ public class RessourceServiceImpl implements RessourceService {
         log.debug("Request to search for a page of Ressources for query {}", query);
         return ressourceSearchRepository.search(query, pageable).map(ressourceMapper::toDto);
     }
+@Override
+public Page<RessourceDTO> findAllRessourceByService(Long serviceId, Pageable pageable) {
+    return ressourceRepository.findByServiceId(serviceId, pageable):map(ressourceMapper::toDto);
+}
+
+@Override
+public Page<RessourceDTO> findAllRessourceByBlocfonctionnel(Long blocfonctionnelId, Pageable pageable) {
+    return ressourceRepository.findByBlocfonctionnelId(blocfonctionnelId, pageable).map(ressourceMapper::toDto);
+}
+
+@Override
+public RessourceDTO setActifYNRessource(Long id, Boolean actifYN) {
+    Ressource ressource = ressourceRepository.findById(id)
+                              .orElseThrow(() -> new BadRequestAlertException("Ressource not found.", ENTITY_NAME, "ressourceNotFound"));
+    ressource.setActifYN(actifYN);
+    ressource = ressourceRepository.save(ressource);
+    return ressourceMapper.toDto(ressource);
+
+    }
+
+private void validateData(RessourceDTO ressourceDTO) {
+    if (ressourceDTO.getLibelle().isEmpty() || ressourceDTO.getLibelle().isBlank()){
+        throw new BadRequestAlertException("Le Ressource ne peut pas être vide.", ENTITY_NAME, "getLibelleRessourceNotNull");
+    }
+//    if (ressourceDTO.getNationalite().isEmpty() || ressourceDTO.getNationalite().isBlank()){
+//        throw new BadRequestAlertException("Le Ressource ne peut pas être vide.", ENTITY_NAME, "getLibelleRessourceNotNull");
+//    }
+//    if (ressourceDTO.getCodeRessource().isEmpty() || ressourceDTO.getCodeRessource().isBlank()){
+//        throw new BadRequestAlertException("Le Ressource ne peut pas être vide.", ENTITY_NAME, "getLibelleRessourceNotNull");
+//    }
+//    Optional<Ressource> existingRessource = ressourceRepository.findByLibelleRessourceIgnoreCase(ressourceDTO.getLibelle());
+//    if (existingRessource.isPresent() && !existingRessource.get().getId().equals(ressourceDTO.getId())) {
+//        throw new BadRequestAlertException("Un Ressource avec le même libellé existe.", ENTITY_NAME, "getLibelleRessourceExist");
+//    }
+//    @Override
+//    public Boolean setRessourceActifYN(Boolean actifYN) {
+//        this.setRessourceActifYN(actifYN);
+//        return true;
+//    }
+}
 }

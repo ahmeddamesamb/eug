@@ -38,4 +38,8 @@ interface RessourceRepositoryInternal {
     Mono<Ressource> findById(Long id);
     // this is not supported at the moment because of https://github.com/jhipster/generator-jhipster/issues/18269
     // Flux<Ressource> findAllBy(Pageable pageable, Criteria criteria);
+    Page<Ressource>findByServiceId(Long serviceId, Pageable pageable);
+    Page<Ressource>findByBlocfonctionnelId(Long blocfonctionnelId, Pageable pageable);
+
+    public void setRessourceActifYN(Boolean actifYN);
 }
