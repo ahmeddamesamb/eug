@@ -59,8 +59,8 @@ public class InfosUserServiceImpl implements InfosUserService {
 
         validateInfosUser(infosUserDTO);
 
-        return infosUserRepository
-            .save(infosUserMapper.toEntity(infosUserDTO))
+        return validateInfosUser(infosUserDTO)
+            .then(infosUserRepository.save(infosUserMapper.toEntity(infosUserDTO)))
             .flatMap(infosUserSearchRepository::save)
             .map(infosUserMapper::toDto);
     }
@@ -69,9 +69,21 @@ public class InfosUserServiceImpl implements InfosUserService {
     public Mono<InfosUserDTO> update(InfosUserDTO infosUserDTO) {
         log.debug("Request to update InfosUser : {}", infosUserDTO);
 
-        validateInfosUser(infosUserDTO);
-        return infosUserRepository
-            .save(infosUserMapper.toEntity(infosUserDTO))
+        Mono<Void> desactivationUtilisateur = Mono.empty();
+
+        if (!infosUserDTO.getActifYN()) {
+            desactivationUtilisateur = userRepository.findById(infosUserDTO.getUser().getId())
+                .flatMap(user -> {
+                    user.setActivated(infosUserDTO.getActifYN());
+                    return userRepository.save(user);
+                })
+                .switchIfEmpty(Mono.error(new BadRequestAlertException("Utilisateur non trouvé", ENTITY_NAME, "usernotfound")))
+                .then();
+        }
+
+        return desactivationUtilisateur
+            .then(validateInfosUser(infosUserDTO))
+            .then(infosUserRepository.save(infosUserMapper.toEntity(infosUserDTO)))
             .flatMap(infosUserSearchRepository::save)
             .map(infosUserMapper::toDto);
     }
@@ -96,38 +108,33 @@ public class InfosUserServiceImpl implements InfosUserService {
             .map(infosUserMapper::toDto);
     }
 
-    private void validateInfosUser(InfosUserDTO infosUserDTO) {
-
+    private Mono<Void> validateInfosUser(InfosUserDTO infosUserDTO) {
         if (infosUserDTO.getDateAjout() == null) {
-            throw new BadRequestAlertException("DateAjout est obligatoire", ENTITY_NAME, "dateajoutnull");
+            return Mono.error(new BadRequestAlertException("DateAjout est obligatoire", ENTITY_NAME, "dateajoutnull"));
         }
         if (infosUserDTO.getActifYN() == null) {
-            throw new BadRequestAlertException("ActifYN est obligatoire", ENTITY_NAME, "actifyannull");
+            return Mono.error(new BadRequestAlertException("ActifYN est obligatoire", ENTITY_NAME, "actifyannull"));
         }
         if (infosUserDTO.getUser() == null || infosUserDTO.getUser().getLogin() == null) {
-            throw new BadRequestAlertException("Le login de l'utilisateur est obligatoire", ENTITY_NAME, "userloginnull");
+            return Mono.error(new BadRequestAlertException("Le login de l'utilisateur est obligatoire", ENTITY_NAME, "userloginnull"));
         }
 
         String email = infosUserDTO.getUser().getLogin();
-        String personnelOrEnseignantPattern = "^[a-z]+\\.[a-z]+\\.[0-9]+@ugb\\.edu\\.sn$";
-        String etudiantPattern = "^[a-z]+\\.[a-z]+\\.[0-9]+@ugb\\.edu\\.sn$";
+        String emailPattern = "^[a-z]+\\.[a-z]+\\.[0-9]+@ugb\\.edu\\.sn$";
 
-        if (!Pattern.matches(personnelOrEnseignantPattern, email) && !Pattern.matches(etudiantPattern, email)) {
-            throw new BadRequestAlertException("Format d'email invalide", ENTITY_NAME, "invalidemail");
+        if (!Pattern.matches(emailPattern, email)) {
+            return Mono.error(new BadRequestAlertException("Format d'email invalide", ENTITY_NAME, "invalidemail"));
         }
 
-        if (!infosUserDTO.getActifYN()) {
-            UserDTO userDTO = infosUserDTO.getUser();
-            Optional<User> optionalUser = userRepository.findById(userDTO.getId()).blockOptional();
-            if (optionalUser.isPresent()) {
-                User user = optionalUser.get();
-                user.setActivated(false);
-                userRepository.save(user).block();
-            } else {
-                throw new BadRequestAlertException("Utilisateur non trouvé", ENTITY_NAME, "usernotfound");
-            }
-        }
+        return userRepository.findById(infosUserDTO.getUser().getId())
+            .flatMap(user -> {
+                user.setActivated(infosUserDTO.getActifYN());
+                return userRepository.save(user);
+            })
+            .switchIfEmpty(Mono.error(new BadRequestAlertException("Utilisateur non trouvé", ENTITY_NAME, "usernotfound")))
+            .then();
     }
+
 
     @Override
     @Transactional(readOnly = true)
