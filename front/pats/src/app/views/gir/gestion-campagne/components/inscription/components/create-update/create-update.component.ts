@@ -20,8 +20,10 @@ export class CreateUpdateComponent {
 
   inscription: InscriptionModel = {
     id: 0,
+    libelle:'',
     dateDebut: '',
     dateFin: '',
+    dateForclos: '',
     campagne: '',
     formation: ''
   };
@@ -35,8 +37,10 @@ export class CreateUpdateComponent {
 
   constructor( private inscriptionService: InscriptionService, private route: ActivatedRoute, private router:Router , private alertService:AlertServiceService){
     this.inscriptionForm = new FormGroup({
+      libelle: new FormControl(null, Validators.required),
       dateDebut: new FormControl(null, Validators.required),
       dateFin: new FormControl(null, Validators.required),
+      dateForclos: new FormControl(null, Validators.required),
       campagne: new FormControl(null, Validators.required),
       formation: new FormControl(null, Validators.required)
       
@@ -71,6 +75,7 @@ initializeForm(inscription: InscriptionModel) {
   this.inscriptionForm.setValue({
     dateDebut: inscription.dateDebut || null,
     dateFin: inscription.dateFin || null,
+    dateForclos: inscription.dateForclos || null,
     campagne: inscription.campagne,
     formation: inscription.formation
   });

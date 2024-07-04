@@ -10,6 +10,19 @@
         class="row g-3 needs-validation"
         [formGroup]="inscriptionForm"
     >
+    <c-col md="12">
+        <label cLabel for="validationCustomLibelle">Libellé</label>
+        <input cFormControl id="validationCustomLibelle"
+               formControlName="libelle"
+               [valid]="(inscriptionForm?.get('libelle')?.touched && inscriptionForm?.get('libelle')?.valid) ? true : (inscriptionForm?.get('libelle')?.touched) && inscriptionForm?.get('libelle')?.invalid ? false : undefined"
+               required
+               type="text"
+               aria-describedby="libelle-error"/>
+    
+        @if ((inscriptionForm?.get('libelle')?.touched && inscriptionForm?.get('libelle')?.hasError('required'))) {
+            <span class="text-danger" id="libelle-error">Le libellé est obligatoire</span>
+        }
+    </c-col>
         <c-col md="12">
             <label cLabel for="validationCustomCampagne">Campagne</label>
             <select cSelect id="validationCustomCampagne"
@@ -73,6 +86,17 @@
             }
         </c-col>
         
+        <c-col md="12">
+            <label cLabel for="validationCustomDateForclos">Date de forclusion</label>
+            <c-date-picker closeOnSelect cFormControl id="validationCustomDateForclos"
+              [valid]="(inscriptionForm?.get('dateForclos')?.touched && inscriptionForm?.get('dateForclos')?.valid) ? true : (inscriptionForm?.get('dateForclos')?.touched) && inscriptionForm?.get('dateForclos')?.invalid ? false : undefined"
+              required locale="fr-FR" formControlName="dateForclos"
+              aria-describedby="dateForclos-error"/>
+        
+            @if ((inscriptionForm?.get('dateForclos')?.touched && inscriptionForm?.get('dateForclos')?.hasError('required'))) {
+              <span class="text-danger" id="dateForclos-error">La date de forclusion est obligatoire</span>
+            }
+        </c-col>
         @if (inscriptionForm?.hasError('dateInvalide')) {
           <c-col md="12">
             <span class="text-danger">La date de fin doit être postérieure à la date de début</span>

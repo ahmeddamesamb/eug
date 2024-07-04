@@ -14,7 +14,7 @@ export class InscriptionService {
 
   constructor(private http: HttpClient) {
     const baseUrl = ENVIRONMENT.endpointURL + CONSTANTES_GLOBALES.girURL;
-    this.inscriptionUrl = `${baseUrl}/inscriptions`;
+    this.inscriptionUrl = `${baseUrl}/programmation-inscriptions`;
     
   }
 
@@ -23,8 +23,8 @@ export class InscriptionService {
   }
 
 
-  createInscription(ministere: InscriptionModel): Observable<InscriptionModel> {
-    return this.http.post<any>(`${this.inscriptionUrl}`, ministere);
+  createInscription(inscription: InscriptionModel): Observable<InscriptionModel> {
+    return this.http.post<any>(`${this.inscriptionUrl}`, inscription);
   }
 
   getInscriptionById(id:number):Observable<InscriptionModel>{
