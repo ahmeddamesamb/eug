@@ -1,1 +1,101 @@
-<p>create-update works!</p>
+<div class="">
+    @if (id != null) {
+        <h3>Mise à jour</h3>
+    } @else {
+        <h3>Programmer une inscription</h3>
+    }
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="inscriptionForm"
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustomCampagne">Campagne</label>
+            <select cSelect id="validationCustomCampagne"
+                    formControlName="campagne"
+                    [valid]="(inscriptionForm?.get('campagne')?.touched && inscriptionForm?.get('campagne')?.valid) ? true : (inscriptionForm?.get('campagne')?.touched) && inscriptionForm?.get('campagne')?.invalid ? false : undefined"
+                    required
+                    aria-label="Sélectionnez une campagne"
+                    aria-required="true"
+                    aria-describedby="campagne-error">
+                <option value="">Choisir une campagne</option>
+                @for (campagne of campagnes; track campagne.id) {
+                    <option [value]="campagne.id">{{campagne.nom}}</option>
+                  }            </select>
+
+            @if ((inscriptionForm?.get('campagne')?.touched && inscriptionForm?.get('campagne')?.hasError('required'))) {
+                <span class="text-danger" id="campagne-error">La campagne est obligatoire</span>
+            }
+        </c-col>
+
+        <c-col md="12">
+            <label cLabel for="validationCustomFormation">Formation</label>
+            <select cSelect id="validationCustomFormation"
+                    formControlName="formation"
+                    [valid]="(inscriptionForm?.get('formation')?.touched && inscriptionForm?.get('formation')?.valid) ? true : (inscriptionForm?.get('formation')?.touched) && inscriptionForm?.get('formation')?.invalid ? false : undefined"
+                    required
+                    aria-label="Sélectionnez une formation"
+                    aria-required="true"
+                    aria-describedby="formation-error">
+                <option value="">Choisir une formation</option>
+                @for (formation of formations; track formation.id) {
+                    <option [value]="formation.id">{{formation.nom}}</option>
+                  }
+            </select>
+
+            @if ((inscriptionForm?.get('formation')?.touched && inscriptionForm?.get('formation')?.hasError('required'))) {
+                <span class="text-danger" id="formation-error">La formation est obligatoire</span>
+            }
+        </c-col>
+        
+        <c-col md="12">
+            <label cLabel for="validationCustomDateDebut">Date de création</label>
+            <c-date-picker closeOnSelect cFormControl id="validationCustomDateDebut"
+              [valid]="(inscriptionForm?.get('dateDebut')?.touched && inscriptionForm?.get('dateDebut')?.valid) ? true : (inscriptionForm?.get('dateDebut')?.touched) && inscriptionForm?.get('dateDebut')?.invalid ? false : undefined"
+              required locale="fr-FR" formControlName="dateDebut"
+              aria-describedby="dateDebut-error"/>
+
+            @if ((inscriptionForm?.get('dateDebut')?.touched && inscriptionForm?.get('dateDebut')?.hasError('required'))) {
+              <span class="text-danger" id="dateDebut-error">La date de création est obligatoire</span>
+            }
+        </c-col>
+
+        <c-col md="12">
+            <label cLabel for="validationCustomDateFin">Date de fin</label>
+            <c-date-picker closeOnSelect cFormControl id="validationCustomDateFin"
+              [valid]="(inscriptionForm?.get('dateFin')?.touched && inscriptionForm?.get('dateFin')?.valid) ? true : (inscriptionForm?.get('dateFin')?.touched) && inscriptionForm?.get('dateFin')?.invalid ? false : undefined"
+              required locale="fr-FR" formControlName="dateFin"
+              aria-describedby="dateFin-error"/>
+
+            @if ((inscriptionForm?.get('dateFin')?.touched && inscriptionForm?.get('dateFin')?.hasError('required'))) {
+              <span class="text-danger" id="dateFin-error">La date de fin est obligatoire</span>
+            }
+        </c-col>
+        
+        @if (inscriptionForm?.hasError('dateInvalide')) {
+          <c-col md="12">
+            <span class="text-danger">La date de fin doit être postérieure à la date de début</span>
+          </c-col>
+        }
+
+        <div class="col-12 d-flex justify-content-between">
+            <div class="w-50 pe-1">
+                @if (id != null) {
+                    <button (click)="confirmerAnnulation()" class="w-100" cButton color="secondary" type="button">
+                        Annuler
+                    </button>
+                } @else {
+                    <button (click)="onReset1()" class="w-100" cButton color="secondary" type="reset">
+                        Vider
+                    </button>
+                }
+            </div>
+            <div class="w-50 ps-1">
+                <button cButton class="w-100 text-white" [disabled]="!inscriptionForm?.valid" color="primary" type="submit">
+                    Enregistrer
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
