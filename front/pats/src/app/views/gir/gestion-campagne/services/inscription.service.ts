@@ -15,6 +15,7 @@ export class InscriptionService {
   constructor(private http: HttpClient) {
     const baseUrl = ENVIRONMENT.endpointURL + CONSTANTES_GLOBALES.girURL;
     this.inscriptionUrl = `${baseUrl}/programmation-inscriptions`;
+
     
   }
 

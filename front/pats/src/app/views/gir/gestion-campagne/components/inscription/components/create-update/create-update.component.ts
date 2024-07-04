@@ -52,28 +52,26 @@ export class CreateUpdateComponent {
   ngOnInit() {
     this.loadCampagnes();
     this.loadFormations();
-
-    const id: Observable<string> = this.route.params.pipe(map(p=>p['id']));
-    if(id){
-      
-      id.subscribe((id)=>{
-
-        this.inscriptionService.getInscriptionById(parseInt(id)).subscribe(
+  
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id && !isNaN(Number(id))) {
+        this.inscriptionService.getInscriptionById(Number(id)).subscribe(
           (data) => {
             this.inscription = data;
             console.log(this.inscription);
-            this.id = parseInt(id);
+            this.id = Number(id);
             this.initializeForm(data);
           },
           (err) => {
             console.log(err);
+            this.alertService.showToast("Erreur", "Impossible de charger l'inscription", "danger");
           }
         );
-      })
+      }
+    });
+  }
 
-    }
-
-}
 initializeForm(inscription: InscriptionModel) {
   this.inscriptionForm.setValue({
     dateDebut: inscription.dateDebut || null,
