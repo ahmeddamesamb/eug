@@ -71,6 +71,6 @@ public interface MinistereService {
 
     Page<MinistereDTO> findByPeriode(LocalDate startDate, LocalDate endDate, Pageable pageable);
 
-    MinistereDTO activateOrDeactivate(Long id);
 
+    MinistereDTO setActifYNMinistere(Long id, Boolean actifYN);
 }

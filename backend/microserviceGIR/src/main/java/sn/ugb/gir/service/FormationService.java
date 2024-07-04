@@ -95,6 +95,5 @@ public interface FormationService {
 
     Page<FormationDTO> findAllFormationPriveeByMinistere(Long ministereId, Pageable pageable);
 
-    FormationDTO activateOrDeactivate(Long id);
-
+    FormationDTO setActifYNFormation(Long id, Boolean actifYN);
 }

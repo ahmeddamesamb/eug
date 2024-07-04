@@ -11,7 +11,7 @@ import sn.ugb.gateway.service.dto.RessourceDTO;
 /**
  * Mapper for the entity {@link InfoUserRessource} and its DTO {@link InfoUserRessourceDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {InfosUserMapper.class, RessourceMapper.class})
 public interface InfoUserRessourceMapper extends EntityMapper<InfoUserRessourceDTO, InfoUserRessource> {
     @Mapping(target = "infosUser", source = "infosUser", qualifiedByName = "infosUserId")
     @Mapping(target = "ressource", source = "ressource", qualifiedByName = "ressourceId")
@@ -20,10 +20,14 @@ public interface InfoUserRessourceMapper extends EntityMapper<InfoUserRessourceD
     @Named("infosUserId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "dateAjout", source = "dateAjout")
+    @Mapping(target = "actifYN", source = "actifYN")
     InfosUserDTO toDtoInfosUserId(InfosUser infosUser);
 
     @Named("ressourceId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelle", source = "libelle")
+    @Mapping(target = "actifYN", source = "actifYN")
     RessourceDTO toDtoRessourceId(Ressource ressource);
 }

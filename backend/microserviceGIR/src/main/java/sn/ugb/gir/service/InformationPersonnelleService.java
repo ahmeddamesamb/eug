@@ -3,6 +3,7 @@ package sn.ugb.gir.service;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 import sn.ugb.gir.service.dto.InformationPersonnelleDTO;
 
 /**
@@ -48,6 +49,14 @@ public interface InformationPersonnelleService {
      * @return the entity.
      */
     Optional<InformationPersonnelleDTO> findOne(Long id);
+
+    /**
+     * Get the "codeEtudiant" informationPersonnelle.
+     *
+     * @param codeEtudiant the id of the entity.
+     * @return the entity.
+     */
+    Optional<InformationPersonnelleDTO> findOneByCodeEtudiant(String codeEtudiant);
 
     /**
      * Delete the "id" informationPersonnelle.

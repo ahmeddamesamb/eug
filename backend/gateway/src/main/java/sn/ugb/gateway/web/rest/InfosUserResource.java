@@ -262,8 +262,14 @@ public class InfosUserResource {
     public Mono<ResponseEntity<Object>> archiveInfosUser(@PathVariable Long id) {
         return infosUserService.archiveInfosUser(id)
             .thenReturn(ResponseEntity.noContent().build())
-            .onErrorResume(error -> Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to archive InfosUser", error)));
+            .onErrorResume(error -> {
+                if (error instanceof ResponseStatusException) {
+                    return Mono.just(ResponseEntity.status(((ResponseStatusException) error).getStatusCode()).build());
+                }
+                return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+            });
     }
+
 
     @GetMapping("/by-actif")
     public ResponseEntity<Flux<InfosUserDTO>> getAllInfosUserByActifYN(@RequestParam Boolean actifYN) {

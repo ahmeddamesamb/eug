@@ -23,6 +23,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sn.ugb.gateway.repository.UserProfileBlocFonctionnelRepository;
 import sn.ugb.gateway.service.UserProfileBlocFonctionnelService;
+import sn.ugb.gateway.service.dto.ServiceUserDTO;
 import sn.ugb.gateway.service.dto.UserProfileBlocFonctionnelDTO;
 import sn.ugb.gateway.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
@@ -259,5 +260,129 @@ public class UserProfileBlocFonctionnelResource {
                 )
             )
             .map(headers -> ResponseEntity.ok().headers(headers).body(userProfileBlocFonctionnelService.search(query, pageable)));
+    }
+
+    /**
+     * {@code GET  /user-profile-bloc-fonctionnels/user-profiles/:userProfileId} : get all the userProfileBlocFonctionnels by userProfileId.
+     *
+     * @param userProfileId the userProfileId of the UserProfileBlocFonctionnelDTO to retrieve.
+     * @param pageable the pagination information.
+     * @param request a {@link ServerHttpRequest} request.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userProfileBlocFonctionnels in body.
+     */
+    @GetMapping(value = "/user-profiles/{userProfileId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<ResponseEntity<List<UserProfileBlocFonctionnelDTO>>> getAllUserProfilBlocFonctionnelsByUserProfilId(
+        @PathVariable Long userProfileId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        ServerHttpRequest request
+    ) {
+        log.debug("REST request to get a page of UserProfileBlocFonctionnels by userProfileId : {}", userProfileId);
+        return userProfileBlocFonctionnelService
+            .countByUserProfileId(userProfileId)
+            .zipWith(userProfileBlocFonctionnelService.getAllUserProfilBlocFonctionnelByUserProfilId(userProfileId, pageable).collectList())
+            .map(countWithEntities ->
+                ResponseEntity
+                    .ok()
+                    .headers(
+                        PaginationUtil.generatePaginationHttpHeaders(
+                            ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                            new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                        )
+                    )
+                    .body(countWithEntities.getT2())
+            );
+    }
+
+    /**
+     * {@code GET  /user-profile-bloc-fonctionnels/bloc-fonctionnels/:blocFonctionnelId} : get all the userProfileBlocFonctionnels by blocFonctionnelId.
+     *
+     * @param blocFonctionnelId the blocFonctionnelId of the UserProfileBlocFonctionnelDTO to retrieve.
+     * @param pageable the pagination information.
+     * @param request a {@link ServerHttpRequest} request.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userProfileBlocFonctionnels in body.
+     */
+    @GetMapping(value = "/bloc-fonctionnels/{blocFonctionnelId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<ResponseEntity<List<UserProfileBlocFonctionnelDTO>>> getAllUserProfileBlocFonctionnelsByBlocFonctionnelId(
+        @PathVariable Long blocFonctionnelId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        ServerHttpRequest request
+    ) {
+        log.debug("REST request to get a page of UserProfileBlocFonctionnels by blocFonctionnelId : {}", blocFonctionnelId);
+        return userProfileBlocFonctionnelService
+            .countByBlocFonctionnelId(blocFonctionnelId)
+            .zipWith(userProfileBlocFonctionnelService.findAllByBlocFonctionnelId(blocFonctionnelId, pageable).collectList())
+            .map(countWithEntities ->
+                ResponseEntity
+                    .ok()
+                    .headers(
+                        PaginationUtil.generatePaginationHttpHeaders(
+                            ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                            new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                        )
+                    )
+                    .body(countWithEntities.getT2())
+            );
+    }
+
+    /**
+     * {@code GET  /user-profile-bloc-fonctionnels/en-cours-yn/:enCoursYN} : get all the userProfileBlocFonctionnels by enCoursYN.
+     *
+     * @param enCoursYN the enCoursYN of the UserProfileBlocFonctionnelDTO to retrieve.
+     * @param pageable the pagination information.
+     * @param request a {@link ServerHttpRequest} request.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userProfileBlocFonctionnels in body.
+     */
+    @GetMapping(value = "/en-cours-yn/{enCoursYN}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<ResponseEntity<List<UserProfileBlocFonctionnelDTO>>> getAllUserProfileBlocFonctionnelsByEnCoursYN(
+        @PathVariable Boolean enCoursYN,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        ServerHttpRequest request
+    ) {
+        log.debug("REST request to get a page of UserProfileBlocFonctionnels by enCoursYN : {}", enCoursYN);
+        return userProfileBlocFonctionnelService
+            .countByEnCoursYN(enCoursYN)
+            .zipWith(userProfileBlocFonctionnelService.findAllByEnCoursYN(enCoursYN, pageable).collectList())
+            .map(countWithEntities ->
+                ResponseEntity
+                    .ok()
+                    .headers(
+                        PaginationUtil.generatePaginationHttpHeaders(
+                            ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                            new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                        )
+                    )
+                    .body(countWithEntities.getT2())
+            );
+    }
+
+    /**
+     * {@code GET  /user-profile-bloc-fonctionnels/service-users/user-profiles/:userProfileId} : get all services by userProfileId.
+     *
+     * @param userProfileId the userProfileId of the UserProfileBlocFonctionnelDTO to retrieve.
+     * @param pageable the pagination information.
+     * @param request a {@link ServerHttpRequest} request.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of services in body.
+     */
+    @GetMapping(value = "/service-users/user-profiles/{userProfileId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<ResponseEntity<List<ServiceUserDTO>>> getAllServicesByUserProfileId(
+        @PathVariable Long userProfileId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        ServerHttpRequest request
+    ) {
+        log.debug("REST request to get a page of Services by userProfileId : {}", userProfileId);
+        return userProfileBlocFonctionnelService
+            .countByUserProfileId(userProfileId)
+            .zipWith(userProfileBlocFonctionnelService.findAllServiceByUserProfileId(userProfileId, pageable).collectList())
+            .map(countWithEntities ->
+                ResponseEntity
+                    .ok()
+                    .headers(
+                        PaginationUtil.generatePaginationHttpHeaders(
+                            ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                            new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                        )
+                    )
+                    .body(countWithEntities.getT2())
+            );
     }
 }
