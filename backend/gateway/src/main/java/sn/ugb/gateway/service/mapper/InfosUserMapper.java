@@ -18,5 +18,11 @@ public interface InfosUserMapper extends EntityMapper<InfosUserDTO, InfosUser> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "login", source = "login")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "email", source = "email")
+    @Mapping(target = "activated", source = "activated")
+    @Mapping(target = "langKey", source = "langKey")
+    @Mapping(target = "imageUrl", source = "imageUrl")
     UserDTO toDtoUserLogin(User user);
 }

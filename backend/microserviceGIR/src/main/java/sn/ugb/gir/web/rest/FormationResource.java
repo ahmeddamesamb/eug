@@ -295,10 +295,9 @@ public class FormationResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
-    @PutMapping("/activate/{id}")
-    public ResponseEntity<FormationDTO> setActif(@PathVariable Long id) {
-        log.debug("REST request to activate/deactivate Formation : {}", id);
-        FormationDTO result = formationService.activateOrDeactivate(id);
-        return ResponseEntity.ok().body(result);
+    @PutMapping("/actifYN/{id}")
+    public ResponseEntity<FormationDTO> setActifYNFormation(@PathVariable Long id, @RequestBody Boolean actifYN) {
+        FormationDTO updatedFormation = formationService.setActifYNFormation(id, actifYN);
+        return ResponseEntity.ok(updatedFormation);
     }
 }

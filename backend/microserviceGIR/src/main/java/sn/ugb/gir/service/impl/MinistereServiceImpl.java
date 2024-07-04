@@ -200,17 +200,12 @@ public class MinistereServiceImpl implements MinistereService {
     }
 
     @Override
-    public MinistereDTO activateOrDeactivate(Long id) {
-        log.debug("Request to activate/deactivate Ministere : {}", id);
-        Optional<Ministere> optionalMinistere = ministereRepository.findById(id);
-        if (optionalMinistere.isPresent()) {
-            Ministere ministere = optionalMinistere.get();
-            ministere.setActifYN(!ministere.getActifYN());
-            Ministere savedMinistere = ministereRepository.save(ministere);
-            return ministereMapper.toDto(savedMinistere);
-        } else {
-            throw new BadRequestAlertException("Ce ministere n'est pas present " + id, ENTITY_NAME, "ministereIntrouvable");
-        }
+    public MinistereDTO setActifYNMinistere(Long id, Boolean actifYN) {
+        Ministere ministere = ministereRepository.findById(id)
+            .orElseThrow(() -> new BadRequestAlertException("Ministere not found.", ENTITY_NAME, "ministereNotFound"));
+        ministere.setActifYN(actifYN);
+        ministere = ministereRepository.save(ministere);
+        return ministereMapper.toDto(ministere);
     }
 
 }

@@ -279,17 +279,9 @@ public class InfoUserRessourceResource {
         return infoUserRessourceService.findAllByActifYN(actifYN);
     }
 
-    @PutMapping("/info-user-ressources/{id}/archive")
-    public Mono<ResponseEntity<Void>> archiveInfoUserRessource(@PathVariable Long id) {
-        return infoUserRessourceService.archive(id)
+    @PutMapping("/archive/{id}")
+    public Mono<ResponseEntity<Void>> archiveInfoUserRessource(@PathVariable Long id, @RequestBody Boolean enCours) {
+        return infoUserRessourceService.archive(id, enCours)
             .then(Mono.just(ResponseEntity.noContent().build()));
     }
-
-    @PutMapping("/info-user-ressources/{id}/unarchive")
-    public Mono<ResponseEntity<Void>> unarchiveInfoUserRessource(@PathVariable Long id) {
-        return infoUserRessourceService.unarchive(id)
-            .then(Mono.just(ResponseEntity.noContent().build()));
-    }
-
-
 }

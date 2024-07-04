@@ -225,11 +225,11 @@ public class MinistereResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
-    @PutMapping("/activate/{id}")
-    public ResponseEntity<MinistereDTO> setActif(@PathVariable Long id) {
-        log.debug("REST request to activate/deactivate Ministere : {}", id);
-        MinistereDTO result = ministereService.activateOrDeactivate(id);
-        return ResponseEntity.ok().body(result);
+    @PutMapping("/actifYN/{id}")
+    public ResponseEntity<MinistereDTO> setActifYNMinistere(@PathVariable Long id, @RequestBody Boolean actifYN) {
+        MinistereDTO updatedMinistere = ministereService.setActifYNMinistere(id, actifYN);
+        return ResponseEntity.ok(updatedMinistere);
     }
+
 
 }
