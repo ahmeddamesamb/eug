@@ -128,18 +128,14 @@ public class InfoUserRessourceServiceImpl implements InfoUserRessourceService {
         return infoUserRessourceRepository.findAllByActifYN(actifYN).map(infoUserRessourceMapper::toDto);
     }
 
-
-    @Transactional
     @Override
-    public Mono<Void> archive(Long id) {
-        log.debug("Request to archive InfoUserRessource : {}", id);
-        return infoUserRessourceRepository.archiveById(id);
-    }
-
-    @Transactional
-    @Override
-    public Mono<Void> unarchive(Long id) {
-        log.debug("Request to unarchive InfoUserRessource : {}", id);
-        return infoUserRessourceRepository.unarchiveById(id);
+    public Mono<Void> archive(Long id, Boolean enCours) {
+        return infoUserRessourceRepository.findById(id)
+            .switchIfEmpty(Mono.error(new RuntimeException("InfoUserRessource not found with id: " + id)))
+            .flatMap(infoUserRessource -> {
+                infoUserRessource.setEnCoursYN(enCours);
+                return infoUserRessourceRepository.save(infoUserRessource);
+            })
+            .then();
     }
 }
