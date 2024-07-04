@@ -224,4 +224,6 @@ public class EtudiantResource {
         DossierEtudiantDTO etudiantDetails = etudiantService.getEtudiantDetailsByCodeEtu(codeEtudiant);
         return ResponseEntity.ok().body(etudiantDetails);
     }
+
+
 }
