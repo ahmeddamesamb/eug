@@ -219,7 +219,7 @@ public class EtudiantResource {
         }
     }
 
-    @GetMapping("/details/{codeEtudiant}")
+    @GetMapping("/dossier-etudiant/{codeEtudiant}")
     public ResponseEntity<DossierEtudiantDTO> getEtudiantDetails(@PathVariable String codeEtudiant) {
         DossierEtudiantDTO etudiantDetails = etudiantService.getEtudiantDetailsByCodeEtu(codeEtudiant);
         return ResponseEntity.ok().body(etudiantDetails);
