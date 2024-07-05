@@ -34,16 +34,17 @@
             }
         </c-col>
         <c-col md="12" lg="6">
+            <label cLabel for="lieuNaissEtu">Lieu de naissance </label>
+            <input cFormControl id="lieuNaissEtu" required type="text" formControlName="lieuNaissEtu"/>
+            <c-form-feedback>Lieu de naissance</c-form-feedback>
+        </c-col>
+        <c-col md="12" lg="6">
             <label cLabel for="adresseEtu">Adresse </label>
             <input cFormControl id="adresseEtu" required type="text" formControlName="adresseEtu"/>
             <c-form-feedback>Adresse</c-form-feedback>
         </c-col>
 
-        <c-col md="12" lg="6">
-            <label cLabel for="lieuNaissEtu">Lieu de naissance </label>
-            <input cFormControl id="lieuNaissEtu" required type="text" formControlName="lieuNaissEtu"/>
-            <c-form-feedback>Lieu de naissance</c-form-feedback>
-        </c-col>
+        
         <c-col md="12" lg="6">
             <label cLabel for="ine">INE </label>
             <input cFormControl id="ine" required type="text" formControlName="ine"/>
@@ -125,19 +126,19 @@
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="typeHandique">Type handique </label>
+            <label cLabel for="typeHandicap">Type handique </label>
             <select 
                 cFormControl 
                 aria-label="Default select example" 
-                formControlName="typeHandique"
+                formControlName="typeHandicap"
                 required
-                id="typeHandique"
-                [valid]="(informationPersonelleForm?.get('typeHandique')?.touched && informationPersonelleForm?.get('typeHandique')?.valid) ? true
-                : (informationPersonelleForm?.get('typeHandique')?.touched) && informationPersonelleForm?.get('typeHandique')?.invalid ? false : undefined"
+                id="typeHandicap"
+                [valid]="(informationPersonelleForm?.get('typeHandicap')?.touched && informationPersonelleForm?.get('typeHandicap')?.valid) ? true
+                : (informationPersonelleForm?.get('typeHandicap')?.touched) && informationPersonelleForm?.get('typeHandicap')?.invalid ? false : undefined"
                 cSelect> 
-                @for (typeHandique of typeHandiqueListe; track $index) {
+                @for (typeHandicap of typeHandicapListe; track $index) {
                     
-                    <option [value]="typeHandique.id">{{typeHandique.libelleTypeHandicap}}</option>
+                    <option [value]="typeHandicap.id">{{typeHandicap.libelleTypeHandicap}}</option>
                 }  
             </select>
             <c-form-feedback> Type handicap</c-form-feedback>
@@ -326,7 +327,6 @@
 
         <c-col md="12" lg="6">
             <label cLabel for="mentionBac">Mention du bac </label>
-           <!--  <input cFormControl id="mentionBac" required type="text" formControlName="mentionBac"/> -->
             <select 
                 cFormControl 
                 aria-label="Default select example" 
