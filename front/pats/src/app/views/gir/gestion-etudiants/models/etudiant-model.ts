@@ -4,7 +4,7 @@ import {LyceeModel} from 'src/app/views/gir/parametrage/components/lycee/models/
 import {BaccalaureatModel} from 'src/app/views/gir/parametrage/components/baccalaureat/models/baccalaureat-model'
 
 export interface EtudiantModel {
-    id?: number;
+    id?: number,
     codeEtu?: string | null;
     ine?: string | null;
     codeBU?: number | null;

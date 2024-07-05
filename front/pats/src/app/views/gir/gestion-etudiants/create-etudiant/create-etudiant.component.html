@@ -78,7 +78,7 @@
 
         <c-col md="12" lg="6">
             <label cLabel for="sexe">Sexe </label>
-            <!-- <input cFormControl id="sexe" required type="text" formControlName="sexe"/> -->
+           
 
             <select 
                 cFormControl 
@@ -89,8 +89,8 @@
                 [valid]="(informationPersonelleForm?.get('sexe')?.touched && informationPersonelleForm?.get('sexe')?.valid) ? true
             : (informationPersonelleForm?.get('sexe')?.touched) && informationPersonelleForm?.get('sexe')?.invalid ? false : undefined"
                 cSelect>
-                <option value="célibataire ">masculin </option>
-                <option value="marié">féminin</option>
+                <option value="masculin">masculin </option>
+                <option value="féminin">féminin</option>
             </select>
             <c-form-feedback>Sexe</c-form-feedback>
         </c-col>
@@ -221,7 +221,7 @@
                 [valid]="(informationPersonelleForm?.get('statutMarital')?.touched && informationPersonelleForm?.get('statutMarital')?.valid) ? true
                : (informationPersonelleForm?.get('statutMarital')?.touched) && informationPersonelleForm?.get('statutMarital')?.invalid ? false : undefined"
                 cSelect>
-                <option value="célibataire ">célibataire </option>
+                <option value="célibataire">célibataire </option>
                 <option value="marié">marié</option>
                 <option value="veuf">veuf</option>
                 <option value="divorcé">divorcé</option> 

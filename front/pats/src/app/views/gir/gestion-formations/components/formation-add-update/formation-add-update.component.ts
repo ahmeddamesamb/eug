@@ -5,6 +5,7 @@ import { FormControl, FormControlDirective, FormGroup, FormsModule, ReactiveForm
 import { FormationService } from '../../../parametrage/components/formation/services/formation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-formation-add-update',
@@ -20,7 +21,8 @@ import { AlertServiceService } from 'src/app/shared/services/alert/alert-service
 export class FormationAddUpdateComponent {
 
   formation :FormationModel = {
-    libelleformation: '',
+    codeFormation: '',
+    
   }; 
 
   formationForm: FormGroup;
@@ -34,6 +36,36 @@ export class FormationAddUpdateComponent {
       formations: new FormControl([], Validators.required),
     });
   }
+  ngOnInit() {
+    //this.id = this.route.snapshot.params['id'];
+    
+    var id: Observable<string> = this.route.params.pipe(map(p=>p['id']));
+    if(id){
+      
+      id.subscribe((id)=>{
+        this.id =(parseInt(id));
+        /* this.domaineService.getDomaineById(parseInt(id)).subscribe(
+          (data) => {
+            this.domaine = {
+              libelleDomaine: '',
+              ufrs : []
+            }; 
+            this.domaine = data;
+            this.id = parseInt(id);
+            this.initializeForm(this.domaine);          
+          },
+          (err) => {
+            console.log(err);
+          }
+        ); */
+      })
+
+    }
+    
+    //this.getListeUfr();
+  }
+
+
   annuler(){
 
   }
@@ -44,6 +76,7 @@ export class FormationAddUpdateComponent {
   onSubmit1(){
     
   }
+  
   
 
 
