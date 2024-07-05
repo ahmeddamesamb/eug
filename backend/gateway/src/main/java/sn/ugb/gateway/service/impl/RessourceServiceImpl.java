@@ -113,20 +113,19 @@ private final RessourceRepository ressourceRepository;
         log.debug("Request to search for a page of Ressources for query {}", query);
         return ressourceSearchRepository.search(query, pageable).map(ressourceMapper::toDto);
     }
-@Override
-public Page<RessourceDTO> findAllRessourceByService(Long serviceId, Pageable pageable) {
-    return ressourceRepository.findByServiceId(serviceId, pageable).map(ressourceMapper::toDto);
-}
+    @Override
+    public Page<RessourceDTO> findAllRessourceByService(Long serviceId, Pageable pageable) {
+        return ressourceRepository.findByServiceId(serviceId, pageable).map(ressourceMapper::toDto);
+    }
 
-@Override
-public Page<RessourceDTO> findAllRessourceByBlocfonctionnel(Long blocfonctionnelId, Pageable pageable) {
-    return ressourceRepository.findByBlocfonctionnelId(blocfonctionnelId, pageable).map(ressourceMapper::toDto);
-}
+    @Override
+    public Page<RessourceDTO> findAllRessourceByBlocfonctionnel(Long blocfonctionnelId, Pageable pageable) {
+        return ressourceRepository.findByBlocFonctionnelId(blocfonctionnelId, pageable).map(ressourceMapper::toDto);
+    }
 
-@Override
-public RessourceDTO setActifYNRessource(Long id, Boolean actifYN) {
-return  null;
-
+    @Override
+    public RessourceDTO setActifYNRessource(Long id, Boolean actifYN) {
+        return  null;
     }
 
 private void validateData(RessourceDTO ressourceDTO) {
