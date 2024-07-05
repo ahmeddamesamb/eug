@@ -350,10 +350,5 @@ public class EtudiantServiceImpl implements EtudiantService {
         return dossierEtudiantDTO;
     }
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> ff337b31e885f5a19fd4d125ce9809f53e6985f9
 }
 
