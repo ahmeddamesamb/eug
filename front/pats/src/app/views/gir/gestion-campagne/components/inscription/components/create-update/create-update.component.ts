@@ -11,6 +11,8 @@ import { Observable, map } from 'rxjs';
 import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
 import { CampagneService } from '../../../campagnes/services/campagne.service';
 import { CampagneModel } from '../../../campagnes/models/campagne-model';
+import { AnneeAcademiqueService} from '../../../../../parametrage/components/annee-academique/services/annee-academique.service';
+import { AnneeAcademiqueModel } from 'src/app/views/gir/parametrage/components/annee-academique/models/AnneeAcademiqueModel';
 @Component({
   selector: 'app-create-update',
   standalone: true,
@@ -27,7 +29,8 @@ export class CreateUpdateComponent {
     dateFin: '',
     dateForclos: '',
     campagne: '',
-    formation: ''
+    formation: '',
+    anneeAcademique:''
   };
 
   customStylesValidated = false;
@@ -35,23 +38,27 @@ export class CreateUpdateComponent {
   inscriptionForm: FormGroup;
   campagnes: CampagneModel[] = []; 
   formations: any[] = [];
+  annees: AnneeAcademiqueModel[] = [];
 
 
 
-  constructor( private inscriptionService: InscriptionService, private campagneService: CampagneService, private route: ActivatedRoute, private router:Router , private alertService:AlertServiceService){
+
+  constructor( private inscriptionService: InscriptionService, private anneeAcademiqueService: AnneeAcademiqueService, private campagneService: CampagneService, private route: ActivatedRoute, private router:Router , private alertService:AlertServiceService){
     this.inscriptionForm = new FormGroup({
       libelle: new FormControl(null, Validators.required),
       dateDebut: new FormControl(null, Validators.required),
       dateFin: new FormControl(null, Validators.required),
       dateForclos: new FormControl(null, Validators.required),
       campagne: new FormControl(null, Validators.required),
-      formation: new FormControl(null, Validators.required)
+      formation: new FormControl(null, Validators.required),
+      anneeAcademique: new FormControl(null, Validators.required)
       
     });
   }
   ngOnInit() {
     this.loadCampagnes();
     this.loadFormations();
+    this.loadAnneeAcademiques();
   
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -78,7 +85,10 @@ initializeForm(inscription: InscriptionModel) {
     dateFin: inscription.dateFin || null,
     dateForclos: inscription.dateForclos || null,
     campagne: inscription.campagne,
-    formation: inscription.formation
+    formation: inscription.formation,
+    anneeAcademique: inscription.anneeAcademique || null,
+
+
   });
 }
 
@@ -104,6 +114,48 @@ loadCampagnes() {
   });
 }
 
+loadAnneeAcademiques() {
+  console.log("getAnneesAcamiques");
+  this.anneeAcademiqueService.getAnneeAcademiqueList()
+  .subscribe({
+    next: (data) => {
+      this.annees = data;
+      console.log("AnneesAcademiques:", this.annees.length);
+      
+      if (this.annees && this.annees.length > 0) {
+        console.log("Libellés des annees:");
+        this.annees.forEach(annee => {
+          console.log(annee.libelleAnneeAcademique); 
+        });
+      } else {
+        console.log("Aucune année académique trouvée");
+      }
+    },
+    error: (err) => {
+      console.error("Erreur lors du chargement des années academiques:", err);
+    }
+  });
+}
+
+
+formatDates(formValue: any): any {
+  const formatted = { ...formValue };
+  ['dateDebut', 'dateFin', 'dateForclos'].forEach(dateField => {
+    if (formValue[dateField]) {
+      const date = new Date(formValue[dateField]);
+      formatted[dateField] = this.formatDate(date);
+    }
+  });
+  return formatted;
+}
+
+formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 loadFormations() {
   this.formations = [
     { id: 1, nom: 'Formation 1' },
@@ -112,54 +164,47 @@ loadFormations() {
 }
 
 onSubmit1() {
-
   if (this.inscriptionForm!.valid) {
     this.customStylesValidated = true;
-    
 
+    // Formater les dates
+    const formattedData = this.formatDates(this.inscriptionForm!.value);
 
-    if(this.id !=null){
-      //Si c'est une mis a jour
-
-      this.inscription = { ...this.inscriptionForm.value, id: Number(this.id) };      // Convertir la valeur booléenne en entier
+    if (this.id != null) {
+      // Si c'est une mise à jour
+      this.inscription = { ...formattedData, id: Number(this.id) };
       this.inscriptionService.updateInscription(this.id, this.inscription).subscribe({
         next: (data) => {
           console.log(data);
-          //this.addToast(true);
-          this.alertService.showToast("Création","Mise à jour du ministère avec succès","success");
+          this.alertService.showToast("Mise à jour", "Mise à jour de l'inscription avec succès", "success");
           this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
         },
         error: (err) => {
-          //console.log(err);
-          //this.addToast(false);
-          this.alertService.showToast("Création","Échec de la mise à jour du ministère","danger");
+          console.error(err);
+          this.alertService.showToast("Mise à jour", "Échec de la mise à jour de l'inscription", "danger");
         }
       });
-
-    }else{
-      //Si c'est une creation
-      this.inscription = this.inscriptionForm!.value;
+    } else {
+      // Si c'est une création
+      this.inscription = formattedData;
       this.inscriptionService.createInscription(this.inscription!).subscribe({
-        
         next: (data) => {
           console.log(data);
-          this.alertService.showToast("Création","Programmation d'inscription  avec succes","success");
-          //this.addToast(true);
-          this.router.navigate(['/gir/gestion-campagne/inscription/view',data.id])
+          this.alertService.showToast("Création", "Programmation d'inscription avec succès", "success");
+          this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
         },
         error: (err) => {
-          this.alertService.showToast("Création","Echec de la programmation d'inscription","danger");
+          console.error(err);
+          this.alertService.showToast("Création", "Échec de la programmation d'inscription", "danger");
         }
       });
-
-
     }
 
-
-
-    console.log('Données du formulaire :', this.inscriptionForm!.value);
+    console.log('Données du formulaire formatées :', formattedData);
   } else {
     console.log('Formulaire invalide');
+    // Optionnel : Afficher un message d'erreur à l'utilisateur
+    this.alertService.showToast("Erreur", "Veuillez remplir correctement tous les champs obligatoires", "warning");
   }
 }
 

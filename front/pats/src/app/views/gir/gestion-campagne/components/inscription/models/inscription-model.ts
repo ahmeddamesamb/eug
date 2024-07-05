@@ -1,3 +1,4 @@
+import { AnneeAcademiqueModel } from 'src/app/views/gir/parametrage/components/annee-academique/models/AnneeAcademiqueModel';
 import {CampagneModel} from '../../campagnes/models/campagne-model';
 
 export interface InscriptionModel{
@@ -7,6 +8,7 @@ export interface InscriptionModel{
     dateFin: Date | string,
     dateForclos: Date | string,
     campagne: CampagneModel | string,
-    formation: string
+    formation: string,
+    anneeAcademique: AnneeAcademiqueModel | string,
 
 }
