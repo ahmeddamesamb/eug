@@ -16,6 +16,8 @@ import sn.ugb.gir.repository.FormationInvalideRepository;
 import sn.ugb.gir.repository.FormationRepository;
 import sn.ugb.gir.repository.search.FormationInvalideSearchRepository;
 import sn.ugb.gir.service.FormationInvalideService;
+import sn.ugb.gir.service.dto.AnneeAcademiqueDTO;
+import sn.ugb.gir.service.dto.FormationDTO;
 import sn.ugb.gir.service.dto.FormationInvalideDTO;
 import sn.ugb.gir.service.mapper.FormationInvalideMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
@@ -57,6 +59,8 @@ public class FormationInvalideServiceImpl implements FormationInvalideService {
     @Override
     public FormationInvalideDTO save(FormationInvalideDTO formationInvalideDTO) {
         log.debug("Request to save FormationInvalide : {}", formationInvalideDTO);
+        validateFormationInvalideDTO(formationInvalideDTO);
+
         FormationInvalide formationInvalide = formationInvalideMapper.toEntity(formationInvalideDTO);
         formationInvalide = formationInvalideRepository.save(formationInvalide);
         FormationInvalideDTO result = formationInvalideMapper.toDto(formationInvalide);
@@ -67,6 +71,8 @@ public class FormationInvalideServiceImpl implements FormationInvalideService {
     @Override
     public FormationInvalideDTO update(FormationInvalideDTO formationInvalideDTO) {
         log.debug("Request to update FormationInvalide : {}", formationInvalideDTO);
+        validateFormationInvalideDTO(formationInvalideDTO);
+
         FormationInvalide formationInvalide = formationInvalideMapper.toEntity(formationInvalideDTO);
         formationInvalide = formationInvalideRepository.save(formationInvalide);
         FormationInvalideDTO result = formationInvalideMapper.toDto(formationInvalide);
@@ -77,12 +83,12 @@ public class FormationInvalideServiceImpl implements FormationInvalideService {
     @Override
     public Optional<FormationInvalideDTO> partialUpdate(FormationInvalideDTO formationInvalideDTO) {
         log.debug("Request to partially update FormationInvalide : {}", formationInvalideDTO);
+        validateFormationInvalideDTO(formationInvalideDTO);
 
         return formationInvalideRepository
             .findById(formationInvalideDTO.getId())
             .map(existingFormationInvalide -> {
                 formationInvalideMapper.partialUpdate(existingFormationInvalide, formationInvalideDTO);
-
                 return existingFormationInvalide;
             })
             .map(formationInvalideRepository::save)
@@ -122,7 +128,6 @@ public class FormationInvalideServiceImpl implements FormationInvalideService {
     }
 
     public FormationInvalideDTO invaliderFormation(Long formationId, Long anneeAcademiqueId) {
-        FormationInvalide formationInvalide = new FormationInvalide();
         Optional<Formation> formationOpt = formationRepository.findById(formationId);
         Optional<AnneeAcademique> anneeAcademiqueOpt = anneeAcademiqueRepository.findById(anneeAcademiqueId);
 
@@ -134,6 +139,9 @@ public class FormationInvalideServiceImpl implements FormationInvalideService {
             throw new BadRequestAlertException("Cette Année Académique n'est pas présente", ENTITY_NAME, "anneeAcademiqueIntrouvable");
         }
 
+        checkFormationAnneeAcademiqueUnicity(formationOpt.get().getId(), anneeAcademiqueOpt.get().getId());
+
+        FormationInvalide formationInvalide = new FormationInvalide();
         formationInvalide.setFormation(formationOpt.get());
         formationInvalide.setAnneeAcademique(anneeAcademiqueOpt.get());
         formationInvalide.setActifYN(false);
@@ -143,4 +151,18 @@ public class FormationInvalideServiceImpl implements FormationInvalideService {
     }
 
 
+    private void validateFormationInvalideDTO(FormationInvalideDTO formationInvalideDTO) {
+        Long formationId = formationInvalideDTO.getFormation().getId();
+        Long anneeAcademiqueId = formationInvalideDTO.getAnneeAcademique().getId();
+        checkFormationAnneeAcademiqueUnicity(formationId, anneeAcademiqueId);
+    }
+
+    private void checkFormationAnneeAcademiqueUnicity(Long formationId, Long anneeAcademiqueId) {
+        Optional<FormationInvalide> existingEntry = formationInvalideRepository.findByFormationIdAndAnneeAcademiqueId(formationId, anneeAcademiqueId);
+        if (existingEntry.isPresent()) {
+            throw new BadRequestAlertException("Cette Formation a déjà été invalidée pour cette Année Académique", ENTITY_NAME, "entreeExistante");
+        }
+
+
+    }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sn.ugb.gir.repository.ProcessusInscriptionAdministrativeRepository;
 import sn.ugb.gir.service.ProcessusInscriptionAdministrativeService;
+import sn.ugb.gir.service.dto.EtudiantDTO;
 import sn.ugb.gir.service.dto.ProcessusInscriptionAdministrativeDTO;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 import sn.ugb.gir.web.rest.errors.ElasticsearchExceptionMapper;
@@ -230,4 +231,13 @@ public class ProcessusInscriptionAdministrativeResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
+    @PostMapping("/etudiants/{id}/generateEmailUGB")
+    public String generateEmail(@PathVariable Long id, EtudiantDTO etudiantDTO) {
+        return processusInscriptionAdministrativeService.generateInstitutionalEmail(etudiantDTO);
+    }
+    @PostMapping("/etudiants/{id}/generateCodeBU")
+    public String generateCodeEtudiant(@PathVariable Long id, EtudiantDTO etudiantDTO) {
+        return processusInscriptionAdministrativeService.generateCodeBareBU(etudiantDTO);
+    }
+
 }

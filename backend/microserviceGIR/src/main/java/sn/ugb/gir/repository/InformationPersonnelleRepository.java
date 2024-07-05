@@ -14,4 +14,7 @@ import java.util.Optional;
 public interface InformationPersonnelleRepository extends JpaRepository<InformationPersonnelle, Long> {
 
     Optional<InformationPersonnelle> findByEtudiantCodeEtu(String codeEtudiant);
+    Long countByNomEtuAndPrenomEtu(String nomEtu, String prenomEtu);
+
+    boolean existsByNomEtuAndPrenomEtu(String nomEtu, String prenomEtu);
 }

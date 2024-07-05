@@ -1,5 +1,6 @@
 package sn.ugb.gateway.service;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -79,4 +80,10 @@ public interface RessourceService {
      * @return the list of entities.
      */
     Flux<RessourceDTO> search(String query, Pageable pageable);
+    Page<RessourceDTO> findAllRessourceByService(Long serviceId, Pageable pageable);
+
+    Page<RessourceDTO> findAllRessourceByBlocfonctionnel(Long blocfonctionnelId, Pageable pageable);
+
+    RessourceDTO setActifYNRessource(Long id, Boolean actifYN);
+
 }

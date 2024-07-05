@@ -3,6 +3,9 @@ package sn.ugb.gir.service;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import sn.ugb.gir.service.dto.AnneeAcademiqueDTO;
+import sn.ugb.gir.service.dto.EtudiantDTO;
+import sn.ugb.gir.service.dto.InformationPersonnelleDTO;
 import sn.ugb.gir.service.dto.ProcessusInscriptionAdministrativeDTO;
 
 /**
@@ -67,4 +70,10 @@ public interface ProcessusInscriptionAdministrativeService {
      * @return the list of entities.
      */
     Page<ProcessusInscriptionAdministrativeDTO> search(String query, Pageable pageable);
+    String generateInstitutionalEmail(EtudiantDTO etudiantDTO);
+    String generateCodeEtudiant(EtudiantDTO etudiantDTO);
+    String generateCodeBareBU(EtudiantDTO etudiantDTO);
+    InformationPersonnelleDTO getInformationPersonnelleByCodeBU(String codeBU);
+    String trouverNomPrenomUnique(String nomEtu, String prenomEtu);
+
 }
