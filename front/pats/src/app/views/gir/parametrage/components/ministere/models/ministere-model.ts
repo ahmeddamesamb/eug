@@ -4,5 +4,6 @@ export interface MinistereModel {
   sigleMinistere?:string,
   dateDebut?: Date | string,
   dateFin?: Date | string,
-  enCoursYN?: number
+  enCoursYN?: boolean,
+  actifYN?: boolean,
 }

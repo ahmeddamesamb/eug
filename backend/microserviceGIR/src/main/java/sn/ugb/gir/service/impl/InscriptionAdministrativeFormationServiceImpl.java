@@ -139,8 +139,7 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
                     throw new BadRequestAlertException("Vous ne pouvez pas supprimer un paiement déja valider par le paiement", ENTITY_NAME, "InscriptionFormationDejaPayer");
                 }
             }
-
-
+        paiementFraisRepository.delete(paiementFrais);
         inscriptionAdministrativeFormationRepository.deleteById(id);
         inscriptionAdministrativeFormationSearchRepository.deleteFromIndexById(id);
     }

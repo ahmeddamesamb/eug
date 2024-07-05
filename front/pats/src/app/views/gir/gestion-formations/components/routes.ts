@@ -13,7 +13,7 @@ export const routes: Routes = [
     },
     {      
         //path: 'update/:id',
-        path: 'formation-autorise',
+        path: 'formation-autorise/:id',
         loadComponent: () => import('./formation-add-update/formation-add-update.component').then(m => m.FormationAddUpdateComponent),
         
     },
