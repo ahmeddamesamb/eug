@@ -17,12 +17,12 @@ export interface InformationPersonellesModel {
     emailParent?: string | null;
     nomParent?: string | null;
     prenomParent?: string | null;
-    handicapYN?: number | null;
+    handicapYN?: boolean | null;
     photo?: string | null;
-    ordiPersoYN?: number | null;
-    derniereModification?: string | null;
+    ordiPersoYN?: boolean | null;
+    derniereModification?: Date | null;
     emailUser?: string | null;
     etudiant?: EtudiantModel;
-    typeHandique?: TypeHandicapModel | null;
+    typeHandicap?: TypeHandicapModel | null;
     typeBourse?: TypeBourseModel | null; 
 }
