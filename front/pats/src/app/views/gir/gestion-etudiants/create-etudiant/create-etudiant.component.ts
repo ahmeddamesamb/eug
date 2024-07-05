@@ -37,12 +37,14 @@ import {  SerieService } from '../../parametrage/components/serie/services/serie
   styleUrl: './create-etudiant.component.scss'
 })
 export class CreateEtudiantComponent {
-  informationPersonelle : InformationPersonellesModel= {
+  informationPersonelle : InformationPersonellesModel= { 
+    photo: "oupsgsrdgtd", 
+    derniereModification: new Date(),
     nomEtu: '',
     nomJeuneFilleEtu: '',
     prenomEtu: '',
     statutMarital: '',
-    regime:0 ,
+    regime:14568,
     profession: '',
     adresseEtu: '',
     telEtu: '',
@@ -52,11 +54,10 @@ export class CreateEtudiantComponent {
     emailParent: '',
     nomParent: '',
     prenomParent: '',
-    handicapYN: 0,
-    ordiPersoYN: 0,
-    derniereModification:'',
-    emailUser: '',
-    typeHandique: {id:0},
+    handicapYN: false,
+    ordiPersoYN: false,
+    emailUser: 'fujiohhgnerjgher',
+    typeHandicap: {id:0},
     typeBourse: {id:0},
     etudiant : {
       ine: '',
@@ -68,8 +69,8 @@ export class CreateEtudiantComponent {
       exonereYN: false,
       region: {id:0},
       typeSelection: {id:0},
-      lycee: {id:0},
-      baccalaureat: {
+      lycee: {id:0}
+      /* baccalaureat: {
         origineScolaire: '',
         anneeBac: null,
         natureBac: '',
@@ -77,11 +78,11 @@ export class CreateEtudiantComponent {
         moyenneSelectionBac: 0,
         moyenneBac: 0,
         serie: {id:0},
-      },
+      }, */
     },
     
   }
-  typeHandiqueListe: TypeHandicapModel[] = [];
+  typeHandicapListe: TypeHandicapModel[] = [];
   typeBourseListe: TypeBourseModel[] = [];
   regionListe: RegionModel[] = [];
   typeSelectionListe: TypeselectionModel[] = [];
@@ -112,7 +113,7 @@ export class CreateEtudiantComponent {
       nomJeuneFilleEtu: new FormControl('', Validators.required),
       prenomEtu: new FormControl('', Validators.required),
       statutMarital: new FormControl('', Validators.required),
-      regime: new FormControl(0, Validators.required),
+      /* regime: new FormControl(0, Validators.required), */
       profession: new FormControl('', Validators.required),
       adresseEtu: new FormControl('', Validators.required),
       telEtu: new FormControl('', Validators.required),
@@ -122,60 +123,39 @@ export class CreateEtudiantComponent {
       emailParent: new FormControl('', Validators.required),
       nomParent: new FormControl('', Validators.required),
       prenomParent: new FormControl('', Validators.required),
-      derniereModification: new FormControl('', Validators.required),
-      emailUser: new FormControl('', Validators.required),
-      typeHandique: new FormControl('', Validators.required),
+      /* derniereModification: new FormControl('', Validators.required), */
+      /* emailUser: new FormControl('', Validators.required), */
+      typeHandicap: new FormControl('', Validators.required),
       typeBourse: new FormControl('', Validators.required),
-      handicapYN: new FormControl(0, Validators.required),
-      ordiPersoYN: new FormControl(0, Validators.required),
+/*       handicapYN: new FormControl(0, Validators.required),
+      ordiPersoYN: new FormControl(0, Validators.required), */
       /*------------------------------------------------------------*/
-      etudiant: new FormGroup({
-        ine: new FormControl('', Validators.required),
-        dateNaissEtu: new FormControl(null, Validators.required),
-        lieuNaissEtu: new FormControl('', Validators.required),
-        sexe: new FormControl('', Validators.required),
-        numDocIdentite: new FormControl('', Validators.required),
-        region: new FormControl('', Validators.required),
-        typeSelection: new FormControl('', Validators.required),
-        lycee: new FormControl('', Validators.required),
-        /*------------------------------------------------------------*/
-        baccalaureat: new FormGroup({
-          origineScolaire: new FormControl('', Validators.required),
-          anneeBac: new FormControl(null, Validators.required),
-          natureBac: new FormControl('', Validators.required),
-          mentionBac: new FormControl('', Validators.required),
-          moyenneSelectionBac: new FormControl(0, Validators.required),
-          moyenneBac: new FormControl(0, Validators.required),
-          serie: new FormControl('', Validators.required)
-        }),
-      }),
-      
+
+      ine: new FormControl('', Validators.required),
+      dateNaissEtu: new FormControl(null, Validators.required),
+      lieuNaissEtu: new FormControl('', Validators.required),
+      sexe: new FormControl('', Validators.required),
+      numDocIdentite: new FormControl('', Validators.required),
+      region: new FormControl('', Validators.required),
+      typeSelection: new FormControl('', Validators.required),
+      lycee: new FormControl('', Validators.required),
+      /*------------------------------------------------------------*/
+
+      origineScolaire: new FormControl('', Validators.required),
+      anneeBac: new FormControl(null, Validators.required),
+      natureBac: new FormControl('', Validators.required),
+      mentionBac: new FormControl('', Validators.required),
+      moyenneSelectionBac: new FormControl(0, Validators.required),
+      moyenneBac: new FormControl(0, Validators.required),
+      serie: new FormControl('', Validators.required)
+
     });
 
   }
 
   ngOnInit() {
-    //this.id = this.route.snapshot.params['id'];
-    
-    //const id: Observable<string> = this.route.params.pipe(map(p=>p['id']));
-    /* if(id){
-      
-      id.subscribe((id)=>{
-        this.specialiteService.getSpecialiteById(parseInt(id)).subscribe(
-          (data) => {
-            this.specialite = data;
-            this.id = parseInt(id);
-            this.initializeForm(this.specialite); 
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-      })
 
-    } */
-
-      this.getListeTypeHandique();
+    this.getTypeHandicapListe();
     this.getListeTypeBourse();
     this.getListeRegion();
     this.getListeTypeSelection();
@@ -239,11 +219,11 @@ export class CreateEtudiantComponent {
       }
     });
   }
-  getListeTypeHandique() {
+  getTypeHandicapListe() {
     this.typeHandiqueService.getTypeHandicapList().subscribe({ 
       next: (data) => {
         //console.log(data);
-        this.typeHandiqueListe = data;
+        this.typeHandicapListe = data;
       },
       error: (err) => {
   
@@ -258,7 +238,7 @@ export class CreateEtudiantComponent {
     this.informationPersonelle.nomJeuneFilleEtu = formValues.nomJeuneFilleEtu ?? '';
     this.informationPersonelle.prenomEtu = formValues.prenomEtu ?? '';
     this.informationPersonelle.statutMarital = formValues.statutMarital ?? '';
-    this.informationPersonelle.regime = formValues.regime ?? 0;
+    /* this.informationPersonelle.regime = formValues.regime ?? 0; */
     this.informationPersonelle.profession = formValues.profession ?? '';
     this.informationPersonelle.adresseEtu = formValues.adresseEtu ?? '';
     this.informationPersonelle.telEtu = formValues.telEtu ?? '';
@@ -268,32 +248,30 @@ export class CreateEtudiantComponent {
     this.informationPersonelle.emailParent = formValues.emailParent ?? '';
     this.informationPersonelle.nomParent = formValues.nomParent ?? '';
     this.informationPersonelle.prenomParent = formValues.prenomParent ?? '';
-    this.informationPersonelle.handicapYN = formValues.handicapYN ?? 0;
-    this.informationPersonelle.ordiPersoYN = formValues.ordiPersoYN ?? 0;
-    this.informationPersonelle.derniereModification = formValues.derniereModification ?? '';
-    this.informationPersonelle.emailUser = formValues.emailUser ?? '';
-    this.informationPersonelle.typeHandique = { id: formValues.typeHandique ?? 0 };
-    this.informationPersonelle.typeBourse = { id: formValues.typeBourse ?? 0 };
-  
-    const etudiantFormValues = formValues.etudiant ?? {};
+    this.informationPersonelle.handicapYN = formValues.handicapYN ?? false;
+    this.informationPersonelle.ordiPersoYN = formValues.ordiPersoYN ?? false;
+    /* this.informationPersonelle.derniereModification = formValues.derniereModification ?? ''; */
+    this.informationPersonelle.typeHandicap = { id: Number(formValues.typeHandicap) ?? 0 };
+    this.informationPersonelle.typeBourse = { id: Number(formValues.typeBourse) ?? 0 };
+
     this.informationPersonelle.etudiant = {
-      ine: etudiantFormValues.ine ?? '',
-      dateNaissEtu: etudiantFormValues.dateNaissEtu ?? null,
-      lieuNaissEtu: etudiantFormValues.lieuNaissEtu ?? '',
-      sexe: etudiantFormValues.sexe ?? '',
-      numDocIdentite: etudiantFormValues.numDocIdentite ?? '',
-      region: { id: etudiantFormValues.region ?? 0 },
-      typeSelection: { id: etudiantFormValues.typeSelection ?? 0 },
-      lycee: { id: etudiantFormValues.lycee ?? 0 },
-      baccalaureat: {
-        origineScolaire: etudiantFormValues.baccalaureat?.origineScolaire ?? '',
-        anneeBac: etudiantFormValues.baccalaureat?.anneeBac ?? null,
-        natureBac: etudiantFormValues.baccalaureat?.natureBac ?? '',
-        mentionBac: etudiantFormValues.baccalaureat?.mentionBac ?? '',
-        moyenneSelectionBac: etudiantFormValues.baccalaureat?.moyenneSelectionBac ?? 0,
-        moyenneBac: etudiantFormValues.baccalaureat?.moyenneBac ?? 0,
-        serie: { id: etudiantFormValues.baccalaureat?.serie ?? 0 }
-      }
+      ine: formValues.ine ?? '',
+      dateNaissEtu: formValues.dateNaissEtu ?? null,
+      lieuNaissEtu: formValues.lieuNaissEtu ?? '',
+      sexe: formValues.sexe ?? '',
+      numDocIdentite: formValues.numDocIdentite ?? '',
+      region: { id: Number(formValues.region) ?? 0 },
+      typeSelection: { id: Number(formValues.typeSelection) ?? 0 },
+      lycee: { id: Number(formValues.lycee) ?? 0 },
+      /* baccalaureat: {
+        origineScolaire: formValues.origineScolaire ?? '',
+        anneeBac: formValues.anneeBac ?? null,
+        natureBac: formValues.natureBac ?? '',
+        mentionBac: formValues.mentionBac ?? '',
+        moyenneSelectionBac: formValues.moyenneSelectionBac ?? 0,
+        moyenneBac: formValues.moyenneBac ?? 0,
+        serie: { id: formValues.serie ?? 0 }
+      } */
     };
   }
   
@@ -302,9 +280,56 @@ export class CreateEtudiantComponent {
 
   onSubmit1() {
 
+    
     if (this.informationPersonelleForm!.valid) {
       this.customStylesValidated = true;
       this.mapFormToInformationPersonelle();
+      console.log(this.informationPersonelle);
+      /* this.informationPersonelle = {
+        nomEtu: "mia fdhdm extra",
+        nomJeuneFilleEtu: "actionnaire afin que sous couleur de",
+        prenomEtu: "perplexe",
+        statutMarital: "vu que redescendre dorénavant",
+        regime: 24749,
+        profession: "alors que environ",
+        adresseEtu: "tandis que conseil d’administration",
+        telEtu: "psdhdthth",
+        emailEtu: "cldththth",
+        adresseParent: "certainement",
+        telParent: "certaihthtnement",
+        emailParent: "adepthtrhlir",
+        nomParent: "rouler ouch",
+        prenomParent: "inciter perdre aigre",
+        handicapYN: false,
+        photo: "oups",
+        ordiPersoYN: true,
+        derniereModification: "2024-06-24",
+        emailUser: "émettre aïe",
+        etudiant: {
+          ine: "Quis alias veniam qgreger",
+          dateNaissEtu: new Date('2024-02-01'),
+          lieuNaissEtu: "Molestiae adipisicin",
+          sexe: "Ad quae eaque quis e",
+          numDocIdentite: "Minima dbfdsbfdb",
+          assimileYN: true,
+          actifYN: true,
+          region: {
+            id: 7,
+          },
+          typeSelection: {
+            id: 2,
+          },
+          lycee: {
+            id: 9,
+          }
+        },
+        typeHandicap: {
+          id: 10,
+        },
+        typeBourse: {
+          id: 10,
+        }
+      } */
       
       
       //Si c'est une creation
@@ -315,6 +340,7 @@ export class CreateEtudiantComponent {
           this.router.navigate(['/gir/inscription-reinscription/view',data.etudiant?.id])
         },
         error: (err) => {
+          console.log(err);
           this.alertService.showToast("Création","Echec de creation de l'étudiant","danger");
         }
       });

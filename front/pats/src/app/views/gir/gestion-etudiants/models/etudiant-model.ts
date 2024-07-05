@@ -15,8 +15,9 @@ export interface EtudiantModel {
     numDocIdentite?: string | null;
     assimileYN?: boolean | null;
     exonereYN?: boolean | null;
+    actifYN?: boolean | null;
     region?: RegionModel | null;
     typeSelection?: TypeselectionModel | null;
     lycee?: LyceeModel | null;
-    baccalaureat?: BaccalaureatModel | null; 
+    //baccalaureat?: BaccalaureatModel | null; 
 }
