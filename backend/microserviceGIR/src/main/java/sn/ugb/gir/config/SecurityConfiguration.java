@@ -49,42 +49,43 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class)
-            .headers(headers ->
-                headers
-                    .contentSecurityPolicy(csp -> csp.policyDirectives(jHipsterProperties.getSecurity().getContentSecurityPolicy()))
-                    .frameOptions(FrameOptionsConfig::sameOrigin)
-                    .referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
-                    .permissionsPolicy(permissions ->
-                        permissions.policy(
-                            "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
-                        )
-                    )
-            )
-            .authorizeHttpRequests(authz ->
+                .csrf(csrf -> csrf.disable())
+                .addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class)
+                .headers(headers -> headers
+                        .contentSecurityPolicy(csp -> csp
+                                .policyDirectives(jHipsterProperties.getSecurity().getContentSecurityPolicy()))
+                        .frameOptions(FrameOptionsConfig::sameOrigin)
+                        .referrerPolicy(referrer -> referrer
+                                .policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
+                        .permissionsPolicy(permissions -> permissions.policy(
+                                "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()")))
+                .authorizeHttpRequests(authz ->
                 // prettier-ignore
                 authz
-                    .requestMatchers(mvc.pattern("/index.html"), mvc.pattern("/*.js"), mvc.pattern("/*.txt"), mvc.pattern("/*.json"), mvc.pattern("/*.map"), mvc.pattern("/*.css")).permitAll()
-                    .requestMatchers(mvc.pattern("/*.ico"), mvc.pattern("/*.png"), mvc.pattern("/*.svg"), mvc.pattern("/*.webapp")).permitAll()
-                    .requestMatchers(mvc.pattern("/app/**")).permitAll()
-                    .requestMatchers(mvc.pattern("/i18n/**")).permitAll()
-                    .requestMatchers(mvc.pattern("/content/**")).permitAll()
-                    .requestMatchers(mvc.pattern("/swagger-ui/**")).permitAll()
-                    .requestMatchers(mvc.pattern("/api/authenticate")).permitAll()
-                    .requestMatchers(mvc.pattern("/api/auth-info")).permitAll()
-                    .requestMatchers(mvc.pattern("/api/admin/**")).permitAll()//hasAuthority(AuthoritiesConstants.ADMIN)
-                    .requestMatchers(mvc.pattern("/api/**")).permitAll() //authenticated()
-                    .requestMatchers(mvc.pattern("/v3/api-docs/**")).hasAuthority(AuthoritiesConstants.ADMIN)
-                    .requestMatchers(mvc.pattern("/management/health")).permitAll()
-                    .requestMatchers(mvc.pattern("/management/health/**")).permitAll()
-                    .requestMatchers(mvc.pattern("/management/info")).permitAll()
-                    .requestMatchers(mvc.pattern("/management/prometheus")).permitAll()
-                    .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
-            )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter())))
-            .oauth2Client(withDefaults());
+                        .requestMatchers(mvc.pattern("/index.html"), mvc.pattern("/*.js"), mvc.pattern("/*.txt"),
+                                mvc.pattern("/*.json"), mvc.pattern("/*.map"), mvc.pattern("/*.css"))
+                        .permitAll()
+                        .requestMatchers(mvc.pattern("/*.ico"), mvc.pattern("/*.png"), mvc.pattern("/*.svg"),
+                                mvc.pattern("/*.webapp"))
+                        .permitAll()
+                        .requestMatchers(mvc.pattern("/app/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/i18n/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/content/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/swagger-ui/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/api/authenticate")).permitAll()
+                        .requestMatchers(mvc.pattern("/api/auth-info")).permitAll()
+                        .requestMatchers(mvc.pattern("/api/admin/**")).permitAll()// hasAuthority(AuthoritiesConstants.ADMIN)
+                        .requestMatchers(mvc.pattern("/api/**")).permitAll() // authenticated()
+                        .requestMatchers(mvc.pattern("/v3/api-docs/**")).hasAuthority(AuthoritiesConstants.ADMIN)
+                        .requestMatchers(mvc.pattern("/management/health")).permitAll()
+                        .requestMatchers(mvc.pattern("/management/health/**")).permitAll()
+                        .requestMatchers(mvc.pattern("/management/info")).permitAll()
+                        .requestMatchers(mvc.pattern("/management/prometheus")).permitAll()
+                        .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2ResourceServer(
+                        oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter())))
+                .oauth2Client(withDefaults());
         return http.build();
     }
 
@@ -105,7 +106,8 @@ public class SecurityConfiguration {
 
         return userRequest -> {
             OidcUser oidcUser = delegate.loadUser(userRequest);
-            return new DefaultOidcUser(oidcUser.getAuthorities(), oidcUser.getIdToken(), oidcUser.getUserInfo(), PREFERRED_USERNAME);
+            return new DefaultOidcUser(oidcUser.getAuthorities(), oidcUser.getIdToken(), oidcUser.getUserInfo(),
+                    PREFERRED_USERNAME);
         };
     }
 
@@ -113,7 +115,8 @@ public class SecurityConfiguration {
     JwtDecoder jwtDecoder() {
         NimbusJwtDecoder jwtDecoder = JwtDecoders.fromOidcIssuerLocation(issuerUri);
 
-        OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(jHipsterProperties.getSecurity().getOauth2().getAudience());
+        OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(
+                jHipsterProperties.getSecurity().getOauth2().getAudience());
         OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuerUri);
         OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<>(withIssuer, audienceValidator);
 

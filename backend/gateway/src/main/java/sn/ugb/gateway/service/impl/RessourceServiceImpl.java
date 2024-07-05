@@ -2,16 +2,19 @@ package sn.ugb.gateway.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sn.ugb.gateway.domain.Ressource;
 import sn.ugb.gateway.repository.RessourceRepository;
 import sn.ugb.gateway.repository.search.RessourceSearchRepository;
 import sn.ugb.gateway.service.RessourceService;
 import sn.ugb.gateway.service.dto.RessourceDTO;
 import sn.ugb.gateway.service.mapper.RessourceMapper;
+import sn.ugb.gateway.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gateway.domain.Ressource}.
@@ -21,8 +24,9 @@ import sn.ugb.gateway.service.mapper.RessourceMapper;
 public class RessourceServiceImpl implements RessourceService {
 
     private final Logger log = LoggerFactory.getLogger(RessourceServiceImpl.class);
+private static final String ENTITY_NAME = "Ressource";
 
-    private final RessourceRepository ressourceRepository;
+private final RessourceRepository ressourceRepository;
 
     private final RessourceMapper ressourceMapper;
 
@@ -111,7 +115,7 @@ public class RessourceServiceImpl implements RessourceService {
     }
 @Override
 public Page<RessourceDTO> findAllRessourceByService(Long serviceId, Pageable pageable) {
-    return ressourceRepository.findByServiceId(serviceId, pageable):map(ressourceMapper::toDto);
+    return ressourceRepository.findByServiceId(serviceId, pageable).map(ressourceMapper::toDto);
 }
 
 @Override
@@ -121,11 +125,7 @@ public Page<RessourceDTO> findAllRessourceByBlocfonctionnel(Long blocfonctionnel
 
 @Override
 public RessourceDTO setActifYNRessource(Long id, Boolean actifYN) {
-    Ressource ressource = ressourceRepository.findById(id)
-                              .orElseThrow(() -> new BadRequestAlertException("Ressource not found.", ENTITY_NAME, "ressourceNotFound"));
-    ressource.setActifYN(actifYN);
-    ressource = ressourceRepository.save(ressource);
-    return ressourceMapper.toDto(ressource);
+return  null;
 
     }
 
