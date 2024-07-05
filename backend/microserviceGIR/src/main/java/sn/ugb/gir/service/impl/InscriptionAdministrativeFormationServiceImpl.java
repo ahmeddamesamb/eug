@@ -25,7 +25,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 /**
- * Service Implementation for managing {@link sn.ugb.gir.domain.InscriptionAdministrativeFormation}.
+ * Service Implementation for managing {@link InscriptionAdministrativeFormation}.
  */
 @Service
 @Transactional
@@ -129,11 +129,18 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
     @Override
     public void delete(Long id) {
         log.debug("Request to delete InscriptionAdministrativeFormation : {}", id);
+            Optional<InscriptionAdministrativeFormation> iaf = inscriptionAdministrativeFormationRepository.findById(id);
+            if(iaf.isEmpty()){
+                throw new BadRequestAlertException("L'element que vous tentez de supprimer n'existe", ENTITY_NAME, "InscriptionAdministrativeFormationNotExiste");
+            }
+            PaiementFrais paiementFrais = paiementFraisRepository.paiementFraisIAF(id);
+            if (!Objects.equals(paiementFrais, null)){
+                if (paiementFrais.getEcheancePayeeYN()){
+                    throw new BadRequestAlertException("Vous ne pouvez pas supprimer un paiement déja valider par le paiement", ENTITY_NAME, "InscriptionFormationDejaPayer");
+                }
+            }
 
-        PaiementFrais paiementFrais = paiementFraisRepository.paiementFraisIAF(id);
-        if (paiementFrais.getEcheancePayeeYN()){
-            throw new BadRequestAlertException("Vous ne pouvez pas supprimer un paiement déja valider par le paiement", ENTITY_NAME, "InscriptionFormationDejaPayer");
-        }
+
         inscriptionAdministrativeFormationRepository.deleteById(id);
         inscriptionAdministrativeFormationSearchRepository.deleteFromIndexById(id);
     }
@@ -148,7 +155,7 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
     }
 
     public void validateData(InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormationDTO){
-
+        Pageable pageable = null;
 
         if (Objects.equals(inscriptionAdministrativeFormationDTO.getFormation(),null)) {
             throw new BadRequestAlertException("Veuillez renseigné la formation à laquelle s'inscrit l'étudiant", "Formation", "FormationObligatoire");
@@ -167,7 +174,7 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
         Long etudiantId = inscriptionAdministrativeFormationDTO.getInscriptionAdministrative().getEtudiant().getId();
         Long AnneeAcademiqueId = inscriptionAdministrativeFormationDTO.getInscriptionAdministrative().getAnneeAcademique().getId();
         Optional<InscriptionAdministrativeFormation> existingIAF= inscriptionAdministrativeFormationRepository.findByFormationIdAndInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId(formationId,etudiantId,AnneeAcademiqueId);
-        Page<InscriptionAdministrative> existingIA= inscriptionAdministrativeRepository.findByEtudiantIdAndAnneeAcademiqueId(etudiantId,AnneeAcademiqueId);
+        Page<InscriptionAdministrative> existingIA= inscriptionAdministrativeRepository.findByEtudiantIdAndAnneeAcademiqueId(pageable, etudiantId,AnneeAcademiqueId);
         Long count = existingIA.getTotalElements();
 
         if (existingIAF.isPresent()) {

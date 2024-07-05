@@ -3,6 +3,7 @@ package sn.ugb.gir.repository;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import sn.ugb.gir.domain.InscriptionAdministrativeFormation;
 import sn.ugb.gir.domain.PaiementFrais;
 
 import java.util.List;
@@ -15,9 +16,9 @@ import java.util.List;
 public interface PaiementFraisRepository extends JpaRepository<PaiementFrais, Long> {
     List<PaiementFrais> findByInscriptionAdministrativeFormationInscriptionAdministrativeEtudiantCodeEtu(String codeEtudiant);
 //    Optional<PaiementFrais> findByInscriptionAdministrativeFormation
-    @Modifying
+
     @Transactional
-    @Query("SELECT pf.inscriptionAdministrativeFormation FROM PaiementFrais pf WHERE pf.inscriptionAdministrativeFormation = :id")
-    PaiementFrais paiementFraisIAF(Long id);
+    @Query("SELECT pf FROM PaiementFrais pf WHERE pf.inscriptionAdministrativeFormation.id = :id")
+    PaiementFrais paiementFraisIAF(Long id );
 
 }
