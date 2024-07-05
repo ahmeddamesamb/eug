@@ -27,10 +27,9 @@ public interface RessourceRepository extends ReactiveCrudRepository<Ressource, L
 
     @Override
     Mono<Void> deleteById(Long id);
-Page<Ressource> findByServiceId(Long serviceId, Pageable pageable);
-Page<Ressource>findByBlocfonctionnelId(Long blocfonctionnelId, Pageable pageable);
+//    Page<Ressource> findByServiceId(Long serviceId, Pageable pageable);
+//    Page<Ressource> findByBlocFonctionnelId(Long blocfonctionnelId, Pageable pageable);
 
-public void setRessourceActifYN(Boolean actifYN);
 }
 
 interface RessourceRepositoryInternal {
