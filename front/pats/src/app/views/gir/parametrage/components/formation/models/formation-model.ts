@@ -1,4 +1,4 @@
 export interface FormationModel {
     id?:number,
-    libelleformation?:string,
+    libelleDiplome?:string,
 }

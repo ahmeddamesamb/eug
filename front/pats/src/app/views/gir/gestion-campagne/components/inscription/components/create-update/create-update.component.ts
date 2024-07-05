@@ -13,6 +13,8 @@ import { CampagneService } from '../../../campagnes/services/campagne.service';
 import { CampagneModel } from '../../../campagnes/models/campagne-model';
 import { AnneeAcademiqueService } from '../../../../../parametrage/components/annee-academique/services/annee-academique.service';
 import { AnneeAcademiqueModel } from 'src/app/views/gir/parametrage/components/annee-academique/models/AnneeAcademiqueModel';
+import { FormationService } from 'src/app/views/gir/parametrage/components/formation/services/formation.service';
+import { FormationModel } from 'src/app/views/gir/parametrage/components/formation/models/formation-model';
 
 @Component({
   selector: 'app-create-update',
@@ -38,7 +40,7 @@ export class CreateUpdateComponent implements OnInit {
   id: number | undefined;
   inscriptionForm: FormGroup;
   campagnes: CampagneModel[] = [];
-  formations: any[] = [];
+  formations: FormationModel[] = [];
   annees: AnneeAcademiqueModel[] = [];
 
   constructor(
@@ -47,7 +49,8 @@ export class CreateUpdateComponent implements OnInit {
     private campagneService: CampagneService,
     private route: ActivatedRoute,
     private router: Router,
-    private alertService: AlertServiceService
+    private alertService: AlertServiceService,
+    private formationService: FormationService
   ) {
     this.inscriptionForm = new FormGroup({
       libelle: new FormControl('', Validators.required),
@@ -122,11 +125,18 @@ export class CreateUpdateComponent implements OnInit {
   }
 
   loadFormations() {
-    // Remplacez ceci par un appel à votre service de formations
-    this.formations = [
-      { id: 1401, nom: 'Formation 1' },
-      { id: 2, nom: 'Formation 2' },
-    ];
+    console.log("FORMATIONS");
+    this.formationService.getFormationList().
+    subscribe({
+      next: (data) => {
+        this.formations = data;
+        console.log("Formations: " + this.formations);
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement des formations:", err);
+      }
+    });
+    
   }
 
   formatDates(formValue: any): any {

@@ -54,7 +54,7 @@
                 aria-describedby="formation-error">
             <option value="">Choisir une formation</option>
             @for (formation of formations; track formation.id) {
-                <option [value]="formation.id">{{formation.nom}}</option>
+                <option [value]="formation.id">{{formation.libelleDiplome}}</option>
             }
         </select>
 

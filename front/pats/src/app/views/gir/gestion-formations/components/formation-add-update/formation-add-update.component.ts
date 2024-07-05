@@ -20,7 +20,7 @@ import { AlertServiceService } from 'src/app/shared/services/alert/alert-service
 export class FormationAddUpdateComponent {
 
   formation :FormationModel = {
-    libelleformation: '',
+    libelleDiplome: '',
   }; 
 
   formationForm: FormGroup;
