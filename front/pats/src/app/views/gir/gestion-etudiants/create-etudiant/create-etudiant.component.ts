@@ -24,10 +24,13 @@ import { RegionService } from '../../parametrage/components/region/services/regi
 import { TypeselectionService } from '../../parametrage/components/typeselection/services/typeselection.service';
 import {  LyceeService } from '../../parametrage/components/lycee/services/lycee.service';
 import {  SerieService } from '../../parametrage/components/serie/services/serie.service';
+import {UserService} from 'src/app/services/user.service'
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-create-etudiant',
   standalone: true,
+  providers: [UserService, KeycloakService],
   imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent,
     DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective,
      FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent,
@@ -67,6 +70,7 @@ export class CreateEtudiantComponent {
       numDocIdentite: '',
       assimileYN: false,
       exonereYN: false,
+      actifYN: true,
       region: {id:0},
       typeSelection: {id:0},
       lycee: {id:0}
@@ -106,7 +110,8 @@ export class CreateEtudiantComponent {
               private regionService:RegionService,
               private typeSelectionService:TypeselectionService,
               private lyceeService:LyceeService,
-              private serieService:SerieService) {
+              private serieService:SerieService,
+              private userService: UserService) {
     
     this.informationPersonelleForm = new FormGroup({
       nomEtu: new FormControl('', Validators.required),
@@ -283,53 +288,48 @@ export class CreateEtudiantComponent {
     
     if (this.informationPersonelleForm!.valid) {
       this.customStylesValidated = true;
-      this.mapFormToInformationPersonelle();
+      //this.mapFormToInformationPersonelle();
       console.log(this.informationPersonelle);
-      /* this.informationPersonelle = {
-        nomEtu: "mia fdhdm extra",
-        nomJeuneFilleEtu: "actionnaire afin que sous couleur de",
-        prenomEtu: "perplexe",
-        statutMarital: "vu que redescendre dorénavant",
+      const formValues = this.informationPersonelleForm.value;
+      this.informationPersonelle = {
+        nomEtu: formValues.nomEtu,
+        nomJeuneFilleEtu: formValues.nomJeuneFilleEtu,
+        prenomEtu: formValues.prenomEtu,
+        statutMarital: formValues.statutMarital,
         regime: 24749,
-        profession: "alors que environ",
-        adresseEtu: "tandis que conseil d’administration",
-        telEtu: "psdhdthth",
-        emailEtu: "cldththth",
-        adresseParent: "certainement",
-        telParent: "certaihthtnement",
-        emailParent: "adepthtrhlir",
-        nomParent: "rouler ouch",
-        prenomParent: "inciter perdre aigre",
+        profession: formValues.profession,
+        adresseEtu: formValues.adresseEtu,
+        telEtu: formValues.telEtu,
+        emailEtu: formValues.emailEtu,
+        adresseParent: formValues.adresseParent,
+        telParent: formValues.telParent,
+        emailParent: formValues.emailParent,
+        nomParent: formValues.nomParent,
+        prenomParent: formValues.prenomParent,
         handicapYN: false,
         photo: "oups",
         ordiPersoYN: true,
-        derniereModification: "2024-06-24",
-        emailUser: "émettre aïe",
+        derniereModification: new Date(),
+        emailUser: this.userService.getUserEmail() ,
         etudiant: {
-          ine: "Quis alias veniam qgreger",
-          dateNaissEtu: new Date('2024-02-01'),
-          lieuNaissEtu: "Molestiae adipisicin",
-          sexe: "Ad quae eaque quis e",
-          numDocIdentite: "Minima dbfdsbfdb",
+          ine: formValues.ine ?? '',
+          dateNaissEtu: formValues.dateNaissEtu ?? null,
+          lieuNaissEtu: formValues.lieuNaissEtu ?? '',
+          sexe: formValues.sexe ?? '',
+          numDocIdentite: formValues.numDocIdentite ?? '',
+          region: { id: Number(formValues.region) ?? 0 },
+          typeSelection: { id: Number(formValues.typeSelection) ?? 0 },
+          lycee: { id: Number(formValues.lycee) ?? 0 },
           assimileYN: true,
           actifYN: true,
-          region: {
-            id: 7,
-          },
-          typeSelection: {
-            id: 2,
-          },
-          lycee: {
-            id: 9,
-          }
         },
         typeHandicap: {
-          id: 10,
+          id: Number(formValues.typeHandicap),
         },
         typeBourse: {
-          id: 10,
+          id: Number(formValues.typeBourse),
         }
-      } */
+      } 
       
       
       //Si c'est une creation
