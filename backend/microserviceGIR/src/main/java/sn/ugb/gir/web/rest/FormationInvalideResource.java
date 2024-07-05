@@ -208,7 +208,7 @@ public class FormationInvalideResource {
         }
     }
 
-    @PostMapping("/invalider")
+    @PostMapping("/invalider-formation")
     public ResponseEntity<FormationInvalideDTO> invaliderFormation(@RequestParam Long formationId, @RequestParam Long anneeAcademiqueId) {
         FormationInvalideDTO result = formationInvalideService.invaliderFormation(formationId, anneeAcademiqueId);
         return ResponseEntity.ok().body(result);

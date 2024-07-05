@@ -7,6 +7,7 @@ import sn.ugb.gir.domain.InformationPersonnelle;
 import sn.ugb.gir.domain.ProcessusInscriptionAdministrative;
 
 import java.util.Optional;
+import java.util.List;
 
 /**
  * Spring Data JPA repository for the ProcessusInscriptionAdministrative entity.
@@ -15,4 +16,5 @@ import java.util.Optional;
 @Repository
 public interface ProcessusInscriptionAdministrativeRepository extends JpaRepository<ProcessusInscriptionAdministrative, Long> {
 
+    List<ProcessusInscriptionAdministrative> findByInscriptionAdministrativeEtudiantCodeEtu(String codeEtudiant);
 }
