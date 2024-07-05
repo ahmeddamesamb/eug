@@ -2,7 +2,7 @@ import { AnneeAcademiqueModel } from 'src/app/views/gir/parametrage/components/a
 import {CampagneModel} from '../../campagnes/models/campagne-model';
 
 export interface InscriptionModel{
-    id: number,
+    id: any;
     libelle: string,
     dateDebut: Date | string,
     dateFin: Date | string,

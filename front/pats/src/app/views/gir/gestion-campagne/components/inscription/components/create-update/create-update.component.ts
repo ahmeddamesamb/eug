@@ -1,221 +1,198 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RowComponent, ColComponent, TextColorDirective, CardComponent,DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective } from '@coreui/angular-pro';
+import { RowComponent, ColComponent, TextColorDirective, CardComponent, DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective } from '@coreui/angular-pro';
 import { DocsExampleComponent } from '@docs-components/public-api';
-import {InscriptionModel} from '../../models/inscription-model';
+import { InscriptionModel } from '../../models/inscription-model';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import {InscriptionService} from '../../../../services/inscription.service';
+import { InscriptionService } from '../../../../services/inscription.service';
 import { CampagneListComponent } from '../../../campagnes/components/campagne-list/campagne-list.component';
 import { Observable, map } from 'rxjs';
 import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
 import { CampagneService } from '../../../campagnes/services/campagne.service';
 import { CampagneModel } from '../../../campagnes/models/campagne-model';
-import { AnneeAcademiqueService} from '../../../../../parametrage/components/annee-academique/services/annee-academique.service';
+import { AnneeAcademiqueService } from '../../../../../parametrage/components/annee-academique/services/annee-academique.service';
 import { AnneeAcademiqueModel } from 'src/app/views/gir/parametrage/components/annee-academique/models/AnneeAcademiqueModel';
+
 @Component({
   selector: 'app-create-update',
   standalone: true,
-  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective,DatePipe,DatePickerComponent_1],
+  imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ReactiveFormsModule, FormsModule, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective, DatePipe, DatePickerComponent_1],
   templateUrl: './create-update.component.html',
   styleUrl: './create-update.component.scss'
 })
-export class CreateUpdateComponent {
+export class CreateUpdateComponent implements OnInit {
 
   inscription: InscriptionModel = {
     id: 0,
-    libelle:'',
+    libelle: '',
     dateDebut: '',
     dateFin: '',
     dateForclos: '',
     campagne: '',
     formation: '',
-    anneeAcademique:''
+    anneeAcademique: ''
   };
 
   customStylesValidated = false;
   id: number | undefined;
   inscriptionForm: FormGroup;
-  campagnes: CampagneModel[] = []; 
+  campagnes: CampagneModel[] = [];
   formations: any[] = [];
   annees: AnneeAcademiqueModel[] = [];
 
-
-
-
-  constructor( private inscriptionService: InscriptionService, private anneeAcademiqueService: AnneeAcademiqueService, private campagneService: CampagneService, private route: ActivatedRoute, private router:Router , private alertService:AlertServiceService){
+  constructor(
+    private inscriptionService: InscriptionService,
+    private anneeAcademiqueService: AnneeAcademiqueService,
+    private campagneService: CampagneService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private alertService: AlertServiceService
+  ) {
     this.inscriptionForm = new FormGroup({
-      libelle: new FormControl(null, Validators.required),
+      libelle: new FormControl('', Validators.required),
       dateDebut: new FormControl(null, Validators.required),
       dateFin: new FormControl(null, Validators.required),
       dateForclos: new FormControl(null, Validators.required),
       campagne: new FormControl(null, Validators.required),
       formation: new FormControl(null, Validators.required),
       anneeAcademique: new FormControl(null, Validators.required)
-      
     });
   }
+
   ngOnInit() {
     this.loadCampagnes();
     this.loadFormations();
     this.loadAnneeAcademiques();
-  
+
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id && !isNaN(Number(id))) {
-        this.inscriptionService.getInscriptionById(Number(id)).subscribe(
-          (data) => {
-            this.inscription = data;
-            console.log(this.inscription);
-            this.id = Number(id);
-            this.initializeForm(data);
-          },
-          (err) => {
-            console.log(err);
-            this.alertService.showToast("Erreur", "Impossible de charger l'inscription", "danger");
-          }
-        );
+        this.id = Number(id);
+        this.loadInscription(this.id);
       }
     });
   }
 
-initializeForm(inscription: InscriptionModel) {
-  this.inscriptionForm.setValue({
-    dateDebut: inscription.dateDebut || null,
-    dateFin: inscription.dateFin || null,
-    dateForclos: inscription.dateForclos || null,
-    campagne: inscription.campagne,
-    formation: inscription.formation,
-    anneeAcademique: inscription.anneeAcademique || null,
-
-
-  });
-}
-
-loadCampagnes() {
-  console.log("GET CAMPAGNES");
-  this.campagneService.getCampagneList().subscribe({
-    next: (data) => {
-      this.campagnes = data;
-      console.log("CAMPAGNES:", this.campagnes.length);
-      
-      if (this.campagnes && this.campagnes.length > 0) {
-        console.log("Libellés des campagnes:");
-        this.campagnes.forEach(campagne => {
-          console.log(campagne.libelleCampagne); 
-        });
-      } else {
-        console.log("Aucune campagne trouvée");
+  loadInscription(id: number) {
+    this.inscriptionService.getInscriptionById(id).subscribe({
+      next: (data) => {
+        this.inscription = data;
+        this.initializeForm(data);
+      },
+      error: (err) => {
+        console.error(err);
+        this.alertService.showToast("Erreur", "Impossible de charger l'inscription", "danger");
       }
-    },
-    error: (err) => {
-      console.error("Erreur lors du chargement des campagnes:", err);
-    }
-  });
-}
+    });
+  }
 
-loadAnneeAcademiques() {
-  console.log("getAnneesAcamiques");
-  this.anneeAcademiqueService.getAnneeAcademiqueList()
-  .subscribe({
-    next: (data) => {
-      this.annees = data;
-      console.log("AnneesAcademiques:", this.annees.length);
-      
-      if (this.annees && this.annees.length > 0) {
-        console.log("Libellés des annees:");
-        this.annees.forEach(annee => {
-          console.log(annee.libelleAnneeAcademique); 
-        });
-      } else {
-        console.log("Aucune année académique trouvée");
+  initializeForm(inscription: InscriptionModel) {
+    this.inscriptionForm.patchValue({
+      libelle: inscription.libelle || '',
+      dateDebut: inscription.dateDebut || null,
+      dateFin: inscription.dateFin || null,
+      dateForclos: inscription.dateForclos || null,
+      campagne: inscription.campagne instanceof Object ? inscription.campagne.id : inscription.campagne,
+      formation: inscription.formation,
+      anneeAcademique: inscription.anneeAcademique instanceof Object ? inscription.anneeAcademique.id : inscription.anneeAcademique,
+    });
+  }
+
+  loadCampagnes() {
+    this.campagneService.getCampagneList().subscribe({
+      next: (data) => {
+        this.campagnes = data;
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement des campagnes:", err);
       }
-    },
-    error: (err) => {
-      console.error("Erreur lors du chargement des années academiques:", err);
-    }
-  });
-}
+    });
+  }
 
+  loadAnneeAcademiques() {
+    this.anneeAcademiqueService.getAnneeAcademiqueList().subscribe({
+      next: (data) => {
+        this.annees = data;
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement des années académiques:", err);
+      }
+    });
+  }
 
-formatDates(formValue: any): any {
-  const formatted = { ...formValue };
-  ['dateDebut', 'dateFin', 'dateForclos'].forEach(dateField => {
-    if (formValue[dateField]) {
-      const date = new Date(formValue[dateField]);
-      formatted[dateField] = this.formatDate(date);
-    }
-  });
-  return formatted;
-}
+  loadFormations() {
+    // Remplacez ceci par un appel à votre service de formations
+    this.formations = [
+      { id: 1401, nom: 'Formation 1' },
+      { id: 2, nom: 'Formation 2' },
+    ];
+  }
 
-formatDate(date: Date): string {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
+  formatDates(formValue: any): any {
+    const formatted = { ...formValue };
+    ['dateDebut', 'dateFin', 'dateForclos'].forEach(dateField => {
+      if (formValue[dateField]) {
+        const date = new Date(formValue[dateField]);
+        formatted[dateField] = this.formatDate(date);
+      }
+    });
 
-loadFormations() {
-  this.formations = [
-    { id: 1, nom: 'Formation 1' },
-    { id: 2, nom: 'Formation 2' },
-  ];
-}
+    // Conversion des IDs en objets
+    ['campagne', 'formation', 'anneeAcademique'].forEach(field => {
+      if (formatted[field]) {
+        formatted[field] = { id: formatted[field] };
+      }
+    });
 
-onSubmit1() {
-  if (this.inscriptionForm!.valid) {
-    this.customStylesValidated = true;
+    return formatted;
+  }
 
-    // Formater les dates
-    const formattedData = this.formatDates(this.inscriptionForm!.value);
+  formatDate(date: Date): string {
+    return date.toISOString().split('T')[0];
+  }
 
-    if (this.id != null) {
-      // Si c'est une mise à jour
-      this.inscription = { ...formattedData, id: Number(this.id) };
-      this.inscriptionService.updateInscription(this.id, this.inscription).subscribe({
+  annuler() {
+    this.router.navigate(['/gir/gestion-campagne/inscription/attente']);
+  }
+
+  onReset() {
+    this.inscriptionForm.reset();
+    this.customStylesValidated = false;
+  }
+
+  onSubmit1() {
+    if (this.inscriptionForm.valid) {
+      this.customStylesValidated = true;
+
+      const formattedData = this.formatDates(this.inscriptionForm.value);
+      console.log('Données formatées avant envoi:', JSON.stringify(formattedData));
+
+      const inscription: InscriptionModel = {
+        id: this.id ?? undefined,  // Ne pas envoyer d'ID pour une nouvelle inscription
+        ...formattedData
+      };
+
+      const operation = this.id ? 'update' : 'create';
+      const service = this.id 
+        ? this.inscriptionService.updateInscription(this.id, inscription)
+        : this.inscriptionService.createInscription(inscription);
+
+      service.subscribe({
         next: (data) => {
-          console.log(data);
-          this.alertService.showToast("Mise à jour", "Mise à jour de l'inscription avec succès", "success");
+          const message = operation === 'update' 
+            ? "Mise à jour de l'inscription avec succès"
+            : "Programmation d'inscription avec succès";
+          this.alertService.showToast(operation === 'update' ? "Mise à jour" : "Création", message, "success");
           this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
         },
         error: (err) => {
-          console.error(err);
-          this.alertService.showToast("Mise à jour", "Échec de la mise à jour de l'inscription", "danger");
+          console.error('Erreur lors de l\'opération:', err);
+          this.alertService.showToast("Erreur", "Une erreur est survenue lors de l'opération", "danger");
         }
       });
     } else {
-      // Si c'est une création
-      this.inscription = formattedData;
-      this.inscriptionService.createInscription(this.inscription!).subscribe({
-        next: (data) => {
-          console.log(data);
-          this.alertService.showToast("Création", "Programmation d'inscription avec succès", "success");
-          this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
-        },
-        error: (err) => {
-          console.error(err);
-          this.alertService.showToast("Création", "Échec de la programmation d'inscription", "danger");
-        }
-      });
+      this.alertService.showToast("Erreur", "Veuillez remplir correctement tous les champs obligatoires", "warning");
     }
-
-    console.log('Données du formulaire formatées :', formattedData);
-  } else {
-    console.log('Formulaire invalide');
-    // Optionnel : Afficher un message d'erreur à l'utilisateur
-    this.alertService.showToast("Erreur", "Veuillez remplir correctement tous les champs obligatoires", "warning");
   }
-}
-
-annuler(){
-  this.router.navigate(['/gir/gestion-campagne/inscription/attente']);
-}
-
-onReset1() {
-  this.inscriptionForm!.reset();
-  this.customStylesValidated = false;
-}
-
-
 }
