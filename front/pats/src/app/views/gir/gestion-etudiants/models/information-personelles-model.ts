@@ -3,26 +3,27 @@ import {TypeHandicapModel} from 'src/app/views/gir/parametrage/components/type-h
 import {TypeBourseModel} from 'src/app/views/gir/parametrage/components/type-bourse/models/type-bourse-model'
 
 export interface InformationPersonellesModel {
-    nomEtu?: string | null;
-    nomJeuneFilleEtu?: string | null;
-    prenomEtu?: string | null;
-    statutMarital?: string | null;
-    regime?: number | null;
-    profession?: string | null;
-    adresseEtu?: string | null;
-    telEtu?: string | null;
-    emailEtu?: string | null;
-    adresseParent?: string | null;
-    telParent?: string | null;
-    emailParent?: string | null;
-    nomParent?: string | null;
-    prenomParent?: string | null;
-    handicapYN?: number | null;
-    photo?: string | null;
-    ordiPersoYN?: number | null;
-    derniereModification?: string | null;
-    emailUser?: string | null;
-    etudiant?: EtudiantModel;
-    typeHandique?: TypeHandicapModel | null;
-    typeBourse?: TypeBourseModel | null; 
+    id?: number;
+    nomEtu?: string,
+    nomJeuneFilleEtu?: string,
+    prenomEtu?: string,
+    statutMarital?: string,
+    regime?: number,
+    profession?: string,
+    adresseEtu?: string,
+    telEtu?: string,
+    emailEtu?: string,
+    adresseParent?: string,
+    telParent?: string,
+    emailParent?: string,
+    nomParent?: string,
+    prenomParent?: string,
+    handicapYN?: boolean | null;
+    photo?: string,
+    ordiPersoYN?: boolean | null;
+    derniereModification?: Date | string,
+    emailUser?: string,
+    etudiant?: EtudiantModel,
+    typeHandique?: TypeHandicapModel,
+    typeBourse?: TypeBourseModel 
 }

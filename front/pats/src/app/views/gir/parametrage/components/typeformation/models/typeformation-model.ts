@@ -1,4 +1,4 @@
-export interface TypeformationList {
+export interface TypeformationModel {
     id?:number,
     libelleTypeFormation?:string,
 }
