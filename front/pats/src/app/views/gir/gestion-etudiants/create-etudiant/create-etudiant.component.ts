@@ -313,6 +313,7 @@ export class CreateEtudiantComponent {
         emailUser: this.userService.getUserEmail() ,
         etudiant: {
           ine: formValues.ine ?? '',
+          emailUGB:formValues.ine?? '',
           dateNaissEtu: formValues.dateNaissEtu ?? null,
           lieuNaissEtu: formValues.lieuNaissEtu ?? '',
           sexe: formValues.sexe ?? '',
