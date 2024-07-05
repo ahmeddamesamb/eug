@@ -1,5 +1,5 @@
 import { EtudiantModel } from './etudiant-model'
-import {TypeadmissionModel} from 'src/app/views/gir/parametrage/components/typeadmission/models/typeadmission-model'
+import {TypeHandicapModel} from 'src/app/views/gir/parametrage/components/type-handicap/models/type-handicap-model'
 import {TypeBourseModel} from 'src/app/views/gir/parametrage/components/type-bourse/models/type-bourse-model'
 
 export interface InformationPersonellesModel {
@@ -17,12 +17,12 @@ export interface InformationPersonellesModel {
     emailParent?: string | null;
     nomParent?: string | null;
     prenomParent?: string | null;
-    handicapYN?: number | null;
+    handicapYN?: boolean | null;
     photo?: string | null;
-    ordiPersoYN?: number | null;
-    derniereModification?: string | null;
+    ordiPersoYN?: boolean | null;
+    derniereModification?: Date | null;
     emailUser?: string | null;
     etudiant?: EtudiantModel;
-    typeHandique?: TypeadmissionModel | null;
+    typeHandicap?: TypeHandicapModel | null;
     typeBourse?: TypeBourseModel | null; 
 }

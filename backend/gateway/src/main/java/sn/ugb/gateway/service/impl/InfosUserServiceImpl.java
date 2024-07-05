@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sn.ugb.gateway.domain.InfosUser;
@@ -57,8 +59,6 @@ public class InfosUserServiceImpl implements InfosUserService {
     public Mono<InfosUserDTO> save(InfosUserDTO infosUserDTO) {
         log.debug("Request to save InfosUser : {}", infosUserDTO);
 
-        validateInfosUser(infosUserDTO);
-
         return validateInfosUser(infosUserDTO)
             .then(infosUserRepository.save(infosUserMapper.toEntity(infosUserDTO)))
             .flatMap(infosUserSearchRepository::save)
@@ -69,20 +69,7 @@ public class InfosUserServiceImpl implements InfosUserService {
     public Mono<InfosUserDTO> update(InfosUserDTO infosUserDTO) {
         log.debug("Request to update InfosUser : {}", infosUserDTO);
 
-        Mono<Void> desactivationUtilisateur = Mono.empty();
-
-        if (!infosUserDTO.getActifYN()) {
-            desactivationUtilisateur = userRepository.findById(infosUserDTO.getUser().getId())
-                .flatMap(user -> {
-                    user.setActivated(infosUserDTO.getActifYN());
-                    return userRepository.save(user);
-                })
-                .switchIfEmpty(Mono.error(new BadRequestAlertException("Utilisateur non trouvé", ENTITY_NAME, "usernotfound")))
-                .then();
-        }
-
-        return desactivationUtilisateur
-            .then(validateInfosUser(infosUserDTO))
+        return validateInfosUser(infosUserDTO)
             .then(infosUserRepository.save(infosUserMapper.toEntity(infosUserDTO)))
             .flatMap(infosUserSearchRepository::save)
             .map(infosUserMapper::toDto);
@@ -113,7 +100,7 @@ public class InfosUserServiceImpl implements InfosUserService {
             return Mono.error(new BadRequestAlertException("DateAjout est obligatoire", ENTITY_NAME, "dateajoutnull"));
         }
         if (infosUserDTO.getActifYN() == null) {
-            return Mono.error(new BadRequestAlertException("ActifYN est obligatoire", ENTITY_NAME, "actifyannull"));
+            return Mono.error(new BadRequestAlertException("ActifYN est obligatoire", ENTITY_NAME, "actifynnull"));
         }
         if (infosUserDTO.getUser() == null || infosUserDTO.getUser().getLogin() == null) {
             return Mono.error(new BadRequestAlertException("Le login de l'utilisateur est obligatoire", ENTITY_NAME, "userloginnull"));
@@ -181,18 +168,34 @@ public class InfosUserServiceImpl implements InfosUserService {
 
     /**
      * @param id
-     * @param <T>
+     * @param <Void>
      * @return
      */
+
+    @Transactional
     @Override
     public Mono<Void> archiveInfosUser(Long id) {
         return infosUserRepository.findById(id)
+            .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "InfosUser introuvable")))
             .flatMap(infosUser -> {
                 infosUser.setActifYN(false);
-                infosUser.getUser().setActivated(false);
-                return infosUserRepository.save(infosUser);
-            })
-            .then();
+                if (infosUser.getUserId() != null) {
+                    return userRepository.findById(infosUser.getUserId())
+                        .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable")))
+                        .flatMap(user -> {
+                            log.debug("Désactivation de l'utilisateur: {}", user.getLogin());
+                            user.setActivated(false);
+                            return userRepository.save(user)
+                                .doOnSuccess(savedUser -> log.debug("Utilisateur désactivé: {}", savedUser.getLogin()))
+                                .then(infosUserRepository.save(infosUser))
+                                .doOnSuccess(savedInfosUser -> log.debug("InfosUser archivé: {}", savedInfosUser.getId()))
+                                .then();
+                        });
+                }
+                return infosUserRepository.save(infosUser)
+                    .doOnSuccess(savedInfosUser -> log.debug("InfosUser archivé: {}", savedInfosUser.getId()))
+                    .then();
+            });
     }
 
 

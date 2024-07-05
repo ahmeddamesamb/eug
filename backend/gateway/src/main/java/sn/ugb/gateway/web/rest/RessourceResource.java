@@ -10,14 +10,17 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.ForwardedHeaderUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -255,4 +258,24 @@ public class RessourceResource {
             )
             .map(headers -> ResponseEntity.ok().headers(headers).body(ressourceService.search(query, pageable)));
     }
+    @GetMapping("/blocfonctionnels/{blocfonctionnelId}")
+    public ResponseEntity<List<RessourceDTO>> getAllRessourceByBlocfonctionnelId(@PathVariable Long blocfonctionnelId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Blocfonctionnel by Blocfonctionnel ID : {}", blocfonctionnelId);
+        Page<RessourceDTO> page = ressourceService.findAllRessourceByBlocfonctionnel(blocfonctionnelId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+    @GetMapping("/services/{serviceId}")
+    public ResponseEntity<List<RessourceDTO>> getAllRessourceByServiceId(@PathVariable Long serviceId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Service by Service ID : {}", serviceId);
+        Page<RessourceDTO> page = ressourceService.findAllRessourceByService(serviceId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+    @PutMapping("/actifYN/{id}")
+    public ResponseEntity<RessourceDTO> setActifYNRessource(@PathVariable Long id, @RequestBody Boolean actifYN) {
+        RessourceDTO updatedRessource = ressourceService.setActifYNRessource(id, actifYN);
+        return ResponseEntity.ok(updatedRessource);
+    }
+
 }

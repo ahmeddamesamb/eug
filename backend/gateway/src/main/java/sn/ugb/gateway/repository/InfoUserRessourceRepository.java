@@ -35,14 +35,12 @@ public interface InfoUserRessourceRepository extends ReactiveCrudRepository<Info
     @Query("SELECT * FROM info_user_ressource entity WHERE entity.ressource_id = :ressourceId")
     Flux<InfoUserRessource> findAllByRessourceId(Long ressourceId);
 
-    @Query("SELECT * FROM info_user_ressource entity WHERE entity.en_cours_y_n = :actifYN")
+    @Query("SELECT * FROM info_user_ressource entity WHERE entity.en_cours_yn = :actifYN")
     Flux<InfoUserRessource> findAllByActifYN(Boolean actifYN);
 
-    @Query("UPDATE info_user_ressource SET en_cours_y_n = false WHERE id = :id")
-    Mono<Void> archiveById(@Param("id") Long id);
+    @Query("UPDATE info_user_ressource SET en_cours_yn = false WHERE id = :id")
+    Mono<Integer> archiveById(Long id);
 
-    @Query("UPDATE info_user_ressource SET en_cours_y_n = true WHERE id = :id")
-    Mono<Void> unarchiveById(@Param("id") Long id);
 
     @Override
     <S extends InfoUserRessource> Mono<S> save(S entity);

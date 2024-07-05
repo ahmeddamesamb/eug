@@ -1,5 +1,7 @@
 package sn.ugb.gir.service.impl;
 
+import java.time.Instant;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,15 +9,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sn.ugb.gir.domain.InscriptionAdministrative;
 import sn.ugb.gir.domain.InscriptionAdministrativeFormation;
+import sn.ugb.gir.domain.PaiementFrais;
 import sn.ugb.gir.repository.InscriptionAdministrativeFormationRepository;
+import sn.ugb.gir.repository.InscriptionAdministrativeRepository;
+import sn.ugb.gir.repository.PaiementFraisRepository;
 import sn.ugb.gir.repository.search.InscriptionAdministrativeFormationSearchRepository;
 import sn.ugb.gir.service.InscriptionAdministrativeFormationService;
-import sn.ugb.gir.service.dto.InscriptionAdministrativeFormationDTO;
+import sn.ugb.gir.service.dto.*;
 import sn.ugb.gir.service.mapper.InscriptionAdministrativeFormationMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 /**
- * Service Implementation for managing {@link sn.ugb.gir.domain.InscriptionAdministrativeFormation}.
+ * Service Implementation for managing {@link InscriptionAdministrativeFormation}.
  */
 @Service
 @Transactional
@@ -23,18 +33,26 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
 
     private final Logger log = LoggerFactory.getLogger(InscriptionAdministrativeFormationServiceImpl.class);
 
+    private static final String ENTITY_NAME = "microserviceGirInscriptionAdministrativeFormation";
+
     private final InscriptionAdministrativeFormationRepository inscriptionAdministrativeFormationRepository;
+
+    private final InscriptionAdministrativeRepository inscriptionAdministrativeRepository;
+
+    private final PaiementFraisRepository paiementFraisRepository;
 
     private final InscriptionAdministrativeFormationMapper inscriptionAdministrativeFormationMapper;
 
     private final InscriptionAdministrativeFormationSearchRepository inscriptionAdministrativeFormationSearchRepository;
 
     public InscriptionAdministrativeFormationServiceImpl(
-        InscriptionAdministrativeFormationRepository inscriptionAdministrativeFormationRepository,
-        InscriptionAdministrativeFormationMapper inscriptionAdministrativeFormationMapper,
-        InscriptionAdministrativeFormationSearchRepository inscriptionAdministrativeFormationSearchRepository
+            InscriptionAdministrativeFormationRepository inscriptionAdministrativeFormationRepository, InscriptionAdministrativeRepository inscriptionAdministrativeRepository, PaiementFraisRepository paiementFraisRepository,
+            InscriptionAdministrativeFormationMapper inscriptionAdministrativeFormationMapper,
+            InscriptionAdministrativeFormationSearchRepository inscriptionAdministrativeFormationSearchRepository
     ) {
         this.inscriptionAdministrativeFormationRepository = inscriptionAdministrativeFormationRepository;
+        this.inscriptionAdministrativeRepository = inscriptionAdministrativeRepository;
+        this.paiementFraisRepository = paiementFraisRepository;
         this.inscriptionAdministrativeFormationMapper = inscriptionAdministrativeFormationMapper;
         this.inscriptionAdministrativeFormationSearchRepository = inscriptionAdministrativeFormationSearchRepository;
     }
@@ -45,6 +63,10 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
         InscriptionAdministrativeFormation inscriptionAdministrativeFormation = inscriptionAdministrativeFormationMapper.toEntity(
             inscriptionAdministrativeFormationDTO
         );
+        Instant currentDate = Instant.now();
+
+        validateData( inscriptionAdministrativeFormationDTO);
+        inscriptionAdministrativeFormationDTO.setDateChoixFormation(currentDate);
         inscriptionAdministrativeFormation = inscriptionAdministrativeFormationRepository.save(inscriptionAdministrativeFormation);
         InscriptionAdministrativeFormationDTO result = inscriptionAdministrativeFormationMapper.toDto(inscriptionAdministrativeFormation);
         inscriptionAdministrativeFormationSearchRepository.index(inscriptionAdministrativeFormation);
@@ -57,6 +79,8 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
         InscriptionAdministrativeFormation inscriptionAdministrativeFormation = inscriptionAdministrativeFormationMapper.toEntity(
             inscriptionAdministrativeFormationDTO
         );
+
+        validateData( inscriptionAdministrativeFormationDTO);
         inscriptionAdministrativeFormation = inscriptionAdministrativeFormationRepository.save(inscriptionAdministrativeFormation);
         InscriptionAdministrativeFormationDTO result = inscriptionAdministrativeFormationMapper.toDto(inscriptionAdministrativeFormation);
         inscriptionAdministrativeFormationSearchRepository.index(inscriptionAdministrativeFormation);
@@ -69,6 +93,7 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
     ) {
         log.debug("Request to partially update InscriptionAdministrativeFormation : {}", inscriptionAdministrativeFormationDTO);
 
+        validateData( inscriptionAdministrativeFormationDTO);
         return inscriptionAdministrativeFormationRepository
             .findById(inscriptionAdministrativeFormationDTO.getId())
             .map(existingInscriptionAdministrativeFormation -> {
@@ -104,6 +129,17 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
     @Override
     public void delete(Long id) {
         log.debug("Request to delete InscriptionAdministrativeFormation : {}", id);
+            Optional<InscriptionAdministrativeFormation> iaf = inscriptionAdministrativeFormationRepository.findById(id);
+            if(iaf.isEmpty()){
+                throw new BadRequestAlertException("L'element que vous tentez de supprimer n'existe", ENTITY_NAME, "InscriptionAdministrativeFormationNotExiste");
+            }
+            PaiementFrais paiementFrais = paiementFraisRepository.paiementFraisIAF(id);
+            if (!Objects.equals(paiementFrais, null)){
+                if (paiementFrais.getEcheancePayeeYN()){
+                    throw new BadRequestAlertException("Vous ne pouvez pas supprimer un paiement déja valider par le paiement", ENTITY_NAME, "InscriptionFormationDejaPayer");
+                }
+            }
+        paiementFraisRepository.delete(paiementFrais);
         inscriptionAdministrativeFormationRepository.deleteById(id);
         inscriptionAdministrativeFormationSearchRepository.deleteFromIndexById(id);
     }
@@ -116,4 +152,45 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
             .search(query, pageable)
             .map(inscriptionAdministrativeFormationMapper::toDto);
     }
+
+    public void validateData(InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormationDTO){
+        Pageable pageable = null;
+
+        if (Objects.equals(inscriptionAdministrativeFormationDTO.getFormation(),null)) {
+            throw new BadRequestAlertException("Veuillez renseigné la formation à laquelle s'inscrit l'étudiant", "Formation", "FormationObligatoire");
+        }
+        if (Objects.equals(inscriptionAdministrativeFormationDTO.getInscriptionAdministrative().getEtudiant(),null)) {
+            throw new BadRequestAlertException("Veuillez renseigné l'etudiant qui doit s'inscrire ", ENTITY_NAME, "EtudiantObligatoire");
+        }
+        if (Objects.equals(inscriptionAdministrativeFormationDTO.getInscriptionAdministrative().getAnneeAcademique(),null)) {
+            throw new BadRequestAlertException("Veuillez renseigné l'année de l'inscription", ENTITY_NAME, "AnneeAcademiqueObligatoire");
+        }
+        if (Objects.equals(inscriptionAdministrativeFormationDTO.getInscriptionAdministrative().getTypeAdmission(),null)) {
+            throw new BadRequestAlertException("Veuillez renseigné le type d'admission de l'étudiant", ENTITY_NAME, "TypeAdmissionObligatoire");
+        }
+        inscriptionAdministrativeFormationDTO.setInscriptionPrincipaleYN(TRUE);
+        Long formationId = inscriptionAdministrativeFormationDTO.getFormation().getId() ;
+        Long etudiantId = inscriptionAdministrativeFormationDTO.getInscriptionAdministrative().getEtudiant().getId();
+        Long AnneeAcademiqueId = inscriptionAdministrativeFormationDTO.getInscriptionAdministrative().getAnneeAcademique().getId();
+        Optional<InscriptionAdministrativeFormation> existingIAF= inscriptionAdministrativeFormationRepository.findByFormationIdAndInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId(formationId,etudiantId,AnneeAcademiqueId);
+        Page<InscriptionAdministrative> existingIA= inscriptionAdministrativeRepository.findByEtudiantIdAndAnneeAcademiqueId(pageable, etudiantId,AnneeAcademiqueId);
+        Long count = existingIA.getTotalElements();
+
+        if (existingIAF.isPresent()) {
+            if (!Objects.equals(existingIAF.get().getId(), inscriptionAdministrativeFormationDTO.getId())) {
+                throw new BadRequestAlertException("l'inscription de cet etudiant à cette formation est deja faite pour cet annee", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationExiste");
+            }
+        }
+//        if (existingIA.isPresent()) {
+//            if (Objects.equals(existingIA.get().getId(), inscriptionAdministrativeFormationDTO.getInscriptionAdministrative().getId())  ) {
+//               if ( !Objects.equals(existingIA.get().getFormation().getId(), inscriptionAdministrativeFormationDTO.getFormation().getId())) {
+//                    inscriptionAdministrativeFormationDTO.setInscriptionPrincipaleYN(FALSE);
+//                }
+//
+//            }
+//        }
+
+    }
+
+
 }
