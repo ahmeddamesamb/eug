@@ -160,32 +160,36 @@ export class CreateUpdateComponent implements OnInit {
   onSubmit() {
     if (this.inscriptionForm.valid) {
       this.customStylesValidated = true;
-
       const formValue = this.inscriptionForm.value;
       console.log('Données du formulaire avant envoi:', JSON.stringify(formValue));
-
+  
       const inscription: InscriptionModel = {
-        id: this.id !== null ? this.id : 0,
         libelleProgrammation: formValue.libelleProgrammation,
         dateDebutProgrammation: this.formatDate(new Date(formValue.dateDebutProgrammation)),
         dateFinProgrammation: this.formatDate(new Date(formValue.dateFinProgrammation)),
         ouvertYN: true,
-        emailUser: '',
+        emailUser: formValue.emailUser || '',
         dateForclosClasse: this.formatDate(new Date(formValue.dateForclosClasse)),
         forclosClasseYN: false,
         actifYN: true,
-        anneeAcademique: { id: formValue.anneeAcademique },
-        formation: { id: formValue.formation },
-        campagne: { id: formValue.campagne }
+        anneeAcademique: { id: Number(formValue.anneeAcademique) },
+        formation: { id: Number(formValue.formation) },
+        campagne: { id: Number(formValue.campagne) }
       };
-
+  
+      if (this.id !== null) {
+        inscription.id = this.id;
+      }
+  
+      console.log('Objet inscription à envoyer:', JSON.stringify(inscription));
+  
       let observable: Observable<InscriptionModel>;
       if (this.id !== null) {
         observable = this.inscriptionService.updateInscription(this.id, inscription);
       } else {
         observable = this.inscriptionService.createInscription(inscription);
       }
-
+  
       observable.subscribe({
         next: (data) => {
           const message = this.id !== null
@@ -196,7 +200,13 @@ export class CreateUpdateComponent implements OnInit {
         },
         error: (err) => {
           console.error('Erreur lors de l\'opération:', err);
-          this.alertService.showToast("Erreur", "Une erreur est survenue lors de l'opération", "danger");
+          let errorMessage = "Une erreur est survenue lors de l'opération";
+          if (err.error && err.error.detail) {
+            errorMessage += `: ${err.error.detail}`;
+          } else if (err.message) {
+            errorMessage += `: ${err.message}`;
+          }
+          this.alertService.showToast("Erreur", errorMessage, "danger");
         }
       });
     } else {

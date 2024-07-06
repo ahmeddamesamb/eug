@@ -28,6 +28,9 @@ export class InscriptionService {
     return this.http.post<any>(`${this.inscriptionUrl}`,inscription);
   }
 
+ 
+
+
   getInscriptionById(id:number):Observable<InscriptionModel>{
 
     return this.http.get<InscriptionModel>(`${this.inscriptionUrl}/${id}`);
