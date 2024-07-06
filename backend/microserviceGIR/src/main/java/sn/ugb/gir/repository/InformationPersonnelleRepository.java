@@ -15,6 +15,9 @@ public interface InformationPersonnelleRepository extends JpaRepository<Informat
 
     Optional<InformationPersonnelle> findByEtudiantCodeEtu(String codeEtudiant);
     Long countByNomEtuAndPrenomEtu(String nomEtu, String prenomEtu);
-
     boolean existsByNomEtuAndPrenomEtu(String nomEtu, String prenomEtu);
+    InformationPersonnelle findByEtudiantId(Long etudiantId);
+
+
+
 }

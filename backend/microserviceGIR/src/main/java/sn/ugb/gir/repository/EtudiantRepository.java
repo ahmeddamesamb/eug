@@ -26,5 +26,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
     boolean existsByNumDocIdentiteIgnoreCase(String numDocIdentite);
     Etudiant findByCodeBU(String codeBU);
+    @Query("SELECT MAX(e.codeBU) FROM Etudiant e")
+    String findMaxCodeBU();
 
 }

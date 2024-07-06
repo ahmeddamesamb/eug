@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -259,14 +260,14 @@ public class RessourceResource {
             .map(headers -> ResponseEntity.ok().headers(headers).body(ressourceService.search(query, pageable)));
     }
     @GetMapping("/blocfonctionnels/{blocfonctionnelId}")
-    public ResponseEntity<List<RessourceDTO>> getAllRessourceByBlocfonctionnelId(@PathVariable Long blocfonctionnelId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<RessourceDTO>> getAllRessourceByBlocfonctionnelId(@PathVariable Long blocfonctionnelId, @ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Blocfonctionnel by Blocfonctionnel ID : {}", blocfonctionnelId);
         Page<RessourceDTO> page = ressourceService.findAllRessourceByBlocfonctionnel(blocfonctionnelId, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
     @GetMapping("/services/{serviceId}")
-    public ResponseEntity<List<RessourceDTO>> getAllRessourceByServiceId(@PathVariable Long serviceId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<RessourceDTO>> getAllRessourceByServiceId(@PathVariable Long serviceId, @ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Service by Service ID : {}", serviceId);
         Page<RessourceDTO> page = ressourceService.findAllRessourceByService(serviceId, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -277,5 +278,4 @@ public class RessourceResource {
         RessourceDTO updatedRessource = ressourceService.setActifYNRessource(id, actifYN);
         return ResponseEntity.ok(updatedRessource);
     }
-
 }

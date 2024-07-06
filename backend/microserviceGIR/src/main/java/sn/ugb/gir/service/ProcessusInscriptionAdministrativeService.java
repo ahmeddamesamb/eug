@@ -70,9 +70,9 @@ public interface ProcessusInscriptionAdministrativeService {
      * @return the list of entities.
      */
     Page<ProcessusInscriptionAdministrativeDTO> search(String query, Pageable pageable);
-    String generateInstitutionalEmail(EtudiantDTO etudiantDTO);
+    String generateInstitutionalEmail(Long etudiantId);
+    String generateCodeBareBU(Long etudiantId);
     String generateCodeEtudiant(EtudiantDTO etudiantDTO);
-    String generateCodeBareBU(EtudiantDTO etudiantDTO);
     InformationPersonnelleDTO getInformationPersonnelleByCodeBU(String codeBU);
     String trouverNomPrenomUnique(String nomEtu, String prenomEtu);
 
