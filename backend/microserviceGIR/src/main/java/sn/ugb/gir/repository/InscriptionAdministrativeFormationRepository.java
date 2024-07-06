@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sn.ugb.gir.domain.InscriptionAdministrativeFormation;
 import sn.ugb.gir.domain.PaiementFrais;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,10 +18,10 @@ import java.util.Optional;
 @Repository
 public interface InscriptionAdministrativeFormationRepository extends JpaRepository<InscriptionAdministrativeFormation, Long> {
     Optional<InscriptionAdministrativeFormation>  findByFormationIdAndInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId(Long idFormation, Long idEtudiant,Long idAnneeAcademique);
-    Page<InscriptionAdministrativeFormation> findByInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId(Pageable pageable,Long idEtudiant, Long idAnneeAcademique);
+    List<InscriptionAdministrativeFormation> findByInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId( Long idEtudiant, Long idAnneeAcademique);
+//    Optional<InscriptionAdministrativeFormation> findByInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId(Pageable pageable,Long idEtudiant, Long idAnneeAcademique);
     @Transactional
     @Query("SELECT iaf.id FROM InscriptionAdministrativeFormation iaf WHERE iaf.id = :id")
     InscriptionAdministrativeFormation findByOne(Long id);
-
 
 }
