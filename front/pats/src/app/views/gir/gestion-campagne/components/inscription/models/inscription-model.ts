@@ -3,18 +3,24 @@ import { FormationModel } from "src/app/views/gir/parametrage/components/formati
 import { CampagneModel } from "../../campagnes/models/campagne-model";
 
 export interface InscriptionModel {
-    id?: number;
-    libelleProgrammation?: string;
-    dateDebutProgrammation?: string;
-    dateFinProgrammation?: string;
-    ouvertYN?: boolean;
-    emailUser?: string;
-    dateForclosClasse?: string;
-    forclosClasseYN?: boolean;
-    actifYN?: boolean;
-    anneeAcademique?: AnneeAcademiqueModel;
-    formation?: FormationModel;
-    campagne?: CampagneModel;
-  }
+  id?: number;
+  libelleProgrammation: string;
+  dateDebutProgrammation: string;
+  dateFinProgrammation: string;
+  ouvertYN: boolean;
+  emailUser: string;
+  dateForclosClasse: string;
+  forclosClasseYN: boolean;
+  actifYN: boolean;
+  anneeAcademique: {
+    id: number;
+  };
+  formation: {
+    id: number;
+  };
+  campagne: {
+    id: number;
+  };
+}
   
  

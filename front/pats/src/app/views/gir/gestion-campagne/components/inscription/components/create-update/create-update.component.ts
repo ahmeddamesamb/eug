@@ -38,7 +38,9 @@ export class CreateUpdateComponent implements OnInit {
       id: 0,
      
     },
-    formation: {},
+    formation: {
+      id: 0
+    },
     campagne: {
       id: 0,
      
@@ -46,7 +48,8 @@ export class CreateUpdateComponent implements OnInit {
   };
 
   customStylesValidated = false;
-  id: number | null = null;
+  id: number | undefined ;
+
   inscriptionForm: FormGroup;
   campagnes: CampagneModel[] = [];
   formations: FormationModel[] = [];
@@ -157,19 +160,67 @@ export class CreateUpdateComponent implements OnInit {
     this.customStylesValidated = false;
   }
 
+  // onSubmit() {
+  //   if (this.inscriptionForm.valid) {
+  //     this.customStylesValidated = true;
+  //     const formValue = this.inscriptionForm.value;
+  //     console.log('Données du formulaire avant envoi:', JSON.stringify(formValue));
+  
+  //     const inscription: InscriptionModel = {
+  //       libelleProgrammation: formValue.libelleProgrammation,
+  //       dateDebutProgrammation: this.formatDate(formValue.dateDebutProgrammation),
+  //       dateFinProgrammation: this.formatDate(formValue.dateFinProgrammation),
+  //       ouvertYN: true,
+  //       emailUser: formValue.emailUser || '',
+  //       dateForclosClasse: this.formatDate(formValue.dateForclosClasse),
+  //       forclosClasseYN: false,
+  //       actifYN: true,
+  //       anneeAcademique: { id: Number(formValue.anneeAcademique) },
+  //       formation: { id: Number(formValue.formation) },
+  //       campagne: { id: Number(formValue.campagne) }
+  //     };
+  
+  //     console.log('Objet inscription à envoyer:', JSON.stringify(inscription));
+  
+  //     this.inscriptionService.createInscription(inscription).subscribe({
+  //       next: (data) => {
+  //         const message = "Création de l'inscription réussie";
+  //         this.alertService.showToast("Création", message, "success");
+  //         this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
+  //       },
+  //       error: (err) => {
+  //         console.error('Erreur lors de la création:', err);
+  //         let errorMessage = "Une erreur est survenue lors de la création";
+  //         if (err.error?.detail) {
+  //           errorMessage += `: ${err.error.detail}`;
+  //         } else if (err.message) {
+  //           errorMessage += `: ${err.message}`;
+  //         }
+  //         this.alertService.showToast("Erreur", errorMessage, "danger");
+  //       }
+  //     });
+  //   } else {
+  //     this.alertService.showToast("Erreur", "Veuillez remplir correctement tous les champs obligatoires", "warning");
+  //   }
+  // }
+
   onSubmit() {
     if (this.inscriptionForm.valid) {
-      this.customStylesValidated = true;
       const formValue = this.inscriptionForm.value;
-      console.log('Données du formulaire avant envoi:', JSON.stringify(formValue));
+      
+      // Vérification des valeurs sélectionnées
+      if (!formValue.anneeAcademique || !formValue.formation || !formValue.campagne) {
+        this.alertService.showToast("Erreur", "Veuillez sélectionner tous les champs requis", "warning");
+        return;
+      }
   
       const inscription: InscriptionModel = {
         libelleProgrammation: formValue.libelleProgrammation,
-        dateDebutProgrammation: this.formatDate(new Date(formValue.dateDebutProgrammation)),
-        dateFinProgrammation: this.formatDate(new Date(formValue.dateFinProgrammation)),
+        dateDebutProgrammation: this.formatDate(formValue.dateDebutProgrammation),
+        dateFinProgrammation: this.formatDate(formValue.dateFinProgrammation),
         ouvertYN: true,
         emailUser: formValue.emailUser || '',
-        dateForclosClasse: this.formatDate(new Date(formValue.dateForclosClasse)),
+        dateForclosClasse: this.formatDate(formValue.dateForclosClasse),
         forclosClasseYN: false,
         actifYN: true,
         anneeAcademique: { id: Number(formValue.anneeAcademique) },
@@ -177,31 +228,18 @@ export class CreateUpdateComponent implements OnInit {
         campagne: { id: Number(formValue.campagne) }
       };
   
-      if (this.id !== null) {
-        inscription.id = this.id;
-      }
-  
       console.log('Objet inscription à envoyer:', JSON.stringify(inscription));
   
-      let observable: Observable<InscriptionModel>;
-      if (this.id !== null) {
-        observable = this.inscriptionService.updateInscription(this.id, inscription);
-      } else {
-        observable = this.inscriptionService.createInscription(inscription);
-      }
-  
-      observable.subscribe({
+       this.inscriptionService.createInscription(inscription).subscribe({
         next: (data) => {
-          const message = this.id !== null
-            ? "Mise à jour de l'inscription avec succès"
-            : "Programmation d'inscription créée avec succès";
-          this.alertService.showToast(this.id !== null ? "Mise à jour" : "Création", message, "success");
+          const message = "Création de l'inscription réussie";
+          this.alertService.showToast("Création", message, "success");
           this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
         },
         error: (err) => {
-          console.error('Erreur lors de l\'opération:', err);
-          let errorMessage = "Une erreur est survenue lors de l'opération";
-          if (err.error && err.error.detail) {
+          console.error('Erreur lors de la création:', err);
+          let errorMessage = "Une erreur est survenue lors de la création";
+          if (err.error?.detail) {
             errorMessage += `: ${err.error.detail}`;
           } else if (err.message) {
             errorMessage += `: ${err.message}`;
