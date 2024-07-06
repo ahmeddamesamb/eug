@@ -27,8 +27,8 @@ public interface RessourceRepository extends ReactiveCrudRepository<Ressource, L
 
     @Override
     Mono<Void> deleteById(Long id);
-//    Page<Ressource> findByServiceId(Long serviceId, Pageable pageable);
-//    Page<Ressource> findByBlocFonctionnelId(Long blocfonctionnelId, Pageable pageable);
+//    Flux<Ressource> findByServiceId(Long serviceId, Pageable pageable);
+//    Flux<Ressource> findByBlocFonctionnelId(Long blocfonctionnelId, Pageable pageable);
 
 }
 

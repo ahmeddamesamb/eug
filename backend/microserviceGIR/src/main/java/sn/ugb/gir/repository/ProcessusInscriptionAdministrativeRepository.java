@@ -17,4 +17,8 @@ import java.util.List;
 public interface ProcessusInscriptionAdministrativeRepository extends JpaRepository<ProcessusInscriptionAdministrative, Long> {
 
     List<ProcessusInscriptionAdministrative> findByInscriptionAdministrativeEtudiantCodeEtu(String codeEtudiant);
+    Optional<ProcessusInscriptionAdministrative> findByInscriptionAdministrativeEtudiantId(Long etudiantId);
+
+
+
 }
