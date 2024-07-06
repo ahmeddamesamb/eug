@@ -27,8 +27,8 @@ export class CreateComponent {
   specialite :SpecialiteModel = {
     nomSpecialites: '',
     sigleSpecialites: '',
-    specialiteParticulierYN:0,
-    specialitesPayanteYN:0,
+    specialiteParticulierYN:false,
+    specialitesPayanteYN:false,
     mention : {
       id: 0
     } 
@@ -104,8 +104,8 @@ export class CreateComponent {
           if (this.specialite && this.specialite.mention) {
               this.specialite.nomSpecialites = this.specialiteForm!.get('nomSpecialites')?.value; 
               this.specialite.sigleSpecialites = this.specialiteForm!.get('sigleSpecialites')?.value;
-              this.specialite.specialiteParticulierYN = this.specialiteForm!.get('specialiteParticulierYN')?.value ? 1 : 0;
-              this.specialite.specialitesPayanteYN = this.specialiteForm!.get('specialitesPayanteYN')?.value ? 1 : 0; 
+              this.specialite.specialiteParticulierYN = this.specialiteForm!.get('specialiteParticulierYN')?.value ? true : false;
+              this.specialite.specialitesPayanteYN = this.specialiteForm!.get('specialitesPayanteYN')?.value ? true : false; 
               this.specialite.mention.id = parseInt(this.specialiteForm!.get('mention')?.value) ; 
           }
       }

@@ -1,5 +1,5 @@
 <h3>Formations autorisées n+1</h3>
-<small>Lorem Ipsum is simply dummy text of the printing</small>
+<small>Lorem Ipsum is simply dummy text of the printing {{id}}</small>
 
 <form #customStylesForm="ngForm"
         (ngSubmit)="onSubmit1()"
@@ -17,7 +17,7 @@
                     <c-multi-select-option 
                         [selected]="isFormationSelected(formation.id)" 
                         [value]="formation.id">
-                        {{ formation.libelleFormation }}
+                        {{ formation.codeFormation }}
                     </c-multi-select-option>
                     
                 }
@@ -26,9 +26,6 @@
         </c-col>
         
         
-        
-
-
 
         <div class="col-12 d-flex justify-content-between ">
             <div class=" w-50 pe-1">

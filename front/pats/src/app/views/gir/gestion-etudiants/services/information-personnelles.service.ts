@@ -9,6 +9,7 @@ import {CONSTANTES_GLOBALES} from '../../../../config/constantes.globales';
   providedIn: 'root'
 })
 export class InformationPersonnellesService {
+  
 
   private url;
 
@@ -37,4 +38,11 @@ export class InformationPersonnellesService {
   updateInformationPersonnelle(id: number, infos: InformationPersonellesModel): Observable<InformationPersonellesModel> {
     return this.http.put<InformationPersonellesModel>(`${this.url}/${id}`, infos);
   }
+
+
+
+  getEtudiantCode(code:string):Observable<InformationPersonellesModel>{
+
+    return this.http.get<InformationPersonellesModel>(`${this.url}/etudiant/${code}`);
+  }
 }

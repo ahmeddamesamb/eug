@@ -3,6 +3,7 @@ import {TypeHandicapModel} from 'src/app/views/gir/parametrage/components/type-h
 import {TypeBourseModel} from 'src/app/views/gir/parametrage/components/type-bourse/models/type-bourse-model'
 
 export interface InformationPersonellesModel {
+    id?:number,
     nomEtu?: string | null;
     nomJeuneFilleEtu?: string | null;
     prenomEtu?: string | null;

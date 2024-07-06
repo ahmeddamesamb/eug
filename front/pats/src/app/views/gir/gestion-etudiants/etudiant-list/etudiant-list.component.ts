@@ -1,5 +1,7 @@
 import { Component, QueryList, ViewChild, ViewChildren, } from '@angular/core';
 import { Router } from '@angular/router';
+import {InformationPersonnellesService} from '../services/information-personnelles.service';
+import {InformationPersonellesModel} from '../models/information-personelles-model';
 import {EtudiantService} from '../services/etudiant.service';
 import {EtudiantModel} from '../models/etudiant-model';
 import { NumberToStringPipe } from '../../../../pipes/number-to-string.pipe'
@@ -38,13 +40,13 @@ import{
 })
 export class EtudiantListComponent {
 
-  constructor (private route:Router,private etudiantService: EtudiantService,private alertService: AlertServiceService){
+  constructor (private route:Router,private informationPersonnellesService: InformationPersonnellesService, private alertService: AlertServiceService){
 
   }
 
-  etudiantList : EtudiantModel[] = [];
-  itemDelete!: EtudiantModel;
-  itemUpdate!: EtudiantModel;
+  infosPersonnelList : InformationPersonellesModel[] = [];
+  itemDelete!: InformationPersonellesModel;
+  itemUpdate!: InformationPersonellesModel;
   public liveDemoVisible = false;
   public modalCreateUpdate = false;
   isloading = false;
@@ -56,9 +58,9 @@ export class EtudiantListComponent {
 
   getListe(){
     this.isloading = true;
-    this.etudiantService.getEtudiantList().subscribe({
+    this.informationPersonnellesService.getInformationPersonnelleList().subscribe({
       next: (data) => {
-        this.etudiantList = data;
+        this.infosPersonnelList = data;
         this.isloading = false;
       },
       error: (err) => {
@@ -69,10 +71,6 @@ export class EtudiantListComponent {
 
   columns: IColumn[] = [
     {
-      key: 'codeEtu',
-      label: 'Code'
-    },
-    {
       key: 'nomEtu',
       label: 'Nom'
     },
@@ -81,12 +79,16 @@ export class EtudiantListComponent {
       label: 'Prenom'
     },
     {
-      key: 'emailUGB',
+      key: 'emailEtu',
       label: 'Email'
     },
     {
-      key: 'ine',
-      label: 'INE'
+      key: 'profession',
+      label: 'Profession'
+    },
+    {
+      key: 'etudiant',
+      label: 'Etudiant'
     },
     {
       key: 'show',
@@ -98,7 +100,7 @@ export class EtudiantListComponent {
   ];
 
   view(item: number) {
-    this.route.navigate(['/gir/gestion-etudiant/view',item])
+    this.route.navigate(['/gir/inscription-reinscription/view/',item])
 
   }
 
@@ -114,7 +116,7 @@ export class EtudiantListComponent {
 
   delete(){
     if (this.itemDelete && this.itemDelete.id !== undefined) {
-      this.etudiantService.deleteEtudiant(this.itemDelete.id).subscribe({
+      this.informationPersonnellesService.deleteInformationPersonnelle(this.itemDelete.id).subscribe({
         next: (data) => {
           this.getListe();
           this.liveDemoVisible = false;

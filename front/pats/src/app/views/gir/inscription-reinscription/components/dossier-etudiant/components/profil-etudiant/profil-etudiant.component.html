@@ -4,10 +4,15 @@
         <img src="/assets/images/avatars/etudiant.png" width="150" alt="">
       </div>
       <div class="d-flex flex-column ms-4">
-        <h4 class="text-secondary fw-bold">{{informationPersonelle.etudiant?.codeEtu}}</h4>
-        <p class="fw-bold">{{informationPersonelle.prenomEtu}} {{informationPersonelle.nomEtu}}</p>
-        <p> Né(e) le, {{informationPersonelle.etudiant?.dateNaissEtu | date : 'dd/MM/YYYY'}}</p>
-        <p> {{informationPersonelle.etudiant?.ine}}</p>
+        
+
+          <h4 class="text-secondary fw-bold">{{informationPersonelle.etudiant?.codeEtu}}</h4>
+          <p class="fw-bold">{{informationPersonelle.prenomEtu}} {{informationPersonelle.nomEtu}}</p>
+          <p> Né(e) le, {{informationPersonelle.etudiant?.dateNaissEtu | date : 'dd/MM/YYYY'}}</p>
+          <p> {{informationPersonelle.etudiant?.ine}}</p>
+
+     
+        
       </div>
     </div>
     <div class="d-flex flex-row mt-3 buttons-etudiant">

@@ -46,9 +46,26 @@ export class CycleListComponent {
   public liveDemoVisible = false;
   isloading = false;
   
+  ngOnInit(): void {
+    this.getListe();
+ 
+  }
+
+  getListe(){
+    this.isloading = true;
+    this.cycleService.getCycleList().subscribe({
+      next: (data) => {
+        this.cycleList = data;
+        this.isloading = false;
+      },
+      error: (err) => {
+      }
+    });
+  }
+
   columns: IColumn[] = [
     {
-      key: 'libellecycle',
+      key: 'libelleCycle',
       label: 'Nom'
     },
     {
@@ -61,7 +78,7 @@ export class CycleListComponent {
   ];
 
   create(){
-
+    this.route.navigate(['/gir/parametrage/cycle/create'])
   }
   associerFrais(){
     this.route.navigate(['/gir/parametrage/cycle/associer-frais',1])

@@ -1,5 +1,8 @@
 package sn.ugb.gir.web.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sn.ugb.gir.repository.InformationPersonnelleRepository;
 import sn.ugb.gir.service.InformationPersonnelleService;
@@ -221,6 +225,21 @@ public class InformationPersonnelleResource {
             return ResponseEntity.ok().headers(headers).body(page.getContent());
         } catch (RuntimeException e) {
             throw ElasticsearchExceptionMapper.mapException(e);
+        }
+    }
+
+    @Operation(summary = "Ajouter une photo",
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            content = @Content(mediaType = "multipart/form-data",
+                schema = @Schema(type = "object", implementation = MultipartFile.class, format = "binary")))
+        )
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadPhoto(@RequestParam("file") MultipartFile file, @RequestParam("codeEtu") String codeEtu) {
+        try {
+            String filename = informationPersonnelleService.uploadPhoto(file, codeEtu);
+            return ResponseEntity.ok("Photo uploaded successfully with filename: " + filename);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

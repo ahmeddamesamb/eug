@@ -8,6 +8,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sn.ugb.gateway.domain.HistoriqueConnexion;
 
+import java.time.LocalDate;
+
 /**
  * Spring Data R2DBC repository for the HistoriqueConnexion entity.
  */
@@ -34,6 +36,24 @@ public interface HistoriqueConnexionRepository
 
     @Override
     Mono<Void> deleteById(Long id);
+
+    @Query("SELECT * FROM historique_connexion entity WHERE entity.actif_yn = :enCoursYN")
+    Flux<HistoriqueConnexion> findAllByEnCoursYN(Boolean enCoursYN, Pageable pageable);
+
+    @Query("SELECT * FROM historique_connexion entity WHERE (entity.date_debut_connexion BETWEEN :dateDebut AND :dateFin) AND (entity.date_fin_connexion BETWEEN :dateDebut AND :dateFin)")
+    Flux<HistoriqueConnexion> findAllByTimeSlots(LocalDate dateDebut, LocalDate dateFin, Pageable pageable);
+
+    @Query("SELECT * FROM historique_connexion entity WHERE entity.info_user_id = :infosUserId AND (entity.date_debut_connexion BETWEEN :dateDebut AND :dateFin) AND (entity.date_fin_connexion BETWEEN :dateDebut AND :dateFin)")
+    Flux<HistoriqueConnexion> findAllByInfosUserIdAndTimeSlots(Long infosUserId, LocalDate dateDebut, LocalDate dateFin, Pageable pageable);
+
+    @Query("SELECT COUNT(*) FROM historique_connexion entity WHERE entity.actif_yn = :enCoursYN")
+    Mono<Long> countAllByEnCoursYN(Boolean enCoursYN);
+
+    @Query("SELECT COUNT(*) FROM historique_connexion entity WHERE (entity.date_debut_connexion BETWEEN :dateDebut AND :dateFin) AND (entity.date_fin_connexion BETWEEN :dateDebut AND :dateFin)")
+    Mono<Long> countAllByTimeSlots(LocalDate dateDebut, LocalDate dateFin);
+
+    @Query("SELECT COUNT(*) FROM historique_connexion entity WHERE entity.info_user_id = :infosUserId AND (entity.date_debut_connexion BETWEEN :dateDebut AND :dateFin) AND (entity.date_fin_connexion BETWEEN :dateDebut AND :dateFin)")
+    Mono<Long> countAllByInfosUserIdAndTimeSlots(Long infosUserId, LocalDate dateDebut, LocalDate dateFin);
 }
 
 interface HistoriqueConnexionRepositoryInternal {
