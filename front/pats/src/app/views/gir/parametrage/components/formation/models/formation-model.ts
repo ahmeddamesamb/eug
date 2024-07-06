@@ -5,9 +5,6 @@ import {DepartementModel} from '../../departement/models/departement-model';
 
 export interface FormationModel {
     id?:number,
-<<<<<<< HEAD
-    libelleDiplome?:string,
-=======
     classeDiplomanteYN?:boolean,
     libelleDiplome?:string,
     codeFormation?:string,
@@ -19,5 +16,4 @@ export interface FormationModel {
     niveau?:NiveauModel,
     specialite?:SpecialiteModel,
     departement?:DepartementModel  
->>>>>>> eb1fff07f315284ee072e4d730b46db6ad81917c
 }

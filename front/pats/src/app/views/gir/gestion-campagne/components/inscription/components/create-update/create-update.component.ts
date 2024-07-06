@@ -6,25 +6,15 @@ import { CampagneService } from '../../../campagnes/services/campagne.service';
 import { AnneeAcademiqueService } from '../../../../../parametrage/components/annee-academique/services/annee-academique.service';
 import { FormationService } from 'src/app/views/gir/parametrage/components/formation/services/formation.service';
 import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
-import { CampagneModel } from '../../../campagnes/models/campagne-model';
-import { AnneeAcademiqueModel } from 'src/app/views/gir/parametrage/components/annee-academique/models/AnneeAcademiqueModel';
-import { FormationModel } from 'src/app/views/gir/parametrage/components/formation/models/formation-model';
 import { RowComponent, ColComponent, TextColorDirective, CardComponent, DatePickerComponent as DatePickerComponent_1, CardHeaderComponent, CardBodyComponent, FormDirective, FormLabelDirective, FormControlDirective, FormFeedbackComponent, InputGroupComponent, InputGroupTextDirective, FormSelectDirective, FormCheckComponent, FormCheckInputDirective, FormCheckLabelDirective, ButtonDirective, ListGroupDirective, ListGroupItemDirective } from '@coreui/angular-pro';
 import { DocsExampleComponent } from '@docs-components/public-api';
 import { DatePipe } from '@angular/common';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
+import { InscriptionModel } from '../../models/inscription-model';
+import { CampagneModel } from '../../../campagnes/models/campagne-model';
+import { FormationModel } from 'src/app/views/gir/parametrage/components/formation/models/formation-model';
+import { AnneeAcademiqueModel } from 'src/app/views/gir/parametrage/components/annee-academique/models/AnneeAcademiqueModel';
 
-export interface InscriptionModel{
-  id: any;
-  libelle: string,
-  dateDebut: Date | string,
-  dateFin: Date | string,
-  dateForclos: Date | string,
-  campagne: CampagneModel | string,
-  formation: string,
-  anneeAcademique: AnneeAcademiqueModel | string,
-
-}
 @Component({
   selector: 'app-create-update',
   standalone: true,
@@ -32,24 +22,31 @@ export interface InscriptionModel{
   templateUrl: './create-update.component.html',
   styleUrl: './create-update.component.scss'
 })
-
-
-
 export class CreateUpdateComponent implements OnInit {
 
   inscription: InscriptionModel = {
     id: 0,
-    libelle: '',
-    dateDebut: '',
-    dateFin: '',
-    dateForclos: '',
-    campagne: '',
-    formation: '',
-    anneeAcademique: ''
+    libelleProgrammation: '',
+    dateDebutProgrammation: '',
+    dateFinProgrammation: '',
+    ouvertYN: false,
+    emailUser: '',
+    dateForclosClasse: '',
+    forclosClasseYN: false,
+    actifYN: true,
+    anneeAcademique: {
+      id: 0,
+     
+    },
+    formation: {},
+    campagne: {
+      id: 0,
+     
+    }
   };
 
   customStylesValidated = false;
-  id: number | undefined;
+  id: number | null = null;
   inscriptionForm: FormGroup;
   campagnes: CampagneModel[] = [];
   formations: FormationModel[] = [];
@@ -65,10 +62,10 @@ export class CreateUpdateComponent implements OnInit {
     private formationService: FormationService
   ) {
     this.inscriptionForm = new FormGroup({
-      libelle: new FormControl('', Validators.required),
-      dateDebut: new FormControl(null, Validators.required),
-      dateFin: new FormControl(null, Validators.required),
-      dateForclos: new FormControl(null, Validators.required),
+      libelleProgrammation: new FormControl('', Validators.required),
+      dateDebutProgrammation: new FormControl(null, Validators.required),
+      dateFinProgrammation: new FormControl(null, Validators.required),
+      dateForclosClasse: new FormControl(null, Validators.required),
       campagne: new FormControl(null, Validators.required),
       formation: new FormControl(null, Validators.required),
       anneeAcademique: new FormControl(null, Validators.required)
@@ -104,13 +101,13 @@ export class CreateUpdateComponent implements OnInit {
 
   initializeForm(inscription: InscriptionModel) {
     this.inscriptionForm.patchValue({
-      libelle: inscription.libelle || '',
-      dateDebut: inscription.dateDebut || '',
-      dateFin: inscription.dateFin || '',
-      dateForclos: inscription.dateForclos || '',
-      campagne: inscription.campagne || null,
-      formation: inscription.formation || null,
-      anneeAcademique: inscription.anneeAcademique || null
+      libelleProgrammation: inscription.libelleProgrammation || '',
+      dateDebutProgrammation: inscription.dateDebutProgrammation || '',
+      dateFinProgrammation: inscription.dateFinProgrammation || '',
+      dateForclosClasse: inscription.dateForclosClasse || '',
+      campagne: inscription.campagne?.id || null,
+      formation: inscription.formation?.id || null,
+      anneeAcademique: inscription.anneeAcademique?.id || null
     });
   }
 
@@ -137,28 +134,15 @@ export class CreateUpdateComponent implements OnInit {
   }
 
   loadFormations() {
-    console.log("FORMATIONS");
     this.formationService.getFormationList().subscribe({
       next: (data) => {
         this.formations = data;
-        console.log("Formations: " + this.formations);
       },
       error: (err) => {
         console.error("Erreur lors du chargement des formations:", err);
       }
     });
   }
-
-  // formatDates(formValue: any): any {
-  //   const formatted = { ...formValue };
-  //   ['dateDebut', 'dateFin', 'dateForclos'].forEach(dateField => {
-  //     if (formValue[dateField]) {
-  //       const date = new Date(formValue[dateField]);
-  //       formatted[dateField] = this.formatDate(date);
-  //     }
-  //   });
-  //   return formatted;
-  // }
 
   formatDate(date: Date): string {
     return date.toISOString().split('T')[0];
@@ -173,68 +157,41 @@ export class CreateUpdateComponent implements OnInit {
     this.customStylesValidated = false;
   }
 
-  onSubmit1() {
+  onSubmit() {
     if (this.inscriptionForm.valid) {
       this.customStylesValidated = true;
-  
-      const formattedData = this.inscriptionForm.value;
-      console.log('Données formatées avant envoi:', JSON.stringify(formattedData));
-  
-      const inscription: any = {
-        libelleProgrammation: formattedData.libelle,
-        dateDebutProgrammation: this.formatDate(new Date(formattedData.dateDebut)),
-        dateFinProgrammation: this.formatDate(new Date(formattedData.dateFin)),
-        dateForclosClasse: this.formatDate(new Date(formattedData.dateForclos)),
-        ouvertYN: false, // Exemple de valeur fixe, à ajuster selon vos besoins
-        emailUser: null, // Exemple de valeur nulle, à ajuster selon vos besoins
-        forclosClasseYN: false, // Exemple de valeur fixe, à ajuster selon vos besoins
-        actifYN: false, // Exemple de valeur fixe, à ajuster selon vos besoins
-        anneeAcademique: {
-          id: formattedData.anneeAcademique.id,
-          libelleAnneeAcademique: null,
-          anneeAc: null,
-          separateur: null,
-          anneeCouranteYN: null
-        },
-        formation: {
-          id: formattedData.formation.id,
-          classeDiplomanteYN: null,
-          libelleDiplome: null,
-          codeFormation: null,
-          nbreCreditsMin: null,
-          estParcoursYN: null,
-          lmdYN: null,
-          actifYN: null,
-          typeFormation: null,
-          niveau: null,
-          specialite: null,
-          departement: null
-        },
-        campagne: {
-          id: formattedData.campagne.id,
-          libelleCampagne: null,
-          dateDebut: null,
-          dateFin: null,
-          libelleAbrege: null,
-          actifYN: null
-        }
+
+      const formValue = this.inscriptionForm.value;
+      console.log('Données du formulaire avant envoi:', JSON.stringify(formValue));
+
+      const inscription: InscriptionModel = {
+        id: this.id !== null ? this.id : 0,
+        libelleProgrammation: formValue.libelleProgrammation,
+        dateDebutProgrammation: this.formatDate(new Date(formValue.dateDebutProgrammation)),
+        dateFinProgrammation: this.formatDate(new Date(formValue.dateFinProgrammation)),
+        ouvertYN: true,
+        emailUser: '',
+        dateForclosClasse: this.formatDate(new Date(formValue.dateForclosClasse)),
+        forclosClasseYN: false,
+        actifYN: true,
+        anneeAcademique: { id: formValue.anneeAcademique },
+        formation: { id: formValue.formation },
+        campagne: { id: formValue.campagne }
       };
-  
-      if (this.id) {
-        inscription.id = this.id; // Ajouter l'ID seulement s'il est défini
+
+      let observable: Observable<InscriptionModel>;
+      if (this.id !== null) {
+        observable = this.inscriptionService.updateInscription(this.id, inscription);
+      } else {
+        observable = this.inscriptionService.createInscription(inscription);
       }
-  
-      const operation = this.id ? 'update' : 'create';
-      const service = this.id 
-        ? this.inscriptionService.updateInscription(this.id, inscription)
-        : this.inscriptionService.createInscription(inscription);
-  
-      service.subscribe({
+
+      observable.subscribe({
         next: (data) => {
-          const message = operation === 'update' 
+          const message = this.id !== null
             ? "Mise à jour de l'inscription avec succès"
-            : "Programmation d'inscription avec succès";
-          this.alertService.showToast(operation === 'update' ? "Mise à jour" : "Création", message, "success");
+            : "Programmation d'inscription créée avec succès";
+          this.alertService.showToast(this.id !== null ? "Mise à jour" : "Création", message, "success");
           this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
         },
         error: (err) => {
@@ -246,6 +203,4 @@ export class CreateUpdateComponent implements OnInit {
       this.alertService.showToast("Erreur", "Veuillez remplir correctement tous les champs obligatoires", "warning");
     }
   }
-  
-  
 }

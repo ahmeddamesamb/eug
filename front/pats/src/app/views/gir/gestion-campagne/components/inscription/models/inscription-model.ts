@@ -1,14 +1,20 @@
-import { AnneeAcademiqueModel } from 'src/app/views/gir/parametrage/components/annee-academique/models/AnneeAcademiqueModel';
-import {CampagneModel} from '../../campagnes/models/campagne-model';
+import { AnneeAcademiqueModel } from "src/app/views/gir/parametrage/components/annee-academique/models/AnneeAcademiqueModel";
+import { FormationModel } from "src/app/views/gir/parametrage/components/formation/models/formation-model";
+import { CampagneModel } from "../../campagnes/models/campagne-model";
 
-export interface InscriptionModel{
-    id: any;
-    libelle: string,
-    dateDebut: Date | string,
-    dateFin: Date | string,
-    dateForclos: Date | string,
-    campagne: CampagneModel | string,
-    formation: string,
-    anneeAcademique: AnneeAcademiqueModel | string,
-
-}
+export interface InscriptionModel {
+    id?: number;
+    libelleProgrammation?: string;
+    dateDebutProgrammation?: string;
+    dateFinProgrammation?: string;
+    ouvertYN?: boolean;
+    emailUser?: string;
+    dateForclosClasse?: string;
+    forclosClasseYN?: boolean;
+    actifYN?: boolean;
+    anneeAcademique?: AnneeAcademiqueModel;
+    formation?: FormationModel;
+    campagne?: CampagneModel;
+  }
+  
+ 
