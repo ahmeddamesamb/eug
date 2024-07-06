@@ -8,7 +8,7 @@
 
         <!-- Rubrique: Informations Personnelles -->
 
-        <h4 class="mt-4 fw-bold">Informations Personnelles</h4>
+        <h4 class="mt-4 fw-bold">Civilité</h4>
         <c-col md="12" lg="6">
             <label cLabel for="nomEtu">Nom </label>
             <input cFormControl id="nomEtu" required type="text" formControlName="nomEtu"/>
@@ -20,7 +20,6 @@
             <input cFormControl id="prenomEtu" required type="text" formControlName="prenomEtu"/>
             <c-form-feedback>Prénom</c-form-feedback>
         </c-col>
-
 
         <c-col md="12" lg="6">
             <label cLabel for="dateNaissEtu">Date de naissance  </label>
@@ -38,13 +37,47 @@
             <input cFormControl id="lieuNaissEtu" required type="text" formControlName="lieuNaissEtu"/>
             <c-form-feedback>Lieu de naissance</c-form-feedback>
         </c-col>
+
         <c-col md="12" lg="6">
-            <label cLabel for="adresseEtu">Adresse </label>
-            <input cFormControl id="adresseEtu" required type="text" formControlName="adresseEtu"/>
-            <c-form-feedback>Adresse</c-form-feedback>
+            <label cLabel for="sexe">Sexe </label>
+           
+
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="sexe"
+                required
+                id="sexe"
+                [valid]="(informationPersonelleForm?.get('sexe')?.touched && informationPersonelleForm?.get('sexe')?.valid) ? true
+            : (informationPersonelleForm?.get('sexe')?.touched) && informationPersonelleForm?.get('sexe')?.invalid ? false : undefined"
+                cSelect>
+                <option value="masculin">masculin </option>
+                <option value="féminin">féminin</option>
+            </select>
+            <c-form-feedback>Sexe</c-form-feedback>
         </c-col>
 
-        
+        <c-col  md="12" lg="6">
+            <label  cLabel for="statutMarital">Statut marital </label>
+            <!-- <input cFormControl id="statutMarital" required type="text" formControlName="statutMarital"/> -->
+
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="statutMarital"
+                required
+                id="statutMarital"
+                [valid]="(informationPersonelleForm?.get('statutMarital')?.touched && informationPersonelleForm?.get('statutMarital')?.valid) ? true
+               : (informationPersonelleForm?.get('statutMarital')?.touched) && informationPersonelleForm?.get('statutMarital')?.invalid ? false : undefined"
+                cSelect>
+                <option value="célibataire">célibataire </option>
+                <option value="marié">marié</option>
+                <option value="veuf">veuf</option>
+                <option value="divorcé">divorcé</option> 
+            </select>
+            <c-form-feedback>Statut marital</c-form-feedback>
+        </c-col>
+
         <c-col md="12" lg="6">
             <label cLabel for="ine">INE </label>
             <input cFormControl id="ine" required type="text" formControlName="ine"/>
@@ -58,6 +91,8 @@
             <input cFormControl id="numDocIdentite" required type="text" formControlName="numDocIdentite"/>
             <c-form-feedback>Numéro d'identité</c-form-feedback>
         </c-col>
+
+        <h4 class="mt-4 fw-bold">Contacts</h4>
         <c-col md="12" lg="6">
             <label cLabel for="telEtu">Téléphone </label>
             <input cFormControl id="telEtu" required type="text" formControlName="telEtu"/>
@@ -71,29 +106,24 @@
         </c-col>
 
         <c-col md="12" lg="6">
+            <label cLabel for="adresseEtu">Adresse </label>
+            <input cFormControl id="adresseEtu" required type="text" formControlName="adresseEtu"/>
+            <c-form-feedback>Adresse</c-form-feedback>
+        </c-col>
+
+
+
+
+
+        <h4 class="mt-4 fw-bold">Informations supplémentaires</h4>
+
+        <c-col md="12" lg="6">
             <label cLabel for="profession">Profession </label>
             <input cFormControl id="profession" required type="text" formControlName="profession"/>
             <c-form-feedback>Profession</c-form-feedback>
         </c-col>
 
-        <c-col md="12" lg="6">
-            <label cLabel for="sexe">Sexe </label>
-            <!-- <input cFormControl id="sexe" required type="text" formControlName="sexe"/> -->
-
-            <select 
-                cFormControl 
-                aria-label="Default select example" 
-                formControlName="sexe"
-                required
-                id="sexe"
-                [valid]="(informationPersonelleForm?.get('sexe')?.touched && informationPersonelleForm?.get('sexe')?.valid) ? true
-            : (informationPersonelleForm?.get('sexe')?.touched) && informationPersonelleForm?.get('sexe')?.invalid ? false : undefined"
-                cSelect>
-                <option value="célibataire ">masculin </option>
-                <option value="marié">féminin</option>
-            </select>
-            <c-form-feedback>Sexe</c-form-feedback>
-        </c-col>
+        
         <!-- <c-col md="12" lg="6">
             <label cLabel for="assimileYN">Assimilé (Oui/Non) </label>
             <input cFormControl id="assimileYN" required type="checkbox" formControlName="assimileYN"/>
@@ -208,26 +238,7 @@
 
         <!-- Rubrique: Informations Complémentaires -->
         <!-- <h4 class="mt-4 fw-bold">Informations Complémentaires</h4> -->
-        <c-col  md="12" lg="6">
-            <label  cLabel for="statutMarital">Statut marital </label>
-            <!-- <input cFormControl id="statutMarital" required type="text" formControlName="statutMarital"/> -->
-
-            <select 
-                cFormControl 
-                aria-label="Default select example" 
-                formControlName="statutMarital"
-                required
-                id="statutMarital"
-                [valid]="(informationPersonelleForm?.get('statutMarital')?.touched && informationPersonelleForm?.get('statutMarital')?.valid) ? true
-               : (informationPersonelleForm?.get('statutMarital')?.touched) && informationPersonelleForm?.get('statutMarital')?.invalid ? false : undefined"
-                cSelect>
-                <option value="célibataire ">célibataire </option>
-                <option value="marié">marié</option>
-                <option value="veuf">veuf</option>
-                <option value="divorcé">divorcé</option> 
-            </select>
-            <c-form-feedback>Statut marital</c-form-feedback>
-        </c-col>
+        
 
         <c-col  md="12" lg="6">
             <label  cLabel for="nomJeuneFilleEtu">Nom de jeune fille </label>

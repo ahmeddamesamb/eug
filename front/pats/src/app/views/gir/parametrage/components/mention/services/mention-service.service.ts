@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {DomaineModel} from '../../domaine/models/domaine-model';
 import {MentionModel} from '../models/mention-model';
 import { ENVIRONMENT} from '../../../../../../../environments/environment';
 import {CONSTANTES_GLOBALES} from '../../../../../../config/constantes.globales';

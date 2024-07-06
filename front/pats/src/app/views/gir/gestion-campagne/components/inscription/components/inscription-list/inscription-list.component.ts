@@ -28,13 +28,15 @@ import{
 import { delay } from 'rxjs';
 import { InscriptionService } from '../../../../services/inscription.service';
 import { InscriptionModel } from '../../models/inscription-model';
+import { AlerteComponent } from 'src/app/shared/components/alerte/alerte/alerte.component';
 @Component({
   selector: 'app-inscription-list',
   standalone: true,
   imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
     ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
-    CardComponent, CardHeaderComponent,PopoverModule, ColComponent,ToasterComponent
-    ],  templateUrl: './inscription-list.component.html',
+    CardComponent, CardHeaderComponent,PopoverModule, ColComponent,ToasterComponent,AlerteComponent
+    ],
+     templateUrl: './inscription-list.component.html',
   styleUrl: './inscription-list.component.scss'
 })
 export class InscriptionListComponent {
@@ -57,18 +59,17 @@ inscriptionList : InscriptionModel[] = [];
     this.inscriptionService.getInscriptionList().subscribe({
       next: (data) => {
         this.inscriptionList = data;
+        console.log(this.inscriptionList);
         this.isloading = false;
       },
       error: (err) => {
-
-
       }
     });
   }
 
   columns: IColumn[] = [
     {
-      key: 'libelleFormation',
+      key: 'libelleProgrammation',
       label: 'Formation'
     },
    

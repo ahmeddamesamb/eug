@@ -14,7 +14,7 @@ export class EtudiantService {
 
   constructor(private http: HttpClient) {
     const baseUrl = ENVIRONMENT.endpointURL + CONSTANTES_GLOBALES.girURL;
-    this.url = `${baseUrl}/etudians`;
+    this.url = `${baseUrl}/etudiants`;
     
   }
 

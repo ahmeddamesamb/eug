@@ -62,6 +62,7 @@ export class SpecialiteListComponent {
         this.isloading = false;
       },
       error: (err) => {
+        this.isloading = false;
       }
     });
   }
