@@ -204,6 +204,54 @@ export class CreateUpdateComponent implements OnInit {
   //   }
   // }
 
+  // onSubmit() {
+  //   if (this.inscriptionForm.valid) {
+  //     const formValue = this.inscriptionForm.value;
+      
+  //     // Vérification des valeurs sélectionnées
+  //     if (!formValue.anneeAcademique || !formValue.formation || !formValue.campagne) {
+  //       this.alertService.showToast("Erreur", "Veuillez sélectionner tous les champs requis", "warning");
+  //       return;
+  //     }
+  
+  //     const inscription: InscriptionModel = {
+  //       libelleProgrammation: formValue.libelleProgrammation,
+  //       dateDebutProgrammation: this.formatDate(formValue.dateDebutProgrammation),
+  //       dateFinProgrammation: this.formatDate(formValue.dateFinProgrammation),
+  //       ouvertYN: true,
+  //       emailUser: formValue.emailUser || '',
+  //       dateForclosClasse: this.formatDate(formValue.dateForclosClasse),
+  //       forclosClasseYN: false,
+  //       actifYN: true,
+  //       anneeAcademique: { id: Number(formValue.anneeAcademique) },
+  //       formation: { id: Number(formValue.formation) },
+  //       campagne: { id: Number(formValue.campagne) }
+  //     };
+  
+  //     console.log('Objet inscription à envoyer:', JSON.stringify(inscription));
+  
+  //      this.inscriptionService.createInscription(inscription).subscribe({
+  //       next: (data) => {
+  //         const message = "Création de l'inscription réussie";
+  //         this.alertService.showToast("Création", message, "success");
+  //         this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
+  //       },
+  //       error: (err) => {
+  //         console.error('Erreur lors de la création:', err);
+  //         let errorMessage = "Une erreur est survenue lors de la création";
+  //         if (err.error?.detail) {
+  //           errorMessage += `: ${err.error.detail}`;
+  //         } else if (err.message) {
+  //           errorMessage += `: ${err.message}`;
+  //         }
+  //         this.alertService.showToast("Erreur", errorMessage, "danger");
+  //       }
+  //     });
+  //   } else {
+  //     this.alertService.showToast("Erreur", "Veuillez remplir correctement tous les champs obligatoires", "warning");
+  //   }
+  // }
+
   onSubmit() {
     if (this.inscriptionForm.valid) {
       const formValue = this.inscriptionForm.value;
@@ -230,15 +278,23 @@ export class CreateUpdateComponent implements OnInit {
   
       console.log('Objet inscription à envoyer:', JSON.stringify(inscription));
   
-       this.inscriptionService.createInscription(inscription).subscribe({
+      let operation: Observable<InscriptionModel>;
+      if (this.id) {
+        operation = this.inscriptionService.updateInscription(this.id, inscription);
+      } else {
+        operation = this.inscriptionService.createInscription(inscription);
+      }
+  
+      operation.subscribe({
         next: (data) => {
-          const message = "Création de l'inscription réussie";
-          this.alertService.showToast("Création", message, "success");
+          const action = this.id ? "Modification" : "Création";
+          const message = `${action} de l'inscription réussie`;
+          this.alertService.showToast(action, message, "success");
           this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
         },
         error: (err) => {
-          console.error('Erreur lors de la création:', err);
-          let errorMessage = "Une erreur est survenue lors de la création";
+          console.error(`Erreur lors de la ${this.id ? 'modification' : 'création'}:`, err);
+          let errorMessage = `Une erreur est survenue lors de la ${this.id ? 'modification' : 'création'}`;
           if (err.error?.detail) {
             errorMessage += `: ${err.error.detail}`;
           } else if (err.message) {

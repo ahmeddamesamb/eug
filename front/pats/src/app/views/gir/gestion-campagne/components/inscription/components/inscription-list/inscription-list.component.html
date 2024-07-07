@@ -46,7 +46,7 @@ noItemsLabel="La liste est vide"
 </ng-template> -->
 
 <ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent" >
-  <td>
+  <td class="border-1 ">
     @switch (columnName) {
       @case ('enCoursYN') {
         <c-badge [color]="getBadge(tdContent)">
@@ -60,11 +60,11 @@ noItemsLabel="La liste est vide"
           </button>
           <button cButton cPopover="Mise à jour" cPopoverPlacement="top" 
           color="primary" size="sm" variant="outline" (click)="update(item.id)">
-            <i class="bi bi-pen-fill"></i>
+            <i class="bi bi-calendar"></i>
           </button>
-          <button (click)="toggleLiveDemo(item)" cButton cPopover="Suppression" cPopoverPlacement="right" color="danger" size="sm" variant="outline">
+          <!-- <button (click)="toggleLiveDemo(item)" cButton cPopover="Suppression" cPopoverPlacement="right" color="danger" size="sm" variant="outline">
             <i class="bi bi-x-lg"></i>
-          </button>
+          </button> -->
         </div>
       }
       @default {
