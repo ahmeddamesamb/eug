@@ -46,7 +46,7 @@ noItemsLabel="La liste est vide"
 </ng-template> -->
 
 <ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent" >
-  <td class="border-1 ">
+  <td class=" border border-2 mb-3">
     @switch (columnName) {
       @case ('enCoursYN') {
         <c-badge [color]="getBadge(tdContent)">

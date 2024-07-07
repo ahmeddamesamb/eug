@@ -75,7 +75,7 @@ inscriptionList : InscriptionModel[] = [];
    
     {
       key: 'show',
-      label: 'Action',
+      label: 'Actions',
       _style: { width: '5%' },
       filter: false,
       sorter: false
