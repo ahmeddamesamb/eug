@@ -21,8 +21,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.ForwardedHeaderUtils;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sn.ugb.gateway.repository.RessourceRepository;
@@ -259,23 +261,54 @@ public class RessourceResource {
             )
             .map(headers -> ResponseEntity.ok().headers(headers).body(ressourceService.search(query, pageable)));
     }
-    @GetMapping("/blocfonctionnels/{blocfonctionnelId}")
-    public ResponseEntity<List<RessourceDTO>> getAllRessourceByBlocfonctionnelId(@PathVariable Long blocfonctionnelId, @ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Blocfonctionnel by Blocfonctionnel ID : {}", blocfonctionnelId);
-        Page<RessourceDTO> page = ressourceService.findAllRessourceByBlocfonctionnel(blocfonctionnelId, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-    @GetMapping("/services/{serviceId}")
-    public ResponseEntity<List<RessourceDTO>> getAllRessourceByServiceId(@PathVariable Long serviceId, @ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Service by Service ID : {}", serviceId);
-        Page<RessourceDTO> page = ressourceService.findAllRessourceByService(serviceId, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
+
+@GetMapping(value = "/blocfonctionnels/{blocfonctionnelId}", produces = MediaType.APPLICATION_JSON_VALUE)
+public Mono<ResponseEntity<List<RessourceDTO>>> getAllRessourceByBlocfonctionnelId(
+    @PathVariable Long blocfonctionnelId,
+    @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+    ServerWebExchange exchange
+) {
+    return ressourceService
+               .countByBlocfonctionnelId(blocfonctionnelId)
+               .zipWith(ressourceService.findAllRessourceByBlocfonctionnel(blocfonctionnelId, pageable).collectList())
+               .map(countWithEntities ->
+                        ResponseEntity
+                            .ok()
+                            .headers(
+                                PaginationUtil.generatePaginationHttpHeaders(
+                                    UriComponentsBuilder.fromHttpRequest(exchange.getRequest()),
+                                    new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                                )
+                            )
+                            .body(countWithEntities.getT2())
+               );
+}
+
+@GetMapping(value = "/services/{serviceId}", produces = MediaType.APPLICATION_JSON_VALUE)
+public Mono<ResponseEntity<List<RessourceDTO>>> getAllRessourceByServiceId(
+    @PathVariable Long serviceId,
+    @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+    ServerWebExchange exchange
+) {
+    return ressourceService
+               .countByServiceId(serviceId)
+               .zipWith(ressourceService.findAllRessourceByService(serviceId, pageable).collectList())
+               .map(countWithEntities ->
+                        ResponseEntity
+                            .ok()
+                            .headers(
+                                PaginationUtil.generatePaginationHttpHeaders(
+                                    UriComponentsBuilder.fromHttpRequest(exchange.getRequest()),
+                                    new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                                )
+                            )
+                            .body(countWithEntities.getT2())
+               );
+}
+
     @PutMapping("/actifYN/{id}")
-    public ResponseEntity<RessourceDTO> setActifYNRessource(@PathVariable Long id, @RequestBody Boolean actifYN) {
-        RessourceDTO updatedRessource = ressourceService.setActifYNRessource(id, actifYN);
-        return ResponseEntity.ok(updatedRessource);
+    public Mono<ResponseEntity<RessourceDTO>> setActifYNRessource(@PathVariable Long id, @RequestBody Boolean actifYN) {
+        return ressourceService.setActifYNRessource(id, actifYN)
+                   .map(updatedRessource -> ResponseEntity.ok().body(updatedRessource));
     }
 }

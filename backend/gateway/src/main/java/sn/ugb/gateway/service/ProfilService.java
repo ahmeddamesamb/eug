@@ -79,4 +79,7 @@ public interface ProfilService {
      * @return the list of entities.
      */
     Flux<ProfilDTO> search(String query, Pageable pageable);
+    Mono<ProfilDTO> archiveProfil(Long id);
+
+Flux<ProfilDTO> getAllProfilByActifYN(boolean actifYN, Pageable pageable);
 }

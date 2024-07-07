@@ -238,7 +238,7 @@ public class ProcessusInscriptionAdministrativeResource {
         return ResponseEntity.ok(email);
     }
 
-    @PostMapping("/{etudiantId}/generateCodeBU")
+    @PostMapping("/generateCodeBU/{etudiantId}")
     public ResponseEntity<String> generateCodeEtudiant(@PathVariable Long etudiantId) {
         String codeBU = processusInscriptionAdministrativeService.generateCodeBareBU(etudiantId);
         return ResponseEntity.ok(codeBU);

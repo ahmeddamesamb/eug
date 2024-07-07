@@ -2,6 +2,7 @@ package sn.ugb.gateway.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -27,9 +28,15 @@ public interface RessourceRepository extends ReactiveCrudRepository<Ressource, L
 
     @Override
     Mono<Void> deleteById(Long id);
-//    Flux<Ressource> findByServiceId(Long serviceId, Pageable pageable);
-//    Flux<Ressource> findByBlocFonctionnelId(Long blocfonctionnelId, Pageable pageable);
+    //Flux<Ressource> findByServiceId(Long serviceId, Pageable pageable);
+    //
+    //Flux<Ressource> findByBlocFonctionnelId(Long blocfonctionnelId, Pageable pageable);
 
+    //@Query("SELECT COUNT(*) FROM ressource WHERE service_id = :serviceId")
+    //Mono<Long> countByServiceId(Long serviceId);
+    //
+    //@Query("SELECT COUNT(*) FROM ressource WHERE bloc_fonctionnel_id = :blocfonctionnelId")
+    //Mono<Long> countByBlocFonctionnelId(Long blocfonctionnelId);
 }
 
 interface RessourceRepositoryInternal {

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.ForwardedHeaderUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sn.ugb.gateway.domain.Profil;
 import sn.ugb.gateway.repository.ProfilRepository;
 import sn.ugb.gateway.service.ProfilService;
 import sn.ugb.gateway.service.dto.ProfilDTO;
@@ -254,5 +256,19 @@ public class ProfilResource {
                 )
             )
             .map(headers -> ResponseEntity.ok().headers(headers).body(profilService.search(query, pageable)));
+    }
+
+    @PutMapping("/{id}/archive")
+    public Mono<ResponseEntity<ProfilDTO>> archiveProfil(@PathVariable Long id) {
+        return profilService.archiveProfil(id)
+                   .map(archivedProfil -> ResponseEntity.ok().body(archivedProfil))
+                   .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/profils")
+    public Flux<ProfilDTO> getAllProfilByActifYN(
+        @RequestParam(required = true) boolean actifYN,
+        @PageableDefault(size = 20, sort = "id") Pageable pageable) {
+        return profilService.getAllProfilByActifYN(actifYN, pageable);
     }
 }
