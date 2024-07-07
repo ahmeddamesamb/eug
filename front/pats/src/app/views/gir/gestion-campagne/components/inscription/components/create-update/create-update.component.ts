@@ -211,10 +211,18 @@ export class CreateUpdateComponent implements OnInit {
         error: (err) => {
           console.error(`Erreur lors de la ${this.id ? 'modification' : 'création'}:`, err);
           let errorMessage = `Une erreur est survenue lors de la ${this.id ? 'modification' : 'création'}`;
-          if (err.error?.detail) {
-            errorMessage += `: ${err.error.detail}`;
-          } else if (err.message) {
-            errorMessage += `: ${err.message}`;
+        
+          if (err.status === 400 && err.error) {
+            switch (err.error.message) {
+              case 'error.noFormationCampaignInPast':
+                errorMessage = "On ne peut pas programmer une formation/campagne dans le passé.";
+                break;
+              case 'error.dateDebutNotPosteriorDateFin':
+                errorMessage = "La date de début ne doit pas être postérieure à la date de fin.";
+                break;
+              default:
+                errorMessage = err.error.detail || err.error.title || "Une erreur inattendue s'est produite.";
+            }
           }
           this.alertService.showToast("Erreur", errorMessage, "danger");
         }
