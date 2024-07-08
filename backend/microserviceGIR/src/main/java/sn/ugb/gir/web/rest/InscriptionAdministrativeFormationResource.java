@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sn.ugb.gir.repository.InscriptionAdministrativeFormationRepository;
 import sn.ugb.gir.service.InscriptionAdministrativeFormationService;
+import sn.ugb.gir.service.dto.InformationsDerniersInscriptionsDTO;
 import sn.ugb.gir.service.dto.InscriptionAdministrativeFormationDTO;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 import sn.ugb.gir.web.rest.errors.ElasticsearchExceptionMapper;
@@ -222,11 +223,11 @@ public class InscriptionAdministrativeFormationResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of inscriptionAdministrativeFormations in body.
      */
     @GetMapping("/derniersInscrits")
-    public ResponseEntity<List<InscriptionAdministrativeFormationDTO>> getAllDerniersInscriptionAdministrativeFormations(
+    public ResponseEntity<List<InformationsDerniersInscriptionsDTO>> getAllDerniersInscriptionAdministrativeFormations(
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get a page of InscriptionAdministrativeFormations by the last anneeacademique.");
-        Page<InscriptionAdministrativeFormationDTO> page = inscriptionAdministrativeFormationService.findAllByDernierInscription(pageable);
+        Page<InformationsDerniersInscriptionsDTO> page = inscriptionAdministrativeFormationService.findAllByDernierInscription(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

@@ -1,4 +1,7 @@
 import {FormationModel} from '../../parametrage/components/formation/models/formation-model';
+import { NiveauModel } from '../../parametrage/components/niveau/models/niveau-model';
+import { TypeadmissionModel } from '../../parametrage/components/typeadmission/models/typeadmission-model';
+import { UfrModel } from '../../parametrage/components/ufr/models/ufr-model';
 import {InscriptionAdministrativeModel} from '../models/inscription-administrative-model';
 
 export interface InscriptionAdministrativeFormModel {
@@ -12,5 +15,10 @@ export interface InscriptionAdministrativeFormModel {
   dateChoixFormation?: Date | null;
   dateValidationInscription?: Date | null;
   inscriptionAdministrative?: InscriptionAdministrativeModel;
-  formation?: FormationModel
+  formation?: FormationModel,
+  ufr?: UfrModel,
+  niveau?: NiveauModel,
+  typeAdmission?: TypeadmissionModel
+
+
 }

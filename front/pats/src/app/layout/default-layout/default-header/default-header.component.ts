@@ -45,6 +45,8 @@ import { DefaultBreadcrumbComponent } from '.././';
 import { UserService } from '../../../services/user.service';
 import { KeycloakService } from 'keycloak-angular';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { InformationPersonellesModel } from 'src/app/views/gir/gestion-etudiants/models/information-personelles-model';
+import { InformationPersonnellesService } from 'src/app/views/gir/gestion-etudiants/services/information-personnelles.service';
 
 @Component({
   selector: 'app-default-header',
@@ -75,9 +77,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
   userFirstName: string | undefined;
   userLastName: string | undefined;
   rechercheForm: FormGroup;
+  informationPersonelle:InformationPersonellesModel={};
 
 
-  constructor(private userService: UserService , private router:Router ) {
+  constructor(private userService: UserService  , private infoPersonnelleService: InformationPersonnellesService, private router:Router ) {
     super();
     this.#colorModeService.localStorageItemName.set('coreui-pro-angular-admin-template-theme-modern');
     this.#colorModeService.eventName.set('ColorSchemeChange');
@@ -119,8 +122,13 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   dossierEtudiant(){
-    console.log('cvrgrtgkmlgtrk,tr');
-    this.router.navigate(['/gir/inscription-reinscription/view/',1216]);
+    console.log("Code de recherche",this.rechercheForm.value.code);
+    this.infoPersonnelleService.getEtudiantCode(this.rechercheForm.value.code).subscribe((data)=>{
+      this.informationPersonelle = data;
+      console.log(this.informationPersonelle );
+      this.router.navigate(['/gir/inscription-reinscription/view/',this.informationPersonelle.etudiant?.id]);
+    })
+    
   }
 
 
