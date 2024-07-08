@@ -21,10 +21,7 @@ import sn.ugb.gir.repository.InformationPersonnelleRepository;
 import sn.ugb.gir.repository.PaiementFraisRepository;
 import sn.ugb.gir.repository.ProcessusInscriptionAdministrativeRepository;
 import sn.ugb.gir.repository.search.EtudiantSearchRepository;
-import sn.ugb.gir.service.EtudiantService;
-import sn.ugb.gir.service.InscriptionAdministrativeService;
-import sn.ugb.gir.service.LyceeService;
-import sn.ugb.gir.service.RegionService;
+import sn.ugb.gir.service.*;
 import sn.ugb.gir.service.dto.*;
 import sn.ugb.gir.service.mapper.*;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
@@ -57,6 +54,9 @@ public class EtudiantServiceImpl implements EtudiantService {
     private InscriptionAdministrativeService inscriptionAdministrativeService;
 
     @Autowired
+    private AnneeAcademiqueService anneeAcademiqueService;
+
+    @Autowired
     private PaiementFraisRepository paiementFraisRepository;
 
     @Autowired
@@ -76,6 +76,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
     @Autowired
     private ProcessusInscriptionAdministrativeMapper processusInscriptionAdministrativeMapper;
+
+    @Autowired
+    private InscriptionAdministrativeMapper inscriptionAdministrativeMapper;
 
     private static final String CURRENT_YEAR = String.valueOf(LocalDate.now().getYear());
 
@@ -114,6 +117,23 @@ public class EtudiantServiceImpl implements EtudiantService {
         etudiant = etudiantRepository.save(etudiant);
         EtudiantDTO result = etudiantMapper.toDto(etudiant);
         etudiantSearchRepository.index(etudiant);
+
+        // Créer une instance d'InscriptionAdministrative
+        InscriptionAdministrativeDTO inscription = inscriptionAdministrativeMapper.toDto(new InscriptionAdministrative());
+
+        // Définir les attributs de l'objet InscriptionAdministrative
+        inscription.setNouveauInscritYN(true);
+        inscription.setRepriseYN(false);
+        inscription.setAutoriseYN(true);
+
+        // Assumant que vous avez déjà une instance de InscriptionAdministrativeDTO appelée 'inscription'
+        Optional<AnneeAcademiqueDTO> anneeAcademiqueDTO = anneeAcademiqueService.getInfosCurrentAnneeAcademique();
+        anneeAcademiqueDTO.ifPresent(inscription::setAnneeAcademique);
+
+        inscription.setOrdreInscription(inscription.getOrdreInscription() == null ? 0 : inscription.getOrdreInscription() + 1);
+
+        inscription.setEtudiant(result);
+        inscriptionAdministrativeService.save(inscription);
         return result;
     }
 
