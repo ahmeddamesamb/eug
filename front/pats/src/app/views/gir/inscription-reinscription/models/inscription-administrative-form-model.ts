@@ -19,6 +19,4 @@ export interface InscriptionAdministrativeFormModel {
   ufr?: UfrModel,
   niveau?: NiveauModel,
   typeAdmission?: TypeadmissionModel
-
-
 }

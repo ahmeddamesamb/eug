@@ -57,7 +57,7 @@
     
     <td>
       @switch (columnName) {
-        @case ('inscriptionAdministrative') {
+        <!-- @case ('inscriptionAdministrative') {
           
           {{ (item[columnName].etudiant.codeEtu)  }} 
 
@@ -81,11 +81,11 @@
           
           {{ (item[columnName].anneeAcademique.libelleAnneeAcademique)  }} 
 
-        }
+        } -->
        
         @case ('show') {
             <div class="d-flex gap-2">
-                <button (click)="view(item.inscriptionAdministrative.etudiant.id)"  cButton cPopover="Détails" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >
+                <button (click)="view(item.idEtudiant)"  cButton cPopover="Détails" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >
                     <i class="bi bi-eye-fill"></i>
                 </button>
                 <button  cButton cPopover="Mise à jour" cPopoverPlacement="top" color="primary" size="sm" variant="outline" (click)="update(item.id)" >
