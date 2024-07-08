@@ -72,7 +72,7 @@ export class UfrListComponent {
 
   columns: IColumn[] = [
     {
-      key: 'libeleUfr',
+      key: 'libelleUfr',
       label: 'Nom'
     },
     {

@@ -78,7 +78,7 @@ export class EtudiantListComponent {
       codeEtu: data.inscriptionAdministrative?.etudiant?.codeEtu,
       idEtudiant: data.inscriptionAdministrative?.etudiant?.id,
       codeBU: data.inscriptionAdministrative?.etudiant?.codeBU,
-      ufr: data.formation?.departement?.ufr?.libeleUfr,
+      ufr: data.formation?.departement?.ufr?.libelleUfr,
       niveau: data.formation?.niveau?.libelleNiveau,
       filiere: data.formation?.specialite?.nomSpecialites,
       annee: data.inscriptionAdministrative?.anneeAcademique?.libelleAnneeAcademique,
