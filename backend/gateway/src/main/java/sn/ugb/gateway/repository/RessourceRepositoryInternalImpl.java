@@ -1,10 +1,9 @@
 package sn.ugb.gateway.repository;
 
-import io.r2dbc.spi.Row;
-import io.r2dbc.spi.RowMetadata;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
+import io.r2dbc.spi.Row;
+import io.r2dbc.spi.RowMetadata;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.convert.R2dbcConverter;
 import org.springframework.data.r2dbc.core.R2dbcEntityOperations;
@@ -81,9 +80,20 @@ class RessourceRepositoryInternalImpl extends SimpleR2dbcRepository<Ressource, L
         return createQuery(null, whereClause).one();
     }
 
+    @Override
+    public Flux<Ressource> findAllByProfileId(Long userProfileId, Pageable pageable) {
+        Comparison whereClause = Conditions.isEqual(entityTable.column("profil_id"), Conditions.just(userProfileId.toString()));
+        return createQuery(pageable, whereClause).all();
+    }
+
+    @Override
+    public Flux<Ressource> findAllByInfoUserId(Long infoUserId, Pageable pageable) {
+        Comparison whereClause = Conditions.isEqual(entityTable.column("info_user_id"), Conditions.just(infoUserId.toString()));
+        return createQuery(pageable, whereClause).all();
+    }
 
 
-private Ressource process(Row row, RowMetadata metadata) {
+    private Ressource process(Row row, RowMetadata metadata) {
         Ressource entity = ressourceMapper.apply(row, "e");
         return entity;
     }
@@ -93,3 +103,4 @@ private Ressource process(Row row, RowMetadata metadata) {
         return super.save(entity);
     }
 }
+

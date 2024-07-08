@@ -93,6 +93,7 @@ export class CreateUpdateComponent implements OnInit {
     this.inscriptionService.getInscriptionById(id).subscribe({
       next: (data) => {
         this.inscription = data;
+        console.log("ici", this.inscription);
         this.initializeForm(data);
       },
       error: (err) => {
@@ -101,6 +102,8 @@ export class CreateUpdateComponent implements OnInit {
       }
     });
   }
+
+
 
   initializeForm(inscription: InscriptionModel) {
     this.inscriptionForm.patchValue({
@@ -112,6 +115,7 @@ export class CreateUpdateComponent implements OnInit {
       formation: inscription.formation?.id || null,
       anneeAcademique: inscription.anneeAcademique?.id || null
     });
+    console.log('Form values after initialization:', this.inscriptionForm.value);
   }
 
   loadCampagnes() {
@@ -160,49 +164,7 @@ export class CreateUpdateComponent implements OnInit {
     this.customStylesValidated = false;
   }
 
-  // onSubmit() {
-  //   if (this.inscriptionForm.valid) {
-  //     this.customStylesValidated = true;
-  //     const formValue = this.inscriptionForm.value;
-  //     console.log('Données du formulaire avant envoi:', JSON.stringify(formValue));
-  
-  //     const inscription: InscriptionModel = {
-  //       libelleProgrammation: formValue.libelleProgrammation,
-  //       dateDebutProgrammation: this.formatDate(formValue.dateDebutProgrammation),
-  //       dateFinProgrammation: this.formatDate(formValue.dateFinProgrammation),
-  //       ouvertYN: true,
-  //       emailUser: formValue.emailUser || '',
-  //       dateForclosClasse: this.formatDate(formValue.dateForclosClasse),
-  //       forclosClasseYN: false,
-  //       actifYN: true,
-  //       anneeAcademique: { id: Number(formValue.anneeAcademique) },
-  //       formation: { id: Number(formValue.formation) },
-  //       campagne: { id: Number(formValue.campagne) }
-  //     };
-  
-  //     console.log('Objet inscription à envoyer:', JSON.stringify(inscription));
-  
-  //     this.inscriptionService.createInscription(inscription).subscribe({
-  //       next: (data) => {
-  //         const message = "Création de l'inscription réussie";
-  //         this.alertService.showToast("Création", message, "success");
-  //         this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
-  //       },
-  //       error: (err) => {
-  //         console.error('Erreur lors de la création:', err);
-  //         let errorMessage = "Une erreur est survenue lors de la création";
-  //         if (err.error?.detail) {
-  //           errorMessage += `: ${err.error.detail}`;
-  //         } else if (err.message) {
-  //           errorMessage += `: ${err.message}`;
-  //         }
-  //         this.alertService.showToast("Erreur", errorMessage, "danger");
-  //       }
-  //     });
-  //   } else {
-  //     this.alertService.showToast("Erreur", "Veuillez remplir correctement tous les champs obligatoires", "warning");
-  //   }
-  // }
+
 
   onSubmit() {
     if (this.inscriptionForm.valid) {
@@ -215,6 +177,7 @@ export class CreateUpdateComponent implements OnInit {
       }
   
       const inscription: InscriptionModel = {
+        id: this.id, // Ajoutez cette ligne pour inclure l'ID lors de la mise à jour
         libelleProgrammation: formValue.libelleProgrammation,
         dateDebutProgrammation: this.formatDate(formValue.dateDebutProgrammation),
         dateFinProgrammation: this.formatDate(formValue.dateFinProgrammation),
@@ -228,21 +191,38 @@ export class CreateUpdateComponent implements OnInit {
         campagne: { id: Number(formValue.campagne) }
       };
   
-      console.log('Objet inscription à envoyer:', JSON.stringify(inscription));
+      console.log('ID avant envoi:', this.id);
+      console.log('Inscription avant envoi:', JSON.stringify(inscription));
   
-       this.inscriptionService.createInscription(inscription).subscribe({
+      let operation: Observable<InscriptionModel>;
+      if (this.id) {
+        operation = this.inscriptionService.updateInscription(this.id, inscription);
+      } else {
+        operation = this.inscriptionService.createInscription(inscription);
+      }
+  
+      operation.subscribe({
         next: (data) => {
-          const message = "Création de l'inscription réussie";
-          this.alertService.showToast("Création", message, "success");
+          const action = this.id ? "Modification" : "Création";
+          const message = `${action} de l'inscription réussie`;
+          this.alertService.showToast(action, message, "success");
           this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
         },
         error: (err) => {
-          console.error('Erreur lors de la création:', err);
-          let errorMessage = "Une erreur est survenue lors de la création";
-          if (err.error?.detail) {
-            errorMessage += `: ${err.error.detail}`;
-          } else if (err.message) {
-            errorMessage += `: ${err.message}`;
+          console.error(`Erreur lors de la ${this.id ? 'modification' : 'création'}:`, err);
+          let errorMessage = `Une erreur est survenue lors de la ${this.id ? 'modification' : 'création'}`;
+        
+          if (err.status === 400 && err.error) {
+            switch (err.error.message) {
+              case 'error.noFormationCampaignInPast':
+                errorMessage = "On ne peut pas programmer une formation/campagne dans le passé.";
+                break;
+              case 'error.dateDebutNotPosteriorDateFin':
+                errorMessage = "La date de début ne doit pas être postérieure à la date de fin.";
+                break;
+              default:
+                errorMessage = err.error.detail || err.error.title || "Une erreur inattendue s'est produite.";
+            }
           }
           this.alertService.showToast("Erreur", errorMessage, "danger");
         }

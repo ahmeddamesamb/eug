@@ -14,5 +14,12 @@ import java.util.Optional;
 @SuppressWarnings("unused")
 @Repository
 public interface InscriptionAdministrativeRepository extends JpaRepository<InscriptionAdministrative, Long> {
+    long countByNouveauInscritYNTrue();
+
+    long countByNouveauInscritYNTrueAndAnneeAcademiqueId(Long anneeAcademiqueId);
+
+    long countByNouveauInscritYNTrueAndAnneeAcademiqueAnneeCouranteYNTrue();
+
     Page<InscriptionAdministrative> findByEtudiantIdAndAnneeAcademiqueId(Pageable pageable,Long etudiantId, Long AnneeAcademiqueId);
 }
+

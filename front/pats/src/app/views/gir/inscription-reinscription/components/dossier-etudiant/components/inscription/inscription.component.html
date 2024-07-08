@@ -1,1 +1,68 @@
-<p>inscription works!</p>
+<div class="row">
+    <div class="col-12 border border-2 rounded-2 mt-2 m-4 w-75">
+        <h3>Inscription</h3>
+        <form cForm [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label cLabel for="ufrSelect">UFR</label>
+                    <select cSelect id="ufrSelect" formControlName="UFR">
+                        <option value="">Sélectionnez une UFR</option>
+                        <option value="ufr1">UFR 1</option>
+                        <option value="ufr2">UFR 2</option>
+                        <option value="ufr3">UFR 3</option>
+                    </select>
+                    <div *ngIf="inscriptionForm.get('UFR')?.invalid && (inscriptionForm.get('UFR')?.dirty || inscriptionForm.get('UFR')?.touched)" class="invalid-feedback">
+                        Veuillez sélectionner une UFR.
+                    </div>
+                </div>
+          
+                <div class="col-md-6">
+                    <label cLabel for="filiereSelect">Filière</label>
+                    <select cSelect id="filiereSelect" formControlName="filiere">
+                        <option value="">Sélectionnez une filière</option>
+                        <option value="filiere1">Filière 1</option>
+                        <option value="filiere2">Filière 2</option>
+                        <option value="filiere3">Filière 3</option>
+                    </select>
+                    <div *ngIf="inscriptionForm.get('filiere')?.invalid && (inscriptionForm.get('filiere')?.dirty || inscriptionForm.get('filiere')?.touched)" class="invalid-feedback">
+                        Veuillez sélectionner une filière.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label cLabel for="niveauSelect">Niveau</label>
+                    <select cSelect id="niveauSelect" formControlName="niveau">
+                        <option value="">Sélectionnez un niveau</option>
+                        <option value="niveau1">Niveau 1</option>
+                        <option value="niveau2">Niveau 2</option>
+                        <option value="niveau3">Niveau 3</option>
+                    </select>
+                    <div *ngIf="inscriptionForm.get('niveau')?.invalid && (inscriptionForm.get('niveau')?.dirty || inscriptionForm.get('niveau')?.touched)" class="invalid-feedback">
+                        Veuillez sélectionner un niveau.
+                    </div>
+                </div>
+          
+                <div class="col-md-6">
+                    <label cLabel for="typeAdmissionSelect">Type d'admission</label>
+                    <select cSelect id="typeAdmissionSelect" formControlName="typeAdmission">
+                        <option value="">Sélectionnez un type d'admission</option>
+                        <option value="type1">Type 1</option>
+                        <option value="type2">Type 2</option>
+                        <option value="type3">Type 3</option>
+                    </select>
+                    <div *ngIf="inscriptionForm.get('typeAdmission')?.invalid && (inscriptionForm.get('typeAdmission')?.dirty || inscriptionForm.get('typeAdmission')?.touched)" class="invalid-feedback">
+                        Veuillez sélectionner un type d'admission.
+                    </div>
+                </div>
+            </div>
+          
+            <button cButton color="primary" type="submit" class="bi bi-floppy" color="primary"  [disabled]="inscriptionForm.invalid">Enregistrer</button>
+        </form>        
+    </div>
+
+    <div class="col-12 border border-2 rounded-2 mt-2 m-4">
+        <h4>Historique</h4>
+    </div>
+</div>
