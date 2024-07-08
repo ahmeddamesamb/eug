@@ -10,7 +10,11 @@ import {EtatValidationComponent} from 'src/app/shared/components/etat-validation
 export class EtapeInscriptionComponent {
 
   panes = [
-    { name: 'Déclencher' , etat: true},
+    { name: 'Déclencher' , etat: true},          
+    { name: 'Quitus BU' , etat: false},
+    { name: 'Quitus CROUS' , etat: false},
+    { name: 'Visite Médicale' , etat: false},
+    { name: 'Carte délivrée' , etat: false},
     { name: 'Paiement' , etat: false},
   ]
 
