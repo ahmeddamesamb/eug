@@ -3,11 +3,13 @@ import { UserService } from '../../services/user.service';
 import { environment } from '../../config/environment';
 import { KeycloakService } from 'keycloak-angular';
 
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-footer',
   standalone: true,
   imports: [],
-  providers:[UserService, KeycloakService],
+  providers:[UserService, KeycloakService, DatePipe],
 
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
@@ -23,8 +25,12 @@ export class FooterComponent {
   public redirectUrl_etudiant = environment.redirectUrl_etudiant;
   public clientId = environment.clientId;
   public suiteUrlLogin = environment.suiteUrlLogin;
-  constructor(private userService: UserService){
+
+  year : any ;
+ 
+  constructor(private userService: UserService, private datePipe: DatePipe){
     this.userService.initialize();
+    this.year = this.datePipe.transform(new Date(), 'yyyy');
 
   }
 
