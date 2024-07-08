@@ -1,6 +1,7 @@
 package sn.ugb.gir.service.impl;
 
 import java.time.Instant;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -79,7 +80,7 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
             inscriptionAdministrativeFormationDTO
         );
 
-//        validateData( inscriptionAdministrativeFormationDTO);
+
         inscriptionAdministrativeFormation = inscriptionAdministrativeFormationRepository.save(inscriptionAdministrativeFormation);
         InscriptionAdministrativeFormationDTO result = inscriptionAdministrativeFormationMapper.toDto(inscriptionAdministrativeFormation);
         inscriptionAdministrativeFormationSearchRepository.index(inscriptionAdministrativeFormation);
@@ -92,7 +93,6 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
     ) {
         log.debug("Request to partially update InscriptionAdministrativeFormation : {}", inscriptionAdministrativeFormationDTO);
 
-//        validateData( inscriptionAdministrativeFormationDTO);
         return inscriptionAdministrativeFormationRepository
             .findById(inscriptionAdministrativeFormationDTO.getId())
             .map(existingInscriptionAdministrativeFormation -> {
@@ -153,11 +153,19 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
             .map(inscriptionAdministrativeFormationMapper::toDto);
     }
 
+//    @Override
+//    public Page<Object[]> findAllByDernierInscription(Pageable pageable) {
+//        log.debug("Request to get all the last InscriptionAdministrativeFormations");
+//        return inscriptionAdministrativeFormationRepository.findByLastInscription(pageable);
+//    }
+
+
     @Override
-    public Page<InscriptionAdministrativeFormationDTO> findAllByDernierInscription(Pageable pageable) {
+    public Page<InformationsDerniersInscriptionsDTO> findAllByDernierInscription(Pageable pageable) {
         log.debug("Request to get all the last InscriptionAdministrativeFormations");
-        return inscriptionAdministrativeFormationRepository.findByLastInscription(pageable).map(inscriptionAdministrativeFormationMapper::toDto);
+        return inscriptionAdministrativeFormationRepository.findByLastInscription(pageable);
     }
+
 
     public void validateData(InscriptionAdministrativeFormation inscriptionAdministrativeFormation){
 
@@ -178,18 +186,66 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
         Long AnneeAcademiqueId = inscriptionAdministrativeFormation.getInscriptionAdministrative().getAnneeAcademique().getId();
         List<InscriptionAdministrativeFormation> IafExistants= inscriptionAdministrativeFormationRepository.findByInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId(etudiantId,AnneeAcademiqueId);
 
-        long nbIafEtudiant = IafExistants.size();
+/*        long nbIafEtudiant = IafExistants.size();
         if (!IafExistants.isEmpty() && nbIafEtudiant ==2 ) {
+            Iterator<InscriptionAdministrativeFormation> iterator = IafExistants.iterator();
+            while (iterator.hasNext()) {
+                InscriptionAdministrativeFormation iaf = iterator.next();
+                if (!Objects.equals(iaf.getId(), inscriptionAdministrativeFormation.getId()) && Objects.equals(iaf.getFormation(), inscriptionAdministrativeFormation.getFormation())) {
+                    throw new BadRequestAlertException("l'inscription de cet etudiant à cette formation est deja faite pour cet annee", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationExiste");
+                } else if (Objects.equals(iaf.getId(), inscriptionAdministrativeFormation.getId()) && !Objects.equals(iaf.getFormation().getNiveau(), inscriptionAdministrativeFormation.getFormation().getNiveau())) {
+                    throw new BadRequestAlertException("Vous ne pouvez pas changer le niveau, vous ne pouvez que modifier la fillière", "InscriptionAdministrativeFormation", "Niveau N'est Pas Modifiable, Modifier uniquement la fillière");
+                }
+                // vérifier les informations de l'objet
+                System.out.println("Formation :  "+ iaf.getFormation());
+            }
             throw new BadRequestAlertException("l'étudiant possède deja deux inscriptions à deux formations distinctes", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationTrippleImpossible");
         } else if (nbIafEtudiant ==1) {
             if (Objects.equals(IafExistants.get(0).getFormation(), inscriptionAdministrativeFormation.getFormation() )) {
                 throw new BadRequestAlertException("l'inscription de cet etudiant à cette formation est deja faite pour cet annee", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationExiste");
-            } else { //double inscription
+            } else {
                 inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(FALSE);
             }
-        } else if (nbIafEtudiant ==0) { //setInscriptionPrincipaleYN quelle prealable ??
+        } else if (nbIafEtudiant ==0) {
             inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(TRUE);
+        }*/
+
+        long nbIafEtudiant = IafExistants.size();
+        if (nbIafEtudiant ==0) {
+            inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(TRUE);
+        }else if (nbIafEtudiant ==1) {
+            if (!Objects.equals(IafExistants.get(0).getId(), inscriptionAdministrativeFormation.getId()) && Objects.equals(IafExistants.get(0).getFormation(), inscriptionAdministrativeFormation.getFormation() )) {
+                throw new BadRequestAlertException("l'inscription de cet etudiant à cette formation est deja faite pour cet annee", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationExiste");
+            }
+            else if (Objects.equals(IafExistants.get(0).getId(), inscriptionAdministrativeFormation.getId()) && !Objects.equals(IafExistants.get(0).getFormation().getNiveau(), inscriptionAdministrativeFormation.getFormation().getNiveau())) {
+                throw new BadRequestAlertException("Vous ne pouvez pas changer le niveau, vous ne pouvez que modifier la fillière", "InscriptionAdministrativeFormation", "Niveau N'est Pas Modifiable, Modifier uniquement la fillière");
+            } else {
+                inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(FALSE);
+            }
+        }else if (!IafExistants.isEmpty() && nbIafEtudiant ==2 ) {
+            for (InscriptionAdministrativeFormation iaf : IafExistants) {
+                if (!Objects.equals(iaf.getId(), inscriptionAdministrativeFormation.getId()) && Objects.equals(iaf.getFormation(), inscriptionAdministrativeFormation.getFormation())) {
+                    throw new BadRequestAlertException("l'inscription de cet etudiant à cette formation est deja faite pour cet annee", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationExiste");
+                } else if (Objects.equals(iaf.getId(), inscriptionAdministrativeFormation.getId()) && !Objects.equals(iaf.getFormation().getNiveau(), inscriptionAdministrativeFormation.getFormation().getNiveau())) {
+                    throw new BadRequestAlertException("Vous ne pouvez pas changer le niveau, vous ne pouvez que modifier la fillière", "InscriptionAdministrativeFormation", "Niveau N'est Pas Modifiable, Modifier uniquement la fillière");
+                }
+                System.out.println("Formation :  " + iaf.getFormation());
+            }
+            throw new BadRequestAlertException("l'étudiant possède deja deux inscriptions à deux formations distinctes", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationTrippleImpossible");
         }
+
+//        Iterator<InscriptionAdministrativeFormation> iterator = IafExistants.iterator();
+//        while (iterator.hasNext()) {
+//            InscriptionAdministrativeFormation iaf = iterator.next();
+//            if (!Objects.equals(iaf.getId(), inscriptionAdministrativeFormation.getId()) && Objects.equals(iaf.getFormation(), inscriptionAdministrativeFormation.getFormation())) {
+//                throw new BadRequestAlertException("l'inscription de cet etudiant à cette formation est deja faite pour cet annee", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationExiste");
+//            } else if (Objects.equals(iaf.getId(), inscriptionAdministrativeFormation.getId()) && !Objects.equals(iaf.getFormation().getNiveau(), inscriptionAdministrativeFormation.getFormation().getNiveau())) {
+//                throw new BadRequestAlertException("Vous ne pouvez pas changer le niveau, vous ne pouvez que modifier la fillière", "InscriptionAdministrativeFormation", "Niveau N'est Pas Modifiable, Modifier uniquement la fillière");
+//            }
+//            // vérifier les informations de l'objet
+//            System.out.println("Formation :  "+ iaf.getFormation());
+//        }
+
     }
 
 

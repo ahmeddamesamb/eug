@@ -3,6 +3,7 @@ package sn.ugb.gir.service;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import sn.ugb.gir.service.dto.InformationsDerniersInscriptionsDTO;
 import sn.ugb.gir.service.dto.InscriptionAdministrativeFormationDTO;
 
 /**
@@ -74,6 +75,8 @@ public interface InscriptionAdministrativeFormationService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<InscriptionAdministrativeFormationDTO> findAllByDernierInscription(Pageable pageable);
+    Page<InformationsDerniersInscriptionsDTO> findAllByDernierInscription(Pageable pageable);
+
+//    Page<Object[]> findAllByDernierInscription(Pageable pageable);
 
 }
