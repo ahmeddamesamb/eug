@@ -26,10 +26,7 @@ export class ViewComponent {
 
 
   constructor(private activeRoute: ActivatedRoute,private router: Router, private domaineService: DomaineService, private loaderservice:LoaderService){
-    this.previousUrl = '';
 
-    const previousUrl = this.router.getCurrentNavigation();
-    console.log('URL précédente :', previousUrl);
   }
 
   domaine? :DomaineModel ;

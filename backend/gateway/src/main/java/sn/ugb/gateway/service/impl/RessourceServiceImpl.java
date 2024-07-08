@@ -2,16 +2,20 @@ package sn.ugb.gateway.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sn.ugb.gateway.domain.Ressource;
 import sn.ugb.gateway.repository.RessourceRepository;
 import sn.ugb.gateway.repository.search.RessourceSearchRepository;
 import sn.ugb.gateway.service.RessourceService;
 import sn.ugb.gateway.service.dto.RessourceDTO;
+import sn.ugb.gateway.service.dto.ServiceUserDTO;
 import sn.ugb.gateway.service.mapper.RessourceMapper;
+import sn.ugb.gateway.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gateway.domain.Ressource}.
@@ -21,8 +25,9 @@ import sn.ugb.gateway.service.mapper.RessourceMapper;
 public class RessourceServiceImpl implements RessourceService {
 
     private final Logger log = LoggerFactory.getLogger(RessourceServiceImpl.class);
+private static final String ENTITY_NAME = "Ressource";
 
-    private final RessourceRepository ressourceRepository;
+private final RessourceRepository ressourceRepository;
 
     private final RessourceMapper ressourceMapper;
 
@@ -109,4 +114,60 @@ public class RessourceServiceImpl implements RessourceService {
         log.debug("Request to search for a page of Ressources for query {}", query);
         return ressourceSearchRepository.search(query, pageable).map(ressourceMapper::toDto);
     }
+
+@Override
+@Transactional(readOnly = true)
+public Flux<RessourceDTO> findAllRessourceByBlocfonctionnel(Long blocfonctionnelId, Pageable pageable) {
+//    ressourceRepository.findByBlocFonctionnelId(blocfonctionnelId, pageable).map(ressourceMapper::toDto)
+    return null;
+}
+
+@Override
+@Transactional(readOnly = true)
+public Flux<RessourceDTO> findAllRessourceByService(Long serviceId, Pageable pageable) {
+//    ressourceRepository.findByServiceId(serviceId, pageable).map(ressourceMapper::toDto)
+    return null;
+}
+
+@Override
+public Mono<RessourceDTO> setActifYNRessource(Long id, Boolean actifYN) {
+    return ressourceRepository.findById(id)
+               .flatMap(ressource -> {
+                   ressource.setActifYN(actifYN);
+                   return ressourceRepository.save(ressource);
+               })
+               .map(ressourceMapper::toDto);
+}
+
+@Override
+public Mono<Long> countByServiceId(Long serviceId) {
+//    ressourceRepository.countByServiceId(serviceId)
+    return null;
+}
+
+@Override
+public Mono<Long> countByBlocfonctionnelId(Long blocfonctionnelId) {
+//    ressourceRepository.countByBlocFonctionnelId(blocfonctionnelId)
+    return null;
+}
+private void validateData(RessourceDTO ressourceDTO) {
+    if (ressourceDTO.getLibelle().isEmpty() || ressourceDTO.getLibelle().isBlank()){
+        throw new BadRequestAlertException("Le Ressource ne peut pas être vide.", ENTITY_NAME, "getLibelleRessourceNotNull");
+    }
+//    if (ressourceDTO.getNationalite().isEmpty() || ressourceDTO.getNationalite().isBlank()){
+//        throw new BadRequestAlertException("Le Ressource ne peut pas être vide.", ENTITY_NAME, "getLibelleRessourceNotNull");
+//    }
+//    if (ressourceDTO.getCodeRessource().isEmpty() || ressourceDTO.getCodeRessource().isBlank()){
+//        throw new BadRequestAlertException("Le Ressource ne peut pas être vide.", ENTITY_NAME, "getLibelleRessourceNotNull");
+//    }
+//    Optional<Ressource> existingRessource = ressourceRepository.findByLibelleRessourceIgnoreCase(ressourceDTO.getLibelle());
+//    if (existingRessource.isPresent() && !existingRessource.get().getId().equals(ressourceDTO.getId())) {
+//        throw new BadRequestAlertException("Un Ressource avec le même libellé existe.", ENTITY_NAME, "getLibelleRessourceExist");
+//    }
+//    @Override
+//    public Boolean setRessourceActifYN(Boolean actifYN) {
+//        this.setRessourceActifYN(actifYN);
+//        return true;
+//    }
+}
 }

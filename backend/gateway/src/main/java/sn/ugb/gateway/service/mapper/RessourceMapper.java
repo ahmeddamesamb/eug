@@ -1,6 +1,6 @@
 package sn.ugb.gateway.service.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
 import sn.ugb.gateway.domain.Ressource;
 import sn.ugb.gateway.service.dto.RessourceDTO;
 
@@ -9,6 +9,6 @@ import sn.ugb.gateway.service.dto.RessourceDTO;
  */
 @Mapper(componentModel = "spring")
 public interface RessourceMapper extends EntityMapper<RessourceDTO, Ressource> {
-    RessourceDTO toDto(Ressource ressource);
 
+    RessourceDTO toDto(Ressource ressource);
 }

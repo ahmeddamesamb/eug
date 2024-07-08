@@ -109,4 +109,33 @@ public class InfoUserRessourceServiceImpl implements InfoUserRessourceService {
         log.debug("Request to search for a page of InfoUserRessources for query {}", query);
         return infoUserRessourceSearchRepository.search(query, pageable).map(infoUserRessourceMapper::toDto);
     }
+
+    @Override
+    public Flux<InfoUserRessourceDTO> findAllByInfosUserId(Long infosUserId) {
+        log.debug("Request to get all InfoUserRessources by InfosUserId : {}", infosUserId);
+        return infoUserRessourceRepository.findAllByInfosUserId(infosUserId).map(infoUserRessourceMapper::toDto);
+    }
+
+    @Override
+    public Flux<InfoUserRessourceDTO> findAllByRessourceId(Long ressourceId) {
+        log.debug("Request to get all InfoUserRessources by RessourceId : {}", ressourceId);
+        return infoUserRessourceRepository.findAllByRessourceId(ressourceId).map(infoUserRessourceMapper::toDto);
+    }
+
+    @Override
+    public Flux<InfoUserRessourceDTO> findAllByActifYN(Boolean actifYN) {
+        log.debug("Request to get all InfoUserRessources by ActifYN : {}", actifYN);
+        return infoUserRessourceRepository.findAllByActifYN(actifYN).map(infoUserRessourceMapper::toDto);
+    }
+
+    @Override
+    public Mono<Void> archive(Long id, Boolean enCours) {
+        return infoUserRessourceRepository.findById(id)
+            .switchIfEmpty(Mono.error(new RuntimeException("InfoUserRessource not found with id: " + id)))
+            .flatMap(infoUserRessource -> {
+                infoUserRessource.setEnCoursYN(enCours);
+                return infoUserRessourceRepository.save(infoUserRessource);
+            })
+            .then();
+    }
 }

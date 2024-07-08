@@ -1,0 +1,89 @@
+
+<div class="d-flex">
+  <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder " (click)="create()" >
+      Ajouter une programmation d'inscription
+  </button>
+</div>
+
+
+<c-smart-table
+[activePage]="1"
+[columnSorter]="true"
+[columns]="columns"
+[columnFilter]="false"
+[itemsPerPageSelect]="true"
+[itemsPerPage]="5"
+itemsPerPageLabel="Inscription(s) par page"
+[items]="inscriptionList"
+[sorterValue]="{ column: 'name', state: 'asc' }"
+[tableFilter]="false"
+[tableProps]="{ hover: true, striped: true, responsive: true }"
+[tableBodyProps]="{ align: 'middle' }"
+clickableRows
+footer
+header
+pagination
+noItemsLabel="La liste est vide"
+[loading]="isloading"
+
+
+>
+<!-- <ng-template cTemplateId="tableDetails" let-item="item">
+  <div>
+    <div [visible]="this.details_visible[item.id]===true" cCollapse>
+      <div class="card-body">
+        <h5>{{ item['libelle'] }}</h5>
+        <p class="text-muted">Date debut: {{ item['dateDebut'] }}</p>
+        <button cButton color="info" size="sm">
+          User Settings
+        </button>
+        <button cButton class="ms-1" color="danger" size="sm">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template> -->
+
+<ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent" >
+  <td>
+    @switch (columnName) {
+      @case ('enCoursYN') {
+        <c-badge [color]="getBadge(tdContent)">
+          {{ item[columnName] }}
+        </c-badge>
+      }
+      @case ('show') {
+        <div class="d-flex gap-2">
+          <button (click)="view(item.id)" cButton cPopover="Détails" cPopoverPlacement="left" color="light" size="sm" variant="outline">
+            <i class="bi bi-eye-fill"></i>
+          </button>
+          <button cButton cPopover="Mise à jour" cPopoverPlacement="top" 
+          color="primary" size="sm" variant="outline" (click)="update(item.id)">
+            <i class="bi bi-pen-fill"></i>
+          </button>
+          <button (click)="toggleLiveDemo(item)" cButton cPopover="Suppression" cPopoverPlacement="right" color="danger" size="sm" variant="outline">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      }
+      @default {
+        {{ item[columnName] }}
+      }
+    }
+  </td>
+</ng-template>
+</c-smart-table>
+
+
+
+
+
+
+
+
+
+
+
+
+

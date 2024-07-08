@@ -1,5 +1,13 @@
 package sn.ugb.gir.service.impl;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -10,7 +18,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import sn.ugb.gir.domain.Etudiant;
+import sn.ugb.gir.domain.InformationImage;
 import sn.ugb.gir.domain.InformationPersonnelle;
+import sn.ugb.gir.repository.EtudiantRepository;
+import sn.ugb.gir.repository.InformationImageRepository;
 import sn.ugb.gir.repository.InformationPersonnelleRepository;
 import sn.ugb.gir.repository.search.InformationPersonnelleSearchRepository;
 import sn.ugb.gir.service.*;
@@ -18,6 +31,11 @@ import sn.ugb.gir.service.dto.*;
 
 import sn.ugb.gir.service.mapper.InformationPersonnelleMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.GCMParameterSpec;
 
 import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
@@ -45,6 +63,20 @@ public class InformationPersonnelleServiceImpl implements InformationPersonnelle
     @Autowired
     BaccalaureatService baccalauriatService;
 
+    @Autowired
+    private EtudiantRepository etudiantRepository;
+
+    @Autowired
+    private InformationImageRepository informationImageRepository;
+
+    private static final String ENCRYPTION_ALGORITHM = "AES";
+    private static final String ENCRYPTION_MODE = "AES/GCM/NoPadding";
+    private static final int GCM_TAG_LENGTH = 16;
+    private static final int GCM_IV_LENGTH = 12;
+    private static final int AES_KEY_SIZE = 256;
+
+    private final SecretKey secretKey;
+
     public InformationPersonnelleServiceImpl(
         InformationPersonnelleRepository informationPersonnelleRepository,
         InformationPersonnelleMapper informationPersonnelleMapper,
@@ -53,6 +85,14 @@ public class InformationPersonnelleServiceImpl implements InformationPersonnelle
         this.informationPersonnelleRepository = informationPersonnelleRepository;
         this.informationPersonnelleMapper = informationPersonnelleMapper;
         this.informationPersonnelleSearchRepository = informationPersonnelleSearchRepository;
+        KeyGenerator keyGen = null;
+        try {
+            keyGen = KeyGenerator.getInstance(ENCRYPTION_ALGORITHM);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        keyGen.init(AES_KEY_SIZE);
+        this.secretKey = keyGen.generateKey();
     }
 
     @Override
@@ -297,5 +337,97 @@ public class InformationPersonnelleServiceImpl implements InformationPersonnelle
 
     private boolean isEmptyOrBlank(String value) {
         return value == null || value.trim().isEmpty();
+    }
+
+    public String store(MultipartFile file, String codeEtu) {
+        try {
+            if (file.isEmpty()) {
+                throw new RuntimeException("Le fichier ne peut pas etre vide.");
+            }
+
+            if (!file.getContentType().equals("image/jpeg") && !file.getContentType().equals("image/png")) {
+                throw new IllegalArgumentException("Seuls les fichiers JPEG et PNG sont autorisés.");
+            }
+
+            if (file.getSize() > 2*1024*1024) {
+                throw new IllegalArgumentException("Fichier trop volumineux.");
+            }
+
+            String filename = encrypt(codeEtu) + "." + getFileExtension(file.getOriginalFilename());
+
+            Optional<InformationImage> informationImageOpt = informationImageRepository.findByEnCoursYN("true");
+            if (informationImageOpt.isEmpty()) {
+                throw new RuntimeException("InformationImage avec enCoursYN=true non trouvée.");
+            }
+            InformationImage informationImage = informationImageOpt.get();
+            Path rootLocation = Paths.get(informationImage.getCheminPath());
+
+            Files.createDirectories(rootLocation);
+
+            Path destinationFile = rootLocation.resolve(Paths.get(filename)).normalize().toAbsolutePath();
+
+            try (var inputStream = file.getInputStream()) {
+                Files.copy(inputStream, destinationFile);
+            }
+
+            return filename;
+        } catch (IOException e) {
+            throw new RuntimeException("Échec de l'enregistrement du fichier.", e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String getFileExtension(String filename) {
+        if (filename == null || filename.isEmpty()) {
+            return "";
+        }
+        int dotIndex = filename.lastIndexOf('.');
+        return (dotIndex == -1) ? "" : filename.substring(dotIndex + 1);
+    }
+
+    public String encrypt(String plainText) throws Exception {
+        Cipher cipher = Cipher.getInstance(ENCRYPTION_MODE);
+        byte[] iv = new byte[GCM_IV_LENGTH];
+        SecureRandom random = new SecureRandom();
+        random.nextBytes(iv);
+        GCMParameterSpec parameterSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec);
+        byte[] encryptedText = cipher.doFinal(plainText.getBytes());
+        byte[] encryptedTextWithIv = new byte[iv.length + encryptedText.length];
+        System.arraycopy(iv, 0, encryptedTextWithIv, 0, iv.length);
+        System.arraycopy(encryptedText, 0, encryptedTextWithIv, iv.length, encryptedText.length);
+        return Base64.getUrlEncoder().encodeToString(encryptedTextWithIv);
+    }
+
+    public String decrypt(String encryptedText) throws Exception {
+        byte[] encryptedTextWithIv = Base64.getUrlDecoder().decode(encryptedText);
+        byte[] iv = Arrays.copyOfRange(encryptedTextWithIv, 0, GCM_IV_LENGTH);
+        byte[] encryptedTextBytes = Arrays.copyOfRange(encryptedTextWithIv, GCM_IV_LENGTH, encryptedTextWithIv.length);
+        Cipher cipher = Cipher.getInstance(ENCRYPTION_MODE);
+        GCMParameterSpec parameterSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, parameterSpec);
+        byte[] decryptedTextBytes = cipher.doFinal(encryptedTextBytes);
+        return new String(decryptedTextBytes);
+    }
+
+    @Override
+    public String uploadPhoto(MultipartFile file, String codeEtu) {
+        Optional<Etudiant> etudiant = etudiantRepository.findByCodeEtu(codeEtu);
+        if (!etudiant.isPresent()) {
+            throw new RuntimeException("Étudiant non trouvé");
+        }
+
+        String filename = store(file, codeEtu);
+
+        InformationPersonnelle informationPersonnelle = etudiant.get().getInformationPersonnelle();
+        if (informationPersonnelle == null) {
+            throw new RuntimeException("L'étudiant n'est associée à aucune information personnelle.");
+        }
+
+        informationPersonnelle.setPhoto(filename);
+        informationPersonnelleRepository.save(informationPersonnelle);
+
+        return filename;
     }
 }

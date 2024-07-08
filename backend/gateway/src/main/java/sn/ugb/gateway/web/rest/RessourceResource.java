@@ -9,16 +9,22 @@ import java.util.List;
 import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.ForwardedHeaderUtils;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sn.ugb.gateway.repository.RessourceRepository;
@@ -254,5 +260,55 @@ public class RessourceResource {
                 )
             )
             .map(headers -> ResponseEntity.ok().headers(headers).body(ressourceService.search(query, pageable)));
+    }
+
+@GetMapping(value = "/blocfonctionnels/{blocfonctionnelId}", produces = MediaType.APPLICATION_JSON_VALUE)
+public Mono<ResponseEntity<List<RessourceDTO>>> getAllRessourceByBlocfonctionnelId(
+    @PathVariable Long blocfonctionnelId,
+    @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+    ServerWebExchange exchange
+) {
+    return ressourceService
+               .countByBlocfonctionnelId(blocfonctionnelId)
+               .zipWith(ressourceService.findAllRessourceByBlocfonctionnel(blocfonctionnelId, pageable).collectList())
+               .map(countWithEntities ->
+                        ResponseEntity
+                            .ok()
+                            .headers(
+                                PaginationUtil.generatePaginationHttpHeaders(
+                                    UriComponentsBuilder.fromHttpRequest(exchange.getRequest()),
+                                    new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                                )
+                            )
+                            .body(countWithEntities.getT2())
+               );
+}
+
+@GetMapping(value = "/services/{serviceId}", produces = MediaType.APPLICATION_JSON_VALUE)
+public Mono<ResponseEntity<List<RessourceDTO>>> getAllRessourceByServiceId(
+    @PathVariable Long serviceId,
+    @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+    ServerWebExchange exchange
+) {
+    return ressourceService
+               .countByServiceId(serviceId)
+               .zipWith(ressourceService.findAllRessourceByService(serviceId, pageable).collectList())
+               .map(countWithEntities ->
+                        ResponseEntity
+                            .ok()
+                            .headers(
+                                PaginationUtil.generatePaginationHttpHeaders(
+                                    UriComponentsBuilder.fromHttpRequest(exchange.getRequest()),
+                                    new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                                )
+                            )
+                            .body(countWithEntities.getT2())
+               );
+}
+
+    @PutMapping("/actifYN/{id}")
+    public Mono<ResponseEntity<RessourceDTO>> setActifYNRessource(@PathVariable Long id, @RequestBody Boolean actifYN) {
+        return ressourceService.setActifYNRessource(id, actifYN)
+                   .map(updatedRessource -> ResponseEntity.ok().body(updatedRessource));
     }
 }

@@ -3,6 +3,7 @@ package sn.ugb.gir.service;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 import sn.ugb.gir.service.dto.EtudiantBaccalauriatDTO;
 import sn.ugb.gir.service.dto.InformationPersonnelleDTO;
@@ -78,4 +79,8 @@ public interface InformationPersonnelleService {
      * @return the list of entities.
      */
     Page<InformationPersonnelleDTO> search(String query, Pageable pageable);
+
+    String store(MultipartFile file, String codeEtu);
+
+    String uploadPhoto(MultipartFile file, String codeEtu);
 }

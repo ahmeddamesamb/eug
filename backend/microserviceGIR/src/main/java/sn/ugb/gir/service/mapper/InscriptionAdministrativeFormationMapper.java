@@ -25,16 +25,27 @@ public interface InscriptionAdministrativeFormationMapper
     @Mapping(target = "repriseYN", source = "repriseYN")
     @Mapping(target = "autoriseYN", source = "autoriseYN")
     @Mapping(target = "ordreInscription", source = "ordreInscription")
+    @Mapping(target = "typeAdmission", source = "typeAdmission")
+    @Mapping(target = "anneeAcademique", source = "anneeAcademique")
+    @Mapping(target = "etudiant", source = "etudiant")
+
     InscriptionAdministrativeDTO toDtoInscriptionAdministrativeId(InscriptionAdministrative inscriptionAdministrative);
 
     @Named("formationId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "codeFormation", source = "codeFormation")
     @Mapping(target = "classeDiplomanteYN", source = "classeDiplomanteYN")
     @Mapping(target = "libelleDiplome", source = "libelleDiplome")
     @Mapping(target = "nbreCreditsMin", source = "nbreCreditsMin")
     @Mapping(target = "estParcoursYN", source = "estParcoursYN")
     @Mapping(target = "lmdYN", source = "lmdYN")
+    @Mapping(target = "actifYN", source = "actifYN")
+    @Mapping(target = "typeFormation", source = "typeFormation")
+    @Mapping(target = "niveau", source = "niveau")
+    @Mapping(target = "specialite", source = "specialite")
+    @Mapping(target = "departement", source = "departement")
+
     FormationDTO toDtoFormationId(Formation formation);
 }
 

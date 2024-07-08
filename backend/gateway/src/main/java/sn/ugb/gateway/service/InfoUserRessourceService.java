@@ -79,4 +79,13 @@ public interface InfoUserRessourceService {
      * @return the list of entities.
      */
     Flux<InfoUserRessourceDTO> search(String query, Pageable pageable);
+
+    Flux<InfoUserRessourceDTO> findAllByInfosUserId(Long infosUserId);
+
+    Flux<InfoUserRessourceDTO> findAllByRessourceId(Long ressourceId);
+
+    Flux<InfoUserRessourceDTO> findAllByActifYN(Boolean actifYN);
+
+    Mono<Void> archive(Long id, Boolean enCours);
+
 }
