@@ -111,10 +111,16 @@ public class InfoUserRessourceServiceImpl implements InfoUserRessourceService {
     }
 
     @Override
-    public Flux<InfoUserRessourceDTO> findAllByInfosUserId(Long infosUserId) {
+    public Flux<InfoUserRessourceDTO> findAllByInfosUserId(Long infosUserId, Pageable pageable) {
         log.debug("Request to get all InfoUserRessources by InfosUserId : {}", infosUserId);
-        return infoUserRessourceRepository.findAllByInfosUserId(infosUserId).map(infoUserRessourceMapper::toDto);
+        return infoUserRessourceRepository.findAllByInfosUserId(infosUserId, pageable).map(infoUserRessourceMapper::toDto);
     }
+
+    @Override
+    public Flux<InfoUserRessourceDTO> findAllByInfosUserId(Long infosUserId) {
+        return null;
+    }
+
 
     @Override
     public Flux<InfoUserRessourceDTO> findAllByRessourceId(Long ressourceId) {

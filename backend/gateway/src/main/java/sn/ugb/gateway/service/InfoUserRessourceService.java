@@ -80,6 +80,8 @@ public interface InfoUserRessourceService {
      */
     Flux<InfoUserRessourceDTO> search(String query, Pageable pageable);
 
+    Flux<InfoUserRessourceDTO> findAllByInfosUserId(Long infosUserId, Pageable pageable);
+
     Flux<InfoUserRessourceDTO> findAllByInfosUserId(Long infosUserId);
 
     Flux<InfoUserRessourceDTO> findAllByRessourceId(Long ressourceId);

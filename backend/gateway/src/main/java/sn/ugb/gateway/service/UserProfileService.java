@@ -4,10 +4,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sn.ugb.gateway.service.dto.InfoUserRessourceDTO;
 import sn.ugb.gateway.service.dto.RessourceDTO;
 import sn.ugb.gateway.service.dto.UserProfileDTO;
-
-import java.util.Optional;
 
 /**
  * Service Interface for managing {@link sn.ugb.gateway.domain.UserProfile}.
@@ -98,4 +97,12 @@ public interface UserProfileService {
     Mono<Long> getAllUserProfilByEncoursYNCount(Boolean enCoursYN);
 
     Mono<Long> getAllUserProfilByProfilIdCount(Long profilId);
+
+    Mono<Long> getAllResourceByInfoUserIdCount(Long infoUserId);
+
+    Flux<InfoUserRessourceDTO> getAllResourceByInfoUserId(Long infoUserId, Pageable pageable);
+
+    Mono<Long> getAllRessourceByUserProfilIdCount(Long userProfileId);
+
+    Flux<RessourceDTO> getAllRessourceByUserProfilId(Long userProfileId, Pageable pageable);
 }

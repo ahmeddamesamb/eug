@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sn.ugb.gateway.repository.InfoUserRessourceRepository;
 import sn.ugb.gateway.repository.RessourceRepository;
 import sn.ugb.gateway.repository.UserProfileRepository;
 import sn.ugb.gateway.repository.search.UserProfileSearchRepository;
 import sn.ugb.gateway.service.UserProfileService;
+import sn.ugb.gateway.service.dto.InfoUserRessourceDTO;
 import sn.ugb.gateway.service.dto.RessourceDTO;
 import sn.ugb.gateway.service.dto.UserProfileDTO;
+import sn.ugb.gateway.service.mapper.InfoUserRessourceMapper;
 import sn.ugb.gateway.service.mapper.RessourceMapper;
 import sn.ugb.gateway.service.mapper.UserProfileMapper;
 import sn.ugb.gateway.web.rest.errors.BadRequestAlertException;
@@ -43,6 +46,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Autowired
     private RessourceMapper ressourceMapper;
+    @Autowired
+    private InfoUserRessourceRepository infoUserRessourceRepository;
+    @Autowired
+    private InfoUserRessourceMapper infoUserRessourceMapper;
 
 
     public UserProfileServiceImpl(
@@ -210,11 +217,34 @@ public class UserProfileServiceImpl implements UserProfileService {
     public Mono<Long> getAllUserProfilByProfilIdCount(Long profilId) {
         return userProfileRepository.countByProfilId(profilId);
     }
-
     @Override
     public Mono<Long> getAllUserProfilByEncoursYNCount(Boolean enCoursYN) {
         return userProfileRepository.countByEncoursYN(enCoursYN);
     }
+
+
+    @Override
+    public Mono<Long> getAllResourceByInfoUserIdCount(Long infoUserId) {
+        return null;
+    }
+
+    @Override
+    public Flux<InfoUserRessourceDTO> getAllResourceByInfoUserId(Long infoUserId, Pageable pageable) {
+        return infoUserRessourceRepository.findAllByInfosUserId(infoUserId, pageable).map(infoUserRessourceMapper::toDto);
+    }
+
+    @Override
+    public Mono<Long> getAllRessourceByUserProfilIdCount(Long userProfileId) {
+        return null;
+    }
+
+    @Override
+    public Flux<RessourceDTO> getAllRessourceByUserProfilId(Long userProfileId, Pageable pageable) {
+        return null;
+    }
+
+
+
 
 
 

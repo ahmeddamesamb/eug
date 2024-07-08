@@ -22,6 +22,7 @@ import sn.ugb.gir.repository.PaiementFraisRepository;
 import sn.ugb.gir.repository.ProcessusInscriptionAdministrativeRepository;
 import sn.ugb.gir.repository.search.EtudiantSearchRepository;
 import sn.ugb.gir.service.EtudiantService;
+import sn.ugb.gir.service.InscriptionAdministrativeService;
 import sn.ugb.gir.service.LyceeService;
 import sn.ugb.gir.service.RegionService;
 import sn.ugb.gir.service.dto.*;
@@ -51,6 +52,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
     @Autowired
     private  RegionService regionService;
+
+    @Autowired
+    private InscriptionAdministrativeService inscriptionAdministrativeService;
 
     @Autowired
     private PaiementFraisRepository paiementFraisRepository;
@@ -105,8 +109,6 @@ public class EtudiantServiceImpl implements EtudiantService {
             regionDTO = regionService.save(regionDTO);
             etudiantDTO.setRegion(regionDTO);
         }
-
-        generateTemporaryCode(etudiantDTO);
 
         Etudiant etudiant = etudiantMapper.toEntity(etudiantDTO);
         etudiant = etudiantRepository.save(etudiant);
@@ -251,16 +253,17 @@ public class EtudiantServiceImpl implements EtudiantService {
         Long id = etudiantDTO.getId();
         if (id == null) {
             // Save operation
-            if (etudiantRepository.existsByCodeEtuIgnoreCase(codeEtu)) {
-                throw new BadRequestAlertException("Cet identifiant est déjà utilisé", ENTITY_NAME, "codeEtuExistant");
-            }
-
             if (etudiantRepository.existsByEmailUGBIgnoreCase(emailUGB)) {
                 throw new BadRequestAlertException("Cet email est déjà utilisé", ENTITY_NAME, "emailUGBExistant");
             }
 
             if (etudiantRepository.existsByNumDocIdentiteIgnoreCase(numDocIdentite)) {
                 throw new BadRequestAlertException("Ce numero d'identite est déjà utilisé", ENTITY_NAME, "numDocIdentiteExistant");
+            }
+
+            generateTemporaryCode(etudiantDTO);
+            if (etudiantRepository.existsByCodeEtuIgnoreCase(codeEtu)) {
+                throw new BadRequestAlertException("Cet identifiant est déjà utilisé", ENTITY_NAME, "codeEtuExistant");
             }
         } else {
             // Update or PartialUpdate operation
@@ -292,8 +295,8 @@ public class EtudiantServiceImpl implements EtudiantService {
     }
 
     private void generateTemporaryCode(EtudiantDTO etudiantDTO) {
-        long rang = etudiantRepository.count() + 1;
-        String codeTemporaire = (LocalDate.now().getYear() - 1) + "E" + rang;
+        long rang = inscriptionAdministrativeService.countNouveauInscritsByAnneeAcademiqueEnCours() + 1;
+        String codeTemporaire = (LocalDate.now().getYear() - 1) + " E" + rang;
         etudiantDTO.setCodeEtu(codeTemporaire);
     }
 

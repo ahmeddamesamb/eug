@@ -2,12 +2,12 @@ package sn.ugb.gateway.repository;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sn.ugb.gateway.domain.InfoUserRessource;
+import sn.ugb.gateway.domain.Ressource;
 
 /**
  * Spring Data R2DBC repository for the InfoUserRessource entity.
@@ -30,7 +30,7 @@ public interface InfoUserRessourceRepository extends ReactiveCrudRepository<Info
     Flux<InfoUserRessource> findAllWhereRessourceIsNull();
 
     @Query("SELECT * FROM info_user_ressource entity WHERE entity.infos_user_id = :infosUserId")
-    Flux<InfoUserRessource> findAllByInfosUserId(Long infosUserId);
+    Flux<InfoUserRessource> findAllByInfosUserId(Long infosUserId, Pageable pageable);
 
     @Query("SELECT * FROM info_user_ressource entity WHERE entity.ressource_id = :ressourceId")
     Flux<InfoUserRessource> findAllByRessourceId(Long ressourceId);
@@ -65,4 +65,6 @@ interface InfoUserRessourceRepositoryInternal {
     Mono<InfoUserRessource> findById(Long id);
     // this is not supported at the moment because of https://github.com/jhipster/generator-jhipster/issues/18269
     // Flux<InfoUserRessource> findAllBy(Pageable pageable, Criteria criteria);
+
+    Flux<Ressource> findAllByInfoUserId(Long infoUserId, Pageable pageable);
 }
