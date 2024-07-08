@@ -309,7 +309,7 @@ public class UserProfileResource {
             .map(headers -> ResponseEntity.ok().headers(headers).body(userProfileService.getAllUserProfilByEncoursYN(enCoursYN, pageable)));
     }
 
-   /* @GetMapping("/{userProfileId}/resources")
+   @GetMapping("/{userProfileId}/resources")
     public Mono<ResponseEntity<Flux<RessourceDTO>>> getAllRessourcesByUserProfilId(
         @PathVariable Long userProfileId,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable,
@@ -322,7 +322,7 @@ public class UserProfileResource {
             .map(headers -> ResponseEntity.ok().headers(headers).body(userProfileService.getAllRessourceByUserProfilId(userProfileId, pageable)));
     }
 
-    @GetMapping("/resources/by-info-user/{infoUserId}")
+   /* @GetMapping("/resources/by-info-user/{infoUserId}")
     public Mono<ResponseEntity<Flux<RessourceDTO>>> getAllResourcesByInfoUserId(
         @PathVariable Long infoUserId,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable,
@@ -333,9 +333,9 @@ public class UserProfileResource {
             .map(total -> new PageImpl<>(List.of(), pageable, total))
             .map(page -> PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/resources/by-info-user/{infoUserId}"), page))
             .map(headers -> ResponseEntity.ok().headers(headers).body(userProfileService.getAllResourceByInfoUserId(infoUserId, pageable)));
-    }*/
+    }
+*/
 
-//    public ResponseEntity<Page<NiveauDTO>> getAllNiveauByUniversiteId(@PathVariable Long universiteId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
 /*@GetMapping("/by-profil/{profilId}")
 public ResponseEntity<Page<UserProfileDTO>> getAllUserProfilesByProfilId(
     @PathVariable Long profilId,

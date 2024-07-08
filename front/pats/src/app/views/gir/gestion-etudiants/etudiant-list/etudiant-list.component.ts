@@ -71,20 +71,24 @@ export class EtudiantListComponent {
 
   columns: IColumn[] = [
     {
-      key: 'inscriptionPrincipaleYN',
-      label: 'inscriptionPrincipaleYN'
+      key: 'inscriptionAdministrative.etudiant',
+      label: 'Code'
     },
     {
-      key: 'inscriptionAnnuleeYN',
-      label: 'inscriptionAnnuleeYN'
+      key: 'formation',
+      label: 'Niveau'
     },
     {
-      key: 'exonereYN',
-      label: 'exonereYN'
+      key: 'formation',
+      label: 'Filière'
     },
     {
-      key: 'etudiant',
-      label: 'Etudiant'
+      key: 'inscriptionAdministrative',
+      label: 'Code BU'
+    },
+    {
+      key: 'inscriptionAdministrative',
+      label: 'Année'
     },
     {
       key: 'show',

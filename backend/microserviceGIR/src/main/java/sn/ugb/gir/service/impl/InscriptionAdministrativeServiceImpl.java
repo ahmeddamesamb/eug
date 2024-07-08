@@ -15,6 +15,7 @@ import sn.ugb.gir.domain.InscriptionAdministrative;
 import sn.ugb.gir.repository.InscriptionAdministrativeRepository;
 import sn.ugb.gir.repository.search.InscriptionAdministrativeSearchRepository;
 import sn.ugb.gir.service.InscriptionAdministrativeService;
+import sn.ugb.gir.service.dto.AnneeAcademiqueDTO;
 import sn.ugb.gir.service.dto.InscriptionAdministrativeDTO;
 import sn.ugb.gir.service.mapper.InscriptionAdministrativeMapper;
 

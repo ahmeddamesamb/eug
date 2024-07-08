@@ -22,6 +22,7 @@ import org.springframework.r2dbc.core.RowsFetchSpec;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sn.ugb.gateway.domain.InfoUserRessource;
+import sn.ugb.gateway.domain.Ressource;
 import sn.ugb.gateway.repository.rowmapper.InfoUserRessourceRowMapper;
 import sn.ugb.gateway.repository.rowmapper.InfosUserRowMapper;
 import sn.ugb.gateway.repository.rowmapper.RessourceRowMapper;
@@ -101,6 +102,11 @@ class InfoUserRessourceRepositoryInternalImpl
     public Mono<InfoUserRessource> findById(Long id) {
         Comparison whereClause = Conditions.isEqual(entityTable.column("id"), Conditions.just(id.toString()));
         return createQuery(null, whereClause).one();
+    }
+
+    @Override
+    public Flux<Ressource> findAllByInfoUserId(Long infoUserId, Pageable pageable) {
+        return null;
     }
 
     private InfoUserRessource process(Row row, RowMetadata metadata) {
