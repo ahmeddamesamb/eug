@@ -54,8 +54,8 @@
             <label cLabel for="typeAdmissionSelect">Type d'admission</label>
             <select cSelect id="typeAdmissionSelect" formControlName="typeAdmission">
               <option value="">Sélectionnez un type d'admission</option>
-              @for (type of typesAdmission; track type.id) {
-                <option [value]="type.id">{{ type.nom }}</option>
+              @for (type of typesAdmissions; track type.id) {
+                <option [value]="type.id">{{ type.libelleTypeAdmission }}</option>
               }
             </select>
             @if (inscriptionForm.get('typeAdmission')?.invalid && (inscriptionForm.get('typeAdmission')?.dirty || inscriptionForm.get('typeAdmission')?.touched)) {

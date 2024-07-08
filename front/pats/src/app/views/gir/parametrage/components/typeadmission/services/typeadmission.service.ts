@@ -22,20 +22,20 @@ export class TypeadmissionService {
     return this.http.get<TypeadmissionModel[]>(`${this.url}`);
   }
 
-  createInfoPerso(infoPerso: TypeadmissionModel): Observable<TypeadmissionModel> {
+  createTypeAdmission(infoPerso: TypeadmissionModel): Observable<TypeadmissionModel> {
     return this.http.post<any>(`${this.url}`, infoPerso);
   }
 
-  getInfoPersoById(id:number):Observable<TypeadmissionModel>{
+  getTypeAdmissionById(id:number):Observable<TypeadmissionModel>{
 
     return this.http.get<TypeadmissionModel>(`${this.url}/${id}`);
   }
 
-  deleteInfoPerso(id:number):Observable<void>{
+  deleteTypeAdmissionById(id:number):Observable<void>{
 
     return this.http.delete<void>(`${this.url}/${id}`);
   }
-  updateInfoPerso(id: number, infoPerso: TypeadmissionModel): Observable<TypeadmissionModel> {
+  updateTypeAdmission(id: number, infoPerso: TypeadmissionModel): Observable<TypeadmissionModel> {
     return this.http.put<TypeadmissionModel>(`${this.url}/${id}`, infoPerso);
   }
 }

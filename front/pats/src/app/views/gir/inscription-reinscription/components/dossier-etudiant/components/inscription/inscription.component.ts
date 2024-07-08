@@ -86,6 +86,7 @@ export class InscriptionComponent {
   ngOnInit() {
     this.loadNiveaux();
     this.loadUfrs();
+    this.loadTypeAdmissions();
     
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -223,7 +224,7 @@ export class InscriptionComponent {
           const action = this.id ? "Modification" : "Création";
           const message = `${action} de l'inscription administrative réussie`;
           this.alertService.showToast(action, message, "success");
-          this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
+          //this.router.navigate(['/gir/gestion-campagne/inscription/view', data.id]);
         },
         error: (err) => {
           console.error(`Erreur lors de la ${this.id ? 'modification' : 'création'}:`, err);

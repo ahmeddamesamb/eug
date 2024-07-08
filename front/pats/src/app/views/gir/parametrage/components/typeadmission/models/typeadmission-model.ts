@@ -1,4 +1,4 @@
 export interface TypeadmissionModel {
     id: number;
-    libelleTypeHandicap?: string | null;
+    libelleTypeAdmission?: string | null;
 }
