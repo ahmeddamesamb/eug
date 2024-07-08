@@ -2,16 +2,20 @@ package sn.ugb.gateway.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sn.ugb.gateway.repository.RessourceRepository;
 import sn.ugb.gateway.repository.ServiceUserRepository;
+import sn.ugb.gateway.repository.UserProfileRepository;
 import sn.ugb.gateway.repository.search.ServiceUserSearchRepository;
 import sn.ugb.gateway.service.ServiceUserService;
 import sn.ugb.gateway.service.dto.ServiceUserDTO;
 import sn.ugb.gateway.service.mapper.ServiceUserMapper;
+
 
 /**
  * Service Implementation for managing {@link sn.ugb.gateway.domain.ServiceUser}.
@@ -28,6 +32,13 @@ public class ServiceUserServiceImpl implements ServiceUserService {
 
     private final ServiceUserSearchRepository serviceUserSearchRepository;
 
+    @Autowired
+    private UserProfileRepository userProfileRepository;
+
+    @Autowired
+    private RessourceRepository ressourceRepository;
+
+
     public ServiceUserServiceImpl(
         ServiceUserRepository serviceUserRepository,
         ServiceUserMapper serviceUserMapper,
@@ -41,6 +52,9 @@ public class ServiceUserServiceImpl implements ServiceUserService {
     @Override
     public Mono<ServiceUserDTO> save(ServiceUserDTO serviceUserDTO) {
         log.debug("Request to save ServiceUser : {}", serviceUserDTO);
+
+        validateServiceUser(serviceUserDTO);
+
         return serviceUserRepository
             .save(serviceUserMapper.toEntity(serviceUserDTO))
             .flatMap(serviceUserSearchRepository::save)
@@ -50,6 +64,9 @@ public class ServiceUserServiceImpl implements ServiceUserService {
     @Override
     public Mono<ServiceUserDTO> update(ServiceUserDTO serviceUserDTO) {
         log.debug("Request to update ServiceUser : {}", serviceUserDTO);
+
+        validateServiceUser(serviceUserDTO);
+
         return serviceUserRepository
             .save(serviceUserMapper.toEntity(serviceUserDTO))
             .flatMap(serviceUserSearchRepository::save)
@@ -109,4 +126,52 @@ public class ServiceUserServiceImpl implements ServiceUserService {
         log.debug("Request to search for a page of ServiceUsers for query {}", query);
         return serviceUserSearchRepository.search(query, pageable).map(serviceUserMapper::toDto);
     }
+
+
+
+    private void validateServiceUser(ServiceUserDTO serviceUserDTO) {
+        if (serviceUserDTO == null) {
+            throw new IllegalArgumentException("Le ServiceUserDTO ne peut pas être null");
+        }
+
+        if (isEmpty(serviceUserDTO.getNom())) {
+            throw new IllegalArgumentException("Le champ 'Nom' est obligatoire");
+        }
+
+        if ((serviceUserDTO.getDateAjout()) == null) {
+            throw new IllegalArgumentException("Le champ 'DateAjout' est obligatoire");
+        }
+
+        validateActifYN(serviceUserDTO);
+    }
+
+    private void validateActifYN(ServiceUserDTO serviceUserDTO) {
+        if (serviceUserDTO.getActifYN() == null) {
+            throw new IllegalArgumentException("Le champ 'ActifYN' est obligatoire");
+        }
+
+        // RG2: Définir ActifYN à true si le service est ajouté (nouvelle entité)
+        if (serviceUserDTO.getId() == null) {
+            serviceUserDTO.setActifYN(true);
+        }
+    }
+
+    private boolean isEmpty(String value) {
+        return value == null || value.trim().isEmpty();
+    }
+
+    @Override
+    public Mono<ServiceUserDTO> setServiceUserActifYN(Long id, Boolean actifYN) {
+        log.debug("Request to set actifYN for ServiceUser : {} to {}", id, actifYN);
+        return serviceUserRepository.findById(id)
+            .flatMap(serviceUser -> {
+                serviceUser.setActifYN(actifYN);
+                return serviceUserRepository.save(serviceUser);
+            })
+            .flatMap(serviceUserSearchRepository::save)
+            .map(serviceUserMapper::toDto);
+    }
+
+
+
 }

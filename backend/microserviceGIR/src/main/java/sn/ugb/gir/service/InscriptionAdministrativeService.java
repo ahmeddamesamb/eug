@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 import sn.ugb.gir.service.dto.InscriptionAdministrativeDTO;
 
 /**
@@ -73,4 +74,13 @@ public interface InscriptionAdministrativeService {
      * @return the list of entities.
      */
     Page<InscriptionAdministrativeDTO> search(String query, Pageable pageable);
+
+    @Transactional(readOnly = true)
+    long countNouveauInscrits();
+
+    @Transactional(readOnly = true)
+    long countNouveauInscritsByAnneeAcademique(Long anneeAcademiqueId);
+
+    @Transactional(readOnly = true)
+    long countNouveauInscritsByAnneeAcademiqueEnCours();
 }

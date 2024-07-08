@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sn.ugb.gir.repository.InformationPersonnelleRepository;
 import sn.ugb.gir.service.InformationPersonnelleService;
+import sn.ugb.gir.service.dto.EtudiantBaccalauriatDTO;
 import sn.ugb.gir.service.dto.InformationPersonnelleDTO;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 import sn.ugb.gir.web.rest.errors.ElasticsearchExceptionMapper;
@@ -70,6 +71,26 @@ public class InformationPersonnelleResource {
         return ResponseEntity
             .created(new URI("/api/information-personnelles/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code POST  /information-personnelles} : Create a new informationPersonnelle.
+     *
+     * @param etudiantBaccalauriatDTO the etudiantBaccalauriatDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new etudiantBaccalauriatDTO, or with status {@code 400 (Bad Request)} if the informationPersonnelle has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/AjoutEtudiant")
+    public ResponseEntity<EtudiantBaccalauriatDTO> createEtudiantBaccalauriat(
+        @Valid @RequestBody EtudiantBaccalauriatDTO etudiantBaccalauriatDTO
+    ) throws URISyntaxException {
+        log.debug("REST request to save InformationPersonnelle : {}", etudiantBaccalauriatDTO);
+
+        EtudiantBaccalauriatDTO result = informationPersonnelleService.saveEtudiantBaccalauriat(etudiantBaccalauriatDTO);
+        return ResponseEntity
+            .created(new URI("/api/information-personnelles/" + result.getInformationPersonnelle().getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getInformationPersonnelle().getId().toString()))
             .body(result);
     }
 
@@ -178,7 +199,7 @@ public class InformationPersonnelleResource {
      * @param codeEtudiant the codeEtudiant of the informationPersonnelleDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the informationPersonnelleDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("etudiant/{codeEtudiant}")
+    @GetMapping("recherche-etudiant/{codeEtudiant}")
     public ResponseEntity<InformationPersonnelleDTO> getInformationPersonnelle(@PathVariable("codeEtudiant") String codeEtudiant) {
         log.debug("REST request to get InformationPersonnelle : {}", codeEtudiant);
         Optional<InformationPersonnelleDTO> informationPersonnelleDTO = informationPersonnelleService.findOneByCodeEtudiant(codeEtudiant);

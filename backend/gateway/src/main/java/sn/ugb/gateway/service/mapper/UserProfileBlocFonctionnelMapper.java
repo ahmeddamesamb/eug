@@ -11,10 +11,10 @@ import sn.ugb.gateway.service.dto.UserProfileDTO;
 /**
  * Mapper for the entity {@link UserProfileBlocFonctionnel} and its DTO {@link UserProfileBlocFonctionnelDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {UserProfileMapper.class, UserProfileBlocFonctionnelMapper.class})
 public interface UserProfileBlocFonctionnelMapper extends EntityMapper<UserProfileBlocFonctionnelDTO, UserProfileBlocFonctionnel> {
-    @Mapping(target = "userProfil", source = "userProfil", qualifiedByName = "userProfileId")
-    @Mapping(target = "blocFonctionnel", source = "blocFonctionnel", qualifiedByName = "blocFonctionnelId")
+    @Mapping(target = "userProfil", source = "userProfil")
+    @Mapping(target = "blocFonctionnel", source = "blocFonctionnel")
     UserProfileBlocFonctionnelDTO toDto(UserProfileBlocFonctionnel s);
 
     @Named("userProfileId")

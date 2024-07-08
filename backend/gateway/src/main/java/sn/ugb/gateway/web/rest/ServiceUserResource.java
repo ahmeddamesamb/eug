@@ -209,6 +209,21 @@ public class ServiceUserResource {
     }
 
     /**
+     * {@code POST  /service-users/:id/actifYN} : set the "actifYN" status for the serviceUser.
+     *
+     * @param id the id of the serviceUserDTO to update.
+     * @param actifYN the new actifYN status.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated serviceUserDTO, or with status {@code 404 (Not Found)}.
+     */
+    @PostMapping("/{id}/actifYN")
+    public Mono<ResponseEntity<ServiceUserDTO>> setActifYNServiceUser(@PathVariable Long id, @RequestParam Boolean actifYN) {
+        log.debug("REST request to set actifYN for ServiceUser : {} to {}", id, actifYN);
+        Mono<ServiceUserDTO> serviceUserDTO = serviceUserService.setServiceUserActifYN(id, actifYN);
+        return ResponseUtil.wrapOrNotFound(serviceUserDTO);
+    }
+
+
+    /**
      * {@code DELETE  /service-users/:id} : delete the "id" serviceUser.
      *
      * @param id the id of the serviceUserDTO to delete.

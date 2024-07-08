@@ -1,9 +1,13 @@
 package sn.ugb.gateway.service;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sn.ugb.gateway.service.dto.RessourceDTO;
 import sn.ugb.gateway.service.dto.UserProfileDTO;
+
+import java.util.Optional;
 
 /**
  * Service Interface for managing {@link sn.ugb.gateway.domain.UserProfile}.
@@ -79,4 +83,19 @@ public interface UserProfileService {
      * @return the list of entities.
      */
     Flux<UserProfileDTO> search(String query, Pageable pageable);
+
+    @Transactional(readOnly = true)
+    Flux<UserProfileDTO> getAllUserProfilByProfilId(Long profilId, Pageable pageable);
+
+    Flux<UserProfileDTO> getAllUserProfilByInfosUserId(Long infoUserId, Pageable pageable);
+
+    Mono<UserProfileDTO> archiveUserProfil(Long id);
+
+    Flux<UserProfileDTO> getAllUserProfilByEncoursYN(Boolean enCoursYN, Pageable pageable);
+
+    Mono<Long> getAllUserProfilByInfosUserIdCount(Long infoUserId);
+
+    Mono<Long> getAllUserProfilByEncoursYNCount(Boolean enCoursYN);
+
+    Mono<Long> getAllUserProfilByProfilIdCount(Long profilId);
 }

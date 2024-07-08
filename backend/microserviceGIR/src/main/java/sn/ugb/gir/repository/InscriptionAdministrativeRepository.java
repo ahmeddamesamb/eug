@@ -9,4 +9,10 @@ import sn.ugb.gir.domain.InscriptionAdministrative;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface InscriptionAdministrativeRepository extends JpaRepository<InscriptionAdministrative, Long> {}
+public interface InscriptionAdministrativeRepository extends JpaRepository<InscriptionAdministrative, Long> {
+    long countByNouveauInscritYNTrue();
+
+    long countByNouveauInscritYNTrueAndAnneeAcademiqueId(Long anneeAcademiqueId);
+
+    long countByNouveauInscritYNTrueAndAnneeAcademiqueAnneeCouranteYNTrue();
+}

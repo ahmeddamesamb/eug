@@ -1,6 +1,8 @@
 package sn.ugb.gir.service.impl;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import sn.ugb.gir.domain.InformationPersonnelle;
 import sn.ugb.gir.repository.InformationPersonnelleRepository;
 import sn.ugb.gir.repository.search.InformationPersonnelleSearchRepository;
-import sn.ugb.gir.service.EtudiantService;
-import sn.ugb.gir.service.InformationPersonnelleService;
-import sn.ugb.gir.service.TypeBourseService;
-import sn.ugb.gir.service.TypeHandicapService;
-import sn.ugb.gir.service.dto.EtudiantDTO;
-import sn.ugb.gir.service.dto.InformationPersonnelleDTO;
-import sn.ugb.gir.service.dto.TypeBourseDTO;
-import sn.ugb.gir.service.dto.TypeHandicapDTO;
+import sn.ugb.gir.service.*;
+import sn.ugb.gir.service.dto.*;
 
 import sn.ugb.gir.service.mapper.InformationPersonnelleMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
@@ -46,6 +42,8 @@ public class InformationPersonnelleServiceImpl implements InformationPersonnelle
     private TypeBourseService typeBourseService;
     @Autowired
     private EtudiantService etudiantService;
+    @Autowired
+    BaccalaureatService baccalauriatService;
 
     public InformationPersonnelleServiceImpl(
         InformationPersonnelleRepository informationPersonnelleRepository,
@@ -55,6 +53,39 @@ public class InformationPersonnelleServiceImpl implements InformationPersonnelle
         this.informationPersonnelleRepository = informationPersonnelleRepository;
         this.informationPersonnelleMapper = informationPersonnelleMapper;
         this.informationPersonnelleSearchRepository = informationPersonnelleSearchRepository;
+    }
+
+    @Override
+    @Transactional
+    public EtudiantBaccalauriatDTO saveEtudiantBaccalauriat(EtudiantBaccalauriatDTO etudiantBaccalauriatDTO) {
+        log.debug("Request to save InformationPersonnelle : {}", etudiantBaccalauriatDTO);
+        //InformationPersonnelleDTO informationPersonnelleDTO = etudiantBaccalauriatDTO.getInformationPersonnelle();
+
+        if (etudiantBaccalauriatDTO.getInformationPersonnelle() != null && etudiantBaccalauriatDTO.getInformationPersonnelle().getId() == null) {
+            // Save the Etudiant entity first using EtudiantService
+            InformationPersonnelleDTO informationPersonnelleDTO = etudiantBaccalauriatDTO.getInformationPersonnelle();
+            informationPersonnelleDTO = this.save(informationPersonnelleDTO);
+            etudiantBaccalauriatDTO.setInformationPersonnelle(informationPersonnelleDTO);
+        }
+        if (etudiantBaccalauriatDTO.getBaccalaureatDTO() != null && etudiantBaccalauriatDTO.getBaccalaureatDTO().getId() == null) {
+            // Save the Etudiant entity first using EtudiantService
+            BaccalaureatDTO baccalaureatDTO = etudiantBaccalauriatDTO.getBaccalaureatDTO();
+            Long idEtudiant = etudiantBaccalauriatDTO.getInformationPersonnelle().getEtudiant().getId();
+            log.debug("Request to save InformationPersonnelle Id    ETUDIANT @@@@@@@@@@@@@@@@@@@@@@@@@@@@ : {}", idEtudiant);
+
+            if (baccalaureatDTO.getEtudiant() == null) {
+                baccalaureatDTO.setEtudiant(new EtudiantDTO());
+            }
+            if(idEtudiant!=null){
+                baccalaureatDTO.getEtudiant().setId(idEtudiant);
+            }
+            else
+                throw new BadRequestAlertException(" ETUDIANT @@@@@@@@@@@@@@@@@@@@@@@@@@@@", ENTITY_NAME, "idEtudiantBaccalauriatNull");
+
+            baccalaureatDTO = baccalauriatService.save(baccalaureatDTO);
+            etudiantBaccalauriatDTO.setBaccalaureatDTO(baccalaureatDTO);
+        }
+        return etudiantBaccalauriatDTO;
     }
 
     @Override
@@ -188,10 +219,15 @@ public class InformationPersonnelleServiceImpl implements InformationPersonnelle
 
         String situationMatrimoniale = informationPersonnelleDTO.getStatutMarital();
         String telephone = informationPersonnelleDTO.getTelEtu();
+        String telephoneParent = informationPersonnelleDTO.getTelParent();
         String emailPersonnel = informationPersonnelleDTO.getEmailEtu();
         String prenomParent = informationPersonnelleDTO.getPrenomParent();
         String nomParent = informationPersonnelleDTO.getNomParent();
         String adresseParent = informationPersonnelleDTO.getAdresseParent();
+
+        //String emailPattern = "^[a-z]+\\.[a-z]+\\.[0-9]+@ugb\\.edu\\.sn$";
+        String telephoePattern = "^\\+[1-9]\\d{1,14}$";
+
 
         if (isEmptyOrBlank(situationMatrimoniale)) {
             throw new BadRequestAlertException("La situation matrimoniale est obligatoire", ENTITY_NAME, "situationMatrimonialeObligatoire");
@@ -199,6 +235,13 @@ public class InformationPersonnelleServiceImpl implements InformationPersonnelle
 
         if (isEmptyOrBlank(telephone)) {
             throw new BadRequestAlertException("Le téléphone est obligatoire", ENTITY_NAME, "telephoneObligatoire");
+        }
+        if (!Pattern.matches(telephoePattern, telephone) ) {
+            throw new BadRequestAlertException("Format numero de téléphone de l'etudiant est invalide", ENTITY_NAME, "invalideTelEtu");
+        }
+
+        if (!isEmptyOrBlank(telephoneParent) && !Pattern.matches(telephoePattern, telephone) ) {
+            throw new BadRequestAlertException("Format numero de téléphone du parent de l'etudiant est invalide", ENTITY_NAME, "invalideTelEtu");
         }
 
         if (isEmptyOrBlank(emailPersonnel)) {

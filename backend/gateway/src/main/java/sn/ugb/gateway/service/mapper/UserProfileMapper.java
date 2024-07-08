@@ -11,7 +11,7 @@ import sn.ugb.gateway.service.dto.UserProfileDTO;
 /**
  * Mapper for the entity {@link UserProfile} and its DTO {@link UserProfileDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ProfilMapper.class,InfosUserMapper.class})
 public interface UserProfileMapper extends EntityMapper<UserProfileDTO, UserProfile> {
     @Mapping(target = "profil", source = "profil", qualifiedByName = "profilId")
     @Mapping(target = "infoUser", source = "infoUser", qualifiedByName = "infosUserId")
@@ -20,10 +20,17 @@ public interface UserProfileMapper extends EntityMapper<UserProfileDTO, UserProf
     @Named("profilId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "libelle", source = "libelle")
+    @Mapping(target = "dateAjout", source = "dateAjout")
+    @Mapping(target = "actifYN", source = "actifYN")
     ProfilDTO toDtoProfilId(Profil profil);
 
     @Named("infosUserId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "dateAjout", source = "dateAjout")
+    @Mapping(target = "actifYN", source = "actifYN")
     InfosUserDTO toDtoInfosUserId(InfosUser infosUser);
+
+
 }

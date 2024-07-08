@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -18,10 +19,7 @@ import sn.ugb.gir.repository.EtudiantRepository;
 import sn.ugb.gir.repository.InformationPersonnelleRepository;
 import sn.ugb.gir.repository.PaiementFraisRepository;
 import sn.ugb.gir.repository.search.EtudiantSearchRepository;
-import sn.ugb.gir.service.EtudiantService;
-import sn.ugb.gir.service.InformationPersonnelleService;
-import sn.ugb.gir.service.LyceeService;
-import sn.ugb.gir.service.RegionService;
+import sn.ugb.gir.service.*;
 import sn.ugb.gir.service.dto.*;
 import sn.ugb.gir.service.mapper.EtudiantMapper;
 import sn.ugb.gir.service.mapper.FormationPriveeMapper;
@@ -52,6 +50,9 @@ public class EtudiantServiceImpl implements EtudiantService {
 
     @Autowired
     private  RegionService regionService;
+
+    @Autowired
+    private InscriptionAdministrativeService inscriptionAdministrativeService;
 
     @Autowired
     private PaiementFraisRepository paiementFraisRepository;
@@ -225,6 +226,7 @@ public class EtudiantServiceImpl implements EtudiantService {
         String lieuNaissEtu = etudiantDTO.getLieuNaissEtu();
         String sexe = etudiantDTO.getSexe();
         LocalDate dateNaissEtu = etudiantDTO.getDateNaissEtu();
+        String emailUgbPattern = "^[a-z]+\\.[a-z]+\\.[0-9]+@ugb\\.edu\\.sn$";
 
         if (dateNaissEtu == null || dateNaissEtu.isAfter(LocalDate.now())) {
             throw new BadRequestAlertException("La date de naissance ne doit pas être postérieure à la date du jour", ENTITY_NAME, "dateNaissanceInvalide");
@@ -266,12 +268,20 @@ public class EtudiantServiceImpl implements EtudiantService {
             if (isEmptyOrBlank(emailUGB)) {
                 throw new BadRequestAlertException("L'email UGB est obligatoire", ENTITY_NAME, "emailUGBObligatoire");
             }
+            if (!Pattern.matches(emailUgbPattern, emailUGB) ) {
+                throw new BadRequestAlertException("Format d'email invalide", ENTITY_NAME, "invalidemail");
+            }
             Optional<Etudiant> existingEtudiant = etudiantRepository.findById(id);
             if (existingEtudiant.isEmpty()) {
                 throw new BadRequestAlertException("Etudiant avec id " + id + " non trouvé", ENTITY_NAME, "etudiantNotFound");
             }
 
             Etudiant etudiant = existingEtudiant.get();
+
+            if (!etudiant.getEmailUGB().equalsIgnoreCase(emailUGB) && etudiantRepository.existsByEmailUGBIgnoreCase(emailUGB)) {
+                throw new BadRequestAlertException("Cet identifiant est déjà utilisé", ENTITY_NAME, "emailUGBExistant");
+            }
+
             if (!etudiant.getCodeEtu().equalsIgnoreCase(codeEtu) && etudiantRepository.existsByCodeEtuIgnoreCase(codeEtu)) {
                 throw new BadRequestAlertException("Cet identifiant est déjà utilisé", ENTITY_NAME, "codeEtuExistant");
             }
@@ -287,8 +297,8 @@ public class EtudiantServiceImpl implements EtudiantService {
     }
 
     private void generateTemporaryCode(EtudiantDTO etudiantDTO) {
-        long rang = etudiantRepository.count() + 1;
-        String codeTemporaire = (LocalDate.now().getYear() - 1) + "E" + rang;
+        long rang = inscriptionAdministrativeService.countNouveauInscritsByAnneeAcademiqueEnCours() + 1;
+        String codeTemporaire = (LocalDate.now().getYear() - 1) + " E" + rang;
         etudiantDTO.setCodeEtu(codeTemporaire);
     }
 
