@@ -18,7 +18,7 @@ export class TypeadmissionService {
     
   }
 
-  getInfoPersoList(): Observable<TypeadmissionModel[]> {
+  getTypeAdmissionList(): Observable<TypeadmissionModel[]> {
     return this.http.get<TypeadmissionModel[]>(`${this.url}`);
   }
 
