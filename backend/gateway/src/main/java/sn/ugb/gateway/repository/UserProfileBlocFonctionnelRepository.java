@@ -6,6 +6,7 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sn.ugb.gateway.domain.ServiceUser;
 import sn.ugb.gateway.domain.UserProfileBlocFonctionnel;
 
 /**
@@ -40,6 +41,32 @@ public interface UserProfileBlocFonctionnelRepository
 
     @Override
     Mono<Void> deleteById(Long id);
+
+    @Query("SELECT * FROM user_profile_bloc_fonctionnel WHERE user_profil_id = :userProfileId")
+    Flux<UserProfileBlocFonctionnel> findAllByUserProfileId(Long userProfileId, Pageable pageable);
+
+    @Query("SELECT COUNT(*) FROM user_profile_bloc_fonctionnel WHERE user_profil_id = :userProfileId")
+    Mono<Long> countByUserProfileId(Long userProfileId);
+
+    @Query("SELECT * FROM user_profile_bloc_fonctionnel WHERE bloc_fonctionnel_id = :blocFonctionnelId")
+    Flux<UserProfileBlocFonctionnel> findByBlocFonctionnelId(Long blocFonctionnelId, Pageable pageable);
+
+    @Query("SELECT COUNT(*) FROM user_profile_bloc_fonctionnel WHERE bloc_fonctionnel_id = :blocFonctionnelId")
+    Mono<Long> countByBlocFonctionnelId(Long blocFonctionnelId);
+
+    @Query("SELECT * FROM user_profile_bloc_fonctionnel WHERE en_cours_yn = :enCoursYN")
+    Flux<UserProfileBlocFonctionnel> findByEnCoursYN(Boolean enCoursYN, Pageable pageable);
+
+    @Query("SELECT COUNT(*) FROM user_profile_bloc_fonctionnel WHERE en_cours_yn = :enCoursYN")
+    Mono<Long> countByEnCoursYN(Boolean enCoursYN);
+
+    @Query("""
+            SELECT s.* FROM service_user s
+            JOIN bloc_fonctionnel bf ON s.id = bf.service_id
+            JOIN user_profile_bloc_fonctionnel upbf ON bf.id = upbf.bloc_fonctionnel_id
+            WHERE upbf.user_profil_id = :userProfileId
+        """)
+    Flux<ServiceUser> findAllServiceByUserProfileId(Long userProfileId, Pageable pageable);
 }
 
 interface UserProfileBlocFonctionnelRepositoryInternal {

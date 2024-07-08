@@ -5,6 +5,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sn.ugb.gateway.service.dto.HistoriqueConnexionDTO;
 
+import java.time.LocalDate;
+
 /**
  * Service Interface for managing {@link sn.ugb.gateway.domain.HistoriqueConnexion}.
  */
@@ -79,4 +81,18 @@ public interface HistoriqueConnexionService {
      * @return the list of entities.
      */
     Flux<HistoriqueConnexionDTO> search(String query, Pageable pageable);
+
+    Flux<HistoriqueConnexionDTO> getAllHistoriqueConnexionByEncoursYN(Boolean enCoursYN, Pageable pageable);
+
+    Mono<HistoriqueConnexionDTO> archiveHistoriqueConnexion(Long id);
+
+    Flux<HistoriqueConnexionDTO> getAllHistoriqueConnexionByTimeSlots(LocalDate dateDebut, LocalDate dateFin, Pageable pageable);
+
+    Flux<HistoriqueConnexionDTO> getAllHistoriqueConnexionByInfosUserIdAndTimeSlots(Long infosUserId, LocalDate dateDebut, LocalDate dateFin, Pageable pageable);
+
+    Mono<Long> countAllByEnCoursYN(Boolean enCoursYN);
+
+    Mono<Long> countAllByTimeSlots(LocalDate dateDebut, LocalDate dateFin);
+
+    Mono<Long> countAllByInfosUserIdAndTimeSlots(Long infosUserId, LocalDate dateDebut, LocalDate dateFin);
 }

@@ -1,139 +1,409 @@
 <div class="">
 
-    
-    
     <form #customStylesForm="ngForm"
-        (ngSubmit)="onSubmit1()"
-        cForm
-        class="row g-3 needs-validation"
-        [formGroup]="etudiantForm">
-        
+          (ngSubmit)="onSubmit1()"
+          cForm
+          class="row p-4 needs-validation"
+          [formGroup]="informationPersonelleForm">
+
+        <!-- Rubrique: Informations Personnelles -->
+
+        <h4 class="mt-4 fw-bold">Civilité</h4>
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom01">Nom </label>
-            <input cFormControl id="validationCustom01" required type="text"
-                   [valid]="(etudiantForm?.get('nomEtu')?.touched && etudiantForm?.get('nomEtu')?.valid) ? true
-                        : (etudiantForm?.get('nomEtu')?.touched) && etudiantForm?.get('nomEtu')?.invalid ? false : undefined"
-                   formControlName="nomEtu"/>
+            <label cLabel for="nomEtu">Nom </label>
+            <input cFormControl id="nomEtu" required type="text" formControlName="nomEtu"/>
             <c-form-feedback>Nom </c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom02">Prénom </label>
-            <input cFormControl id="validationCustom02" required type="text" formControlName="prenomEtu"/>
+            <label cLabel for="prenomEtu">Prénom </label>
+            <input cFormControl id="prenomEtu" required type="text" formControlName="prenomEtu"/>
             <c-form-feedback>Prénom</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom03">Nom de jeune fille </label>
-            <input cFormControl id="validationCustom03" required type="text" formControlName="nomJeuneFilleEtu"/>
-            <c-form-feedback>Nom de jeune fille</c-form-feedback>
-        </c-col>
+            <label cLabel for="dateNaissEtu">Date de naissance  </label>
+            <c-date-picker closeOnSelect cFormControl id="dateNaissEtu"
+              [valid]="(informationPersonelleForm?.get('dateNaissEtu')?.touched && informationPersonelleForm?.get('dateNaissEtu')?.valid) ? true : (informationPersonelleForm?.get('dateNaissEtu')?.touched) && informationPersonelleForm?.get('dateNaissEtu')?.invalid ? false : undefined"
+              required  locale="fr-FR"   formControlName="dateNaissEtu"/>
 
-        <c-col md="12" lg="6">
-            <label cLabel for="validationCustom04">INE </label>
-            <input cFormControl id="validationCustom04" required type="text" formControlName="ine"/>
-            <c-form-feedback>INE</c-form-feedback>
-        </c-col>
 
-        <c-col md="12" lg="6">
-            <label cLabel for="validationCustom05">Date de naissance </label>
-            <input cFormControl id="validationCustom05" required type="date" formControlName="dateNaissEtu"/>
-            <c-form-feedback>Date de naissance</c-form-feedback>
+            @if ((informationPersonelleForm?.get('dateNaissEtu')?.touched && informationPersonelleForm?.get('dateNaissEtu')?.hasError('required'))) {
+              <span class="text-danger" > La date de naissance est obligatoire</span>
+            }
         </c-col>
-
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom06">Lieu de naissance </label>
-            <input cFormControl id="validationCustom06" required type="text" formControlName="lieuNaissEtu"/>
+            <label cLabel for="lieuNaissEtu">Lieu de naissance </label>
+            <input cFormControl id="lieuNaissEtu" required type="text" formControlName="lieuNaissEtu"/>
             <c-form-feedback>Lieu de naissance</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom07">Sexe </label>
-            <input cFormControl id="validationCustom07" required type="text" formControlName="sexe"/>
+            <label cLabel for="sexe">Sexe </label>
+           
+
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="sexe"
+                required
+                id="sexe"
+                [valid]="(informationPersonelleForm?.get('sexe')?.touched && informationPersonelleForm?.get('sexe')?.valid) ? true
+            : (informationPersonelleForm?.get('sexe')?.touched) && informationPersonelleForm?.get('sexe')?.invalid ? false : undefined"
+                cSelect>
+                <option value="masculin">masculin </option>
+                <option value="féminin">féminin</option>
+            </select>
             <c-form-feedback>Sexe</c-form-feedback>
         </c-col>
 
-        <c-col md="12" lg="6">
-            <label cLabel for="validationCustom08">Statut marital </label>
-            <input cFormControl id="validationCustom08" required type="text" formControlName="statutMarital"/>
+        <c-col  md="12" lg="6">
+            <label  cLabel for="statutMarital">Statut marital </label>
+            <!-- <input cFormControl id="statutMarital" required type="text" formControlName="statutMarital"/> -->
+
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="statutMarital"
+                required
+                id="statutMarital"
+                [valid]="(informationPersonelleForm?.get('statutMarital')?.touched && informationPersonelleForm?.get('statutMarital')?.valid) ? true
+               : (informationPersonelleForm?.get('statutMarital')?.touched) && informationPersonelleForm?.get('statutMarital')?.invalid ? false : undefined"
+                cSelect>
+                <option value="célibataire">célibataire </option>
+                <option value="marié">marié</option>
+                <option value="veuf">veuf</option>
+                <option value="divorcé">divorcé</option> 
+            </select>
             <c-form-feedback>Statut marital</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom09">Profession </label>
-            <input cFormControl id="validationCustom09" required type="text" formControlName="profession"/>
+            <label cLabel for="ine">INE </label>
+            <input cFormControl id="ine" required type="text" formControlName="ine"/>
+            <c-form-feedback>INE</c-form-feedback>
+        </c-col>
+
+        
+
+        <c-col md="12" lg="6">
+            <label cLabel for="numDocIdentite">Numéro d'identité </label>
+            <input cFormControl id="numDocIdentite" required type="text" formControlName="numDocIdentite"/>
+            <c-form-feedback>Numéro d'identité</c-form-feedback>
+        </c-col>
+
+        <h4 class="mt-4 fw-bold">Contacts</h4>
+        <c-col md="12" lg="6">
+            <label cLabel for="telEtu">Téléphone </label>
+            <input cFormControl id="telEtu" required type="text" formControlName="telEtu"/>
+            <c-form-feedback>Téléphone</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="emailEtu">Email </label>
+            <input cFormControl id="emailEtu" required type="email" formControlName="emailEtu"/>
+            <c-form-feedback>Email</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="adresseEtu">Adresse </label>
+            <input cFormControl id="adresseEtu" required type="text" formControlName="adresseEtu"/>
+            <c-form-feedback>Adresse</c-form-feedback>
+        </c-col>
+
+
+
+
+
+        <h4 class="mt-4 fw-bold">Informations supplémentaires</h4>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="profession">Profession </label>
+            <input cFormControl id="profession" required type="text" formControlName="profession"/>
             <c-form-feedback>Profession</c-form-feedback>
         </c-col>
 
-        <c-col md="12" lg="6">
-            <label cLabel for="validationCustom10">Adresse de l'étudiant </label>
-            <input cFormControl id="validationCustom10" required type="text" formControlName="adresseEtu"/>
-            <c-form-feedback>Adresse de l'étudiant</c-form-feedback>
+        
+        <!-- <c-col md="12" lg="6">
+            <label cLabel for="assimileYN">Assimilé (Oui/Non) </label>
+            <input cFormControl id="assimileYN" required type="checkbox" formControlName="assimileYN"/>
+            <c-form-feedback>Assimilé</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom11">Téléphone de l'étudiant </label>
-            <input cFormControl id="validationCustom11" required type="text" formControlName="telEtu"/>
-            <c-form-feedback>Téléphone de l'étudiant</c-form-feedback>
+            <label cLabel for="exonereYN">Exonéré (Oui/Non) </label>
+            <input cFormControl id="exonereYN" required type="checkbox" formControlName="exonereYN"/>
+            <c-form-feedback>Exonéré</c-form-feedback>
+        </c-col> -->
+
+        <c-col md="12" lg="6">
+            <label cLabel for="region">Région </label>
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="region"
+                required
+                id="region"
+                [valid]="(informationPersonelleForm?.get('region')?.touched && informationPersonelleForm?.get('region')?.valid) ? true
+                : (informationPersonelleForm?.get('region')?.touched) && informationPersonelleForm?.get('region')?.invalid ? false : undefined"
+                cSelect> 
+                @for (region of regionListe; track $index) {
+                    
+                    <option [value]="region.id">{{region.libelleRegion}}</option>
+                }  
+            </select>
+            <c-form-feedback>Région</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom12">Email de l'étudiant </label>
-            <input cFormControl id="validationCustom12" required type="email" formControlName="emailEtu"/>
-            <c-form-feedback>Email de l'étudiant</c-form-feedback>
+            <label cLabel for="typeHandicap">Type handique </label>
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="typeHandicap"
+                required
+                id="typeHandicap"
+                [valid]="(informationPersonelleForm?.get('typeHandicap')?.touched && informationPersonelleForm?.get('typeHandicap')?.valid) ? true
+                : (informationPersonelleForm?.get('typeHandicap')?.touched) && informationPersonelleForm?.get('typeHandicap')?.invalid ? false : undefined"
+                cSelect> 
+                @for (typeHandicap of typeHandicapListe; track $index) {
+                    
+                    <option [value]="typeHandicap.id">{{typeHandicap.libelleTypeHandicap}}</option>
+                }  
+            </select>
+            <c-form-feedback> Type handicap</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom13">Adresse des parents </label>
-            <input cFormControl id="validationCustom13" required type="text" formControlName="adresseParent"/>
-            <c-form-feedback>Adresse des parents</c-form-feedback>
+            <label cLabel for="typeBourse">Type bourse </label>
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="typeBourse"
+                required
+                id="typeBourse"
+                [valid]="(informationPersonelleForm?.get('typeBourse')?.touched && informationPersonelleForm?.get('typeBourse')?.valid) ? true
+                : (informationPersonelleForm?.get('typeBourse')?.touched) && informationPersonelleForm?.get('typeBourse')?.invalid ? false : undefined"
+                cSelect> 
+                @for (typeBourse of typeBourseListe; track $index) {
+                    
+                    <option [value]="typeBourse.id">{{typeBourse.libelleTypeBourse}}</option>
+                }  
+            </select>
+            <c-form-feedback> Type Bourse</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom14">Téléphone des parents </label>
-            <input cFormControl id="validationCustom14" required type="text" formControlName="telParent"/>
-            <c-form-feedback>Téléphone des parents</c-form-feedback>
+            <label cLabel for="typeSelection">type Selection </label>
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="typeSelection"
+                required
+                id="typeSelection"
+                [valid]="(informationPersonelleForm?.get('typeSelection')?.touched && informationPersonelleForm?.get('typeSelection')?.valid) ? true
+                : (informationPersonelleForm?.get('typeSelection')?.touched) && informationPersonelleForm?.get('typeSelection')?.invalid ? false : undefined"
+                cSelect> 
+                @for (typeSelection of typeSelectionListe; track $index) {
+                    
+                    <option [value]="typeSelection.id">{{typeSelection.libelleTypeSelection}}</option>
+                }  
+            </select>
+            <c-form-feedback> Type Selection</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom15">Email des parents </label>
-            <input cFormControl id="validationCustom15" required type="email" formControlName="emailParent"/>
-            <c-form-feedback>Email des parents</c-form-feedback>
+            <label cLabel for="lycee">Lycée </label>
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="lycee"
+                required
+                id="lycee"
+                [valid]="(informationPersonelleForm?.get('lycee')?.touched && informationPersonelleForm?.get('lycee')?.valid) ? true
+                : (informationPersonelleForm?.get('lycee')?.touched) && informationPersonelleForm?.get('lycee')?.invalid ? false : undefined"
+                cSelect> 
+                @for (lycee of lyceeListe; track $index) {
+                    
+                    <option [value]="lycee.id">{{lycee.nomLycee}}</option>
+                }  
+            </select>
+            <c-form-feedback> Lycée</c-form-feedback>
         </c-col>
 
+
+        
+
+        
+
+        <!-- Rubrique: Informations Complémentaires -->
+        <!-- <h4 class="mt-4 fw-bold">Informations Complémentaires</h4> -->
+        
+
+        <c-col  md="12" lg="6">
+            <label  cLabel for="nomJeuneFilleEtu">Nom de jeune fille </label>
+            <input cFormControl id="nomJeuneFilleEtu" required type="text" formControlName="nomJeuneFilleEtu"/>
+            <c-form-feedback>Nom de jeune fille</c-form-feedback>
+        </c-col>
+        
+
+        <c-row class="mt-4" md="12" lg="12">
+            <c-col  md="12" lg="6">
+                <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" formControlName="handicapYN" id="handicapYN">
+                      <label cLabel for="handicapYN">Handicap </label>
+                    </div>
+                </div>
+            </c-col>
+    
+            <c-col  md="12" lg="6">
+                <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" formControlName="ordiPersoYN" id="ordiPersoYN">
+                      <label cLabel for="ordiPersoYN">Ordinateur personnel </label>
+                    </div>
+                </div>
+            </c-col>
+        </c-row>
+        
+
+
+        <!-- <c-col md="12" lg="6">
+            <label cLabel for="derniereModification">Dernière modification </label>
+            <input cFormControl id="derniereModification" required type="text" formControlName="derniereModification"/>
+            <c-form-feedback>Dernière modification</c-form-feedback>
+        </c-col> -->
+
+        
+
+
+
+        <!-- Rubrique: Informations Parentales -->
+        <h4 class="mt-4 fw-bold">Informations Parentales</h4>
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom16">Nom des parents </label>
-            <input cFormControl id="validationCustom16" required type="text" formControlName="nomParent"/>
+            <label cLabel for="nomParent">Nom des parents </label>
+            <input cFormControl id="nomParent" required type="text" formControlName="nomParent"/>
             <c-form-feedback>Nom des parents</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom17">Prénom des parents </label>
-            <input cFormControl id="validationCustom17" required type="text" formControlName="prenomParent"/>
+            <label cLabel for="prenomParent">Prénom des parents </label>
+            <input cFormControl id="prenomParent" required type="text" formControlName="prenomParent"/>
             <c-form-feedback>Prénom des parents</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom18">Dernière modification </label>
-            <input cFormControl id="validationCustom18" required type="text" formControlName="derniereModification"/>
-            <c-form-feedback>Dernière modification</c-form-feedback>
+            <label cLabel for="adresseParent">Adresse des parents </label>
+            <input cFormControl id="adresseParent" required type="text" formControlName="adresseParent"/>
+            <c-form-feedback>Adresse des parents</c-form-feedback>
         </c-col>
 
         <c-col md="12" lg="6">
-            <label cLabel for="validationCustom19">Email utilisateur </label>
-            <input cFormControl id="validationCustom19" required type="email" formControlName="emailUser"/>
-            <c-form-feedback>Email utilisateur</c-form-feedback>
+            <label cLabel for="telParent">Téléphone des parents </label>
+            <input cFormControl id="telParent" required type="text" formControlName="telParent"/>
+            <c-form-feedback>Téléphone des parents</c-form-feedback>
         </c-col>
 
-        <div class="col-12 d-flex justify-content-between">
+        <c-col md="12" lg="6">
+            <label cLabel for="emailParent">Email des parents </label>
+            <input cFormControl id="emailParent" required type="email" formControlName="emailParent"/>
+            <c-form-feedback>Email des parents</c-form-feedback>
+        </c-col>
+
+        
+        
+
+        
+
+        <!-- Rubrique: Baccalauréat -->
+        <h4 class="mt-4 fw-bold">Baccalauréat</h4>
+        <c-col md="12" lg="6">
+            <label cLabel for="origineScolaire">Origine scolaire </label>
+            <input cFormControl id="origineScolaire" required type="text" formControlName="origineScolaire"/>
+            <c-form-feedback>Origine scolaire</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="anneeBac">Année du bac </label>
+            <input cFormControl id="anneeBac" required type="number" formControlName="anneeBac"/>
+            <c-form-feedback>Année du bac</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="natureBac">Nature du bac </label>
+            <input cFormControl id="natureBac" required type="text" formControlName="natureBac"/>
+            <c-form-feedback>Nature du bac</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="mentionBac">Mention du bac </label>
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="mentionBac"
+                required
+                id="mentionBac"
+                [valid]="(informationPersonelleForm?.get('mentionBac')?.touched && informationPersonelleForm?.get('mentionBac')?.valid) ? true
+               : (informationPersonelleForm?.get('mentionBac')?.touched) && informationPersonelleForm?.get('mentionBac')?.invalid ? false : undefined"
+                cSelect>
+                
+                <option value="Passable">Passable</option>
+                <option value="Assez-Bien">Assez-Bien</option>
+                <option value="Bien">Bien</option>
+                <option value="Tres Bien">Tres Bien</option>
+                <option value="Excellent">Excellent</option>
+                    
+                    
+
+                
+            </select>
+            <c-form-feedback>Mention du bac</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="moyenneSelectionBac">Moyenne de sélection du bac </label>
+            <input cFormControl id="moyenneSelectionBac" required type="number" formControlName="moyenneSelectionBac"/>
+            <c-form-feedback>Moyenne de sélection du bac</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="moyenneBac">Moyenne du bac </label>
+            <input cFormControl id="moyenneBac" required type="number" formControlName="moyenneBac"/>
+            <c-form-feedback>Moyenne du bac</c-form-feedback>
+        </c-col>
+
+        <c-col md="12" lg="6">
+            <label cLabel for="serie">Série </label>
+
+            <select 
+                cFormControl 
+                aria-label="Default select example" 
+                formControlName="serie"
+                required
+                id="serie"
+                [valid]="(informationPersonelleForm?.get('serie')?.touched && informationPersonelleForm?.get('serie')?.valid) ? true
+               : (informationPersonelleForm?.get('serie')?.touched) && informationPersonelleForm?.get('serie')?.invalid ? false : undefined"
+                cSelect>
+                
+                @for (serie of serieListe; track $index) {
+                    
+                    <option [value]="serie.id">{{serie.sigleSerie}}</option>
+                }
+                
+            </select>
+            <c-form-feedback>Série</c-form-feedback>
+        </c-col>
+
+        <!-- Boutons de soumission et de réinitialisation -->
+        <div class="col-12 d-flex justify-content-between mt-5">
             <div class="w-50 pe-1">
                 <button (click)="onReset1()" class="w-100" cButton color="secondary" type="reset">
                     Vider
                 </button>
             </div>
-
             <div class="w-50 ps-1">
-                <button cButton class="w-100 text-white" [disabled]="!etudiantForm?.valid" color="primary" type="submit">
+                <button cButton class="w-100 text-white" [disabled]="!informationPersonelleForm?.valid" color="primary" type="submit">
                     Enregistrer
                 </button>
             </div>

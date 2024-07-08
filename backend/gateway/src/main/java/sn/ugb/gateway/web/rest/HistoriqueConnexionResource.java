@@ -1,9 +1,13 @@
 package sn.ugb.gateway.web.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -259,5 +264,149 @@ public class HistoriqueConnexionResource {
                 )
             )
             .map(headers -> ResponseEntity.ok().headers(headers).body(historiqueConnexionService.search(query, pageable)));
+    }
+
+    /**
+     * GET  /historique-connexions/en-cours-yn/:enCoursYN : get all the historiqueConnexions by enCoursYN.
+     *
+     * @param enCoursYN the enCoursYN of the HistoriqueConnexionDTO to retrieve.
+     * @param pageable the pagination information.
+     * @param request a {@link ServerHttpRequest} request.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of historiqueConnexions in body.
+     */
+    @GetMapping("/en-cours-yn/{enCoursYN}")
+    public Mono<ResponseEntity<List<HistoriqueConnexionDTO>>> getAllHistoriqueConnexionByEncoursYN(
+        @PathVariable Boolean enCoursYN,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        ServerHttpRequest request
+    ) {
+        log.debug("REST request to get a page of HistoriqueConnexions by enCoursYN: {}", enCoursYN);
+        return historiqueConnexionService
+            .countAllByEnCoursYN(enCoursYN)
+            .zipWith(historiqueConnexionService.getAllHistoriqueConnexionByEncoursYN(enCoursYN, pageable).collectList())
+            .map(countWithEntities ->
+                ResponseEntity
+                    .ok()
+                    .headers(
+                        PaginationUtil.generatePaginationHttpHeaders(
+                            ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                            new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                        )
+                    )
+                    .body(countWithEntities.getT2())
+            );
+    }
+
+    /**
+     * {@code POST  /archive/:id} : Archive the historiqueConnexion.
+     *
+     * @param id the id of the historiqueConnexionDTO to archive.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the archived historiqueConnexionDTO,
+     * or with status {@code 404 (Not Found)} if the historiqueConnexionDTO couldn't be archived.
+     */
+    @PostMapping("/archive/{id}")
+    public Mono<ResponseEntity<HistoriqueConnexionDTO>> archiveHistoriqueConnexion(@PathVariable Long id) {
+        log.debug("REST request to archive HistoriqueConnexion : {}", id);
+        return historiqueConnexionService.archiveHistoriqueConnexion(id)
+            .map(result ->
+                ResponseEntity.ok()
+                    .headers(HeaderUtil.createAlert(applicationName, "historiqueConnexion archived", id.toString()))
+                    .body(result)
+            )
+            .onErrorResume(e -> Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)));
+    }
+
+    /**
+     * GET  /historique-connexions/timeslots : get all the historiqueConnexions within the specified time slots.
+     *
+     * @param dateDebut the start date and time of the time slot.
+     * @param dateFin the end date and time of the time slot.
+     * @param pageable the pagination information.
+     * @param request a {@link ServerHttpRequest} request.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of historiqueConnexions in body.
+     */
+    @Operation(summary = "Get all historiqueConnexions by time slots",
+        description = "Get a list of historiqueConnexions filtered by the specified time slots.")
+    @GetMapping("/timeslots")
+    public Mono<ResponseEntity<List<HistoriqueConnexionDTO>>> getAllHistoriqueConnexionByTimeSlots(
+        @Parameter(
+            description = "The start date time of the HistoriqueConnexion to retrieve.",
+            required = true,
+            schema = @Schema(type = "string", format = "date", example = "2023-07-04")
+        )
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateDebut,
+
+        @Parameter(
+            description = "The end date time of the HistoriqueConnexion to retrieve.",
+            required = true,
+            schema = @Schema(type = "string", format = "date", example = "2024-07-05")
+        )
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFin,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        ServerHttpRequest request
+    ) {
+        log.debug("REST request to get a page of HistoriqueConnexions by time slots: {} to {}", dateDebut, dateFin);
+        return historiqueConnexionService
+            .countAllByTimeSlots(dateDebut, dateFin)
+            .zipWith(historiqueConnexionService.getAllHistoriqueConnexionByTimeSlots(dateDebut, dateFin, pageable).collectList())
+            .map(countWithEntities ->
+                ResponseEntity
+                    .ok()
+                    .headers(
+                        PaginationUtil.generatePaginationHttpHeaders(
+                            ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                            new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                        )
+                    )
+                    .body(countWithEntities.getT2())
+            );
+    }
+
+    /**
+     * GET  /historique-connexions/infos-users/timeslots/{infosUserId} : get all the historiqueConnexions by infosUserId within the specified time slots.
+     *
+     * @param infosUserId the ID of the infosUser to retrieve historiqueConnexions for.
+     * @param dateDebut the start date and time of the time slot.
+     * @param dateFin the end date and time of the time slot.
+     * @param pageable the pagination information.
+     * @param request a {@link ServerHttpRequest} request.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of historiqueConnexions in body.
+     */
+    @Operation(summary = "Get all historiqueConnexions by time slots",
+        description = "Get a list of historiqueConnexions filtered by the specified time slots.")
+    @GetMapping("/infos-users/timeslots/{infosUserId}")
+    public Mono<ResponseEntity<List<HistoriqueConnexionDTO>>> getAllHistoriqueConnexionByInfosUserIdAndTimeSlots(
+        @PathVariable Long infosUserId,
+        @Parameter(
+            description = "The start date time of the HistoriqueConnexion to retrieve.",
+            required = true,
+            schema = @Schema(type = "string", format = "date", example = "2023-07-04")
+        )
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateDebut,
+
+        @Parameter(
+            description = "The end date time of the HistoriqueConnexion to retrieve.",
+            required = true,
+            schema = @Schema(type = "string", format = "date", example = "2024-07-05")
+        )
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateFin,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        ServerHttpRequest request
+    ) {
+        log.debug("REST request to get a page of HistoriqueConnexions by infosUserId: {} and time slots: {} to {}", infosUserId, dateDebut, dateFin);
+        return historiqueConnexionService
+            .countAllByInfosUserIdAndTimeSlots(infosUserId, dateDebut, dateFin)
+            .zipWith(historiqueConnexionService.getAllHistoriqueConnexionByInfosUserIdAndTimeSlots(infosUserId, dateDebut, dateFin, pageable).collectList())
+            .map(countWithEntities ->
+                ResponseEntity
+                    .ok()
+                    .headers(
+                        PaginationUtil.generatePaginationHttpHeaders(
+                            ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                            new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                        )
+                    )
+                    .body(countWithEntities.getT2())
+            );
     }
 }

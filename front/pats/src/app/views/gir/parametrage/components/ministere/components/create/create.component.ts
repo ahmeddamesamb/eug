@@ -25,7 +25,7 @@ export class CreateComponent {
     sigleMinistere: '',
     dateDebut: '',
     dateFin: '',
-    enCoursYN: 0,
+    enCoursYN: false,
   };
   ministereForm: FormGroup;
   customStylesValidated = false;

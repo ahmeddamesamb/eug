@@ -135,6 +135,10 @@ export class UserService {
   //   } 
   
   // }
+  public getUserEmail(){
+    return this.userModel.email;
+  }
+
   public getUserFirstName(){
     return this.userModel.firstName;
   }

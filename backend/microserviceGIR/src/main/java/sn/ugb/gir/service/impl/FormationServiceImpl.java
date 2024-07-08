@@ -201,17 +201,12 @@ public class FormationServiceImpl implements FormationService {
     }
 
     @Override
-    public FormationDTO activateOrDeactivate(Long id) {
-        log.debug("Request to activate/deactivate Formation : {}", id);
-        Optional<Formation> optionalFormation = formationRepository.findById(id);
-        if (optionalFormation.isPresent()) {
-            Formation formation = optionalFormation.get();
-            formation.setActifYN(!formation.getActifYN());
-            Formation savedFormation = formationRepository.save(formation);
-            return formationMapper.toDto(savedFormation);
-        } else {
-            throw new BadRequestAlertException("Cette Formation n'est pas présente " + id, ENTITY_NAME, "formationIntrouvable");
-        }
+    public FormationDTO setActifYNFormation(Long id, Boolean actifYN) {
+        Formation formation = formationRepository.findById(id)
+            .orElseThrow(() -> new BadRequestAlertException("Formation introuvable.", ENTITY_NAME, "formationNotFound"));
+        formation.setActifYN(actifYN);
+        formation = formationRepository.save(formation);
+        return formationMapper.toDto(formation);
     }
 
 }

@@ -4,7 +4,7 @@ import {LyceeModel} from 'src/app/views/gir/parametrage/components/lycee/models/
 import {BaccalaureatModel} from 'src/app/views/gir/parametrage/components/baccalaureat/models/baccalaureat-model'
 
 export interface EtudiantModel {
-    id?: number;
+    id?: number,
     codeEtu?: string | null;
     ine?: string | null;
     codeBU?: number | null;
@@ -15,8 +15,9 @@ export interface EtudiantModel {
     numDocIdentite?: string | null;
     assimileYN?: boolean | null;
     exonereYN?: boolean | null;
+    actifYN?: boolean | null;
     region?: RegionModel | null;
     typeSelection?: TypeselectionModel | null;
     lycee?: LyceeModel | null;
-    baccalaureat?: BaccalaureatModel | null; 
+    //baccalaureat?: BaccalaureatModel | null; 
 }

@@ -67,4 +67,5 @@ public interface InscriptionAdministrativeFormationService {
      * @return the list of entities.
      */
     Page<InscriptionAdministrativeFormationDTO> search(String query, Pageable pageable);
+
 }

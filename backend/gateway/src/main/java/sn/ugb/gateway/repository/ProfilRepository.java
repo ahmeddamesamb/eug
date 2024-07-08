@@ -26,6 +26,7 @@ public interface ProfilRepository extends ReactiveCrudRepository<Profil, Long>, 
 
     @Override
     Mono<Void> deleteById(Long id);
+    Flux<Profil> findByActifYN(Boolean actifYN,Pageable pageable);
 }
 
 interface ProfilRepositoryInternal {

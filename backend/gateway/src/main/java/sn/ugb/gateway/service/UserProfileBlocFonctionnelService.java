@@ -3,6 +3,7 @@ package sn.ugb.gateway.service;
 import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sn.ugb.gateway.service.dto.ServiceUserDTO;
 import sn.ugb.gateway.service.dto.UserProfileBlocFonctionnelDTO;
 
 /**
@@ -79,4 +80,18 @@ public interface UserProfileBlocFonctionnelService {
      * @return the list of entities.
      */
     Flux<UserProfileBlocFonctionnelDTO> search(String query, Pageable pageable);
+
+    Flux<UserProfileBlocFonctionnelDTO> getAllUserProfilBlocFonctionnelByUserProfilId(Long userProfileId, Pageable pageable);
+
+    Mono<Long> countByUserProfileId(Long userProfileId);
+
+    Flux<UserProfileBlocFonctionnelDTO> findAllByBlocFonctionnelId(Long blocFonctionnelId, Pageable pageable);
+
+    Mono<Long> countByBlocFonctionnelId(Long userProfileId);
+
+    Flux<ServiceUserDTO> findAllServiceByUserProfileId(Long userProfileId, Pageable pageable);
+
+    Flux<UserProfileBlocFonctionnelDTO> findAllByEnCoursYN(Boolean enCoursYN, Pageable pageable);
+
+    Mono<Long> countByEnCoursYN(Boolean enCoursYN);
 }

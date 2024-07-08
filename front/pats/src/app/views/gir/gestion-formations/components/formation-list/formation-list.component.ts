@@ -2,7 +2,6 @@ import { Component, QueryList, ViewChild, ViewChildren, } from '@angular/core';
 import { Router } from '@angular/router';
 import {FormationService} from '../../../parametrage/components/formation/services/formation.service';
 import {FormationModel} from '../../../parametrage/components/formation/models/formation-model';
-import { NumberToStringPipe } from '../../../../../pipes/number-to-string.pipe';
 import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
 import{
   BadgeComponent,
@@ -28,7 +27,7 @@ import{
 @Component({
   selector: 'app-formation-list',
   standalone: true,
-  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
+  imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective,
     ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
     CardComponent, CardHeaderComponent,PopoverModule, ColComponent
   ],
@@ -36,23 +35,59 @@ import{
   styleUrl: './formation-list.component.scss'
 })
 export class FormationListComponent {
-  constructor (private route:Router){
+  constructor (private route:Router,private formationService: FormationService,private alertService: AlertServiceService){
 
   }
 
   formationList : FormationModel[] = [];
   itemDelete!: FormationModel;
   itemUpdate!: FormationModel;
+  public liveDemoVisible = false;
   isloading = false;
 
-  formationAutoriser(){
-    this.route.navigate(['/gir/gestion-formation/gestion-formation/formation-autorise'])
+  ngOnInit(): void {
+    this.getListe();
+ 
+  }
+  getListe(){
+    this.isloading = true;
+    this.formationService.getFormationList().subscribe({
+      next: (data) => {
+        this.formationList = data;
+        this.isloading = false;
+      },
+      error: (err) => {
+
+
+      }
+    });
   }
 
   columns: IColumn[] = [
     {
-      key: 'libelleformation',
-      label: 'Nom'
+      key: 'codeFormation',
+      label: 'Code formation'
+    },
+    {
+      key: 'lmdYN',
+      label: 'LMD'
+    },
+    
+    {
+      key: 'typeFormation',
+      label: 'Type Forma.'
+    },
+    {
+      key: 'niveau',
+      label: 'Niveau'
+    },
+    {
+      key: 'specialite',
+      label: 'Spécialité'
+    },
+    {
+      key: 'departement',
+      label: 'Département'
     },
     {
       key: 'show',
@@ -62,4 +97,9 @@ export class FormationListComponent {
       sorter: false
     }
   ];
+
+  formationAutoriser(item:number){
+    this.route.navigate(['/gir/gestion-formation/gestion-formation/formation-autorise',item])
+  }
+
 }

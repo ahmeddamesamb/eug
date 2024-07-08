@@ -86,8 +86,6 @@ public interface InfoUserRessourceService {
 
     Flux<InfoUserRessourceDTO> findAllByActifYN(Boolean actifYN);
 
-    Mono<Void> archive(Long id);
-
-    Mono<Void> unarchive(Long id);
+    Mono<Void> archive(Long id, Boolean enCours);
 
 }
