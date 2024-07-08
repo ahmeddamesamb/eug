@@ -9,15 +9,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sn.ugb.gir.domain.InformationsDerniersInscriptions;
 import sn.ugb.gir.domain.InscriptionAdministrative;
 import sn.ugb.gir.repository.InscriptionAdministrativeRepository;
 import sn.ugb.gir.repository.search.InscriptionAdministrativeSearchRepository;
 import sn.ugb.gir.service.InscriptionAdministrativeService;
 import sn.ugb.gir.service.dto.AnneeAcademiqueDTO;
+import sn.ugb.gir.service.dto.InformationsDerniersInscriptionsDTO;
+import sn.ugb.gir.service.dto.InformationsIADTO;
 import sn.ugb.gir.service.dto.InscriptionAdministrativeDTO;
 import sn.ugb.gir.service.mapper.InscriptionAdministrativeMapper;
+import sn.ugb.gir.service.mapper.InformationsDerniersInscriptionsMapper;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.InscriptionAdministrative}.
@@ -32,15 +37,18 @@ public class InscriptionAdministrativeServiceImpl implements InscriptionAdminist
 
     private final InscriptionAdministrativeMapper inscriptionAdministrativeMapper;
 
+    private final InformationsDerniersInscriptionsMapper informationsDerniersInscriptionsMapper;
+
     private final InscriptionAdministrativeSearchRepository inscriptionAdministrativeSearchRepository;
 
     public InscriptionAdministrativeServiceImpl(
-        InscriptionAdministrativeRepository inscriptionAdministrativeRepository,
-        InscriptionAdministrativeMapper inscriptionAdministrativeMapper,
-        InscriptionAdministrativeSearchRepository inscriptionAdministrativeSearchRepository
+            InscriptionAdministrativeRepository inscriptionAdministrativeRepository,
+            InscriptionAdministrativeMapper inscriptionAdministrativeMapper, InformationsDerniersInscriptionsMapper informationsDerniersInscriptionsMapper,
+            InscriptionAdministrativeSearchRepository inscriptionAdministrativeSearchRepository
     ) {
         this.inscriptionAdministrativeRepository = inscriptionAdministrativeRepository;
         this.inscriptionAdministrativeMapper = inscriptionAdministrativeMapper;
+        this.informationsDerniersInscriptionsMapper = informationsDerniersInscriptionsMapper;
         this.inscriptionAdministrativeSearchRepository = inscriptionAdministrativeSearchRepository;
     }
 
@@ -144,6 +152,15 @@ public class InscriptionAdministrativeServiceImpl implements InscriptionAdminist
     public long countNouveauInscritsByAnneeAcademiqueEnCours() {
         log.debug("Request to count InscriptionAdministratives where nouveauInscritYN is true and anneeAcademique.enCoursYN is true");
         return inscriptionAdministrativeRepository.countByNouveauInscritYNTrueAndAnneeAcademiqueAnneeCouranteYNTrue();
+    }
+
+    @Override
+    public Page<InformationsIADTO> findByInscriptionEnCours(Pageable pageable){
+        log.debug("Request to get all the last InscriptionAdministrativeFormations");
+        Page<InformationsIADTO> inscriptionEnCours = inscriptionAdministrativeRepository.findByInscriptionEnCours(pageable);
+
+
+        return inscriptionAdministrativeRepository.findByInscriptionEnCours(pageable);
     }
 
 

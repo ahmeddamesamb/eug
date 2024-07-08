@@ -20,6 +20,7 @@ import sn.ugb.gir.service.InscriptionAdministrativeFormationService;
 import sn.ugb.gir.service.dto.*;
 import sn.ugb.gir.service.mapper.InscriptionAdministrativeFormationMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+import sn.ugb.gir.service.mapper.InformationsDerniersInscriptionsMapper;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -44,16 +45,20 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
 
     private final InscriptionAdministrativeFormationMapper inscriptionAdministrativeFormationMapper;
 
+    private final InformationsDerniersInscriptionsMapper informationsDerniersInscriptionsMapper;
+
+
     private final InscriptionAdministrativeFormationSearchRepository inscriptionAdministrativeFormationSearchRepository;
 
     public InscriptionAdministrativeFormationServiceImpl(
             InscriptionAdministrativeFormationRepository inscriptionAdministrativeFormationRepository, PaiementFraisRepository paiementFraisRepository,
-            InscriptionAdministrativeFormationMapper inscriptionAdministrativeFormationMapper,
+            InscriptionAdministrativeFormationMapper inscriptionAdministrativeFormationMapper, InformationsDerniersInscriptionsMapper informationsDerniersInscriptionsMapper,
             InscriptionAdministrativeFormationSearchRepository inscriptionAdministrativeFormationSearchRepository
     ) {
         this.inscriptionAdministrativeFormationRepository = inscriptionAdministrativeFormationRepository;
         this.paiementFraisRepository = paiementFraisRepository;
         this.inscriptionAdministrativeFormationMapper = inscriptionAdministrativeFormationMapper;
+        this.informationsDerniersInscriptionsMapper = informationsDerniersInscriptionsMapper;
         this.inscriptionAdministrativeFormationSearchRepository = inscriptionAdministrativeFormationSearchRepository;
     }
 
@@ -163,7 +168,7 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
     @Override
     public Page<InformationsDerniersInscriptionsDTO> findAllByDernierInscription(Pageable pageable) {
         log.debug("Request to get all the last InscriptionAdministrativeFormations");
-        return inscriptionAdministrativeFormationRepository.findByLastInscription(pageable);
+        return inscriptionAdministrativeFormationRepository.findByLastInscription(pageable).map(informationsDerniersInscriptionsMapper::toDto);
     }
 
 

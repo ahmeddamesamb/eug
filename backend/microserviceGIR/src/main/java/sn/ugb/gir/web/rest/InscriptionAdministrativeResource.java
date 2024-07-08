@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sn.ugb.gir.repository.InscriptionAdministrativeRepository;
 import sn.ugb.gir.service.InscriptionAdministrativeService;
+import sn.ugb.gir.service.dto.InformationsDerniersInscriptionsDTO;
+import sn.ugb.gir.service.dto.InformationsIADTO;
 import sn.ugb.gir.service.dto.InscriptionAdministrativeDTO;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 import sn.ugb.gir.web.rest.errors.ElasticsearchExceptionMapper;
@@ -219,5 +221,21 @@ public class InscriptionAdministrativeResource {
         } catch (RuntimeException e) {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
+    }
+
+    /**
+     * {@code GET  /inscription-administrative} : get all the inscriptionAdministrativeFormations by the last anneeacademique.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of inscriptionAdministrativeFormations in body.
+     */
+    @GetMapping("/InscriptionEnCour")
+    public ResponseEntity<List<InformationsIADTO>> getAllInscriptionAdministrativeEnCour(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get a page of InscriptionAdministrativeFormations by the last anneeacademique.");
+        Page<InformationsIADTO> page = inscriptionAdministrativeService.findByInscriptionEnCours(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

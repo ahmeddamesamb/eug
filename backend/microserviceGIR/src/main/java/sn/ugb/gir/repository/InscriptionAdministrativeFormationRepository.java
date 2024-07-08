@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import sn.ugb.gir.domain.InformationsDerniersInscriptions;
 import sn.ugb.gir.domain.InscriptionAdministrativeFormation;
 import sn.ugb.gir.domain.PaiementFrais;
 import sn.ugb.gir.service.dto.InformationsDerniersInscriptionsDTO;
@@ -37,7 +38,7 @@ public interface InscriptionAdministrativeFormationRepository extends JpaReposit
 //    Page<Object[]> findByLastInscription(Pageable pageable);
 
 
-    @Query("SELECT new sn.ugb.gir.service.dto.InformationsDerniersInscriptionsDTO(iaf,ip) " +
+    @Query("SELECT new sn.ugb.gir.domain.InformationsDerniersInscriptions(iaf,ip) " +
         "FROM InscriptionAdministrativeFormation iaf, InformationPersonnelle ip " +
         "WHERE iaf.inscriptionAdministrative.anneeAcademique.anneeAc = " +
         "(SELECT MAX(i.inscriptionAdministrative.anneeAcademique.anneeAc) " +
@@ -45,7 +46,7 @@ public interface InscriptionAdministrativeFormationRepository extends JpaReposit
         "WHERE iaf.inscriptionAdministrative.etudiant = i.inscriptionAdministrative.etudiant " +
         "AND ip.etudiant.id = iaf.inscriptionAdministrative.etudiant.id " +
         "GROUP BY i.inscriptionAdministrative.etudiant)")
-    Page<InformationsDerniersInscriptionsDTO> findByLastInscription(Pageable pageable);
+    Page<InformationsDerniersInscriptions> findByLastInscription(Pageable pageable);
 
 //    @Query( "SELECT iaf FROM InscriptionAdministrativeFormation iaf  WHERE (iaf.inscriptionAdministrative.anneeAcademique.anneeAc) >=ALL (" SELECT i.inscriptionAdministrative.anneeAcademique.anneeAc FROM InscriptionAdministrativeFormation i WHERE( i.inscriptionAdministrative.etudiant.id == iaf.inscriptionAdministrative.etudiant.id )")")
 //    Page<InscriptionAdministrativeFormation> teste(Pageable pageable);

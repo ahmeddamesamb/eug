@@ -3,14 +3,16 @@ package sn.ugb.gir.service.dto;
 
 import sn.ugb.gir.domain.InformationPersonnelle;
 import sn.ugb.gir.domain.InscriptionAdministrativeFormation;
-
+/**
+ * A DTO for the {@link sn.ugb.gir.domain.InformationsDerniersInscriptions} entity.
+ */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class InformationsDerniersInscriptionsDTO {
 
-    private InscriptionAdministrativeFormation inscriptionAdministrativeFormation;
-    private InformationPersonnelle informationPersonnelle;
+    private InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormation;
+    private InformationPersonnelleDTO informationPersonnelle;
 
-    public InformationsDerniersInscriptionsDTO(InscriptionAdministrativeFormation inscriptionAdministrativeFormation, InformationPersonnelle informationPersonnelle) {
+    public InformationsDerniersInscriptionsDTO(InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormation, InformationPersonnelleDTO informationPersonnelle) {
         this.inscriptionAdministrativeFormation = inscriptionAdministrativeFormation;
         this.informationPersonnelle = informationPersonnelle;
     }
@@ -18,27 +20,27 @@ public class InformationsDerniersInscriptionsDTO {
     public InformationsDerniersInscriptionsDTO() {
     }
 
-    public InscriptionAdministrativeFormation getInscriptionAdministrativeFormation() {
+    public InscriptionAdministrativeFormationDTO getInscriptionAdministrativeFormation() {
         return inscriptionAdministrativeFormation;
     }
 
-    public void setInscriptionAdministrativeFormation(InscriptionAdministrativeFormation inscriptionAdministrativeFormation) {
+    public void setInscriptionAdministrativeFormation(InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormation) {
         this.inscriptionAdministrativeFormation = inscriptionAdministrativeFormation;
     }
 
-    public InformationPersonnelle getInformationPersonnelle() {
+    public InformationPersonnelleDTO getInformationPersonnelle() {
         return informationPersonnelle;
     }
 
-    public void setInformationPersonnelle(InformationPersonnelle informationPersonnelle) {
+    public void setInformationPersonnelle(InformationPersonnelleDTO informationPersonnelle) {
         this.informationPersonnelle = informationPersonnelle;
     }
 
     @Override
     public String toString() {
         return "InformationsDerniersInscriptionsDTO{" +
-            "inscriptionAdministrativeFormation=" + inscriptionAdministrativeFormation +
-            ", informationPersonnelle=" + informationPersonnelle +
+            "inscriptionAdministrativeFormationDTO=" + inscriptionAdministrativeFormation +
+            ", informationPersonnelleDTO=" + informationPersonnelle +
             '}';
     }
 }
