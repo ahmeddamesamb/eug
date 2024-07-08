@@ -159,6 +159,39 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
         return inscriptionAdministrativeFormationRepository.findByLastInscription(pageable).map(inscriptionAdministrativeFormationMapper::toDto);
     }
 
+    public void validateData(InscriptionAdministrativeFormation inscriptionAdministrativeFormation){
+
+        if (Objects.equals(inscriptionAdministrativeFormation.getFormation(),null)) {
+            throw new BadRequestAlertException("Veuillez renseigné la formation à laquelle s'inscrit l'étudiant", "Formation", "FormationObligatoire");
+        }
+        if (Objects.equals(inscriptionAdministrativeFormation.getInscriptionAdministrative().getEtudiant(),null)) {
+            throw new BadRequestAlertException("Veuillez renseigné l'etudiant qui doit s'inscrire ", ENTITY_NAME, "EtudiantObligatoire");
+        }
+        if (Objects.equals(inscriptionAdministrativeFormation.getInscriptionAdministrative().getAnneeAcademique(),null)) {
+            throw new BadRequestAlertException("Veuillez renseigné l'année de l'inscription", ENTITY_NAME, "AnneeAcademiqueObligatoire");
+        }
+        if (Objects.equals(inscriptionAdministrativeFormation.getInscriptionAdministrative().getTypeAdmission(),null)) {
+            throw new BadRequestAlertException("Veuillez renseigné le type d'admission de l'étudiant", ENTITY_NAME, "TypeAdmissionObligatoire");
+        }
+
+        Long etudiantId = inscriptionAdministrativeFormation.getInscriptionAdministrative().getEtudiant().getId();
+        Long AnneeAcademiqueId = inscriptionAdministrativeFormation.getInscriptionAdministrative().getAnneeAcademique().getId();
+        List<InscriptionAdministrativeFormation> IafExistants= inscriptionAdministrativeFormationRepository.findByInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId(etudiantId,AnneeAcademiqueId);
+
+        long nbIafEtudiant = IafExistants.size();
+        if (!IafExistants.isEmpty() && nbIafEtudiant ==2 ) {
+            throw new BadRequestAlertException("l'étudiant possède deja deux inscriptions à deux formations distinctes", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationTrippleImpossible");
+        } else if (nbIafEtudiant ==1) {
+            if (Objects.equals(IafExistants.get(0).getFormation(), inscriptionAdministrativeFormation.getFormation() )) {
+                throw new BadRequestAlertException("l'inscription de cet etudiant à cette formation est deja faite pour cet annee", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationExiste");
+            } else { //double inscription
+                inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(FALSE);
+            }
+        } else if (nbIafEtudiant ==0) { //setInscriptionPrincipaleYN quelle prealable ??
+            inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(TRUE);
+        }
+    }
+
 
     private void appliquerReglesDeGestion(InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormationDTO) {
 
@@ -205,39 +238,6 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
     private boolean etudiantReprendSesEtudes() {
         // Implémenter la logique pour RG4
         return false; // Placeholder
-    }
-
-    public void validateData(InscriptionAdministrativeFormation inscriptionAdministrativeFormation){
-
-        if (Objects.equals(inscriptionAdministrativeFormation.getFormation(),null)) {
-            throw new BadRequestAlertException("Veuillez renseigné la formation à laquelle s'inscrit l'étudiant", "Formation", "FormationObligatoire");
-        }
-        if (Objects.equals(inscriptionAdministrativeFormation.getInscriptionAdministrative().getEtudiant(),null)) {
-            throw new BadRequestAlertException("Veuillez renseigné l'etudiant qui doit s'inscrire ", ENTITY_NAME, "EtudiantObligatoire");
-        }
-        if (Objects.equals(inscriptionAdministrativeFormation.getInscriptionAdministrative().getAnneeAcademique(),null)) {
-            throw new BadRequestAlertException("Veuillez renseigné l'année de l'inscription", ENTITY_NAME, "AnneeAcademiqueObligatoire");
-        }
-        if (Objects.equals(inscriptionAdministrativeFormation.getInscriptionAdministrative().getTypeAdmission(),null)) {
-            throw new BadRequestAlertException("Veuillez renseigné le type d'admission de l'étudiant", ENTITY_NAME, "TypeAdmissionObligatoire");
-        }
-
-        Long etudiantId = inscriptionAdministrativeFormation.getInscriptionAdministrative().getEtudiant().getId();
-        Long AnneeAcademiqueId = inscriptionAdministrativeFormation.getInscriptionAdministrative().getAnneeAcademique().getId();
-        List<InscriptionAdministrativeFormation> IafExistants= inscriptionAdministrativeFormationRepository.findByInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId(etudiantId,AnneeAcademiqueId);
-
-        long nbIafEtudiant = IafExistants.size();
-        if (!IafExistants.isEmpty() && nbIafEtudiant ==2 ) {
-            throw new BadRequestAlertException("l'étudiant possède deja deux inscriptions à deux formations distinctes", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationTrippleImpossible");
-        } else if (nbIafEtudiant ==1) {
-            if (Objects.equals(IafExistants.get(0).getFormation(), inscriptionAdministrativeFormation.getFormation() )) {
-                throw new BadRequestAlertException("l'inscription de cet etudiant à cette formation est deja faite pour cet annee", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationExiste");
-            } else { //double inscription
-                inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(FALSE);
-            }
-        } else if (nbIafEtudiant ==0) { //setInscriptionPrincipaleYN quelle prealable ??
-            inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(TRUE);
-        }
     }
 
     private boolean etudiantEstEnPositionDeCartouche(InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormationDTO) {
