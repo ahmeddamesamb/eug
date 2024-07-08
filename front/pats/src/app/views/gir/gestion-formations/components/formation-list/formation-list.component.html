@@ -28,9 +28,9 @@ noItemsLabel="La liste est vide"
   
   <td>
     @switch (columnName) {
-      @case ('typeFormation') {
+      @case ('specialite') {
           
-        {{ (item[columnName].libelleTypeFormation)  }} 
+        {{ (item[columnName].nomSpecialites)  }} 
 
       }
       @case ('niveau') {
@@ -38,16 +38,12 @@ noItemsLabel="La liste est vide"
         {{ (item[columnName].libelleNiveau)  }} 
 
       }
-      @case ('specialite') {
-          
-        {{ (item[columnName].nomSpecialites)  }} 
-
-      }
       @case ('departement') {
           
-        {{ (item[columnName].nomDepatement)  }} 
+        {{ (item[columnName].ufr.libelleUfr)  }}  
 
       }
+      
       @case ('show') {
           <div class="d-flex gap-2">
               <button (click)="view(item.id)"  cButton cPopover="Détails" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >

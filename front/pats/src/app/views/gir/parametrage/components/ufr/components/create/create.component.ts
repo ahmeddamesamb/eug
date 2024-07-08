@@ -21,10 +21,10 @@ import {AlertServiceService} from 'src/app/shared/services/alert/alert-service.s
 export class CreateComponent {
 
   ufr :UfrModel = {
-    libeleUfr: '',
+    libelleUfr: '',
     sigleUfr: '',
-    systemeLMDYN:0,
-    ordreStat:0,
+    prefixe:'',
+    actifYN: true,
     universite : {
       id: 0
     } 
@@ -72,7 +72,7 @@ export class CreateComponent {
   
   initializeForm(ufr: UfrModel) {
     this.ufrForm.setValue({
-      libeleUfr: ufr.libeleUfr || '',
+      libelleUfr: ufr.libelleUfr || '',
       sigleUfr: ufr.sigleUfr || '',
       universite : ufr.universite?.id || 0,
       /* systemeLMDYN : ufr.systemeLMDYN || 0,
@@ -100,7 +100,7 @@ export class CreateComponent {
       var idUniversite = this.ufrForm!.get('universite')?.value;
       if (idUniversite) {
           if (this.ufr && this.ufr.universite) {
-              this.ufr.libeleUfr = this.ufrForm!.get('libeleUfr')?.value; 
+              this.ufr.libelleUfr = this.ufrForm!.get('libelleUfr')?.value; 
               this.ufr.sigleUfr = this.ufrForm!.get('sigleUfr')?.value;
               /* this.ufr.systemeLMDYN = this.ufrForm!.get('systemeLMDYN')?.value ? 1 : 0;
               this.ufr.ordreStat = this.ufrForm!.get('ordreStat')?.value ? 1 : 0;  */

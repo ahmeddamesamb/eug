@@ -71,7 +71,7 @@ export class EtudiantListComponent {
 
   columns: IColumn[] = [
     {
-      key: 'inscriptionAdministrative.etudiant',
+      key: 'inscriptionAdministrative',
       label: 'Code'
     },
     {

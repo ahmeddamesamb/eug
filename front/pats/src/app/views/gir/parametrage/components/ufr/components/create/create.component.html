@@ -16,9 +16,9 @@
         <c-col md="12">
             <label cLabel for="validationCustom01">Libellé UFR </label>
             <input cFormControl id="validationCustom01" required type="text" value=""
-            [valid]="(ufrForm?.get('libeleUfr')?.touched && ufrForm?.get('libeleUfr')?.valid) ? true
-               : (ufrForm?.get('libeleUfr')?.touched) && ufrForm?.get('libeleUfr')?.invalid ? false : undefined"
-            formControlName="libeleUfr"/>
+            [valid]="(ufrForm?.get('libelleUfr')?.touched && ufrForm?.get('libelleUfr')?.valid) ? true
+               : (ufrForm?.get('libelleUfr')?.touched) && ufrForm?.get('libelleUfr')?.invalid ? false : undefined"
+            formControlName="libelleUfr"/>
             <c-form-feedback>Le Libellé est obligatoire </c-form-feedback>
         </c-col>
         <c-col md="12">
