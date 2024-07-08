@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {InformationPersonnellesService} from '../services/information-personnelles.service';
 import {InscriptionAdministrativeFormModel} from '../../inscription-reinscription/models/inscription-administrative-form-model';
 import {InscriptionAdministrativeFormService} from '../../inscription-reinscription/services/inscription-administrative-form.service';
+import {InformationPersonellesModel} from '../models/information-personelles-model';
 //import {EtudiantModel} from '../models/etudiant-model';
 import { NumberToStringPipe } from '../../../../pipes/number-to-string.pipe'
 import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
@@ -28,6 +29,13 @@ import{
   PopoverModule,
 } from '@coreui/angular-pro';
 import { map } from 'rxjs';
+
+interface InscriptionDerniereInscrit {
+  inscriptionAdministrativeFormation: InscriptionAdministrativeFormModel;
+  informationPersonnelle?: InformationPersonellesModel;
+}
+
+
 
 @Component({
   selector: 'app-etudiant-list',
@@ -58,30 +66,37 @@ export class EtudiantListComponent {
   }
 
   getListe() {
+    
     this.isloading = true;
-    this.iafService.getIafList().pipe(
-      map((data: any[]) => data.map(item => this.transformData(item)))
+    console.log("le issssss loading",this.isloading);
+    this.iafService.getIafDerniersInscritList().pipe(
+      map((data: InscriptionDerniereInscrit[]) => data.map(item => this.transformData(item)))
     ).subscribe({
       next: (transformedData) => {
+        console.log(transformedData);
         this.iafList = transformedData;
         this.isloading = false;
       },
       error: (err) => {
         this.isloading = false;
+        console.log(err);
       }
     });
   }
 
-  transformData(data: InscriptionAdministrativeFormModel): any {
+  transformData(data: InscriptionDerniereInscrit): any {
+    console.log(data);
     return {
-      id: data.id,
-      codeEtu: data.inscriptionAdministrative?.etudiant?.codeEtu,
-      idEtudiant: data.inscriptionAdministrative?.etudiant?.id,
-      codeBU: data.inscriptionAdministrative?.etudiant?.codeBU,
-      ufr: data.formation?.departement?.ufr?.libelleUfr,
-      niveau: data.formation?.niveau?.libelleNiveau,
-      filiere: data.formation?.specialite?.nomSpecialites,
-      annee: data.inscriptionAdministrative?.anneeAcademique?.libelleAnneeAcademique,
+      id: data.inscriptionAdministrativeFormation.id,
+      codeEtu: data.inscriptionAdministrativeFormation.inscriptionAdministrative?.etudiant?.codeEtu,
+      idEtudiant: data.inscriptionAdministrativeFormation.inscriptionAdministrative?.etudiant?.id,
+      nomEtu: data.informationPersonnelle?.nomEtu,
+      prenomEtu: data.informationPersonnelle?.prenomEtu,
+      codeBU: data.inscriptionAdministrativeFormation.inscriptionAdministrative?.etudiant?.codeBU,
+      ufr: data.inscriptionAdministrativeFormation.formation?.departement?.ufr?.libelleUfr,
+      niveau: data.inscriptionAdministrativeFormation.formation?.niveau?.libelleNiveau,
+      filiere: data.inscriptionAdministrativeFormation.formation?.specialite?.nomSpecialites,
+      annee: data.inscriptionAdministrativeFormation.inscriptionAdministrative?.anneeAcademique?.libelleAnneeAcademique
 
 
     };
@@ -91,6 +106,14 @@ export class EtudiantListComponent {
     {
       key: 'codeEtu',
       label: 'Code'
+    },
+    {
+      key: 'nomEtu',
+      label: 'Nom'
+    },
+    {
+      key: 'prenomEtu',
+      label: 'Prenom'
     },
     {
       key: 'niveau',

@@ -29,13 +29,17 @@ export class InscriptionAdministrativeFormService {
     return this.http.get<InscriptionAdministrativeFormModel>(`${this.iafUrl}/${id}`);
   }
 
-deleteIaf(id:number):Observable<void>{
+  deleteIaf(id:number):Observable<void>{
 
-  return this.http.delete<void>(`${this.iafUrl}/${id}`);
+    return this.http.delete<void>(`${this.iafUrl}/${id}`);
   }
 
-updateIaf(id: number, iaf: InscriptionAdministrativeFormModel): Observable<InscriptionAdministrativeFormModel> {
-  return this.http.put<InscriptionAdministrativeFormModel>(`${this.iafUrl}/${id}`, iaf);
-}
+  updateIaf(id: number, iaf: InscriptionAdministrativeFormModel): Observable<InscriptionAdministrativeFormModel> {
+    return this.http.put<InscriptionAdministrativeFormModel>(`${this.iafUrl}/${id}`, iaf);
+  }
+
+  getIafDerniersInscritList(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.iafUrl}/derniersInscrits`);
+  }
 
 }
