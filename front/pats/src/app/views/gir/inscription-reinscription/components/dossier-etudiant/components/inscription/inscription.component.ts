@@ -25,6 +25,20 @@ export class InscriptionComponent {
   inscriptionForm: FormGroup;
   niveaux: NiveauModel[] = [];
   ufrs : UfrModel[] = [];
+  filieres = [
+    { id: 1, nom: 'Informatique' },
+    { id: 2, nom: 'Mathématiques' },
+    { id: 3, nom: 'Physique' },
+    { id: 4, nom: 'Chimie' },
+    { id: 5, nom: 'Biologie' }
+  ];
+
+  typesAdmission = [
+    { id: 1, nom: 'Admission sur concours' },
+    { id: 2, nom: 'Admission sur dossier' },
+    { id: 3, nom: 'Transfert' },
+    { id: 4, nom: 'Réorientation' }
+  ];
 
  
 
@@ -55,6 +69,7 @@ export class InscriptionComponent {
     .subscribe({
       next: (data) => {
         this.niveaux = data;
+        console.log("Niveaux:  " + this.niveaux);
       },
       error: (err) => {
         console.error("Erreur lors du chargement des niveaux:", err);
@@ -66,6 +81,7 @@ export class InscriptionComponent {
       .subscribe({
         next: (data) => {
           this.ufrs = data;
+          console.log("UFRs: "+ this.ufrs);
         },
         error: (err) => {
           console.error("Erreur lors du chargement des niveaux:", err);
