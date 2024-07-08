@@ -18,10 +18,23 @@ import java.util.Optional;
 @Repository
 public interface InscriptionAdministrativeFormationRepository extends JpaRepository<InscriptionAdministrativeFormation, Long> {
     Optional<InscriptionAdministrativeFormation>  findByFormationIdAndInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId(Long idFormation, Long idEtudiant,Long idAnneeAcademique);
+
     List<InscriptionAdministrativeFormation> findByInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId( Long idEtudiant, Long idAnneeAcademique);
-//    Optional<InscriptionAdministrativeFormation> findByInscriptionAdministrativeEtudiantIdAndInscriptionAdministrativeAnneeAcademiqueId(Pageable pageable,Long idEtudiant, Long idAnneeAcademique);
+
     @Transactional
     @Query("SELECT iaf.id FROM InscriptionAdministrativeFormation iaf WHERE iaf.id = :id")
     InscriptionAdministrativeFormation findByOne(Long id);
+
+    @Query( "SELECT iaf FROM InscriptionAdministrativeFormation iaf  WHERE ( iaf.inscriptionAdministrative.anneeAcademique.anneeAc) " +
+        " = (SELECT MAX(i.inscriptionAdministrative.anneeAcademique.anneeAc) FROM InscriptionAdministrativeFormation i " +
+        " WHERE (iaf.inscriptionAdministrative.etudiant = i.inscriptionAdministrative.etudiant) GROUP BY i.inscriptionAdministrative.etudiant) ")
+    Page<InscriptionAdministrativeFormation> findByLastInscription(Pageable pageable);
+
+
+//    @Query( "SELECT iaf FROM InscriptionAdministrativeFormation iaf  WHERE (iaf.inscriptionAdministrative.anneeAcademique.anneeAc) >=ALL (" SELECT i.inscriptionAdministrative.anneeAcademique.anneeAc FROM InscriptionAdministrativeFormation i WHERE( i.inscriptionAdministrative.etudiant.id == iaf.inscriptionAdministrative.etudiant.id )")")
+//    Page<InscriptionAdministrativeFormation> teste(Pageable pageable);
+
+
+
 
 }

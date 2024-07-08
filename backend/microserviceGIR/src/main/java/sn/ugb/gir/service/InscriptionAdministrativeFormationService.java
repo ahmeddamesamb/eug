@@ -68,4 +68,12 @@ public interface InscriptionAdministrativeFormationService {
      */
     Page<InscriptionAdministrativeFormationDTO> search(String query, Pageable pageable);
 
+    /**
+     * Get all the last inscriptionAdministrativeFormations.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<InscriptionAdministrativeFormationDTO> findAllByDernierInscription(Pageable pageable);
+
 }

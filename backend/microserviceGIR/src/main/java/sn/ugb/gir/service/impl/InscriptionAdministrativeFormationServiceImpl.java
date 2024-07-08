@@ -150,6 +150,12 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
             .map(inscriptionAdministrativeFormationMapper::toDto);
     }
 
+    @Override
+    public Page<InscriptionAdministrativeFormationDTO> findAllByDernierInscription(Pageable pageable) {
+        log.debug("Request to get all the last InscriptionAdministrativeFormations");
+        return inscriptionAdministrativeFormationRepository.findByLastInscription(pageable).map(inscriptionAdministrativeFormationMapper::toDto);
+    }
+
     public void validateData(InscriptionAdministrativeFormation inscriptionAdministrativeFormation){
 
         if (Objects.equals(inscriptionAdministrativeFormation.getFormation(),null)) {
@@ -176,10 +182,10 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
             if (Objects.equals(IafExistants.get(0).getFormation(), inscriptionAdministrativeFormation.getFormation() )) {
                 throw new BadRequestAlertException("l'inscription de cet etudiant à cette formation est deja faite pour cet annee", "InscriptionAdministrativeFormation", "InscriptionAdministrativeFormationExiste");
             } else { //double inscription
-                inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(false);
+                inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(FALSE);
             }
         } else if (nbIafEtudiant ==0) { //setInscriptionPrincipaleYN quelle prealable ??
-            inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(true);
+            inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(TRUE);
         }
     }
 }

@@ -215,6 +215,23 @@ public class InscriptionAdministrativeFormationResource {
         }
     }
 
+    /**
+     * {@code GET  /inscription-administrative-formations} : get all the inscriptionAdministrativeFormations by the last anneeacademique.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of inscriptionAdministrativeFormations in body.
+     */
+    @GetMapping("/derniersInscrits")
+    public ResponseEntity<List<InscriptionAdministrativeFormationDTO>> getAllDerniersInscriptionAdministrativeFormations(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get a page of InscriptionAdministrativeFormations by the last anneeacademique.");
+        Page<InscriptionAdministrativeFormationDTO> page = inscriptionAdministrativeFormationService.findAllByDernierInscription(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+
     public void validateDataUpdate(InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormationDTO, Long id){
         if (inscriptionAdministrativeFormationDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
