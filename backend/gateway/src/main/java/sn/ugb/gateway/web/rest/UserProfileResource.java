@@ -7,22 +7,28 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.ForwardedHeaderUtils;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sn.ugb.gateway.repository.UserProfileRepository;
 import sn.ugb.gateway.service.UserProfileService;
+import sn.ugb.gateway.service.dto.RessourceDTO;
 import sn.ugb.gateway.service.dto.UserProfileDTO;
 import sn.ugb.gateway.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
@@ -256,4 +262,149 @@ public class UserProfileResource {
             )
             .map(headers -> ResponseEntity.ok().headers(headers).body(userProfileService.search(query, pageable)));
     }
+
+    @GetMapping("/by-info-user/{infoUserId}")
+    public Mono<ResponseEntity<Flux<UserProfileDTO>>> getAllUserProfilesByInfosUserId(
+        @PathVariable Long infoUserId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get all UserProfiles by InfosUserId");
+        return userProfileService
+            .getAllUserProfilByInfosUserIdCount(infoUserId)
+            .map(total -> new PageImpl<>(List.of(), pageable, total))
+            .map(page -> PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/user-profiles/by-info-user/{infoUserId}"), page))
+            .map(headers -> ResponseEntity.ok().headers(headers).body(userProfileService.getAllUserProfilByInfosUserId(infoUserId, pageable)));
+    }
+
+    @GetMapping("/by-profil/{profilId}")
+    public Mono<ResponseEntity<Flux<UserProfileDTO>>> getAllUserProfilesByProfilId(
+        @PathVariable Long profilId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get all UserProfiles by ProfilId");
+        return userProfileService
+            .getAllUserProfilByProfilIdCount(profilId)
+            .map(total -> new PageImpl<>(List.of(), pageable, total))
+            .map(page -> PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/user-profiles/by-profil/{profilId}"), page))
+            .map(headers -> ResponseEntity.ok().headers(headers).body(userProfileService.getAllUserProfilByProfilId(profilId, pageable)));
+    }
+
+    @PutMapping("/archive/{id}")
+    public Mono<ResponseEntity<UserProfileDTO>> archiveUserProfil(@PathVariable Long id) {
+        log.debug("REST request to archive UserProfile : {}", id);
+        return userProfileService.archiveUserProfil(id)
+            .map(result -> ResponseEntity.ok().body(result));
+    }
+
+    @GetMapping("/by-encours/{enCoursYN}")
+    public Mono<ResponseEntity<Flux<UserProfileDTO>>> getAllUserProfilesByEncoursYN(
+        @PathVariable Boolean enCoursYN,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get all UserProfiles by enCoursYN");
+        return userProfileService
+            .getAllUserProfilByEncoursYNCount(enCoursYN)
+            .map(total -> new PageImpl<>(List.of(), pageable, total))
+            .map(page -> PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/user-profiles/by-encours/{enCoursYN}"), page))
+            .map(headers -> ResponseEntity.ok().headers(headers).body(userProfileService.getAllUserProfilByEncoursYN(enCoursYN, pageable)));
+    }
+
+   /* @GetMapping("/{userProfileId}/resources")
+    public Mono<ResponseEntity<Flux<RessourceDTO>>> getAllRessourcesByUserProfilId(
+        @PathVariable Long userProfileId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get all Ressources by UserProfileId");
+        return userProfileService
+            .getAllRessourceByUserProfilIdCount(userProfileId)
+            .map(total -> new PageImpl<>(List.of(), pageable, total))
+            .map(page -> PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/user-profiles/{userProfileId}/resources"), page))
+            .map(headers -> ResponseEntity.ok().headers(headers).body(userProfileService.getAllRessourceByUserProfilId(userProfileId, pageable)));
+    }
+
+    @GetMapping("/resources/by-info-user/{infoUserId}")
+    public Mono<ResponseEntity<Flux<RessourceDTO>>> getAllResourcesByInfoUserId(
+        @PathVariable Long infoUserId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get all Resources by InfoUserId");
+        return userProfileService
+            .getAllResourceByInfoUserIdCount(infoUserId)
+            .map(total -> new PageImpl<>(List.of(), pageable, total))
+            .map(page -> PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/resources/by-info-user/{infoUserId}"), page))
+            .map(headers -> ResponseEntity.ok().headers(headers).body(userProfileService.getAllResourceByInfoUserId(infoUserId, pageable)));
+    }*/
+
+//    public ResponseEntity<Page<NiveauDTO>> getAllNiveauByUniversiteId(@PathVariable Long universiteId, @org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+/*@GetMapping("/by-profil/{profilId}")
+public ResponseEntity<Page<UserProfileDTO>> getAllUserProfilesByProfilId(
+    @PathVariable Long profilId,
+    @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+    UriComponentsBuilder uriBuilder) {
+    log.debug("REST request to get all UserProfiles by ProfilId");
+    Flux<UserProfileDTO> userProfilesFlux = userProfileService.getAllUserProfilByProfilId(profilId, pageable);
+    List<UserProfileDTO> userProfilesList = userProfilesFlux.collectList().block();
+    Page<UserProfileDTO> page = new PageImpl<>(userProfilesList, pageable, userProfilesList.size());
+    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/user-profiles/by-profil/{profilId}"), page);
+    return ResponseEntity.ok().headers(headers).body(page);
+}
+
+    @GetMapping("/by-info-user/{infoUserId}")
+    public ResponseEntity<Page<UserProfileDTO>> getAllUserProfilesByInfosUserId(
+        @PathVariable Long infoUserId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get all UserProfiles by InfosUserId");
+        Flux<UserProfileDTO> userProfilesFlux = userProfileService.getAllUserProfilByInfosUserId(infoUserId, pageable);
+        List<UserProfileDTO> userProfilesList = userProfilesFlux.collectList().block();
+        Page<UserProfileDTO> page = new PageImpl<>(userProfilesList, pageable, userProfilesList.size());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/user-profiles/by-info-user/{infoUserId}"), page);
+        return ResponseEntity.ok().headers(headers).body(page);
+    }
+
+    @PutMapping("/archive/{id}")
+    public Mono<ResponseEntity<UserProfileDTO>> archiveUserProfil(@PathVariable Long id) {
+        log.debug("REST request to archive UserProfile : {}", id);
+        return userProfileService.archiveUserProfil(id)
+            .map(result -> ResponseEntity.ok().body(result));
+    }
+
+    @GetMapping("/by-encours/{enCoursYN}")
+    public ResponseEntity<Page<UserProfileDTO>> getAllUserProfilesByEncoursYN(
+        @PathVariable Boolean enCoursYN,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get all UserProfiles by enCoursYN");
+        Flux<UserProfileDTO> userProfilesFlux = userProfileService.getAllUserProfilByEncoursYN(enCoursYN, pageable);
+        List<UserProfileDTO> userProfilesList = userProfilesFlux.collectList().block();
+        Page<UserProfileDTO> page = new PageImpl<>(userProfilesList, pageable, userProfilesList.size());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/user-profiles/by-encours/{enCoursYN}"), page);
+        return ResponseEntity.ok().headers(headers).body(page);
+    }
+
+    @GetMapping("/{userProfileId}/resources")
+    public ResponseEntity<Page<RessourceDTO>> getAllRessourcesByUserProfilId(
+        @PathVariable Long userProfileId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get all Ressources by UserProfileId");
+        Flux<RessourceDTO> ressourcesFlux = userProfileService.getAllRessourceByUserProfilId(userProfileId, pageable);
+        List<RessourceDTO> ressourcesList = ressourcesFlux.collectList().block();
+        Page<RessourceDTO> page = new PageImpl<>(ressourcesList, pageable, ressourcesList.size());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/user-profiles/{userProfileId}/resources"), page);
+        return ResponseEntity.ok().headers(headers).body(page);
+    }
+
+    @GetMapping("/resources/by-info-user/{infoUserId}")
+    public ResponseEntity<Page<RessourceDTO>> getAllResourcesByInfoUserId(
+        @PathVariable Long infoUserId,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        UriComponentsBuilder uriBuilder) {
+        log.debug("REST request to get all Resources by InfoUserId");
+        Flux<RessourceDTO> resourcesFlux = userProfileService.getAllResourceByInfoUserId(infoUserId, pageable);
+        List<RessourceDTO> resourcesList = resourcesFlux.collectList().block();
+        Page<RessourceDTO> page = new PageImpl<>(resourcesList, pageable, resourcesList.size());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.path("/api/resources/by-info-user/{infoUserId}"), page);
+        return ResponseEntity.ok().headers(headers).body(page);
+    }*/
 }

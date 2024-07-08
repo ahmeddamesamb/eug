@@ -80,10 +80,13 @@ public interface RessourceService {
      * @return the list of entities.
      */
     Flux<RessourceDTO> search(String query, Pageable pageable);
-    Page<RessourceDTO> findAllRessourceByService(Long serviceId, Pageable pageable);
 
-    Page<RessourceDTO> findAllRessourceByBlocfonctionnel(Long blocfonctionnelId, Pageable pageable);
+    Flux<RessourceDTO> findAllRessourceByBlocfonctionnel(Long blocfonctionnelId, Pageable pageable);
 
-    RessourceDTO setActifYNRessource(Long id, Boolean actifYN);
+    Flux<RessourceDTO> findAllRessourceByService(Long serviceId, Pageable pageable);
 
+    Mono<RessourceDTO> setActifYNRessource(Long id, Boolean actifYN);
+    Mono<Long> countByServiceId(Long serviceId);
+
+    Mono<Long> countByBlocfonctionnelId(Long blocfonctionnelId);
 }

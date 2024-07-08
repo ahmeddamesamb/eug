@@ -19,6 +19,8 @@ interface ProfilSearchRepositoryInternal {
     Flux<Profil> search(String query, Pageable pageable);
 
     Flux<Profil> search(Query query);
+
+
 }
 
 class ProfilSearchRepositoryInternalImpl implements ProfilSearchRepositoryInternal {

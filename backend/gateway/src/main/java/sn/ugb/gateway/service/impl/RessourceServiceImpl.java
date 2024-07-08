@@ -13,6 +13,7 @@ import sn.ugb.gateway.repository.RessourceRepository;
 import sn.ugb.gateway.repository.search.RessourceSearchRepository;
 import sn.ugb.gateway.service.RessourceService;
 import sn.ugb.gateway.service.dto.RessourceDTO;
+import sn.ugb.gateway.service.dto.ServiceUserDTO;
 import sn.ugb.gateway.service.mapper.RessourceMapper;
 import sn.ugb.gateway.web.rest.errors.BadRequestAlertException;
 
@@ -113,21 +114,42 @@ private final RessourceRepository ressourceRepository;
         log.debug("Request to search for a page of Ressources for query {}", query);
         return ressourceSearchRepository.search(query, pageable).map(ressourceMapper::toDto);
     }
-    @Override
-    public Page<RessourceDTO> findAllRessourceByService(Long serviceId, Pageable pageable) {
-        return null;
-    }
 
-    @Override
-    public Page<RessourceDTO> findAllRessourceByBlocfonctionnel(Long blocfonctionnelId, Pageable pageable) {
-        return null;
-    }
+@Override
+@Transactional(readOnly = true)
+public Flux<RessourceDTO> findAllRessourceByBlocfonctionnel(Long blocfonctionnelId, Pageable pageable) {
+//    ressourceRepository.findByBlocFonctionnelId(blocfonctionnelId, pageable).map(ressourceMapper::toDto)
+    return null;
+}
 
-    @Override
-    public RessourceDTO setActifYNRessource(Long id, Boolean actifYN) {
-        return  null;
-    }
+@Override
+@Transactional(readOnly = true)
+public Flux<RessourceDTO> findAllRessourceByService(Long serviceId, Pageable pageable) {
+//    ressourceRepository.findByServiceId(serviceId, pageable).map(ressourceMapper::toDto)
+    return null;
+}
 
+@Override
+public Mono<RessourceDTO> setActifYNRessource(Long id, Boolean actifYN) {
+    return ressourceRepository.findById(id)
+               .flatMap(ressource -> {
+                   ressource.setActifYN(actifYN);
+                   return ressourceRepository.save(ressource);
+               })
+               .map(ressourceMapper::toDto);
+}
+
+@Override
+public Mono<Long> countByServiceId(Long serviceId) {
+//    ressourceRepository.countByServiceId(serviceId)
+    return null;
+}
+
+@Override
+public Mono<Long> countByBlocfonctionnelId(Long blocfonctionnelId) {
+//    ressourceRepository.countByBlocFonctionnelId(blocfonctionnelId)
+    return null;
+}
 private void validateData(RessourceDTO ressourceDTO) {
     if (ressourceDTO.getLibelle().isEmpty() || ressourceDTO.getLibelle().isBlank()){
         throw new BadRequestAlertException("Le Ressource ne peut pas être vide.", ENTITY_NAME, "getLibelleRessourceNotNull");

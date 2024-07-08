@@ -11,7 +11,7 @@ import sn.ugb.gir.service.dto.SerieDTO;
 /**
  * Mapper for the entity {@link Baccalaureat} and its DTO {@link BaccalaureatDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {SerieMapper.class, EtudiantMapper.class} )
 public interface BaccalaureatMapper extends EntityMapper<BaccalaureatDTO, Baccalaureat> {
     @Mapping(target = "etudiant", source = "etudiant", qualifiedByName = "etudiantId")
     @Mapping(target = "serie", source = "serie", qualifiedByName = "serieId")
@@ -25,5 +25,8 @@ public interface BaccalaureatMapper extends EntityMapper<BaccalaureatDTO, Baccal
     @Named("serieId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "codeSerie", source = "codeSerie")
+    @Mapping(target = "libelleSerie", source = "libelleSerie")
+    @Mapping(target = "sigleSerie", source = "sigleSerie")
     SerieDTO toDtoSerieId(Serie serie);
 }

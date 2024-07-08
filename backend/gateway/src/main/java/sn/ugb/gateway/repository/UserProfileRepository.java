@@ -1,6 +1,7 @@
 package sn.ugb.gateway.repository;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Range;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
@@ -39,6 +40,7 @@ public interface UserProfileRepository extends ReactiveCrudRepository<UserProfil
 
     @Override
     Mono<Void> deleteById(Long id);
+
 }
 
 interface UserProfileRepositoryInternal {
@@ -49,6 +51,21 @@ interface UserProfileRepositoryInternal {
     Flux<UserProfile> findAll();
 
     Mono<UserProfile> findById(Long id);
+
     // this is not supported at the moment because of https://github.com/jhipster/generator-jhipster/issues/18269
     // Flux<UserProfile> findAllBy(Pageable pageable, Criteria criteria);
+
+    Flux<UserProfile> findAllByInfoUserId(Long infoUserId, Pageable pageable);
+
+    Flux<UserProfile>  findAllByEnCoursYN(Boolean enCoursYN, Pageable pageable);
+
+    Flux<UserProfile> findAllByProfilId(Long profilId, Pageable pageable);
+
+    Mono<Long> countByUserProfileId(Long userProfileId);
+
+    Mono<Long> countByProfilId(Long profilId);
+
+    Mono<Long> countByInfoUserId(Long infoUserId);
+
+    Mono<Long> countByEncoursYN(Boolean enCoursYN);
 }

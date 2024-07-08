@@ -99,4 +99,22 @@ public class ProfilServiceImpl implements ProfilService {
         log.debug("Request to search for a page of Profils for query {}", query);
         return profilSearchRepository.search(query, pageable).map(profilMapper::toDto);
     }
+
+    @Override
+    public Mono<ProfilDTO> archiveProfil(Long id) {
+        return profilRepository.findById(id)
+                   .flatMap(profil -> {
+                       profil.setActifYN(false);
+                       return profilRepository.save(profil);
+                   })
+                   .map(profilMapper::toDto);
+    }
+
+    @Override
+    public Flux<ProfilDTO> getAllProfilByActifYN(boolean actifYN, Pageable pageable) {
+        return profilRepository.findByActifYN(actifYN, pageable)
+                   .map(profilMapper::toDto);
+    }
+
+
 }
