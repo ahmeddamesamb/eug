@@ -26,6 +26,10 @@ export class InformationPersonnellesService {
     return this.http.post<any>(`${this.url}`, infos);
   }
 
+  ajoutEtudiant(infos: any): Observable<any> {
+    return this.http.post<any>(`${this.url}/AjoutEtudiant`, infos);
+  }
+
   getInformationPersonnelleById(id:number):Observable<InformationPersonellesModel>{
 
     return this.http.get<InformationPersonellesModel>(`${this.url}/${id}`);
@@ -43,6 +47,6 @@ export class InformationPersonnellesService {
 
   getEtudiantCode(code:string):Observable<InformationPersonellesModel>{
 
-    return this.http.get<InformationPersonellesModel>(`${this.url}/etudiant/${code}`);
+    return this.http.get<InformationPersonellesModel>(`${this.url}/recherche-etudiant/${code}`);
   }
 }

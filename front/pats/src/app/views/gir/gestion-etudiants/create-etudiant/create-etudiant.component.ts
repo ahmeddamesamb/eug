@@ -289,56 +289,72 @@ export class CreateEtudiantComponent {
     if (this.informationPersonelleForm!.valid) {
       this.customStylesValidated = true;
       //this.mapFormToInformationPersonelle();
-      console.log(this.informationPersonelle);
+      //console.log(this.informationPersonelle);
       const formValues = this.informationPersonelleForm.value;
-      this.informationPersonelle = {
-        nomEtu: formValues.nomEtu,
-        nomJeuneFilleEtu: formValues.nomJeuneFilleEtu,
-        prenomEtu: formValues.prenomEtu,
-        statutMarital: formValues.statutMarital,
-        regime: 24749,
-        profession: formValues.profession,
-        adresseEtu: formValues.adresseEtu,
-        telEtu: formValues.telEtu,
-        emailEtu: formValues.emailEtu,
-        adresseParent: formValues.adresseParent,
-        telParent: formValues.telParent,
-        emailParent: formValues.emailParent,
-        nomParent: formValues.nomParent,
-        prenomParent: formValues.prenomParent,
-        handicapYN: false,
-        photo: "oups",
-        ordiPersoYN: true,
-        derniereModification: new Date(),
-        emailUser: this.userService.getUserEmail() ,
-        etudiant: {
-          ine: formValues.ine ?? '',
-          emailUGB:formValues.ine?? '',
-          dateNaissEtu: formValues.dateNaissEtu ?? null,
-          lieuNaissEtu: formValues.lieuNaissEtu ?? '',
-          sexe: formValues.sexe ?? '',
-          numDocIdentite: formValues.numDocIdentite ?? '',
-          region: { id: Number(formValues.region) ?? 0 },
-          typeSelection: { id: Number(formValues.typeSelection) ?? 0 },
-          lycee: { id: Number(formValues.lycee) ?? 0 },
-          assimileYN: true,
-          actifYN: true,
+      
+
+      const etudiantBaccalaureat = {
+        informationPersonnelle : {
+          nomEtu: formValues.nomEtu,
+          nomJeuneFilleEtu: formValues.nomJeuneFilleEtu,
+          prenomEtu: formValues.prenomEtu,
+          statutMarital: formValues.statutMarital,
+          regime: 24749,
+          profession: formValues.profession,
+          adresseEtu: formValues.adresseEtu,
+          telEtu: formValues.telEtu,
+          emailEtu: formValues.emailEtu,
+          adresseParent: formValues.adresseParent,
+          telParent: formValues.telParent,
+          emailParent: formValues.emailParent,
+          nomParent: formValues.nomParent,
+          prenomParent: formValues.prenomParent,
+          handicapYN: false,
+          photo: "oups",
+          ordiPersoYN: true,
+          derniereModification: new Date(),
+          emailUser: this.userService.getUserEmail() ,
+          etudiant: {
+            ine: formValues.ine ?? '',
+            emailUGB:formValues.ine?? '',
+            dateNaissEtu: formValues.dateNaissEtu ?? null,
+            lieuNaissEtu: formValues.lieuNaissEtu ?? '',
+            sexe: formValues.sexe ?? '',
+            numDocIdentite: formValues.numDocIdentite ?? '',
+            region: { id: Number(formValues.region) ?? 0 },
+            typeSelection: { id: Number(formValues.typeSelection) ?? 0 },
+            lycee: { id: Number(formValues.lycee) ?? 0 },
+            assimileYN: true,
+            actifYN: true,
+          },
+          typeHandicap: {
+            id: Number(formValues.typeHandicap),
+          },
+          typeBourse: {
+            id: Number(formValues.typeBourse),
+          }
+          
         },
-        typeHandicap: {
-          id: Number(formValues.typeHandicap),
-        },
-        typeBourse: {
-          id: Number(formValues.typeBourse),
+        baccalaureatDTO: {
+          origineScolaire: formValues.origineScolaire,
+          anneeBac: formValues.anneeBac ,
+          natureBac: formValues.natureBac,
+          mentionBac: formValues.mentionBac,
+          moyenneSelectionBac: formValues.moyenneSelectionBac,
+          moyenneBac: formValues.moyenneBac,
+          serie: { id: Number(formValues.serie)}
         }
-      } 
+    }
+      
       
       
       //Si c'est une creation
-      this.infoPersoService.createInformationPersonnelle(this.informationPersonelle!).subscribe({ 
+      console.log(etudiantBaccalaureat);
+      this.infoPersoService.ajoutEtudiant(etudiantBaccalaureat).subscribe({ 
         next: (data) => {
           console.log(data);
           this.alertService.showToast("Création","Création de l'étudiant avec succes","success");
-          this.router.navigate(['/gir/inscription-reinscription/view',data.etudiant?.id])
+          this.router.navigate(['/gir/inscription-reinscription/view',data.informationPersonnelle.etudiant?.id])
         },
         error: (err) => {
           console.log(err);

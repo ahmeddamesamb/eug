@@ -120,7 +120,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   dossierEtudiant(){
     console.log('cvrgrtgkmlgtrk,tr');
-    this.router.navigate(['/gir/inscription-reinscription/view/',2]);
+    this.router.navigate(['/gir/inscription-reinscription/view/',1216]);
   }
 
 
