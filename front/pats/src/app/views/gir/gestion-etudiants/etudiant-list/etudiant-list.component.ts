@@ -116,6 +116,10 @@ export class EtudiantListComponent {
       label: 'Prenom'
     },
     {
+      key: 'ufr',
+      label: 'UFR'
+    },
+    {
       key: 'niveau',
       label: 'Niveau'
     },
