@@ -1,68 +1,76 @@
 <div class="row">
     <div class="col-12 border border-2 rounded-2 mt-2 m-4 w-75">
-        <h3>Inscription</h3>
-        <form cForm [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label cLabel for="ufrSelect">UFR</label>
-                    <select cSelect id="ufrSelect" formControlName="UFR">
-                        <option value="">Sélectionnez une UFR</option>
-                        <option value="ufr1">UFR 1</option>
-                        <option value="ufr2">UFR 2</option>
-                        <option value="ufr3">UFR 3</option>
-                    </select>
-                    <div *ngIf="inscriptionForm.get('UFR')?.invalid && (inscriptionForm.get('UFR')?.dirty || inscriptionForm.get('UFR')?.touched)" class="invalid-feedback">
-                        Veuillez sélectionner une UFR.
-                    </div>
-                </div>
+      <h3>Inscription</h3>
+      <form cForm [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()">
+        <div class="row mb-3">
+          <c-col md="6">
+            <label cLabel for="ufrSelect">UFR</label>
+            <select cSelect id="ufrSelect" formControlName="UFR">
+              <option value="">Sélectionnez une UFR</option>
+              @for (ufr of ufrs; track ufr.id) {
+                <option [value]="ufr.id">{{ ufr.sigleUfr }}</option>
+              }
+            </select>
+            @if (inscriptionForm.get('UFR')?.invalid && (inscriptionForm.get('UFR')?.dirty || inscriptionForm.get('UFR')?.touched)) {
+              <div class="invalid-feedback">
+                Veuillez sélectionner une UFR.
+              </div>
+            }
+          </c-col>
           
-                <div class="col-md-6">
-                    <label cLabel for="filiereSelect">Filière</label>
-                    <select cSelect id="filiereSelect" formControlName="filiere">
-                        <option value="">Sélectionnez une filière</option>
-                        <option value="filiere1">Filière 1</option>
-                        <option value="filiere2">Filière 2</option>
-                        <option value="filiere3">Filière 3</option>
-                    </select>
-                    <div *ngIf="inscriptionForm.get('filiere')?.invalid && (inscriptionForm.get('filiere')?.dirty || inscriptionForm.get('filiere')?.touched)" class="invalid-feedback">
-                        Veuillez sélectionner une filière.
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label cLabel for="niveauSelect">Niveau</label>
-                    <select cSelect id="niveauSelect" formControlName="niveau">
-                        <option value="">Sélectionnez un niveau</option>
-                        <option value="niveau1">Niveau 1</option>
-                        <option value="niveau2">Niveau 2</option>
-                        <option value="niveau3">Niveau 3</option>
-                    </select>
-                    <div *ngIf="inscriptionForm.get('niveau')?.invalid && (inscriptionForm.get('niveau')?.dirty || inscriptionForm.get('niveau')?.touched)" class="invalid-feedback">
-                        Veuillez sélectionner un niveau.
-                    </div>
-                </div>
+          <c-col md="6">
+            <label cLabel for="filiereSelect">Filière</label>
+            <select cSelect id="filiereSelect" formControlName="filiere">
+              <option value="">Sélectionnez une filière</option>
+              @for (filiere of filieres; track filiere.id) {
+                <option [value]="filiere.id">{{ filiere.nom }}</option>
+              }
+            </select>
+            @if (inscriptionForm.get('filiere')?.invalid && (inscriptionForm.get('filiere')?.dirty || inscriptionForm.get('filiere')?.touched)) {
+              <div class="invalid-feedback">
+                Veuillez sélectionner une filière.
+              </div>
+            }
+          </c-col>
+        </div>
+        
+        <div class="row mb-3">
+          <c-col md="6">
+            <label cLabel for="niveauSelect">Niveau</label>
+            <select cSelect id="niveauSelect" formControlName="niveau">
+              <option value="">Sélectionnez un niveau</option>
+              @for (niveau of niveaux; track niveau.id) {
+                <option [value]="niveau.id">{{ niveau.libelleNiveau }}</option>
+              }
+            </select>
+            @if (inscriptionForm.get('niveau')?.invalid && (inscriptionForm.get('niveau')?.dirty || inscriptionForm.get('niveau')?.touched)) {
+              <div class="invalid-feedback">
+                Veuillez sélectionner un niveau.
+              </div>
+            }
+          </c-col>
           
-                <div class="col-md-6">
-                    <label cLabel for="typeAdmissionSelect">Type d'admission</label>
-                    <select cSelect id="typeAdmissionSelect" formControlName="typeAdmission">
-                        <option value="">Sélectionnez un type d'admission</option>
-                        <option value="type1">Type 1</option>
-                        <option value="type2">Type 2</option>
-                        <option value="type3">Type 3</option>
-                    </select>
-                    <div *ngIf="inscriptionForm.get('typeAdmission')?.invalid && (inscriptionForm.get('typeAdmission')?.dirty || inscriptionForm.get('typeAdmission')?.touched)" class="invalid-feedback">
-                        Veuillez sélectionner un type d'admission.
-                    </div>
-                </div>
-            </div>
-          
-            <button cButton color="primary" type="submit" class="bi bi-floppy" color="primary"  [disabled]="inscriptionForm.invalid">Enregistrer</button>
-        </form>        
+          <c-col md="6">
+            <label cLabel for="typeAdmissionSelect">Type d'admission</label>
+            <select cSelect id="typeAdmissionSelect" formControlName="typeAdmission">
+              <option value="">Sélectionnez un type d'admission</option>
+              @for (type of typesAdmissions; track type.id) {
+                <option [value]="type.id">{{ type.libelleTypeAdmission }}</option>
+              }
+            </select>
+            @if (inscriptionForm.get('typeAdmission')?.invalid && (inscriptionForm.get('typeAdmission')?.dirty || inscriptionForm.get('typeAdmission')?.touched)) {
+              <div class="invalid-feedback">
+                Veuillez sélectionner un type d'admission.
+              </div>
+            }
+          </c-col>
+        </div>
+        
+        <button cButton color="primary" type="submit" class="bi bi-floppy" [disabled]="inscriptionForm.invalid">Enregistrer</button>
+      </form>
     </div>
-
+    
     <div class="col-12 border border-2 rounded-2 mt-2 m-4">
-        <h4>Historique</h4>
+      <h4>Historique</h4>
     </div>
-</div>
+  </div>
