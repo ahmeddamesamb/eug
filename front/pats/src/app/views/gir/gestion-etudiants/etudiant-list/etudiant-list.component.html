@@ -37,8 +37,8 @@
   [itemsPerPageSelect]="true"
   [itemsPerPage]="5"
   itemsPerPageLabel="Etudiant(s) par page"
-  [items]="infosPersonnelList"
-  [sorterValue]="{ column: 'nomEtu', state: 'asc' }"
+  [items]="iafList"
+  [sorterValue]="{ column: 'name', state: 'asc' }"
   [tableFilter]="false"
   [tableProps]="{ hover: true, striped: true, responsive: true }"
   [tableBodyProps]="{ align: 'middle' }"
@@ -57,15 +57,35 @@
     
     <td>
       @switch (columnName) {
-        @case ('etudiant') {
+        @case ('inscriptionAdministrative') {
           
-          {{ (item[columnName].codeEtu)  }} 
+          {{ (item[columnName].etudiant.codeEtu)  }} 
 
-      }
+        }
+        @case ('formation') {
+          
+          {{ (item[columnName].niveau.libelleNiveau)  }} 
+
+        }
+        @case ('formation') {
+          
+          {{ (item[columnName].specialite.nomSpecialites)  }} 
+
+        }
+        @case ('inscriptionAdministrative') {
+          
+          {{ (item[columnName].etudiant.id)  }} 
+
+        }
+        @case ('inscriptionAdministrative') {
+          
+          {{ (item[columnName].anneeAcademique.libelleAnneeAcademique)  }} 
+
+        }
        
         @case ('show') {
             <div class="d-flex gap-2">
-                <button (click)="view(item.etudiant.id)"  cButton cPopover="Détails" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >
+                <button (click)="view(item.inscriptionAdministrative.etudiant.id)"  cButton cPopover="Détails" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >
                     <i class="bi bi-eye-fill"></i>
                 </button>
                 <button  cButton cPopover="Mise à jour" cPopoverPlacement="top" color="primary" size="sm" variant="outline" (click)="update(item.id)" >
