@@ -22,6 +22,9 @@ import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link InscriptionAdministrativeFormation}.
@@ -156,6 +159,54 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
         return inscriptionAdministrativeFormationRepository.findByLastInscription(pageable).map(inscriptionAdministrativeFormationMapper::toDto);
     }
 
+
+    private void appliquerReglesDeGestion(InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormationDTO) {
+
+        if (!resultatsDeDeliberationSontDisponibles()) {
+            throw new BadRequestAlertException("Les résultats de délibérations ne sont pas disponibles", ENTITY_NAME, "nullUserProfile");
+        }
+
+        if (!etudiantEstAutoriseAInscription()) {
+            throw new BadRequestAlertException("L’étudiant n’est pas autorisé à s’inscrire.", ENTITY_NAME, "nullUserProfile");
+        }
+
+        if (!programmationEstOuverte()) {
+            throw new BadRequestAlertException("La programmation n'est pas ouverte.", ENTITY_NAME, "nullUserProfile");
+        }
+
+        if (etudiantReprendSesEtudes()) {
+            throw new BadRequestAlertException("L’étudiant ne peut pas démarrer son inscription en ligne en cas de reprise d’étude.", ENTITY_NAME, "nullUserProfile");
+        }
+
+        if (etudiantEstEnPositionDeCartouche(inscriptionAdministrativeFormationDTO)) {
+            throw new BadRequestAlertException("L’étudiant ne doit pas dépasser plus de deux inscriptions sur un niveau donné.", ENTITY_NAME, "nullUserProfile");
+        }
+
+        if (etudiantEstAncienEtudiant() && !etudiantAFinaliseInscriptionAnneeDerniere()) {
+            throw new BadRequestAlertException("L’étudiant (un ancien) doit finaliser son inscription de l’année dernière.", ENTITY_NAME, "nullUserProfile");
+        }
+    }
+
+    private boolean resultatsDeDeliberationSontDisponibles() {
+        // Implémenter la logique pour RG1
+        return true; // Placeholder
+    }
+
+    private boolean etudiantEstAutoriseAInscription() {
+        // Implémenter la logique pour RG2
+        return true; // Placeholder
+    }
+
+    private boolean programmationEstOuverte() {
+        // Implémenter la logique pour RG3
+        return true; // Placeholder
+    }
+
+    private boolean etudiantReprendSesEtudes() {
+        // Implémenter la logique pour RG4
+        return false; // Placeholder
+    }
+
     public void validateData(InscriptionAdministrativeFormation inscriptionAdministrativeFormation){
 
         if (Objects.equals(inscriptionAdministrativeFormation.getFormation(),null)) {
@@ -188,4 +239,22 @@ public class InscriptionAdministrativeFormationServiceImpl implements Inscriptio
             inscriptionAdministrativeFormation.setInscriptionPrincipaleYN(TRUE);
         }
     }
+
+    private boolean etudiantEstEnPositionDeCartouche(InscriptionAdministrativeFormationDTO inscriptionAdministrativeFormationDTO) {
+        // Implémenter la logique pour RG5
+        return false; // Placeholder
+    }
+
+    private boolean etudiantEstAncienEtudiant() {
+        // Implémenter la logique pour RG6
+        return false; // Placeholder
+    }
+
+    private boolean etudiantAFinaliseInscriptionAnneeDerniere() {
+        // Implémenter la logique pour RG6
+        return true; // Placeholder
+    }
 }
+
+
+

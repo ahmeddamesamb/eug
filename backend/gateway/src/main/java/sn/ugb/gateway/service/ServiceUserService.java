@@ -79,4 +79,6 @@ public interface ServiceUserService {
      * @return the list of entities.
      */
     Flux<ServiceUserDTO> search(String query, Pageable pageable);
+
+    Mono<ServiceUserDTO> setServiceUserActifYN(Long id, Boolean actifYN);
 }

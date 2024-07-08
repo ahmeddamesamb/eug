@@ -1,6 +1,8 @@
 package sn.ugb.gir.service.impl;
 
+import java.text.Normalizer;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -130,41 +132,75 @@ public Page<ProcessusInscriptionAdministrativeDTO> search(String query, Pageable
 }
 
 @Override
+@Transactional
 public String generateInstitutionalEmail(Long etudiantId) {
 
     Etudiant etudiant = etudiantRepository.findById(etudiantId)
                             .orElseThrow(() -> new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + etudiantId));
-    ProcessusInscriptionAdministrativeDTO processusInscriptionAdministrativeDTO = new ProcessusInscriptionAdministrativeDTO();
-//     if (processusInscriptionAdministrativeDTO.getInscritAdministrativementYN()){
-//         throw new IllegalStateException("L'étudiant n'a pas terminé son inscription administrative.");
-//     }
+
     InformationPersonnelle infoPersonnelle = etudiant.getInformationPersonnelle();
     if (infoPersonnelle == null) {
         throw new EntityNotFoundException("Information personnelle non trouvée pour l'étudiant avec l'ID : " + etudiantId);
     }
-    String email = trouverNomPrenomUnique(infoPersonnelle.getNomEtu(), infoPersonnelle.getPrenomEtu());
+
+    String email = generateUniqueEmail(infoPersonnelle.getNomEtu(), infoPersonnelle.getPrenomEtu());
     etudiant.setEmailUGB(email);
     etudiantRepository.save(etudiant);
 
     return "Email UGB généré avec succès pour l'étudiant avec ID : " + etudiantId + ", Nouveau Email UGB : " + email;
 }
 
+private String generateUniqueEmail(String nom, String prenom) {
+    String[] prenoms = prenom.split(" ");
+    String[] noms = nom.split(" ");
+    String domain = "@ugb.edu.sn";
+
+    String chn = stripAccents(noms[noms.length - 1].replace("'", "") + '.' + String.join("-", prenoms).replace("'", ""));
+    String email = chn + domain;
+
+    int i = 1;
+    while (etudiantRepository.existsByEmailUGBIgnoreCase(email)) {
+        email = chn + i + domain;
+        i++;
+    }
+
+    return email.toLowerCase();
+}
+
+private String stripAccents(String str) {
+    String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+    Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+    return pattern.matcher(nfdNormalizedString).replaceAll("")
+               .replaceAll("œ", "oe")
+               .replaceAll("æ", "ae")
+               .replaceAll("ñ", "n")
+               .replaceAll("ç", "c");
+}
+
+
 @Override
 public String generateCodeBareBU(Long etudiantId) {
-    ProcessusInscriptionAdministrative processusInscription = processusInscriptionAdministrativeRepository.findByInscriptionAdministrativeEtudiantId(etudiantId)
-                                                                  .orElseThrow(() -> new IllegalStateException("L'inscription administrative n'est pas démarrée pour l'étudiant avec ID : " + etudiantId));
-
+    // Récupérer l'étudiant par ID
     Etudiant etudiant = etudiantRepository.findById(etudiantId)
                             .orElseThrow(() -> new IllegalStateException("Étudiant non trouvé avec l'ID : " + etudiantId));
 
-    String maxCodeBarre = etudiantRepository.findMaxCodeBU();
-    String nouveauCodeBarre = (maxCodeBarre != null ? maxCodeBarre + 1 : String.valueOf(1));
 
-    etudiant.setCodeBU(nouveauCodeBarre);
+//    Vérifier si le code BU est déjà défini pour l'étudiant
+//    if (etudiant.getCodeBU() != null) {
+//        throw new IllegalStateException("Le code BU est déjà défini pour l'étudiant avec ID : " + etudiantId);
+//    }
+
+    // Trouver le maximum du code barre BU et incrémenter
+    String maxCodeBU = etudiantRepository.findMaxCodeBU();
+    int nouveauCodeBU = (maxCodeBU != null ? Integer.parseInt(maxCodeBU) + 1 : 1);
+
+    // Mettre à jour le code BU de l'étudiant
+    etudiant.setCodeBU(String.valueOf(nouveauCodeBU));
     etudiantRepository.save(etudiant);
-    return "Code barre BU généré avec succès pour l'étudiant avec ID : " + etudiantId + ", Nouveau code barre : " + nouveauCodeBarre;
-}
 
+    return "Code barre BU généré avec succès pour l'étudiant avec ID : " + etudiantId + ", Nouveau code barre : "
+               + nouveauCodeBU;
+}
 @Override
 public String generateCodeEtudiant(EtudiantDTO etudiantDTO) {
     return null;

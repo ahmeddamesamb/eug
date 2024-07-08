@@ -61,6 +61,8 @@ public class InformationPersonnelle implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Text)
     private String adresseEtu;
 
+    @NotNull(message = "must not be null")
+    @Pattern(regexp = "^\\+[1-9]\\d{1,14}$")
     @Column(name = "tel_etu")
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Text)
     private String telEtu;
@@ -73,6 +75,8 @@ public class InformationPersonnelle implements Serializable {
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Text)
     private String adresseParent;
 
+    @NotNull(message = "must not be null")
+    @Pattern(regexp = "^\\+[1-9]\\d{1,14}$")
     @Column(name = "tel_parent")
     @org.springframework.data.elasticsearch.annotations.Field(type = org.springframework.data.elasticsearch.annotations.FieldType.Text)
     private String telParent;

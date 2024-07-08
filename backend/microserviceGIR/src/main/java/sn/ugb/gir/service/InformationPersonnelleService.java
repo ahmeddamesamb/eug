@@ -5,12 +5,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.transaction.annotation.Transactional;
+import sn.ugb.gir.service.dto.EtudiantBaccalauriatDTO;
 import sn.ugb.gir.service.dto.InformationPersonnelleDTO;
 
 /**
  * Service Interface for managing {@link sn.ugb.gir.domain.InformationPersonnelle}.
  */
 public interface InformationPersonnelleService {
+    @Transactional
+    EtudiantBaccalauriatDTO saveEtudiantBaccalauriat(EtudiantBaccalauriatDTO etudiantBaccalauriatDTO);
+
     /**
      * Save a informationPersonnelle.
      *

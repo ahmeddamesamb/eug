@@ -123,4 +123,28 @@ public class InscriptionAdministrativeServiceImpl implements InscriptionAdminist
         log.debug("Request to search for a page of InscriptionAdministratives for query {}", query);
         return inscriptionAdministrativeSearchRepository.search(query, pageable).map(inscriptionAdministrativeMapper::toDto);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countNouveauInscrits() {
+        log.debug("Request to count InscriptionAdministratives where nouveauInscritYN is true");
+        return inscriptionAdministrativeRepository.countByNouveauInscritYNTrue();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countNouveauInscritsByAnneeAcademique(Long anneeAcademiqueId) {
+        log.debug("Request to count InscriptionAdministratives where nouveauInscritYN is true for anneeAcademiqueId: {}", anneeAcademiqueId);
+        return inscriptionAdministrativeRepository.countByNouveauInscritYNTrueAndAnneeAcademiqueId(anneeAcademiqueId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countNouveauInscritsByAnneeAcademiqueEnCours() {
+        log.debug("Request to count InscriptionAdministratives where nouveauInscritYN is true and anneeAcademique.enCoursYN is true");
+        return inscriptionAdministrativeRepository.countByNouveauInscritYNTrueAndAnneeAcademiqueAnneeCouranteYNTrue();
+    }
+
+
+
 }
