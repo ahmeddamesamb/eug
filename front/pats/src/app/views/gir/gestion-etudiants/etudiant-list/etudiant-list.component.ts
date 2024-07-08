@@ -1,9 +1,9 @@
 import { Component, QueryList, ViewChild, ViewChildren, } from '@angular/core';
 import { Router } from '@angular/router';
 import {InformationPersonnellesService} from '../services/information-personnelles.service';
-import {InformationPersonellesModel} from '../models/information-personelles-model';
-import {EtudiantService} from '../services/etudiant.service';
-import {EtudiantModel} from '../models/etudiant-model';
+import {InscriptionAdministrativeFormModel} from '../../inscription-reinscription/models/inscription-administrative-form-model';
+import {InscriptionAdministrativeFormService} from '../../inscription-reinscription/services/inscription-administrative-form.service';
+//import {EtudiantModel} from '../models/etudiant-model';
 import { NumberToStringPipe } from '../../../../pipes/number-to-string.pipe'
 import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
 import {CreateEtudiantComponent} from '../create-etudiant/create-etudiant.component';
@@ -40,13 +40,13 @@ import{
 })
 export class EtudiantListComponent {
 
-  constructor (private route:Router,private informationPersonnellesService: InformationPersonnellesService, private alertService: AlertServiceService){
+  constructor (private route:Router,private iafService: InscriptionAdministrativeFormService, private alertService: AlertServiceService){
 
   }
 
-  infosPersonnelList : InformationPersonellesModel[] = [];
-  itemDelete!: InformationPersonellesModel;
-  itemUpdate!: InformationPersonellesModel;
+  iafList : InscriptionAdministrativeFormModel[] = [];
+  itemDelete!: InscriptionAdministrativeFormModel;
+  itemUpdate!: InscriptionAdministrativeFormModel;
   public liveDemoVisible = false;
   public modalCreateUpdate = false;
   isloading = false;
@@ -58,9 +58,9 @@ export class EtudiantListComponent {
 
   getListe(){
     this.isloading = true;
-    this.informationPersonnellesService.getInformationPersonnelleList().subscribe({
+    this.iafService.getIafList().subscribe({
       next: (data) => {
-        this.infosPersonnelList = data;
+        this.iafList = data;
         this.isloading = false;
       },
       error: (err) => {
@@ -71,20 +71,16 @@ export class EtudiantListComponent {
 
   columns: IColumn[] = [
     {
-      key: 'nomEtu',
-      label: 'Nom'
+      key: 'inscriptionPrincipaleYN',
+      label: 'inscriptionPrincipaleYN'
     },
     {
-      key: 'prenomEtu',
-      label: 'Prenom'
+      key: 'inscriptionAnnuleeYN',
+      label: 'inscriptionAnnuleeYN'
     },
     {
-      key: 'emailEtu',
-      label: 'Email'
-    },
-    {
-      key: 'profession',
-      label: 'Profession'
+      key: 'exonereYN',
+      label: 'exonereYN'
     },
     {
       key: 'etudiant',
@@ -116,7 +112,7 @@ export class EtudiantListComponent {
 
   delete(){
     if (this.itemDelete && this.itemDelete.id !== undefined) {
-      this.informationPersonnellesService.deleteInformationPersonnelle(this.itemDelete.id).subscribe({
+      this.iafService.deleteIaf(this.itemDelete.id).subscribe({
         next: (data) => {
           this.getListe();
           this.liveDemoVisible = false;
@@ -133,7 +129,7 @@ export class EtudiantListComponent {
     }
   }
 
-  toggleLiveDemo(item : EtudiantModel) {
+  toggleLiveDemo(item : InscriptionAdministrativeFormModel) {
     this.itemDelete = item;
     this.liveDemoVisible = !this.liveDemoVisible;
   }
