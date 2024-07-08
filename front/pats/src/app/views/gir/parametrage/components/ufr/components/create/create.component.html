@@ -11,13 +11,11 @@
         cForm
         class="row g-3 needs-validation"
         [formGroup]="ufrForm"
-
     >
         <c-col md="12">
             <label cLabel for="validationCustom01">Libellé UFR </label>
             <input cFormControl id="validationCustom01" required type="text" value=""
-            [valid]="(ufrForm?.get('libeleUfr')?.touched && ufrForm?.get('libeleUfr')?.valid) ? true
-               : (ufrForm?.get('libeleUfr')?.touched) && ufrForm?.get('libeleUfr')?.invalid ? false : undefined"
+            
             formControlName="libeleUfr"/>
             <c-form-feedback>Le Libellé est obligatoire </c-form-feedback>
         </c-col>

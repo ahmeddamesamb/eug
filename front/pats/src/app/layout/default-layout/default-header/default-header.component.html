@@ -18,22 +18,26 @@
     </div>
     
     <form cForm 
-      ngForm
       class=" etudiant d-none d-md-flex"
       (ngSubmit)="dossierEtudiant()"
       [formGroup]="rechercheForm"
 
     >
-        <input cFormControl
-               placeholder="Code Etudiant..."
-               aria-label="Search"
-               aria-describedby="search-addon"
-               class="bg-body-secondary border-0"
-               formControlName="code"
-        />
-        <button type="submit" cInputGroupText id="search-addon" class="bg-body-primary border-0 px-1">
-          <svg cIcon name="cilSearch" size="lg" class="my-1 mx-2 text-body-secondary"></svg>
-        </button>
+      <input cFormControl
+          formControlName="code"
+          id="code"
+          placeholder="Search..."
+          aria-label="Search"
+          aria-describedby="search-addon"
+          class="bg-body-secondary border-0"
+          type="text"
+          [valid]="(rechercheForm?.get('code')?.touched && rechercheForm?.get('code')?.valid) ? true
+               : (rechercheForm?.get('code')?.touched) && rechercheForm?.get('code')?.invalid ? false : undefined"
+        
+      />
+      <button  id="search-addon" type="submit" cButton class="bg-body-primary border-0 px-1" >
+        <svg cIcon name="cilSearch"  size="lg" class="my-1 mx-2 text-body-secondary"></svg>
+      </button>
     </form>
 
 
@@ -46,28 +50,6 @@
     </c-header-nav>
 
   </c-container>
-  <form 
-      #customStylesForm="ngForm"
-        cForm
-       class=" etudiant d-flex d-md-none w-50"
-       (ngSubmit)="dossierEtudiant()"
-       [formGroup]="rechercheForm"
-       >
-    
-    <c-input-group class="">
-      <button  id="search-addon" type="submit" cButton class="bg-body-primary border-0 px-1">
-        <svg cIcon name="cilSearch"  size="lg" class="my-1 mx-2 text-body-secondary"></svg>
-      </button>
-      <input cFormControl
-             placeholder="Search..."
-             aria-label="Search"
-             aria-describedby="search-addon"
-             class="bg-body-secondary border-0"
-             formControlName="code"
-             
-      />
-    </c-input-group>
-  </form>
 </ng-container>
 <!--</c-header>-->
 
