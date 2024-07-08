@@ -65,29 +65,20 @@ export class FormationListComponent {
 
   columns: IColumn[] = [
     {
-      key: 'codeFormation',
-      label: 'Code formation'
-    },
-    {
-      key: 'lmdYN',
-      label: 'LMD'
-    },
-    
-    {
-      key: 'typeFormation',
-      label: 'Type Forma.'
+      key: 'specialite',
+      label: 'Spécialité'
     },
     {
       key: 'niveau',
       label: 'Niveau'
     },
     {
-      key: 'specialite',
-      label: 'Spécialité'
+      key: 'departement',
+      label: 'UFR'
     },
     {
-      key: 'departement',
-      label: 'Département'
+      key: 'lmdYN',
+      label: 'LMD'
     },
     {
       key: 'show',

@@ -27,6 +27,7 @@ import{
   ColComponent,
   PopoverModule,
 } from '@coreui/angular-pro';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-etudiant-list',
@@ -56,11 +57,13 @@ export class EtudiantListComponent {
  
   }
 
-  getListe(){
+  getListe() {
     this.isloading = true;
-    this.iafService.getIafList().subscribe({
-      next: (data) => {
-        this.iafList = data;
+    this.iafService.getIafList().pipe(
+      map((data: any[]) => data.map(item => this.transformData(item)))
+    ).subscribe({
+      next: (transformedData) => {
+        this.iafList = transformedData;
         this.isloading = false;
       },
       error: (err) => {
@@ -69,25 +72,40 @@ export class EtudiantListComponent {
     });
   }
 
+  transformData(data: InscriptionAdministrativeFormModel): any {
+    return {
+      id: data.id,
+      codeEtu: data.inscriptionAdministrative?.etudiant?.codeEtu,
+      idEtudiant: data.inscriptionAdministrative?.etudiant?.id,
+      codeBU: data.inscriptionAdministrative?.etudiant?.codeBU,
+      ufr: data.formation?.departement?.ufr?.libelleUfr,
+      niveau: data.formation?.niveau?.libelleNiveau,
+      filiere: data.formation?.specialite?.nomSpecialites,
+      annee: data.inscriptionAdministrative?.anneeAcademique?.libelleAnneeAcademique,
+
+
+    };
+  }
+
   columns: IColumn[] = [
     {
-      key: 'inscriptionAdministrative.etudiant',
+      key: 'codeEtu',
       label: 'Code'
     },
     {
-      key: 'formation',
+      key: 'niveau',
       label: 'Niveau'
     },
     {
-      key: 'formation',
+      key: 'filiere',
       label: 'Filière'
     },
     {
-      key: 'inscriptionAdministrative',
+      key: 'codeBU',
       label: 'Code BU'
     },
     {
-      key: 'inscriptionAdministrative',
+      key: 'annee',
       label: 'Année'
     },
     {
