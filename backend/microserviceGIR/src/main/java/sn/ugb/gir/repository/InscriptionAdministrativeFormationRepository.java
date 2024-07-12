@@ -27,17 +27,6 @@ public interface InscriptionAdministrativeFormationRepository extends JpaReposit
     @Query("SELECT iaf.id FROM InscriptionAdministrativeFormation iaf WHERE iaf.id = :id")
     InscriptionAdministrativeFormation findByOne(Long id);
 
-//    @Query( "SELECT iaf FROM InscriptionAdministrativeFormation iaf  WHERE ( iaf.inscriptionAdministrative.anneeAcademique.anneeAc) " +
-//        " = (SELECT MAX(i.inscriptionAdministrative.anneeAcademique.anneeAc) FROM InscriptionAdministrativeFormation i " +
-//        " WHERE (iaf.inscriptionAdministrative.etudiant = i.inscriptionAdministrative.etudiant) GROUP BY i.inscriptionAdministrative.etudiant) ")
-//    Page<InscriptionAdministrativeFormation> findByLastInscription(Pageable pageable);
-
-//    @Query( "SELECT iaf,ip FROM InscriptionAdministrativeFormation iaf JOIN InformationPersonnelle ip ON (ip.etudiant.id =iaf.inscriptionAdministrative.etudiant.id)  WHERE ( iaf.inscriptionAdministrative.anneeAcademique.anneeAc) " +
-//        " = (SELECT MAX(i.inscriptionAdministrative.anneeAcademique.anneeAc) FROM InscriptionAdministrativeFormation i " +
-//        " WHERE (iaf.inscriptionAdministrative.etudiant = i.inscriptionAdministrative.etudiant) GROUP BY i.inscriptionAdministrative.etudiant) ")
-//    Page<Object[]> findByLastInscription(Pageable pageable);
-
-
     @Query("SELECT new sn.ugb.gir.domain.InformationsDerniersInscriptions(iaf,ip) " +
         "FROM InscriptionAdministrativeFormation iaf, InformationPersonnelle ip " +
         "WHERE iaf.inscriptionAdministrative.anneeAcademique.anneeAc = " +
@@ -47,11 +36,5 @@ public interface InscriptionAdministrativeFormationRepository extends JpaReposit
         "AND ip.etudiant.id = iaf.inscriptionAdministrative.etudiant.id " +
         "GROUP BY i.inscriptionAdministrative.etudiant)")
     Page<InformationsDerniersInscriptions> findByLastInscription(Pageable pageable);
-
-//    @Query( "SELECT iaf FROM InscriptionAdministrativeFormation iaf  WHERE (iaf.inscriptionAdministrative.anneeAcademique.anneeAc) >=ALL (" SELECT i.inscriptionAdministrative.anneeAcademique.anneeAc FROM InscriptionAdministrativeFormation i WHERE( i.inscriptionAdministrative.etudiant.id == iaf.inscriptionAdministrative.etudiant.id )")")
-//    Page<InscriptionAdministrativeFormation> teste(Pageable pageable);
-
-
-
 
 }
