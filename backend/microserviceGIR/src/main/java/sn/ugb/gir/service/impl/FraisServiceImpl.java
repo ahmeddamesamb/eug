@@ -21,6 +21,8 @@ import sn.ugb.gir.service.mapper.FraisMapper;
 import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+import static sn.ugb.gir.config.Constants.INSCTRIPTION_PRIVEE;
+import static sn.ugb.gir.config.Constants.INSCTRIPTION_PUBLIQUE;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.Frais}.
@@ -174,15 +176,29 @@ public class FraisServiceImpl implements FraisService {
             throw new BadRequestAlertException("Veuillez renseigner le cycle est en application ou non", ENTITY_NAME, "estEnApplicationYNObligatoire");
         }
 
-        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription") && (fraisDTO.getDia() == null || fraisDTO.getDip() == null)) {
+        if (fraisDTO.getTypeFrais().getId().equals(INSCTRIPTION_PUBLIQUE) && (fraisDTO.getDia() == null || fraisDTO.getDip() == null)) {
             throw new BadRequestAlertException("les droits d'inscriptions requiert les repartitions en  dia et un dip", ENTITY_NAME, "dia_dip_null");
         }
-        if (fraisDTO.getTypeFrais().getLibelleTypeFrais().equalsIgnoreCase("droit d'inscription du privée") && ((fraisDTO.getDia() == null || fraisDTO.getDip() == null) || (fraisDTO.getFraisPrivee() == null))) {
+        if (fraisDTO.getTypeFrais().getId().equals(INSCTRIPTION_PRIVEE) && ((fraisDTO.getDia() == null || fraisDTO.getDip() == null) || (fraisDTO.getFraisPrivee() == null))) {
             throw new BadRequestAlertException("les droits d'inscriptions du privée requiert les repartitions en  dia et un dip et dipPrivée", ENTITY_NAME, "dia_dip_dipprivee_null");
         }
         if (fraisDTO.getEstEnApplicationYN()){
             fraisDTO.setDateFin(null);
         }
-        //POUR LA DATE PRECEDANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if(!Objects.equals(fraisDTO.getDia(), null) && !Objects.equals(fraisDTO.getDip(), null))
+        {
+            if(fraisDTO.getTypeFrais().getId().equals(INSCTRIPTION_PUBLIQUE)){
+                Double bonneValeur = fraisDTO.getDia() + fraisDTO.getDip();
+                if (!Objects.equals(fraisDTO.getValeurFrais(), bonneValeur)){
+                    throw new BadRequestAlertException("la valeur du frais doit être égale à la somme entre DIA et DIP", "FRAIS", "la valeur du frais est incoherente par rapport à DIA et DIP");
+                }
+            } else if(fraisDTO.getTypeFrais().getId().equals(INSCTRIPTION_PRIVEE) && !Objects.equals(fraisDTO.getFraisPrivee(), null)){
+                Double bonneValeur = fraisDTO.getDia() + fraisDTO.getDip() + fraisDTO.getFraisPrivee();
+                if (!Objects.equals(fraisDTO.getValeurFrais(), bonneValeur)){
+                    throw new BadRequestAlertException("la valeur du frais doit être égale à la somme entre DIA, DIP et de FraisPrivee", "FRAIS", "la valeur du frais est incoherente par rapport à DIA, DIP et FraisPrivee");
+                }
+            }
+        }
+        //POUR LA DATE PRECEDANTE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 }
