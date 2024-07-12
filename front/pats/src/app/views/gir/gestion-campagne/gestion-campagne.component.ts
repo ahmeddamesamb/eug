@@ -33,9 +33,9 @@ import {
 export class GestionCampagneComponent {
 
   public panes = [
-    { name: 'En cours', id: 'tab-01' , route: 'en-cours'},
+    { name: 'Programmées', id: 'tab-01' , route: 'en-cours'},
     { name: 'Terminées', id: 'tab-02', route: 'terminees' },
-    { name: 'Inscription', id: 'tab-03' , route: 'inscription'},
+    { name: 'Programmer inscription', id: 'tab-03' , route: 'inscription'},
     { name: 'Campagnes', id: 'tab-04', route: 'campagnes' },
 
   ];

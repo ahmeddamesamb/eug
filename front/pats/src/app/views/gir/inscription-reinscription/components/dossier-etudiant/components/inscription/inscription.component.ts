@@ -14,6 +14,10 @@ import { AlertServiceService } from 'src/app/shared/services/alert/alert-service
 import { Observable } from 'rxjs'; 
 import {TypeadmissionService} from '../../../../../parametrage/components/typeadmission/services/typeadmission.service';
 import {TypeadmissionModel } from '../../../../../parametrage/components/typeadmission/models/typeadmission-model';
+import { SpecialiteModel} from '../../../../../parametrage/components/specialite/models/specialite-model';
+import {  SpecialiteServiceService} from '../../../../../parametrage/components/specialite/services/specialite-service.service';
+
+
 @Component({
   selector: 'app-inscription',
   standalone: true,
@@ -52,13 +56,7 @@ export class InscriptionComponent {
   inscriptionForm: FormGroup;
   niveaux: NiveauModel[] = [];
   ufrs : UfrModel[] = [];
-  filieres = [
-    { id: 1, nom: 'Informatique' },
-    { id: 2, nom: 'Mathématiques' },
-    { id: 3, nom: 'Physique' },
-    { id: 4, nom: 'Chimie' },
-    { id: 5, nom: 'Biologie' }
-  ];
+  specialite : SpecialiteModel[]= [];
 
   typesAdmissions : TypeadmissionModel[] = [];
 
@@ -71,7 +69,8 @@ export class InscriptionComponent {
     private ufrService: UfrServiceService,
     private inscriptionService: InscriptionAdministrativeFormService,
     private alertService: AlertServiceService,
-    private typeAdmissionService: TypeadmissionService
+    private typeAdmissionService: TypeadmissionService,
+    private specialiteServiceService : SpecialiteServiceService
 
   
   ) {
@@ -87,6 +86,7 @@ export class InscriptionComponent {
     this.loadNiveaux();
     this.loadUfrs();
     this.loadTypeAdmissions();
+    this.loadSpecialite();
     
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -107,7 +107,7 @@ export class InscriptionComponent {
       },
       error: (err) => {
         console.error(err);
-        this.alertService.showToast("Erreur", "Impossible de charger l'inscription", "danger");
+        //this.alertService.showToast("Erreur", "Impossible de charger l'inscription", "danger");
       }
     });
   }
@@ -168,7 +168,20 @@ export class InscriptionComponent {
         console.error("Erreur lors du chargement des types d'admission", err);
       }
     });
-}
+  }
+  loadSpecialite(){
+    this.specialiteServiceService.getSpecialiteList()
+    .subscribe({
+      next: (data) => {
+        this.specialite = data;
+        console.log("Specialite: "+ this.specialite);
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement des spécialités", err);
+      }
+    });
+  }
+
 
 
   onSubmit() {

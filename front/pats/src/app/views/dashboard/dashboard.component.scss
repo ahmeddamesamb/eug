@@ -27,3 +27,28 @@
 }
 
 
+
+  
+.grand-icone{
+  font-size: 52px;
+}
+
+
+
+.info-service:hover{
+  *{
+      color: white;
+  }
+  background-color: #6ea7c4;
+  border: 1px solid #3588B2;
+  box-shadow: 0px 15px 25px #0000004f !important;
+  cursor: pointer;
+  transition: 500ms;
+
+}
+
+.info-service{
+  border-radius: 20px;
+  transition: 800ms;
+
+}

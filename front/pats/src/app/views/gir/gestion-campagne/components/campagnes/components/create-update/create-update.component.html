@@ -1,1 +1,97 @@
-<p>create-update works!</p>
+
+<div class="">
+    @if (id !=null) {
+        <h3>Mise à jour d'une campagne</h3>
+    }@else {
+        <h3>AjoutCampagne</h3>
+    }
+    <form #customStylesForm="ngForm"
+        (ngSubmit)="onSubmit1()"
+
+        cForm
+        class="row g-3 needs-validation"
+        [formGroup]="campagneForm"
+
+    >
+        <c-col md="12">
+            <label cLabel for="validationCustom01">Libellé </label>
+            <input cFormControl id="validationCustom01" required type="text" value=""
+            [valid]="(campagneForm?.get('libelleCampagne')?.touched && campagneForm?.get('libelleCampagne')?.valid) ? true
+               : (campagneForm?.get('libelleCampagne')?.touched) && campagneForm?.get('libelleCampagne')?.invalid ? false : undefined"
+            formControlName="libelleCampagne"/>
+            <c-form-feedback>Ce champ est obligatoire </c-form-feedback>
+        </c-col>
+
+        <c-col md="12">
+            <label cLabel for="validationCustom02">Libellé abrégé </label>
+            <input cFormControl id="validationCustom02" required type="text"
+              value="" formControlName="libelleAbrege" [autofocus]="true"
+              [valid]="(campagneForm?.get('libelleAbrege')?.touched && campagneForm?.get('libelleAbrege')?.valid) ? true
+               : (campagneForm?.get('libelleAbrege')?.touched) && campagneForm?.get('libelleAbrege')?.invalid ? false : undefined"/>
+            <c-form-feedback >Ce champ est obligatoire</c-form-feedback>
+        </c-col>
+        
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Date de début </label>
+            <c-date-picker closeOnSelect cFormControl id="validationCustom03"
+              [valid]="(campagneForm?.get('dateDebut')?.touched && campagneForm?.get('dateDebut')?.valid) ? true : (campagneForm?.get('dateDebut')?.touched) && campagneForm?.get('dateDebut')?.invalid ? false : undefined"
+              required  locale="fr-FR"   formControlName="dateDebut"/>
+
+
+            @if ((campagneForm?.get('dateDebut')?.touched && campagneForm?.get('dateDebut')?.hasError('required'))) {
+              <span class="text-danger" > La date de création est obligatoire</span>
+            }
+        </c-col>
+
+        <c-col md="12">
+            <label cLabel for="validationCustom03">Date de fin </label>
+            <c-date-picker closeOnSelect cFormControl id="validationCustom03"
+              [valid]="(campagneForm?.get('dateFin')?.touched && campagneForm?.get('dateFin')?.valid) ? true : (campagneForm?.get('dateFin')?.touched) && campagneForm?.get('dateFin')?.invalid ? false : undefined"
+              required  locale="fr-FR"   formControlName="dateFin"/>
+
+
+            @if ((campagneForm?.get('dateFin')?.touched && campagneForm?.get('dateFin')?.hasError('required'))) {
+              <span class="text-danger" > La date de fin est obligatoire</span>
+            }
+        </c-col>
+
+
+        
+        
+        
+
+
+
+        <div class="col-12 d-flex justify-content-between ">
+            <div class=" w-50 pe-1">
+                
+                @if (id !=null) {
+                    <button (click)="annuler()"  class=" w-100" cButton color="secondary" type="reset">
+                        Annuler
+                    </button>
+                }@else {
+                    <button (click)="onReset1()" class=" w-100" cButton color="secondary" type="reset">
+                        Vider
+                    </button>
+                }
+            </div>
+            <div class=" w-50 ps-1">
+                <button cButton class=" w-100 text-white" [disabled]="!campagneForm?.valid"  color="primary" type="submit">
+                    Enregistrer
+                </button>
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </form>
+</div>
+
+
+
+
