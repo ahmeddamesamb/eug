@@ -115,22 +115,22 @@ export class CreateEtudiantComponent {
     
     this.informationPersonelleForm = new FormGroup({
       nomEtu: new FormControl('', Validators.required),
-      nomJeuneFilleEtu: new FormControl('', Validators.required),
+      nomJeuneFilleEtu: new FormControl(''),
       prenomEtu: new FormControl('', Validators.required),
-      statutMarital: new FormControl('', Validators.required),
+      statutMarital: new FormControl(''),
       /* regime: new FormControl(0, Validators.required), */
-      profession: new FormControl('', Validators.required),
-      adresseEtu: new FormControl('', Validators.required),
+      profession: new FormControl(''),
+      adresseEtu: new FormControl(''),
       telEtu: new FormControl('', Validators.required),
       emailEtu: new FormControl('', Validators.required),
-      adresseParent: new FormControl('', Validators.required),
-      telParent: new FormControl('', Validators.required),
-      emailParent: new FormControl('', Validators.required),
-      nomParent: new FormControl('', Validators.required),
-      prenomParent: new FormControl('', Validators.required),
+      adresseParent: new FormControl(''),
+      telParent: new FormControl(''),
+      emailParent: new FormControl(''),
+      nomParent: new FormControl(''),
+      prenomParent: new FormControl(''),
       /* derniereModification: new FormControl('', Validators.required), */
       /* emailUser: new FormControl('', Validators.required), */
-      typeHandicap: new FormControl('', Validators.required),
+      typeHandicap: new FormControl(''),
       typeBourse: new FormControl('', Validators.required),
 /*       handicapYN: new FormControl(0, Validators.required),
       ordiPersoYN: new FormControl(0, Validators.required), */
@@ -143,16 +143,16 @@ export class CreateEtudiantComponent {
       numDocIdentite: new FormControl('', Validators.required),
       region: new FormControl('', Validators.required),
       typeSelection: new FormControl('', Validators.required),
-      lycee: new FormControl('', Validators.required),
+      lycee: new FormControl(''),
       /*------------------------------------------------------------*/
 
-      origineScolaire: new FormControl('', Validators.required),
+      origineScolaire: new FormControl(''),
       anneeBac: new FormControl(null, Validators.required),
-      natureBac: new FormControl('', Validators.required),
+      natureBac: new FormControl(''),
       mentionBac: new FormControl('', Validators.required),
       moyenneSelectionBac: new FormControl(0, Validators.required),
       moyenneBac: new FormControl(0, Validators.required),
-      serie: new FormControl('', Validators.required)
+      serie: new FormControl('')
 
     });
 
