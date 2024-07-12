@@ -23,6 +23,7 @@ import sn.ugb.gir.service.dto.EtudiantDTO;
 import sn.ugb.gir.service.dto.InformationPersonnelleDTO;
 import sn.ugb.gir.service.dto.ProcessusInscriptionAdministrativeDTO;
 import sn.ugb.gir.service.mapper.ProcessusInscriptionAdministrativeMapper;
+import sn.ugb.gir.web.rest.errors.BadRequestAlertException;
 
 /**
  * Service Implementation for managing {@link sn.ugb.gir.domain.ProcessusInscriptionAdministrative}.
@@ -133,22 +134,31 @@ public Page<ProcessusInscriptionAdministrativeDTO> search(String query, Pageable
 
 @Override
 @Transactional
-public String generateInstitutionalEmail(Long etudiantId) {
+public String generateInstitutionalEmail(String codeEtu) {
+    final String ENTITY_NAME = "etudiant";
 
-    Etudiant etudiant = etudiantRepository.findById(etudiantId)
-                            .orElseThrow(() -> new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + etudiantId));
+    Etudiant etudiant = etudiantRepository.findByCodeEtu(codeEtu).orElseThrow(() -> new EntityNotFoundException("Étudiant non trouvé avec l'ID : " + codeEtu));
+
+    if (etudiant.getEmailUGB() != null && !etudiant.getEmailUGB().isEmpty()) {
+        throw new BadRequestAlertException("L'étudiant avec ce Code : " + codeEtu + " a déjà un email UGB : " + etudiant.getEmailUGB(), ENTITY_NAME, "emailUGBExists");
+    }
+
+    ProcessusInscriptionAdministrative processusInscriptionAdministrative = new ProcessusInscriptionAdministrative();
+    if (processusInscriptionAdministrative.getInscritAdministrativementYN() == null || !processusInscriptionAdministrative.getInscritAdministrativementYN()) {
+        throw new BadRequestAlertException("L'inscription administrative pour l'étudiant avec ce Code Etudiant : " + codeEtu + " n'est pas terminée.", ENTITY_NAME, "inscriptionNotComplete");
+    }
 
     InformationPersonnelle infoPersonnelle = etudiant.getInformationPersonnelle();
     if (infoPersonnelle == null) {
-        throw new EntityNotFoundException("Information personnelle non trouvée pour l'étudiant avec l'ID : " + etudiantId);
+        throw new EntityNotFoundException("Information personnelle non trouvée pour l'étudiant avec Code Etudiant : " + codeEtu);
     }
 
     String email = generateUniqueEmail(infoPersonnelle.getNomEtu(), infoPersonnelle.getPrenomEtu());
     etudiant.setEmailUGB(email);
     etudiantRepository.save(etudiant);
-
-    return "Email UGB généré avec succès pour l'étudiant avec ID : " + etudiantId + ", Nouveau Email UGB : " + email;
+    return "Email UGB généré avec succès pour l'étudiant avec ce Code : " + codeEtu + ", Nouveau Email UGB : " + email;
 }
+
 
 private String generateUniqueEmail(String nom, String prenom) {
     String[] prenoms = prenom.split(" ");
@@ -167,6 +177,7 @@ private String generateUniqueEmail(String nom, String prenom) {
     return email.toLowerCase();
 }
 
+
 private String stripAccents(String str) {
     String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
     Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
@@ -179,28 +190,37 @@ private String stripAccents(String str) {
 
 
 @Override
-public String generateCodeBareBU(Long etudiantId) {
-    // Récupérer l'étudiant par ID
-    Etudiant etudiant = etudiantRepository.findById(etudiantId)
-                            .orElseThrow(() -> new IllegalStateException("Étudiant non trouvé avec l'ID : " + etudiantId));
+public String generateCodeBareBU(String codeEtu) {
+    final String ENTITY_NAME = "etudiant";
 
+    Etudiant etudiant = etudiantRepository.findByCodeEtu(codeEtu).orElseThrow(() -> new IllegalStateException("Étudiant non trouvé avec ce Code : " + codeEtu));
 
-//    Vérifier si le code BU est déjà défini pour l'étudiant
-//    if (etudiant.getCodeBU() != null) {
-//        throw new IllegalStateException("Le code BU est déjà défini pour l'étudiant avec ID : " + etudiantId);
-//    }
+    ProcessusInscriptionAdministrative processusInscriptionAdministrative = new ProcessusInscriptionAdministrative();
+    if (!processusInscriptionAdministrative.getInscriptionDemarreeYN()) {
+        throw new BadRequestAlertException("L'inscription administrative pour l'étudiant avec ce Code : " + codeEtu + " n'est pas démarrée.", ENTITY_NAME, "inscriptionNotStarted");
+    }
 
-    // Trouver le maximum du code barre BU et incrémenter
+    if (etudiant.getCodeBU() != null && !etudiant.getCodeBU().isEmpty()) {
+        throw new BadRequestAlertException("L'étudiant avec ce Code " + codeEtu + " a déjà un code BU : " + etudiant.getCodeBU(), ENTITY_NAME, "codeBUExists");
+    }
+
     String maxCodeBU = etudiantRepository.findMaxCodeBU();
-    int nouveauCodeBU = (maxCodeBU != null ? Integer.parseInt(maxCodeBU) + 1 : 1);
+    int nouveauCodeBU = 10000;
 
-    // Mettre à jour le code BU de l'étudiant
-    etudiant.setCodeBU(String.valueOf(nouveauCodeBU));
+    if (maxCodeBU != null && !maxCodeBU.isEmpty()) {
+        try {
+            nouveauCodeBU = Integer.parseInt(maxCodeBU) + 1;
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("Le code BU actuel n'est pas un nombre valide: " + maxCodeBU, e);
+        }
+    }
+    String code = String.valueOf(nouveauCodeBU);
+    etudiant.setCodeBU(code);
     etudiantRepository.save(etudiant);
-
-    return "Code barre BU généré avec succès pour l'étudiant avec ID : " + etudiantId + ", Nouveau code barre : "
-               + nouveauCodeBU;
+    return "Code barre BU généré avec succès pour l'étudiant avec ce Code : " + codeEtu + ", Nouveau code barre : " + nouveauCodeBU;
 }
+
+
 @Override
 public String generateCodeEtudiant(EtudiantDTO etudiantDTO) {
     return null;

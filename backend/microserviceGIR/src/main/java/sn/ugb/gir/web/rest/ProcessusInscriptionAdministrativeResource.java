@@ -232,15 +232,15 @@ public class ProcessusInscriptionAdministrativeResource {
             throw ElasticsearchExceptionMapper.mapException(e);
         }
     }
-    @PostMapping("/generate-institutional-email/{etudiantId}")
-    public ResponseEntity<String> generateEmail(@PathVariable Long etudiantId) {
-        String email = processusInscriptionAdministrativeService.generateInstitutionalEmail(etudiantId);
+    @PostMapping("/generate-institutional-email/{codeEtu}")
+    public ResponseEntity<String> generateEmail(@PathVariable String codeEtu) {
+        String email = processusInscriptionAdministrativeService.generateInstitutionalEmail(codeEtu);
         return ResponseEntity.ok(email);
     }
 
-    @PostMapping("/generateCodeBU/{etudiantId}")
-    public ResponseEntity<String> generateCodeEtudiant(@PathVariable Long etudiantId) {
-        String codeBU = processusInscriptionAdministrativeService.generateCodeBareBU(etudiantId);
+    @PostMapping("/generateCodeBU/{codeEtu}")
+    public ResponseEntity<String> generateCodeEtudiant(@PathVariable String codeEtu) {
+        String codeBU = processusInscriptionAdministrativeService.generateCodeBareBU(codeEtu);
         return ResponseEntity.ok(codeBU);
     }
 
