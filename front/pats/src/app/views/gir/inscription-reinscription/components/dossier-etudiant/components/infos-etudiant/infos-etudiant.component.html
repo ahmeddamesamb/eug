@@ -1,20 +1,27 @@
 <div>
     <c-accordion [flush]="true">
-        <c-accordion-item visible class="border border-2 rounded-2 mb-2">
+        <c-accordion-item  visible class="border border-2 rounded-2 mb-2">
           <ng-template cTemplateId="accordionHeader">
             Civilité
           </ng-template>
+          
           <ng-template cTemplateId="accordionBody">
-            <div class="row ">
-              <app-data-display class="col-12 col-lg-6" label="Nom" [data]="informationPersonelle.nomEtu"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Prenom" [data]="informationPersonelle.prenomEtu"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Date de naissance" [data]="informationPersonelle.etudiant.dateNaissEtu"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Lieu de naissance" [data]="informationPersonelle.etudiant.lieuNaissEtu"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Sexe" [data]="informationPersonelle.etudiant.sexe"  ></app-data-display>
-              <!-- <app-data-display class="col-12 col-lg-6" label="Nationalité" [data]="informationPersonelle.etudiant.region.pays.nationalite"  ></app-data-display> -->
-              <app-data-display class="col-12 col-lg-6" label="INE" [data]="informationPersonelle.etudiant.ine"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="CNI/Passeport" [data]="informationPersonelle.etudiant.numDocIdentite"  ></app-data-display>
-            </div>
+            @if (informationPersonelle && informationPersonelle.etudiant) {
+              <div class="row ">
+                <app-data-display  class="col-12 col-lg-6" label="Nom" [data]="informationPersonelle.nomEtu"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Prenom" [data]="informationPersonelle.prenomEtu"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Date de naissance" [data]="informationPersonelle.etudiant.dateNaissEtu"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Lieu de naissance" [data]="informationPersonelle.etudiant.lieuNaissEtu"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Sexe" [data]="informationPersonelle.etudiant.sexe"  ></app-data-display>
+                <!-- <app-data-display class="col-12 col-lg-6" label="Nationalité" [data]="informationPersonelle.etudiant.region.pays.nationalite"  ></app-data-display> -->
+                <app-data-display  class="col-12 col-lg-6" label="INE" [data]="informationPersonelle.etudiant.ine"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="CNI/Passeport" [data]="informationPersonelle.etudiant.numDocIdentite"  ></app-data-display>
+              </div>
+
+            }@else {
+              
+            }
+            
             
           </ng-template>
         </c-accordion-item>
@@ -23,15 +30,21 @@
             Contacts
           </ng-template>
           <ng-template cTemplateId="accordionBody">
-            <div class="row ">
-              <app-data-display class="col-12 col-lg-6" label="Email " [data]="informationPersonelle.emailUser"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Téléphone Etudiant" [data]="informationPersonelle.telEtu"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Adresse Etudiant" [data]="informationPersonelle.adresseEtu"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Prénom Parent" [data]="informationPersonelle.prenomParent"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Nom Parent" [data]="informationPersonelle.nomParent"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Téléphone des Parents" [data]="informationPersonelle.telParent"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Adresse Parent" [data]="informationPersonelle.adresseParent"  ></app-data-display>
-            </div>
+            @if (informationPersonelle && informationPersonelle.etudiant) {
+              <div class="row ">
+                <app-data-display  class="col-12 col-lg-6" label="Email " [data]="informationPersonelle.emailEtu"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Téléphone Etudiant" [data]="informationPersonelle.telEtu"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Adresse Etudiant" [data]="informationPersonelle.adresseEtu"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Prénom Parent" [data]="informationPersonelle.prenomParent"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Nom Parent" [data]="informationPersonelle.nomParent"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Téléphone des Parents" [data]="informationPersonelle.telParent"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Adresse Parent" [data]="informationPersonelle.adresseParent"  ></app-data-display>
+              </div>
+
+            }@else {
+              
+            }
+            
           </ng-template>
         </c-accordion-item>
         <c-accordion-item [visible]="false" class="border border-2 rounded-2 mb-2">
@@ -39,15 +52,21 @@
             Informations supplémentaires
           </ng-template>
           <ng-template cTemplateId="accordionBody">
-            <div class="row ">
-              <app-data-display class="col-12 col-lg-6" label="Type de selection " [data]="informationPersonelle.etudiant.typeSelection.libelleTypeSelection"  ></app-data-display>
-              <!-- <app-data-display class="col-12 col-lg-6" label="Handicap" [data]="informationPersonelle.handicapYN"  ></app-data-display> -->
-              <app-data-display class="col-12 col-lg-6" label="Type Handicap" [data]="informationPersonelle.typeHandicap.libelleTypeHandicap"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Ordinateur Perso" [data]="informationPersonelle.ordiPersoYN"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Regime" [data]="informationPersonelle.etudiant.region.libelleRegion"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Profession" [data]="informationPersonelle.profession"  ></app-data-display>
-              <app-data-display class="col-12 col-lg-6" label="Bourse" [data]="informationPersonelle.typeBourse.libelleTypeBourse"  ></app-data-display>
-            </div>
+            @if (informationPersonelle && informationPersonelle.etudiant) {
+              <div class="row ">
+                <app-data-display  class="col-12 col-lg-6" label="Type de selection " [data]="informationPersonelle.etudiant.typeSelection.libelleTypeSelection"  ></app-data-display>
+                <!-- <app-data-display class="col-12 col-lg-6" label="Handicap" [data]="informationPersonelle.handicapYN"  ></app-data-display> -->
+                <app-data-display  class="col-12 col-lg-6" label="Type Handicap" [data]="informationPersonelle.typeHandicap.libelleTypeHandicap"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Ordinateur Perso" [data]="informationPersonelle.ordiPersoYN"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Regime" [data]="informationPersonelle.etudiant.region.libelleRegion"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Profession" [data]="informationPersonelle.profession"  ></app-data-display>
+                <app-data-display  class="col-12 col-lg-6" label="Bourse" [data]="informationPersonelle.typeBourse.libelleTypeBourse"  ></app-data-display>
+              </div>
+
+            }@else {
+              
+            }
+            
           </ng-template>
         </c-accordion-item>
       </c-accordion>

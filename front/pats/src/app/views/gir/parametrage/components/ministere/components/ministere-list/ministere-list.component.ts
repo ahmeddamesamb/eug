@@ -69,6 +69,7 @@ export class MinistereListComponent {
         this.isloading = false;
       },
       error: (err) => {
+        this.isloading = false;
       }
     });
   }

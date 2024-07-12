@@ -67,8 +67,7 @@ export class UniversiteListComponent {
         this.isloading = false;
       },
       error: (err) => {
-
-
+        this.isloading = false;
       }
     });
   }

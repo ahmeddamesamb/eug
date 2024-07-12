@@ -61,6 +61,7 @@ export class DomaineListComponent {
         this.isloading = false;
       },
       error: (err) => {
+        this.isloading = false;
       }
     });
   }

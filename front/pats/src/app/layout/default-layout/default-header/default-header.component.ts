@@ -47,6 +47,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InformationPersonellesModel } from 'src/app/views/gir/gestion-etudiants/models/information-personelles-model';
 import { InformationPersonnellesService } from 'src/app/views/gir/gestion-etudiants/services/information-personnelles.service';
+import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
 
 @Component({
   selector: 'app-default-header',
@@ -80,7 +81,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
   informationPersonelle:InformationPersonellesModel={};
 
 
-  constructor(private userService: UserService  , private infoPersonnelleService: InformationPersonnellesService, private router:Router ) {
+  constructor(private userService: UserService  , 
+              private infoPersonnelleService: InformationPersonnellesService,
+              private router:Router,
+              private alertService :AlertServiceService) {
     super();
     this.#colorModeService.localStorageItemName.set('coreui-pro-angular-admin-template-theme-modern');
     this.#colorModeService.eventName.set('ColorSchemeChange');
@@ -109,6 +113,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
         this.userLastName = this.userService.getUserLastName();
       }
     });
+    
 
   
   }
@@ -125,9 +130,29 @@ export class DefaultHeaderComponent extends HeaderComponent {
     console.log("Code de recherche",this.rechercheForm.value.code);
     this.infoPersonnelleService.getEtudiantCode(this.rechercheForm.value.code).subscribe((data)=>{
       this.informationPersonelle = data;
-      console.log(this.informationPersonelle );
+      //console.log(this.informationPersonelle );
+      this.rechercheForm.reset();
       this.router.navigate(['/gir/inscription-reinscription/view/',this.informationPersonelle.etudiant?.id]);
     })
+
+    this.infoPersonnelleService.getEtudiantCode(this.rechercheForm.value.code).subscribe({
+      next: (data) => {
+        if(data == null || !data.etudiant || !data.etudiant?.id){
+          this.alertService.showToast("Code étudiant","Erreur sur la récupération de l'etudiant","danger");
+        }
+        else{
+          this.informationPersonelle = data;
+          this.rechercheForm.reset();
+          this.router.navigate(['/gir/inscription-reinscription/view/',this.informationPersonelle.etudiant?.id]);
+
+        }
+        
+      },
+      error: (err) => {
+        this.alertService.showToast("Code étudiant","Le code de l'étudiant n'existe pas","danger");
+
+      }
+    });
     
   }
 

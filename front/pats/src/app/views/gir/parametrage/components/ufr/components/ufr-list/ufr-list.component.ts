@@ -64,6 +64,7 @@ export class UfrListComponent {
         this.isloading = false;
       },
       error: (err) => {
+        this.isloading = false;
 
 
       }
