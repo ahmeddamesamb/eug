@@ -10,6 +10,8 @@ public final class Constants {
 
     public static final String SYSTEM = "system";
     public static final String DEFAULT_LANGUAGE = "fr";
+    public static final Long INSCTRIPTION_PUBLIQUE = 1L;
+    public static final Long INSCTRIPTION_PRIVEE = 2L;
 
     private Constants() {}
 }
