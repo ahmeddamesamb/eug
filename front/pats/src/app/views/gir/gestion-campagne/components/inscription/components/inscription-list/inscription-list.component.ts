@@ -26,40 +26,45 @@ import{
   PopoverModule,
 } from '@coreui/angular-pro';
 import { delay } from 'rxjs';
-import { InscriptionService } from '../../../../services/inscription.service';
-import { InscriptionModel } from '../../models/inscription-model';
+import {FormationService  } from '../../../../../parametrage/components/formation/services/formation.service';
+import { FormationModel } from '../../../../../parametrage/components/formation/models/formation-model';
 import { AlerteComponent } from 'src/app/shared/components/alerte/alerte/alerte.component';
 @Component({
   selector: 'app-inscription-list',
   standalone: true,
   imports: [BadgeComponent, ButtonDirective, CollapseDirective, SmartTableComponent, TemplateIdDirective, TextColorDirective, NumberToStringPipe,
     ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, CardBodyComponent,
-    CardComponent, CardHeaderComponent,PopoverModule, ColComponent,ToasterComponent,AlerteComponent
+    CardComponent, BadgeComponent, SmartTableComponent, TemplateIdDirective, TextColorDirective, CardHeaderComponent,
+    PopoverModule, ColComponent,ToasterComponent,AlerteComponent
     ],
      templateUrl: './inscription-list.component.html',
   styleUrl: './inscription-list.component.scss'
 })
 export class InscriptionListComponent {
-  constructor (private route:Router,private inscriptionService: InscriptionService ,private alertService: AlertServiceService){
+  constructor (private route:Router,private formationService: FormationService ,private alertService: AlertServiceService){
 }
 
-inscriptionList : InscriptionModel[] = [];
-  itemDelete!: InscriptionModel;
-  itemUpdate!: InscriptionModel;
+formationList : FormationModel[] = [];
+  itemDelete!: FormationModel;
+  itemUpdate!: FormationModel;
   public liveDemoVisible = false;
   isloading = false;
+  selectedItems = [];
 
   ngOnInit(): void {
     this.getListe();
  
   }
+  checkSelected = (selectedItems: any) => {
+    this.selectedItems = selectedItems.map((item: { id: any; }) => item.id);
+  };
 
   getListe(){
     this.isloading = true;
-    this.inscriptionService.getInscriptionList().subscribe({
+    this.formationService.getFormationList().subscribe({
       next: (data) => {
-        this.inscriptionList = data;
-        console.log(this.inscriptionList);
+        this.formationList = data;
+        console.log(this.formationList);
         this.isloading = false;
       },
       error: (err) => {
@@ -69,8 +74,12 @@ inscriptionList : InscriptionModel[] = [];
 
   columns: IColumn[] = [
     {
-      key: 'libelleProgrammation',
-      label: 'Formation'
+      key: 'niveau',
+      label: 'Niveau'
+    },
+    {
+      key: 'specialite',
+      label: 'Spécialité'
     },
    
     {
@@ -81,6 +90,7 @@ inscriptionList : InscriptionModel[] = [];
       sorter: false
     }
   ];
+  
 
   
   view(item: number) {
@@ -99,7 +109,7 @@ inscriptionList : InscriptionModel[] = [];
 
   delete(){
     if (this.itemDelete && this.itemDelete.id !== undefined) {
-      this.inscriptionService.deleteInscription(this.itemDelete.id).subscribe({
+      this.formationService.deleteFormation(this.itemDelete.id).subscribe({
         next: (data) => {
           this.getListe();
           this.liveDemoVisible = false;
@@ -117,7 +127,7 @@ inscriptionList : InscriptionModel[] = [];
     }
   }
 
-  toggleLiveDemo(item : InscriptionModel) {
+  toggleLiveDemo(item : FormationModel) {
     this.itemDelete = item;
     this.liveDemoVisible = !this.liveDemoVisible;
   }

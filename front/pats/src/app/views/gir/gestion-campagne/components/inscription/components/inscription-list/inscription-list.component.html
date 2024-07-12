@@ -1,89 +1,68 @@
 
 <div class="d-flex">
-  <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder " (click)="create()" >
-      Ajouter une programmation d'inscription
+  @if (selectedItems[0] !=null) {
+    <button   cButton color="secondary" size="sm" class="text-white ms-auto fw-bolder " (click)="create()" >
+      <i class="bi bi-calendar-fill me-2"></i> Programmer
   </button>
+  }@else {
+  <button   cButton color="primary" size="sm" class="text-white ms-auto fw-bolder " (click)="create()" >
+    <i class="bi bi-calendar-fill me-2"></i>Ajouter une programmation d'inscription
+</button>
+}
+  
 </div>
-
+<!-- <div color="secondary">Selected: {{selectedItems}}</div> -->
 
 <c-smart-table
-[activePage]="1"
-[columnSorter]="true"
-[columns]="columns"
-[columnFilter]="false"
-[itemsPerPageSelect]="true"
-[itemsPerPage]="5"
-itemsPerPageLabel="Inscription(s) par page"
-[items]="inscriptionList"
-[sorterValue]="{ column: 'name', state: 'asc' }"
-[tableFilter]="false"
-[tableProps]="{ hover: true, striped: true, responsive: true }"
-[tableBodyProps]="{ align: 'middle' }"
-clickableRows
-footer
-header
-pagination
-noItemsLabel="La liste est vide"
-[loading]="isloading"
-
-
+  [columnSorter]="true"
+  [columns]="columns"
+  [itemsPerPageSelect]="true"
+  [itemsPerPage]="5"
+  [items]="formationList"
+  [tableBodyProps]="{ align: 'middle' }"
+  [tableProps]="{ hover: true, striped: true, responsive: true }"
+  (selectedItemsChange)="checkSelected($event)"
+  clickableRows
+  footer
+  header
+  pagination
+  noItemsLabel="La liste est vide"
+  [loading]="isloading"
+  selectable
 >
-<!-- <ng-template cTemplateId="tableDetails" let-item="item">
-  <div>
-    <div [visible]="this.details_visible[item.id]===true" cCollapse>
-      <div class="card-body">
-        <h5>{{ item['libelle'] }}</h5>
-        <p class="text-muted">Date debut: {{ item['dateDebut'] }}</p>
-        <button cButton color="info" size="sm">
-          User Settings
-        </button>
-        <button cButton class="ms-1" color="danger" size="sm">
-          Delete
-        </button>
-      </div>
-    </div>
-  </div>
-</ng-template> -->
-
-<ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent" >
-  <td class=" border border-2 mb-3">
-    @switch (columnName) {
-      @case ('enCoursYN') {
-        <c-badge [color]="getBadge(tdContent)">
-          {{ item[columnName] }}
-        </c-badge>
+  <ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent">
+    <td>
+      @switch (columnName) {
+        @case ('niveau'){
+          {{(item[columnName].libelleNiveau)}}
+        }
+        @case ('specialite'){
+          {{(item[columnName].nomSpecialites)}}
+        }
+        @case ('status') {
+          <c-badge [color]="getBadge(tdContent)">
+            {{(item[columnName])}}
+          </c-badge>
+        }
+        @case ('show') {
+          <div class="d-flex gap-2">
+            <button (click)="view(item.id)" cButton cPopover="Détails" cPopoverPlacement="left" color="light" size="sm" variant="outline">
+              <i class="bi bi-eye-fill"></i>
+            </button>
+            <button cButton cPopover="Mise à jour" cPopoverPlacement="top" 
+            color="primary" size="sm" variant="outline" (click)="update(item.id)">
+              <i class="bi bi-calendar-fill"></i>
+            </button>
+            <!-- <button (click)="toggleLiveDemo(item)" cButton cPopover="Suppression" cPopoverPlacement="right" color="danger" size="sm" variant="outline">
+              <i class="bi bi-x-lg"></i>
+            </button> -->
+          </div>
+        }
+        @default {
+          {{tdContent}}
+        }
       }
-      @case ('show') {
-        <div class="d-flex gap-2">
-          <button (click)="view(item.id)" cButton cPopover="Détails" cPopoverPlacement="left" color="light" size="sm" variant="outline">
-            <i class="bi bi-eye-fill"></i>
-          </button>
-          <button cButton cPopover="Mise à jour" cPopoverPlacement="top" 
-          color="primary" size="sm" variant="outline" (click)="update(item.id)">
-            <i class="bi bi-calendar"></i>
-          </button>
-          <!-- <button (click)="toggleLiveDemo(item)" cButton cPopover="Suppression" cPopoverPlacement="right" color="danger" size="sm" variant="outline">
-            <i class="bi bi-x-lg"></i>
-          </button> -->
-        </div>
-      }
-      @default {
-        {{ item[columnName] }}
-      }
-    }
-  </td>
-</ng-template>
+    </td>
+  </ng-template>
 </c-smart-table>
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -31,6 +31,7 @@ import{
   ToasterComponent,
   PopoverModule,
 } from '@coreui/angular-pro';
+import { AlertServiceService } from 'src/app/shared/services/alert/alert-service.service';
 
 @Component({
   selector: 'app-campagne-list',
@@ -43,7 +44,7 @@ import{
   styleUrl: './campagne-list.component.scss'
 })
 export class CampagneListComponent {
-  constructor (private route:Router,private campagneService: CampagneService){
+  constructor (private route:Router,private campagneService: CampagneService ,private alertService: AlertServiceService){
 
   }
 
@@ -60,13 +61,22 @@ export class CampagneListComponent {
   }
 
   getListe(){
-    this.isloading = true; 
+    this.isloading = true;
+    this.campagneService.getCampagneList().subscribe({
+      next: (data) => {
+        this.campagneList = data;
+        this.isloading = false;
+      },
+      error: (err) => {
+        this.isloading = false;
+      }
+    });
   }
 
   columns: IColumn[] = [
     {
-      key: 'nomCampagne',
-      label: 'Nom'
+      key: 'libelleCampagne',
+      label: 'Campagne'
     },
     {
       key: 'dateDebut',
@@ -97,6 +107,35 @@ export class CampagneListComponent {
   }
   update(item:number) {
     this.route.navigate(['/gir/gestion-campagne/campagnes/update',item])
+  }
+
+  delete(){
+    if (this.itemDelete && this.itemDelete.id !== undefined) {
+      this.campagneService.deleteCampagne(this.itemDelete.id).subscribe({
+        next: (data) => {
+          this.getListe();
+          this.liveDemoVisible = false;
+          this.alertService.showToast("Suppression","Suppression de la campagne avec succes","success");
+
+        },
+        error: (err) => {
+          this.liveDemoVisible = false;
+          this.alertService.showToast("Suppression","Echec de la suppression campagne","danger");
+        }
+      });
+    } else {
+      // Handle the case where id is undefined, if needed
+      console.error('Item to delete does not have a valid id.');
+    }
+  }
+
+  toggleLiveDemo(item : CampagneModel) {
+    this.itemDelete = item;
+    this.liveDemoVisible = !this.liveDemoVisible;
+  }
+
+  handleLiveDemoChange(event: boolean) {
+    this.liveDemoVisible = event;
   }
 
 }

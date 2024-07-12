@@ -50,11 +50,7 @@
     
     <td>
       @switch (columnName) {
-        @case ('enCoursYN') {
-          <c-badge [color]="getBadge(tdContent)">
-            {{ (item[columnName]) | numberToString }} 
-          </c-badge>
-        }
+        
         @case ('show') {
             <div class="d-flex gap-2">
                 <button (click)="view(item.id)"  cButton cPopover="Détails" cPopoverPlacement="left" color="light" size="sm" variant="outline"  >

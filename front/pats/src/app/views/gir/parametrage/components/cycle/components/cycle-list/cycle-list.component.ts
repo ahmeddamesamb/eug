@@ -59,6 +59,7 @@ export class CycleListComponent {
         this.isloading = false;
       },
       error: (err) => {
+        this.isloading = false;
       }
     });
   }
